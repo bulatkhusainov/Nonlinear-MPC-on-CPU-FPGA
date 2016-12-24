@@ -3,7 +3,7 @@ clear;
 addpath(strcat(pwd,'/auxilary_functions')); % add current folder to path to use variables_declaration.m
 
 debug_mode = 1;
-test_enable = 1; % enable unit testing
+test_enable = 0; % enable unit testing
 test_tol = 1e-4;
 
 % add problem data to the workspace
