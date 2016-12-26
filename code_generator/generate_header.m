@@ -17,9 +17,10 @@ fprintf(fileID, '#define n_states %d // # of states \n',n_states);
 fprintf(fileID, '#define m_inputs %d // # of inputs \n',m_inputs);
 fprintf(fileID, '#define n_node_slack %d // # of slack variables \n', n_node_slack);
 fprintf(fileID, '#define n_term_slack %d // # of slack variables for terminal term \n', n_term_slack);
-fprintf(fileID, '#define n_stages     %d // # of slack variables for terminal term \n', n_stages);
+fprintf(fileID, '#define n_stages     %d // # of integration stages \n', n_stages);
 fprintf(fileID, '#define n_node_theta %d  // # of optimization variables \n',n_node_theta);
-fprintf(fileID, '#define n_term_theta %d  // # of optimization variables for terminal term \n\n',n_term_theta);
+fprintf(fileID, '#define n_term_theta %d  // # of optimization variables for terminal term \n',n_term_theta);
+fprintf(fileID, '#define n_node_eq %d  // # of equality constraints \n\n',n_node_eq);
 
 fprintf(fileID, '#endif');
 fclose(fileID);
