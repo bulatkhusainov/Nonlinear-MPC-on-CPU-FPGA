@@ -4,7 +4,7 @@ addpath(strcat(pwd,'/auxilary_functions')); % add current folder to path to use 
 
 debug_mode = 1;
 test_enable = 1; % enable unit testing
-test_tol = 1e-4;
+test_tol = 1e-3;
 
 % add problem data to the workspace
 problem_data;

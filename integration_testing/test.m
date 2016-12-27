@@ -20,11 +20,11 @@ cd ../integration_testing
 
 % formulate and solve optimization problem
 % initial condiiton
-x_init = [0;1];
+x_init = [1;0];
 
 % intial guess
-theta_all = zeros(n_node_theta*N+n_term_theta,1);
-lambda_all = zeros(n_states + n_node_eq*N,1); % assume no terminal constraints
+theta_all = 100*zeros(n_node_theta*N+n_term_theta,1);
+lambda_all = -100*zeros(n_states + n_node_eq*N,1); % assume no terminal constraints
 %theta_all = (1:(n_node_theta*N+n_term_theta))';
 %lambda_all = (1:(n_states + n_states*(n_stages+1)*N))'; % assume no terminal constraints
 
@@ -86,12 +86,13 @@ for ip_iter = 1:ip_iter_max
         block_c = -f_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
         block_c(1:n_states) = block_c(1:n_states) + theta_all((1:n_states)+ i*(n_node_theta) );
 
-        size_block = size(block_x,1) + size(block_c,1);    
+        size_block = n_node_theta + n_node_eq;    
         b( (1:size_block) + n_states + (i-1)*(size_block)) = [block_x; block_c];
 
     end
-    block_x_term = -term_gradient_eval(theta_all((1:n_term_theta)+N*(n_node_theta) ));
-    block_x_term(1:n_states) = block_x_term(1:n_states) + lambda_all((1:n_states) + n_states + (N-1)*n_node_eq );
+    block_x_term = term_gradient_eval(theta_all((1:n_term_theta)+N*(n_node_theta) ));
+    block_x_term(1:n_states) = block_x_term(1:n_states) - lambda_all((1:n_states) + n_states + (N-1)*n_node_eq );
+    b( (1:n_term_theta) + n_states + N*(n_node_theta + n_node_eq)) = -block_x_term;
     
     % current resudual vector (extract from b for testing purposes only)
     r_dual = zeros(size(theta_all));

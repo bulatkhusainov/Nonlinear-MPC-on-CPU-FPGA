@@ -5,17 +5,17 @@
 #include <stdlib.h>  
 #include <stdio.h>  
 
-#define N 20 
-#define Ts 5.000000e-01 // sampling frequency 
+#define N 40 
+#define Ts 1 // sampling frequency 
 
 //data for shooting node 
 #define n_states 2 // # of states 
 #define m_inputs 1 // # of inputs 
 #define n_node_slack 0 // # of slack variables 
 #define n_term_slack 0 // # of slack variables for terminal term 
-#define n_stages     2 // # of integration stages 
-#define n_node_theta 7  // # of optimization variables 
+#define n_stages     3 // # of integration stages 
+#define n_node_theta 9  // # of optimization variables 
 #define n_term_theta 2  // # of optimization variables for terminal term 
-#define n_node_eq 6  // # of equality constraints 
+#define n_node_eq 8  // # of equality constraints 
 
 #endif

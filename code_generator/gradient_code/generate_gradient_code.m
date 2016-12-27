@@ -1,11 +1,11 @@
 %% Gradient for one node
-node_objective = node_objective_residual.'*node_objective_residual;
+node_objective = sum(node_objective_residual.*node_objective_residual);
 node_gradient = gradient(node_objective, node_theta);
 node_gradient_func = matlabFunction(node_gradient,'Vars', {node_theta});
 
 
 %% Gradient for terminal node
-term_objective = term_objective_residual.'*term_objective_residual;
+term_objective = sum(term_objective_residual.*term_objective_residual);
 term_gradient = gradient(term_objective, term_theta);
 term_gradient_func = matlabFunction(term_gradient,'Vars', {term_theta});
 
@@ -57,7 +57,7 @@ cd ../code_generator/gradient_code
 % perform unit test
 if test_enable == 1
     % test "node_gradient_eval" C function
-    random_input = 100*rand(1,n_node_theta);
+    random_input = 10*rand(1,n_node_theta);
     cd unit_test_files
         mex node_gradient_eval.c
         mex_data = node_gradient_eval(random_input);
@@ -72,7 +72,7 @@ if test_enable == 1
     end
     
     % test "term_gradient_eval" C function
-    random_input = 100*rand(1,n_term_theta);
+    random_input = 10*rand(1,n_term_theta);
     cd unit_test_files
         mex term_gradient_eval.c
         mex_data = term_gradient_eval(random_input);

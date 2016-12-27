@@ -1,7 +1,7 @@
 %% Hessian approximation for one node
 % approximate Hessian with Gauss newton algorithm
 node_jac_objective = jacobian(node_objective_residual,node_theta);
-node_hessian = node_jac_objective.'*node_jac_objective;
+node_hessian = 2*(node_jac_objective.'*node_jac_objective);
 node_hessian_func = matlabFunction(node_hessian,'Vars', {node_theta});
 % determine hessian sparsity pattern
 node_hessian_pattern = ones(n_node_theta);
@@ -16,7 +16,7 @@ end
 %% Hessian approximation for terminal node
 % approximate Jacobian with Gauss newton algorithm
 term_jac_objective = jacobian(term_objective_residual,term_theta);
-term_hessian = term_jac_objective.'*term_jac_objective;
+term_hessian = 2*(term_jac_objective.'*term_jac_objective);
 term_hessian_func = matlabFunction(term_hessian,'Vars', {term_theta});
 % determine hessian sparsity pattern
 term_hessian_pattern = ones(n_term_theta);
