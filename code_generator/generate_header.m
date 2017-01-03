@@ -20,7 +20,8 @@ fprintf(fileID, '#define n_term_slack %d // # of slack variables for terminal te
 fprintf(fileID, '#define n_stages     %d // # of integration stages \n', n_stages);
 fprintf(fileID, '#define n_node_theta %d  // # of optimization variables \n',n_node_theta);
 fprintf(fileID, '#define n_term_theta %d  // # of optimization variables for terminal term \n',n_term_theta);
-fprintf(fileID, '#define n_node_eq %d  // # of equality constraints \n\n',n_node_eq);
+fprintf(fileID, '#define n_node_eq %d  // # of equality constraints \n',n_node_eq);
+fprintf(fileID, '#define n_term_eq %d  // # of terminal equality constraints \n\n',n_term_eq);
 
 fprintf(fileID, '#endif');
 fclose(fileID);

@@ -24,16 +24,16 @@ x_init = [1;0];
 
 % intial guess
 theta_all = 100*zeros(n_node_theta*N+n_term_theta,1);
-lambda_all = -100*zeros(n_states + n_node_eq*N,1); % assume no terminal constraints
+lambda_all = -100*zeros(n_states + n_node_eq*N + n_term_eq,1); % assume no terminal constraints
 %theta_all = (1:(n_node_theta*N+n_term_theta))';
-%lambda_all = (1:(n_states + n_states*(n_stages+1)*N))'; % assume no terminal constraints
+%lambda_all = (1:(n_states +n_node_eq*N))'; % assume no terminal constraints
 
 
 n_z = size(theta_all,1) + size(lambda_all,1); 
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 15;
+ip_iter_max = 10;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);
@@ -58,7 +58,10 @@ for ip_iter = 1:ip_iter_max
     % terminal hessian
     term_hessian = term_hessian_eval(theta_all((1:n_term_theta)+(N)*(n_node_theta) ));
     term_hessian = vec2mat(term_hessian, n_term_theta);
-    A(end-size(term_hessian,1)+1:end, end-size(term_hessian,1)+1:end) = term_hessian;
+    term_jacobian = term_f_jac_eval( theta_all((1:n_term_theta)+(N)*(n_node_theta) ) );
+    term_block = [term_hessian term_jacobian'; term_jacobian zeros(size(term_jacobian,1))];
+    A_index = (1:n_term_theta+n_term_eq) + n_states + N*(n_node_theta+n_node_eq);
+    A(A_index,A_index) = term_block;
     % symmetrize the matrix
     A = tril(A);
     A = A + tril(A,-1)';
@@ -72,7 +75,7 @@ for ip_iter = 1:ip_iter_max
         node_jacobian_transpose = f_jac_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
         node_jacobian_transpose = vec2mat(node_jacobian_transpose, n_node_theta);
         node_jacobian_transpose = node_jacobian_transpose';
-        block_x = block_x + node_jacobian_transpose*lambda_all((1:n_states*(n_stages+1)) + n_states + (i-1)*n_node_eq);
+        block_x = block_x + node_jacobian_transpose*lambda_all((1:n_node_eq) + n_states + (i-1)*n_node_eq);
         % negative identity
         if i == 1
             block_x(1:n_states) = block_x(1:n_states) - lambda_all(1:n_states);
@@ -90,9 +93,14 @@ for ip_iter = 1:ip_iter_max
         b( (1:size_block) + n_states + (i-1)*(size_block)) = [block_x; block_c];
 
     end
+    % terminal optimality error
     block_x_term = term_gradient_eval(theta_all((1:n_term_theta)+N*(n_node_theta) ));
     block_x_term(1:n_states) = block_x_term(1:n_states) - lambda_all((1:n_states) + n_states + (N-1)*n_node_eq );
-    b( (1:n_term_theta) + n_states + N*(n_node_theta + n_node_eq)) = -block_x_term;
+    block_x_term = -block_x_term;
+    % terminal feasibility error
+    block_c_term = -term_f_eval( theta_all((1:n_term_theta)+N*(n_node_theta) ) );
+    
+    b( (1:n_term_theta+n_term_eq) + n_states + N*(n_node_theta + n_node_eq)) = [block_x_term; block_c_term];
     
     % current resudual vector (extract from b for testing purposes only)
     r_dual = zeros(size(theta_all));
@@ -105,6 +113,7 @@ for ip_iter = 1:ip_iter_max
     for i=1:N
         r_eq((1:n_node_eq) + n_states + (i-1)*n_node_eq) = b((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
     end
+    r_eq((1:n_term_eq) + n_states + N*n_node_eq) = b((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
     r_dual_store(ip_iter) = max(abs(r_dual));
     r_eq_store(ip_iter) = max(abs(r_eq));
     
@@ -114,7 +123,6 @@ for ip_iter = 1:ip_iter_max
     d_z = A\b;
 
     % extract d_theta_all and d_lambda_all
-    n_node_eq = n_states*(n_stages+1);
     d_theta_all = zeros(size(theta_all));
     d_lambda_all = zeros(size(lambda_all));
     for i=1:N
@@ -126,10 +134,16 @@ for ip_iter = 1:ip_iter_max
     for i=1:N
         d_lambda_all((1:n_node_eq) + n_states + (i-1)*n_node_eq) = d_z((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
     end
+    d_lambda_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
 
     % perform step
-    theta_all = d_theta_all + theta_all;
-    lambda_all = d_lambda_all + lambda_all;
+    if ip_iter == 1
+        theta_all = 0.2*d_theta_all + theta_all;
+        lambda_all = -0.5*d_lambda_all + lambda_all;
+    else
+        theta_all = d_theta_all + theta_all;
+        lambda_all = d_lambda_all + lambda_all;
+    end
 
 end
 
@@ -143,12 +157,16 @@ plot(r_eq_store);
 figure
 x_trajectory = zeros(n_states,N+1);
 u_trajectory = zeros(m_inputs,N);
+s_trajectory = zeros(n_node_slack,N);
 for i=1:N
     x_trajectory(:,i) = theta_all((1:n_states) + (i-1)*n_node_theta);
     u_trajectory(:,i) = theta_all((1:m_inputs) + n_states + (i-1)*n_node_theta);
+    s_trajectory(:,i) = theta_all((1:n_node_slack) + n_states + m_inputs + (i-1)*n_node_theta);
 end
 x_trajectory(:,N+1) = theta_all((1:n_states) + (N)*n_node_theta);
 plot((0:N), x_trajectory(1,:)); % first state
 hold on
 plot((0:N), x_trajectory(2,:)); % second state
-stairs((0:N-1), u_trajectory(1,:))
+stairs((0:N-1), u_trajectory(1,:)) % first input
+plot((0:N-1), s_trajectory(1,:)) % first slack
+legend('state 1', 'state 2','input 1','slack 1');

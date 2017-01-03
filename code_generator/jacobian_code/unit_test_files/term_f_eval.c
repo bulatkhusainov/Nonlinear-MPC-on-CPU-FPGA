@@ -10,32 +10,32 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[])
 {
 	int i,j,k;
-	double *f_double, *node_theta_double;
+	double *term_f_double, *term_theta_double;
 	
 	// interface input matrix
-	node_theta_double = mxGetPr(prhs[0]);
+	term_theta_double = mxGetPr(prhs[0]);
 	//n = mxGetN(prhs[0]);
 	
 	// interface output matrix
-	plhs[0] = mxCreateDoubleMatrix(n_node_eq,1,mxREAL);
-	f_double = mxGetPr(plhs[0]);
+	plhs[0] = mxCreateDoubleMatrix(n_term_eq,1,mxREAL);
+	term_f_double = mxGetPr(plhs[0]);
 
 	// local input and output matrices
-	float node_theta[n_node_theta];
-	float f[n_node_eq] = {0};
+	float term_theta[n_term_theta];
+	float term_f[n_term_eq] = {0};
 
 	// input interface loop
-	for(i = 0; i < n_node_theta; i++)
+	for(i = 0; i < n_term_theta; i++)
 	{
-		node_theta[i] = (float) node_theta_double[i];
+		term_theta[i] = (float) term_theta_double[i];
 	}
 
 	//call function
-	f_eval(f,node_theta);
+	term_f_eval(term_f,term_theta);
 	
 	//output interface loop
-	for(i = 0; i < n_node_eq; i++)
+	for(i = 0; i < n_term_eq; i++)
 	{
-		f_double[i] = (double) f[i];
+		term_f_double[i] = (double) term_f[i];
 	}
 }

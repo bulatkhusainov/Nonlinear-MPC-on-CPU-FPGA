@@ -17,12 +17,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	//n = mxGetN(prhs[0]);
 	
 	// interface output matrix
-	plhs[0] = mxCreateDoubleMatrix(n_states*(n_stages+1)*n_node_theta,1,mxREAL);
+	plhs[0] = mxCreateDoubleMatrix(n_node_eq*n_node_theta,1,mxREAL);
 	f_jac_double = mxGetPr(plhs[0]);
 
 	// local input and output matrices
 	float node_theta[n_node_theta];
-	float f_jac[n_states*(n_stages+1)][n_node_theta];
+	float f_jac[n_node_eq][n_node_theta];
 
 	// input interface loop
 	for(i = 0; i < n_node_theta; i++)
@@ -36,7 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
 	//output interface loop
 	k = 0;
-	for(i = 0; i < n_states*(n_stages+1); i++)
+	for(i = 0; i < n_node_eq; i++)
 	{
 		for(j = 0; j < n_node_theta; j++)
 		{

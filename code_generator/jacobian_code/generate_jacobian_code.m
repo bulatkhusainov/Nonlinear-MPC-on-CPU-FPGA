@@ -25,10 +25,15 @@ end
 %f_intgr_jac = jacobian(f_intgr,node_theta);
 
 % overall equality constraints
-f = [f_cont; f_intgr];
+f = [f_cont; f_intgr; f_slack];
 f_func = matlabFunction(f,'Vars', {node_theta});
 f_jac = jacobian(f, node_theta);
 f_jac_func = matlabFunction(f_jac,'Vars', {node_theta});
+
+% terminal constraints
+term_f_jac = jacobian(term_f, term_theta);
+term_f_func = matlabFunction(term_f,'Vars', {term_theta});
+term_f_jac_func = matlabFunction(term_f_jac,'Vars', {term_theta});
 
 %% Generate code for constraints and jacobians evaluations
 cd ../../src 
@@ -99,7 +104,7 @@ fprintf(fileID,'}\n\n');
 
 fprintf(fileID,strcat('// this function evaluates equality constraints\n'));
 fprintf(fileID,strcat('void f_eval('));
-fprintf(fileID,strcat(d_type,' f[n_states*(n_stages+1)],'));
+fprintf(fileID,strcat(d_type,' f[n_node_eq],'));
 fprintf(fileID,strcat(d_type,' node_theta[n_node_theta])\n'));
 fprintf(fileID,'{\n');
 fprintf(fileID,'\tint i, j, k;\n');
@@ -151,23 +156,70 @@ fprintf(fileID,strcat('\t\tfor(j = 0; j < n_states; j++)\n'));
 fprintf(fileID,strcat('\t\t{\n'));
 fprintf(fileID,strcat('\t\t\tf[offset_f+j] = -node_theta[offset_node_theta+j] + local_x_dot[j];\n'));
 fprintf(fileID,strcat('\t\t}\n'));
-fprintf(fileID,'\t}\n');
+fprintf(fileID,'\t}\n\n');
+fprintf(fileID,strcat('\t// slack equalities constraints \n'));
+fprintf(fileID,strcat('\t',d_type,' *slack_eq_pointer = &f[n_states*(n_stages+1)];// define slack equalities pointer \n'));
+for i = 1:n_node_slack_eq
+    tmp_var = ccode(f_slack(i));
+    tmp_var = regexprep(tmp_var, match_expr, strcat('node_theta[',replace_expr,']'));
+    tmp_var = regexprep(tmp_var, 't0 = ', '');
+    fprintf(fileID,'\t*(slack_eq_pointer+%d) = ',i-1);   
+    fprintf(fileID,tmp_var); 
+    fprintf(fileID,strcat('\n'));
+end
 fprintf(fileID,'}\n\n');
 
 
 fprintf(fileID,strcat('// this function evaluates equality constraints jacobian (without x_{k+1})\n'));
 fprintf(fileID,strcat('void f_jac_eval('));
-fprintf(fileID,strcat(d_type,' f_jac[n_states*(n_stages+1)][n_node_theta],'));
+fprintf(fileID,strcat(d_type,' f_jac[n_node_eq][n_node_theta],'));
 fprintf(fileID,strcat(d_type,' node_theta[n_node_theta])\n'));
 fprintf(fileID,'{\n');
 match_expr = 'node_theta(\d*)';
 replace_expr = '$1-1';
-for i = 1:n_states*(n_stages+1)
+for i = 1:n_node_eq
     for j = 1:n_node_theta
         tmp_var = ccode(f_jac(i,j));
         tmp_var = regexprep(tmp_var, match_expr, strcat('node_theta[',replace_expr,']'));
         tmp_var = regexprep(tmp_var, 't0 = ', '');
         fprintf(fileID,'\tf_jac[%d][%d] = ',i-1,j-1);   
+        fprintf(fileID,tmp_var); 
+        fprintf(fileID,strcat('\n'));
+    end
+end
+fprintf(fileID,'}\n\n');
+
+fprintf(fileID,strcat('// this function evaluates terminal equality constraints function \n'));
+fprintf(fileID,strcat('void term_f_eval('));
+fprintf(fileID,strcat(d_type,' term_f[n_term_eq],'));
+fprintf(fileID,strcat(d_type,' term_theta[n_term_theta])\n'));
+fprintf(fileID,'{\n');
+match_expr = 'term_theta(\d*)';
+replace_expr = '$1-1';
+for i = 1:n_term_eq
+        tmp_var = ccode(term_f(i));
+        tmp_var = regexprep(tmp_var, match_expr, strcat('term_theta[',replace_expr,']'));
+        tmp_var = regexprep(tmp_var, 't0 = ', '');
+        fprintf(fileID,'\tterm_f[%d] = ',i-1);   
+        fprintf(fileID,tmp_var); 
+        fprintf(fileID,strcat('\n'));
+end
+fprintf(fileID,'}\n\n');
+
+fprintf(fileID,strcat('// this function evaluates jacobian of terminal equality constraints function \n'));
+fprintf(fileID,strcat('void term_f_jac_eval('));
+fprintf(fileID,strcat(d_type,' term_f_jac[n_term_eq][n_term_theta],'));
+fprintf(fileID,strcat(d_type,' term_theta[n_term_theta])\n'));
+fprintf(fileID,'{\n');
+match_expr = 'term_theta(\d*)';
+replace_expr = '$1-1';
+for i = 1:n_term_eq
+    for j = 1:n_term_theta
+        % the body of inner loop has to be rewritten
+        tmp_var = ccode(term_f_jac(i,j));
+        tmp_var = regexprep(tmp_var, match_expr, strcat('term_theta[',replace_expr,']'));
+        tmp_var = regexprep(tmp_var, 't0 = ', '');
+        fprintf(fileID,'\tterm_f_jac[%d][%d] = ',i-1,j-1);   
         fprintf(fileID,tmp_var); 
         fprintf(fileID,strcat('\n'));
     end
@@ -250,5 +302,34 @@ if test_enable == 1
         error('"f_jac_eval" C function failed the test');
     else
         disp('"f_jac_eval" C function passed the test')
+    end
+    
+    % test "term_f_eval" C function
+    random_input = 5*rand(1,n_term_theta);
+    cd unit_test_files
+        mex term_f_eval.c
+        mex_data = term_f_eval(random_input);
+    cd ..
+    golden_data = term_f_func(random_input');
+    mismatch = abs(golden_data - mex_data);
+    if max(mismatch(:)) > test_tol
+        error('"term_f_eval" C function failed the test');
+    else
+        disp('"term_f_eval" C function passed the test')
+    end
+    
+     % test "term_f_jac_eval" C function
+    random_input = 5*rand(1,n_term_theta);
+    cd unit_test_files
+        mex term_f_jac_eval.c
+        mex_data = term_f_jac_eval(random_input);
+        mex_data = vec2mat(mex_data, n_term_theta); 
+    cd .. 
+    golden_data = term_f_jac_func(random_input');
+    mismatch = abs(golden_data - mex_data);
+    if max(mismatch(:)) > test_tol
+        error('"term_f_jac_eval" C function failed the test');
+    else
+        disp('"term_f_jac_eval" C function passed the test')
     end
 end
