@@ -20,11 +20,11 @@ cd ../integration_testing
 
 % formulate and solve optimization problem
 % initial condiiton
-x_init = [1;0];
+x_init = [0.5;0];
 
 % intial guess
-theta_all = 100*zeros(n_node_theta*N+n_term_theta,1);
-lambda_all = -100*zeros(n_states + n_node_eq*N + n_term_eq,1); % assume no terminal constraints
+theta_all = 1*ones(n_node_theta*N+n_term_theta,1);
+lambda_all = -1*ones(n_states + n_node_eq*N + n_term_eq,1); % assume no terminal constraints
 %theta_all = (1:(n_node_theta*N+n_term_theta))';
 %lambda_all = (1:(n_states +n_node_eq*N))'; % assume no terminal constraints
 
@@ -33,7 +33,7 @@ n_z = size(theta_all,1) + size(lambda_all,1);
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 10;
+ip_iter_max = 20;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);
@@ -95,6 +95,10 @@ for ip_iter = 1:ip_iter_max
     end
     % terminal optimality error
     block_x_term = term_gradient_eval(theta_all((1:n_term_theta)+N*(n_node_theta) ));
+    term_jacobian_transpose = term_f_jac_eval(theta_all((1:n_term_theta)+N*(n_node_theta) ));
+    term_jacobian_transpose = vec2mat(term_jacobian_transpose, n_term_theta);
+    term_jacobian_transpose = term_jacobian_transpose';
+    block_x_term = block_x_term + term_jacobian_transpose*lambda_all((1:n_term_eq) + n_states + N*n_node_eq);
     block_x_term(1:n_states) = block_x_term(1:n_states) - lambda_all((1:n_states) + n_states + (N-1)*n_node_eq );
     block_x_term = -block_x_term;
     % terminal feasibility error
@@ -137,13 +141,13 @@ for ip_iter = 1:ip_iter_max
     d_lambda_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
 
     % perform step
-    if ip_iter == 1
-        theta_all = 0.2*d_theta_all + theta_all;
-        lambda_all = -0.5*d_lambda_all + lambda_all;
-    else
+%     if ip_iter == 1
+%         theta_all = 0.2*d_theta_all + theta_all;
+%         lambda_all = -0.5*d_lambda_all + lambda_all;
+%     else
         theta_all = d_theta_all + theta_all;
         lambda_all = d_lambda_all + lambda_all;
-    end
+%     end
 
 end
 
@@ -168,5 +172,5 @@ plot((0:N), x_trajectory(1,:)); % first state
 hold on
 plot((0:N), x_trajectory(2,:)); % second state
 stairs((0:N-1), u_trajectory(1,:)) % first input
-plot((0:N-1), s_trajectory(1,:)) % first slack
-legend('state 1', 'state 2','input 1','slack 1');
+%plot((0:N-1), s_trajectory(1,:)) % first slack
+legend('state 1', 'state 2','input 1');

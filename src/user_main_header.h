@@ -5,7 +5,7 @@
 #include <stdlib.h>  
 #include <stdio.h>  
 
-#define N 40 
+#define N 50 
 #define Ts 1 // sampling frequency 
 
 //data for shooting node 

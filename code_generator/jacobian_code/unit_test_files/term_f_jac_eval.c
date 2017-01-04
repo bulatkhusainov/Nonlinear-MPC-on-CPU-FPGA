@@ -17,7 +17,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	//n = mxGetN(prhs[0]);
 	
 	// interface output matrix
-	plhs[0] = mxCreateDoubleMatrix(n_term_eq,n_term_theta,mxREAL);
+	plhs[0] = mxCreateDoubleMatrix(n_term_eq*n_term_theta,1,mxREAL);
 	term_f_jac_double = mxGetPr(plhs[0]);
 
 	// local input and output matrices

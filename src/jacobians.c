@@ -82,7 +82,7 @@ void f_eval(float f[n_node_eq],float node_theta[n_node_theta])
 
 	// slack equalities constraints 
 	float *slack_eq_pointer = &f[n_states*(n_stages+1)];// define slack equalities pointer 
-	*(slack_eq_pointer+0) =   node_theta[1-1]*3.0-node_theta[4-1]*2.0;
+	*(slack_eq_pointer+0) =   node_theta[1-1]-node_theta[4-1];
 }
 
 // this function evaluates equality constraints jacobian (without x_{k+1})
@@ -136,10 +136,10 @@ void f_jac_eval(float f_jac[n_node_eq][n_node_theta],float node_theta[n_node_the
 	f_jac[5][5] =   0.0;
 	f_jac[5][6] =   0.0;
 	f_jac[5][7] =   -1.0;
-	f_jac[6][0] =   3.0;
+	f_jac[6][0] =   1.0;
 	f_jac[6][1] =   0.0;
 	f_jac[6][2] =   0.0;
-	f_jac[6][3] =   -2.0;
+	f_jac[6][3] =   -1.0;
 	f_jac[6][4] =   0.0;
 	f_jac[6][5] =   0.0;
 	f_jac[6][6] =   0.0;
@@ -149,7 +149,7 @@ void f_jac_eval(float f_jac[n_node_eq][n_node_theta],float node_theta[n_node_the
 // this function evaluates terminal equality constraints function 
 void term_f_eval(float term_f[n_term_eq],float term_theta[n_term_theta])
 {
-	term_f[0] =   term_theta[1-1]-term_theta[3-1]*(1.0/2.0);
+	term_f[0] =   term_theta[1-1]-term_theta[3-1];
 }
 
 // this function evaluates jacobian of terminal equality constraints function 
@@ -157,5 +157,5 @@ void term_f_jac_eval(float term_f_jac[n_term_eq][n_term_theta],float term_theta[
 {
 	term_f_jac[0][0] =   1.0;
 	term_f_jac[0][1] =   0.0;
-	term_f_jac[0][2] =   -1.0/2.0;
+	term_f_jac[0][2] =   -1.0;
 }
