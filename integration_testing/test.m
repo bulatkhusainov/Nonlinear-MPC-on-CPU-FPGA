@@ -58,7 +58,8 @@ for ip_iter = 1:ip_iter_max
     % terminal hessian
     term_hessian = term_hessian_eval(theta_all((1:n_term_theta)+(N)*(n_node_theta) ));
     term_hessian = vec2mat(term_hessian, n_term_theta);
-    term_jacobian = term_f_jac_eval( theta_all((1:n_term_theta)+(N)*(n_node_theta) ) );
+    term_jacobian = term_f_jac_eval( theta_all((1:n_term_theta)+(N)*(n_node_theta) ) )';
+    term_jacobian = vec2mat(term_jacobian, n_term_theta);
     term_block = [term_hessian term_jacobian'; term_jacobian zeros(size(term_jacobian,1))];
     A_index = (1:n_term_theta+n_term_eq) + n_states + N*(n_node_theta+n_node_eq);
     A(A_index,A_index) = term_block;
