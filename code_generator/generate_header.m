@@ -22,8 +22,10 @@ fprintf(fileID, '#define n_term_slack %d // # of slack variables for terminal te
 fprintf(fileID, '#define n_term_eq %d  // # of terminal equality constraints \n',n_term_eq);
 fprintf(fileID, '#define n_node_theta %d  // # of optimization variables \n',n_node_theta);
 fprintf(fileID, '#define n_term_theta %d  // # of optimization variables for terminal term \n',n_term_theta);
-fprintf(fileID, '#define n_node_eq %d  // # of equality constraints per node \n\n',n_node_eq);
-
+fprintf(fileID, '#define n_node_eq %d  // # of equality constraints per node \n',n_node_eq);
+fprintf(fileID, '#define n_upper_bounds %d  // # of upper bounds per node \n',n_upper_bounds);
+fprintf(fileID, '#define n_lower_bounds %d  // # of lower bounds per node \n',n_upper_bounds);
+fprintf(fileID, '#define n_bounds %d  // # of lower bounds per node \n\n',n_bounds);
 
 fprintf(fileID, '#endif');
 fclose(fileID);

@@ -23,13 +23,13 @@ cd ../integration_testing
 x_init = [0.5;0];
 
 % intial guess
-theta_all = 1*ones(n_node_theta*N+n_term_theta,1);
-lambda_all = -1*ones(n_states + n_node_eq*N + n_term_eq,1); % assume no terminal constraints
+theta_all = 1*zeros(n_node_theta*N+n_term_theta,1);
+nu_all = -1*zeros(n_states + n_node_eq*N + n_term_eq,1); % assume no terminal constraints
 %theta_all = (1:(n_node_theta*N+n_term_theta))';
-%lambda_all = (1:(n_states +n_node_eq*N))'; % assume no terminal constraints
+%nu_all = (1:(n_states +n_node_eq*N))'; % assume no terminal constraints
 
 
-n_z = size(theta_all,1) + size(lambda_all,1); 
+n_z = size(theta_all,1) + size(nu_all,1); 
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
@@ -76,13 +76,13 @@ for ip_iter = 1:ip_iter_max
         node_jacobian_transpose = f_jac_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
         node_jacobian_transpose = vec2mat(node_jacobian_transpose, n_node_theta);
         node_jacobian_transpose = node_jacobian_transpose';
-        block_x = block_x + node_jacobian_transpose*lambda_all((1:n_node_eq) + n_states + (i-1)*n_node_eq);
+        block_x = block_x + node_jacobian_transpose*nu_all((1:n_node_eq) + n_states + (i-1)*n_node_eq);
         % negative identity
         if i == 1
-            block_x(1:n_states) = block_x(1:n_states) - lambda_all(1:n_states);
+            block_x(1:n_states) = block_x(1:n_states) - nu_all(1:n_states);
         else
             block_x(1:n_states)  = ...
-            block_x(1:n_states) - lambda_all((1:n_states) + n_states + (i-2)*n_node_eq );
+            block_x(1:n_states) - nu_all((1:n_states) + n_states + (i-2)*n_node_eq );
         end
         block_x = - block_x;
 
@@ -99,8 +99,8 @@ for ip_iter = 1:ip_iter_max
     term_jacobian_transpose = term_f_jac_eval(theta_all((1:n_term_theta)+N*(n_node_theta) ));
     term_jacobian_transpose = vec2mat(term_jacobian_transpose, n_term_theta);
     term_jacobian_transpose = term_jacobian_transpose';
-    block_x_term = block_x_term + term_jacobian_transpose*lambda_all((1:n_term_eq) + n_states + N*n_node_eq);
-    block_x_term(1:n_states) = block_x_term(1:n_states) - lambda_all((1:n_states) + n_states + (N-1)*n_node_eq );
+    block_x_term = block_x_term + term_jacobian_transpose*nu_all((1:n_term_eq) + n_states + N*n_node_eq);
+    block_x_term(1:n_states) = block_x_term(1:n_states) - nu_all((1:n_states) + n_states + (N-1)*n_node_eq );
     block_x_term = -block_x_term;
     % terminal feasibility error
     block_c_term = -term_f_eval( theta_all((1:n_term_theta)+N*(n_node_theta) ) );
@@ -109,7 +109,7 @@ for ip_iter = 1:ip_iter_max
     
     % current resudual vector (extract from b for testing purposes only)
     r_dual = zeros(size(theta_all));
-    r_eq = zeros(size(lambda_all));
+    r_eq = zeros(size(nu_all));
     for i=1:N
         r_dual((1:n_node_theta) + (i-1)*n_node_theta) = b((1:n_node_theta) + n_states + (i-1)*(n_node_theta+n_node_eq));
     end
@@ -127,27 +127,27 @@ for ip_iter = 1:ip_iter_max
     % solve a system on linear equations
     d_z = A\b;
 
-    % extract d_theta_all and d_lambda_all
+    % extract d_theta_all and d_nu_all
     d_theta_all = zeros(size(theta_all));
-    d_lambda_all = zeros(size(lambda_all));
+    d_nu_all = zeros(size(nu_all));
     for i=1:N
         d_theta_all((1:n_node_theta) + (i-1)*n_node_theta) = d_z((1:n_node_theta) + n_states + (i-1)*(n_node_theta+n_node_eq));
     end
     d_theta_all((1:n_term_theta) + (N)*n_node_theta) = d_z((1:n_term_theta) + n_states + (N)*(n_node_theta+n_node_eq));
 
-    d_lambda_all(1:n_states) = d_z(1:n_states);
+    d_nu_all(1:n_states) = d_z(1:n_states);
     for i=1:N
-        d_lambda_all((1:n_node_eq) + n_states + (i-1)*n_node_eq) = d_z((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
+        d_nu_all((1:n_node_eq) + n_states + (i-1)*n_node_eq) = d_z((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
     end
-    d_lambda_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
+    d_nu_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
 
     % perform step
 %     if ip_iter == 1
 %         theta_all = 0.2*d_theta_all + theta_all;
-%         lambda_all = -0.5*d_lambda_all + lambda_all;
+%         nu_all = -0.5*d_nu_all + nu_all;
 %     else
         theta_all = d_theta_all + theta_all;
-        lambda_all = d_lambda_all + lambda_all;
+        nu_all = d_nu_all + nu_all;
 %     end
 
 end

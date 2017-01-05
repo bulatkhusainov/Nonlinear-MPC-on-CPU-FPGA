@@ -26,7 +26,10 @@ cd jacobian_code;
 generate_jacobian_code;
 cd ..;
 
-
+% generate C file for bound constraints evaluation
+cd bounds_code;
+generate_bounds_code;
+cd ..;
 
 
 
