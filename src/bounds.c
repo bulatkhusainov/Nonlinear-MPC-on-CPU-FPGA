@@ -3,9 +3,9 @@
 // this function evaluates bounds constraints 
 void node_bounds_eval(float node_bounds[n_bounds],float node_theta[n_node_theta])
 {
-	int upper_bounds_indeces[1] = {2,};
+	int upper_bounds_indeces[2] = {0,2,};
 	int lower_bounds_indeces[1] = {2,};
-	float upper_bounds[1] = {0.5000000000000000,};
+	float upper_bounds[2] = {0.5000000000000000,5.0000000000000000,};
 	float lower_bounds[1] = {-0.5000000000000000,};
 
 	int i, j;
@@ -26,25 +26,33 @@ void node_bounds_eval(float node_bounds[n_bounds],float node_theta[n_node_theta]
 // this function evaluates node gwg 
 void node_gwg_eval(float node_gwg[n_states+m_inputs+n_node_slack],float node_bounds[n_bounds],float node_lambda[n_bounds])
 {
-	int upper_bounds_indeces[1] = {2,};
+	int upper_bounds_indeces[2] = {0,2,};
 	int lower_bounds_indeces[1] = {2,};
-	float upper_bounds[1] = {0.5000000000000000,};
-	float lower_bounds[1] = {-0.5000000000000000,};
 
-	int i;
+	int i, j;
 	float tmp_array[n_bounds];
 
-	for(i = 0; i < n_bounds; i++);
+	for(i = 0; i < n_bounds; i++)
 	{
 		tmp_array[i] = -node_lambda[i]/node_bounds[i];
 	}
 
-	//add node_gwg[] reset
+	//reset node_gwg[] 
+	for(i = 0; i < n_states+m_inputs+n_node_slack; i++) 
+	{
+		node_gwg[i] = 0; 
+	}
+
 	//handle upper bounds
 	for(i = 0; i < n_upper_bounds; i++)
 	{
 		node_gwg[upper_bounds_indeces[i]] += tmp_array[i];
 	}
 
-}
 	//handle lower bounds
+	for(i = n_upper_bounds, j = 0; i < n_bounds; i++, j++)
+	{
+		node_gwg[lower_bounds_indeces[j]] += tmp_array[i];
+	}
+
+}
