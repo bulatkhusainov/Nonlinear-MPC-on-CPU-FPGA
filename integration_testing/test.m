@@ -10,6 +10,7 @@ cd ../integration_testing
 addpath(strcat(pwd,'/../code_generator/gradient_code/unit_test_files'));
 addpath(strcat(pwd,'/../code_generator/hessian_code/unit_test_files'));
 addpath(strcat(pwd,'/../code_generator/jacobian_code/unit_test_files'));
+addpath(strcat(pwd,'/../code_generator/bounds_code/unit_test_files'));
 
 %clear the workspace and load only problem data
 clear;
@@ -23,10 +24,11 @@ cd ../integration_testing
 x_init = [0.5;0];
 
 % intial guess
-theta_all = 1*zeros(n_node_theta*N+n_term_theta,1);
-nu_all = -1*zeros(n_states + n_node_eq*N + n_term_eq,1); % assume no terminal constraints
-%theta_all = (1:(n_node_theta*N+n_term_theta))';
-%nu_all = (1:(n_states +n_node_eq*N))'; % assume no terminal constraints
+theta_all = zeros(n_node_theta*N+n_term_theta,1); % optimization variables
+nu_all = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
+lambda_all = ones(N*n_bounds, 1); % inequality dual variables
+
+mu = 0.01; % barrier parameter
 
 
 n_z = size(theta_all,1) + size(nu_all,1); 
@@ -44,6 +46,16 @@ for ip_iter = 1:ip_iter_max
     for i = 1:N
         node_Hessian = node_hessian_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
         node_Hessian = vec2mat(node_Hessian,n_node_theta);
+        if (n_bounds > 0)
+            % evaluate bound constraints
+            node_bounds = node_bounds_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
+            % calculate gwg
+            node_gwg = node_gwg_eval(node_bounds, lambda_all((1:n_bounds) + (i-1)*n_bounds));
+            node_gwg = diag(node_gwg);
+            node_range = 1:n_states+m_inputs+n_node_slack;
+            node_Hessian(node_range,node_range) = node_Hessian(node_range,node_range) + node_gwg;
+        end
+        
         node_jacobian = f_jac_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
         node_jacobian = vec2mat(node_jacobian, n_node_theta);
         block = [node_Hessian node_jacobian'; node_jacobian zeros(size(node_jacobian,1))];
@@ -85,6 +97,22 @@ for ip_iter = 1:ip_iter_max
             block_x(1:n_states) - nu_all((1:n_states) + n_states + (i-2)*n_node_eq );
         end
         block_x = - block_x;
+        
+        if (n_bounds > 0)
+             % evaluate bound constraints
+            node_bounds = node_bounds_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
+            tmp_vector = mu./node_bounds;
+
+            block_x_upper = zeros(n_node_theta, 1);
+            block_x_upper(upper_bounds_indeces+1) = tmp_vector(1:n_upper_bounds);
+            
+            block_x_lower = zeros(n_node_theta, 1);
+            block_x_lower(lower_bounds_indeces+1) = -tmp_vector(n_upper_bounds+1:n_bounds);
+                       
+            block_x = block_x + block_x_upper + block_x_lower;
+        end
+        
+        
 
         % process feasibility error
         block_c = -f_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
@@ -140,16 +168,52 @@ for ip_iter = 1:ip_iter_max
         d_nu_all((1:n_node_eq) + n_states + (i-1)*n_node_eq) = d_z((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
     end
     d_nu_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
+    
+    % recover d_lambda_all
+    if (n_bounds > 0)
+        d_lambda_all = zeros(N*n_bounds, 1);
+        for i = 1:N
+            d_theta_local = d_theta_all((1:n_node_theta)+(i-1)*(n_node_theta) );
+            tmp_vector_upper = d_theta_local(upper_bounds_indeces+1);
+            tmp_vector_lower = -d_theta_local(lower_bounds_indeces+1);
+            tmp_vector = [tmp_vector_upper; tmp_vector_lower];
+            tmp_vector = lambda_all((1:n_bounds) + (i-1)*n_bounds).*tmp_vector;
+            tmp_vector = mu*ones(n_bounds,1) + tmp_vector;
+            % evaluate bound constraints
+            node_bounds = node_bounds_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
+            tmp_vector = tmp_vector ./ node_bounds;
+            d_lambda_all((1:n_bounds) + (i-1)*n_bounds) = -lambda_all((1:n_bounds) + (i-1)*n_bounds) - tmp_vector;
+        end
+    end
 
+    
+    % line search (required only if bounds are present)
+    alfa = 1;
+    if (n_bounds > 0)
+        d_g_search = zeros(N*n_bounds,1);
+        g_all = zeros(N*n_bounds,1);
+        for i = 1:N
+            d_theta_local = d_theta_all((1:n_node_theta)+(i-1)*(n_node_theta) );
+            tmp_vector_upper = d_theta_local(upper_bounds_indeces+1);
+            tmp_vector_lower = -d_theta_local(lower_bounds_indeces+1);
+            d_g_search((1:n_bounds) + (i-1)*n_bounds) = [tmp_vector_upper; tmp_vector_lower];
+            g_all((1:n_bounds) + (i-1)*n_bounds) = node_bounds_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
+        end
+        
+  
+        while ( max(g_all + alfa*d_g_search) > 0 || min(lambda_all + alfa*d_lambda_all) < 0)
+            alfa = alfa*0.5;
+        end
+    end
+ 
     % perform step
-%     if ip_iter == 1
-%         theta_all = 0.2*d_theta_all + theta_all;
-%         nu_all = -0.5*d_nu_all + nu_all;
-%     else
-        theta_all = d_theta_all + theta_all;
-        nu_all = d_nu_all + nu_all;
-%     end
-
+    theta_all = alfa*d_theta_all + theta_all;
+    nu_all = alfa*d_nu_all + nu_all;
+    if (n_bounds > 0)
+        lambda_all = alfa*d_lambda_all + lambda_all;
+    end
+    
+    % update barrier 
 end
 
 % plot convergence of the algorithm

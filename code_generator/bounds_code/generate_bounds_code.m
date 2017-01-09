@@ -68,7 +68,7 @@ fprintf(fileID,'}\n');
 fclose(fileID);
 cd ../code_generator/bounds_code
 
-if test_enable == 1
+if test_enable == 1 && n_bounds > 0
     % test "node_bounds_eval" C function
     random_input = 10*rand(1,n_node_theta);
     cd unit_test_files
@@ -87,9 +87,6 @@ if test_enable == 1
         disp('"node_bounds_eval" C function passed the test')
     end
     
-end
-
-if debug_mode == 1
     % test "node_gwg_eval" C function
     random_bounds = 10*rand(1,n_bounds);
     random_lambda = 10*rand(1,n_bounds);

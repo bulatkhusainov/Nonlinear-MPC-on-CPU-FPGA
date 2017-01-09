@@ -35,10 +35,10 @@ term_s = term_theta(n_states+1:n_states+n_term_slack);
 
 % define objective (function of x,u,s)
 node_objective_residual = [ sqrt(1)*(x(1)); 
-                            sqrt(1)*(x(2)-2); 
-                            sqrt(1)*(u(1)-2)]; % least squares format
+                            sqrt(1)*(x(2)); 
+                            sqrt(1)*(u(1))]; % least squares format
 term_objective_residual = [sqrt(1)*(term_x(1)); 
-                           sqrt(1)*(term_x(2)-2)]; % least squares format
+                           sqrt(1)*(term_x(2))]; % least squares format
 
 % define ode (function of x,u)
 ode(1) = (1-x(2)^2)*x(1) - x(2) + u(1);
@@ -58,10 +58,10 @@ term_f(1) = term_x(1) - term_s(1);
 
 % define bounds on x,u,s
 % bound indeces [x' u' s']'
-upper_bounds_indeces = [1 3]-1; % in C format
+upper_bounds_indeces = [3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [0.5 5];
-lower_bounds = [-0.5];
+upper_bounds = [0.38];
+lower_bounds = [-0.38];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));
