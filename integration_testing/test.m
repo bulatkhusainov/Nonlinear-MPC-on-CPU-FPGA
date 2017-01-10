@@ -28,17 +28,19 @@ theta_all = zeros(n_node_theta*N+n_term_theta,1); % optimization variables
 nu_all = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
 lambda_all = ones(N*n_bounds, 1); % inequality dual variables
 
-mu = 0.01; % barrier parameter
+mu = 0.1; % barrier parameter
 
 
 n_z = size(theta_all,1) + size(nu_all,1); 
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 20;
+ip_iter_max = 15;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);
+r_slackness_store = zeros(1,ip_iter_max);
+mu_store = zeros(1,ip_iter_max);
 
 for ip_iter = 1:ip_iter_max
     %evaluate A matrix
@@ -150,8 +152,16 @@ for ip_iter = 1:ip_iter_max
     r_dual_store(ip_iter) = max(abs(r_dual));
     r_eq_store(ip_iter) = max(abs(r_eq));
     
-
-
+    % calculate complementary slackness
+    r_slackness = zeros(n_bounds*N,1);
+    for i = 1:N
+        % evaluate bound constraints
+        node_bounds = node_bounds_eval(theta_all((1:n_node_theta)+(i-1)*(n_node_theta) ));
+        r_slackness((1:n_bounds) + (i-1)*n_bounds) = node_bounds.*lambda_all((1:n_bounds) + (i-1)*n_bounds);
+    end
+    r_slackness_store(ip_iter) = max(abs(r_slackness));
+    mu_store(ip_iter) = mu;
+    
     % solve a system on linear equations
     d_z = A\b;
 
@@ -214,13 +224,20 @@ for ip_iter = 1:ip_iter_max
     end
     
     % update barrier 
+    mu = mu*0.8;
 end
 
 % plot convergence of the algorithm
-subplot(2,1,1);
-plot(r_dual_store);
-subplot(2,1,2);
-plot(r_eq_store);
+subplot(3,1,1);
+plot(0:(ip_iter_max-1), r_dual_store);
+title('optimality error');
+subplot(3,1,2);
+plot(0:(ip_iter_max-1), r_eq_store);
+title('feasibility error');
+subplot(3,1,3);
+plot(0:(ip_iter_max-1), r_slackness_store,0:(ip_iter_max-1),mu_store, '--');
+title('complementary slackness');
+
 
 %plot solution
 figure

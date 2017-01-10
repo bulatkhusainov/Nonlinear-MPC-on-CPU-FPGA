@@ -2,10 +2,10 @@
 % define integrator Butcher table
 %butcher_table_A = [0]; % Euler integrator
 %butcher_table_beta =  [1];
-%butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
-%butcher_table_beta =  [0.5; 0.5];
-butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
-butcher_table_beta =  [1/6; 2/3; 1/6];
+butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
+butcher_table_beta =  [0.5; 0.5];
+%butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
+%butcher_table_beta =  [1/6; 2/3; 1/6];
 
 
 
@@ -36,7 +36,7 @@ term_s = term_theta(n_states+1:n_states+n_term_slack);
 % define objective (function of x,u,s)
 node_objective_residual = [ sqrt(1)*(x(1)); 
                             sqrt(1)*(x(2)); 
-                            sqrt(1)*(u(1))]; % least squares format
+                            sqrt(1)*(s(1))]; % least squares format
 term_objective_residual = [sqrt(1)*(term_x(1)); 
                            sqrt(1)*(term_x(2))]; % least squares format
 
@@ -49,7 +49,7 @@ ode(2) = x(1);
 % define equality constraints with slack variables (function of x,u,s)
 %f_slack = [];
 f_slack = sym(zeros(n_node_slack_eq,1));
-f_slack(1) = x(1) - s(1);
+f_slack(1) = u(1) - s(1);
 
 %term_f = [];
 term_f = sym(zeros(n_term_eq,1));
