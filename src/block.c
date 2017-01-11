@@ -1,0 +1,50 @@
+#include "user_main_header.h"
+
+// this function evaluates blocks 
+void node_blocks_eval(float all_blocks[nnz_block_tril*N],float all_theta[n_all_theta],float all_lambda_over_g[n_all_lambda])
+{
+	int i, j, k;
+	float node_hessian[n_node_theta][n_node_theta];
+	float f[n_node_eq][n_node_theta];
+
+	// node Hessian reading info 
+	float row_node_hessian_tril[3] = {0.0000000000000000,1.0000000000000000,3.0000000000000000,};
+	float col_node_hessian_tril[3] = {0.0000000000000000,1.0000000000000000,3.0000000000000000,};
+	float num_node_hessian_tril[3] = {0.0000000000000000,6.0000000000000000,14.0000000000000000,};
+
+	// node Jacobian reading info 
+	float row_node_f_jac[25] = {0.0000000000000000,2.0000000000000000,3.0000000000000000,4.0000000000000000,5.0000000000000000,1.0000000000000000,2.0000000000000000,4.0000000000000000,2.0000000000000000,4.0000000000000000,6.0000000000000000,6.0000000000000000,0.0000000000000000,2.0000000000000000,4.0000000000000000,5.0000000000000000,1.0000000000000000,3.0000000000000000,4.0000000000000000,0.0000000000000000,4.0000000000000000,5.0000000000000000,1.0000000000000000,4.0000000000000000,5.0000000000000000,};
+	float col_node_f_jac[25] = {0.0000000000000000,0.0000000000000000,0.0000000000000000,0.0000000000000000,0.0000000000000000,1.0000000000000000,1.0000000000000000,1.0000000000000000,2.0000000000000000,2.0000000000000000,2.0000000000000000,3.0000000000000000,4.0000000000000000,4.0000000000000000,4.0000000000000000,4.0000000000000000,5.0000000000000000,5.0000000000000000,5.0000000000000000,6.0000000000000000,6.0000000000000000,6.0000000000000000,7.0000000000000000,7.0000000000000000,7.0000000000000000,};
+	float num_node_f_jac[25] = {1.0000000000000000,2.0000000000000000,3.0000000000000000,4.0000000000000000,5.0000000000000000,7.0000000000000000,8.0000000000000000,9.0000000000000000,11.0000000000000000,12.0000000000000000,13.0000000000000000,15.0000000000000000,16.0000000000000000,17.0000000000000000,18.0000000000000000,19.0000000000000000,20.0000000000000000,21.0000000000000000,22.0000000000000000,23.0000000000000000,24.0000000000000000,25.0000000000000000,26.0000000000000000,27.0000000000000000,28.0000000000000000,};
+
+	// node gwg reading info 
+	float col_gwg[1] = {2.0000000000000000,};
+	float num_gwg[1] = {10.0000000000000000,};
+
+	for(i = 0; i < N; i++)
+	{
+		block = &all_blocks[i*nnz_block_tril];
+		node_lambda_over_g = &all_lambda_over_g[i*n_bounds];
+
+		node_hessian_eval(node_hessian, &all_theta[i*n_node_theta]);
+		f_jac_eval(f_jac, &all_theta[i*n_node_theta]);
+
+		// read hessian
+		for(i = 0; i < nnz_node_hessian_tril; i++)
+			block[num_node_hessian_tril[i]] = node_hessian_eval[row_node_hessian_tril[i]][col_node_hessian_tril[i]];
+
+		// read jacobian
+		for(i = 0; i < nnz_f_jac; i++)
+			block[num_node_f_jac[i]] = f_jac[row_node_f_jac[i]][col_node_f_jac[i]];
+
+		// calculate and read gwg
+		for(i = 0; i < n_states+m_inputs+n_node_slack; i++) // reset node_gwg[]
+			node_gwg[i] = 0; 
+		for(i = 0; i < n_upper_bounds; i++) //handle upper bounds
+			node_gwg[upper_bounds_indeces[i]] += node_lambda_over_g[i];
+		for(i = n_upper_bounds, j = 0; i < n_bounds; i++, j++) //handle lower bounds
+			node_gwg[lower_bounds_indeces[j]] += node_lambda_over_g[i];
+		for(i = 0; i < nnz_gwg; i++)
+			block[num_gwg[i]] = node_gwg[col_gwg[i]]; // read gwg
+	}
+}

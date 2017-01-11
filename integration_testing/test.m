@@ -35,7 +35,7 @@ n_z = size(theta_all,1) + size(nu_all,1);
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 15;
+ip_iter_max = 20;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);

@@ -25,7 +25,20 @@ fprintf(fileID, '#define n_term_theta %d  // # of optimization variables for ter
 fprintf(fileID, '#define n_node_eq %d  // # of equality constraints per node \n',n_node_eq);
 fprintf(fileID, '#define n_upper_bounds %d  // # of upper bounds per node \n',n_upper_bounds);
 fprintf(fileID, '#define n_lower_bounds %d  // # of lower bounds per node \n',n_upper_bounds);
-fprintf(fileID, '#define n_bounds %d  // # of lower bounds per node \n\n',n_bounds);
+fprintf(fileID, '#define n_bounds %d  // # of bounds per node \n\n',n_bounds);
+
+fprintf(fileID, '//nnz for nodes \n');
+fprintf(fileID, '#define nnz_block_tril %d   \n',nnz_block_tril);
+fprintf(fileID, '#define nnz_node_hessian_tril %d   \n',nnz_node_hessian_tril);
+fprintf(fileID, '#define nnz_f_jac %d   \n',nnz_f_jac);
+fprintf(fileID, '#define nnz_gwg %d   \n\n',nnz_gwg);
+
+
+
+fprintf(fileID, '//data for optimization problem \n');
+fprintf(fileID, '#define n_all_theta %d  // # of optimization variables \n',n_node_theta*N + n_term_theta);
+fprintf(fileID, '#define n_all_nu %d  // # of equality constraints \n',n_node_eq*N + n_term_eq);
+fprintf(fileID, '#define n_all_lambda %d  // # of inequality constraints (assume no inequalities for terminal term) \n\n',n_bounds*N);
 
 fprintf(fileID, '#endif');
 fclose(fileID);

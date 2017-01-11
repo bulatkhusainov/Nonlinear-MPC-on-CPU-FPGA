@@ -9,9 +9,6 @@ test_tol = 1e-4;
 % add problem data to the workspace
 problem_data;
 
-% generate header file for all C files
-generate_header;
-
 cd gradient_code;
 generate_gradient_code;
 cd ..;
@@ -31,6 +28,12 @@ cd bounds_code;
 generate_bounds_code;
 cd ..;
 
+% generate C file for block evaluation
+cd block_code;
+generate_block_code;
+cd ..;
 
+% generate header file for all C files
+generate_header;
 
 

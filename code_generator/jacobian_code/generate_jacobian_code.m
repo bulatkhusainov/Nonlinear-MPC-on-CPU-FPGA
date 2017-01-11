@@ -35,6 +35,26 @@ term_f_jac = jacobian(term_f, term_theta);
 term_f_func = matlabFunction(term_f,'Vars', {term_theta});
 term_f_jac_func = matlabFunction(term_f_jac,'Vars', {term_theta});
 
+% determine sparsity pattern
+% node
+f_jac_pattern = ones(n_node_eq, n_node_theta);
+for i = 1:n_node_eq
+    for j = 1:n_node_theta
+        if isequaln(f_jac(i,j),0)
+            f_jac_pattern(i,j) = 0;
+        end
+    end
+end
+% terminal
+term_f_jac_pattern = ones(n_term_eq, n_term_theta);
+for i = 1:n_term_eq
+    for j = 1:n_term_theta
+        if isequaln(term_f_jac(i,j),0)
+            term_f_jac_pattern(i,j) = 0;
+        end
+    end
+end
+
 %% Generate code for constraints and jacobians evaluations
 cd ../../src 
 fileID = fopen('jacobians.c','w');

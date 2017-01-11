@@ -18,7 +18,7 @@ end
 term_jac_objective = jacobian(term_objective_residual,term_theta);
 term_hessian = 2*(term_jac_objective.'*term_jac_objective);
 term_hessian_func = matlabFunction(term_hessian,'Vars', {term_theta});
-% determine hessian sparsity pattern
+% determine terminal hessian sparsity pattern
 term_hessian_pattern = ones(n_term_theta);
 for i = 1:n_term_theta
     for j = 1:n_term_theta
