@@ -2,12 +2,22 @@ clear;
 
 addpath(strcat(pwd,'/auxilary_functions')); % add current folder to path to use variables_declaration.m
 
+% add mex files to path
+addpath(strcat(pwd,'/gradient_code/unit_test_files'));
+addpath(strcat(pwd,'/hessian_code/unit_test_files'));
+addpath(strcat(pwd,'/jacobian_code/unit_test_files'));
+addpath(strcat(pwd,'/bounds_code/unit_test_files'));
+addpath(strcat(pwd,'/block_code/unit_test_files'));
+
 debug_mode = 1;
 test_enable = 1; % enable unit testing
 test_tol = 1e-4;
 
 % add problem data to the workspace
 problem_data;
+
+% generate header file for all C files
+generate_header;
 
 cd gradient_code;
 generate_gradient_code;
@@ -33,7 +43,6 @@ cd block_code;
 generate_block_code;
 cd ..;
 
-% generate header file for all C files
-generate_header;
+
 
 

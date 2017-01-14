@@ -23,12 +23,6 @@
 #define n_lower_bounds 1  // # of lower bounds per node 
 #define n_bounds 2  // # of bounds per node 
 
-//nnz for nodes 
-#define nnz_block_tril 29   
-#define nnz_node_hessian_tril 3   
-#define nnz_f_jac 25   
-#define nnz_gwg 1   
-
 //data for optimization problem 
 #define n_all_theta 243  // # of optimization variables 
 #define n_all_nu 211  // # of equality constraints 

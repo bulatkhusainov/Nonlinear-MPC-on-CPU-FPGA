@@ -1,50 +1,84 @@
 #include "user_main_header.h"
+#include "user_nnz_header.h"
 
-// this function evaluates blocks 
-void node_blocks_eval(float all_blocks[nnz_block_tril*N],float all_theta[n_all_theta],float all_lambda_over_g[n_all_lambda])
+// functions prototypes 
+void node_hessian_eval(float node_hessian[n_node_theta][n_node_theta],float node_theta[n_node_theta]); 
+void f_jac_eval(float f_jac[n_node_eq][n_node_theta],float node_theta[n_node_theta]); 
+
+void term_hessian_eval(float term_hessian[n_term_theta][n_term_theta],float term_theta[n_term_theta]);; 
+void term_f_jac_eval(float term_f_jac[n_term_eq][n_term_theta],float term_theta[n_term_theta]); 
+
+// this function evaluates node blocks 
+void node_block_eval(float block[nnz_block_tril],float node_jac_2d[n_node_eq][n_node_theta],float node_theta[n_node_theta],float node_lambda_over_g[n_bounds])
 {
 	int i, j, k;
 	float node_hessian[n_node_theta][n_node_theta];
-	float f[n_node_eq][n_node_theta];
 
 	// node Hessian reading info 
-	float row_node_hessian_tril[3] = {0.0000000000000000,1.0000000000000000,3.0000000000000000,};
-	float col_node_hessian_tril[3] = {0.0000000000000000,1.0000000000000000,3.0000000000000000,};
-	float num_node_hessian_tril[3] = {0.0000000000000000,6.0000000000000000,14.0000000000000000,};
+	int row_node_hessian_tril[3] = {0,1,3,};
+	int col_node_hessian_tril[3] = {0,1,3,};
+	int num_node_hessian_tril[3] = {0,6,14,};
 
 	// node Jacobian reading info 
-	float row_node_f_jac[25] = {0.0000000000000000,2.0000000000000000,3.0000000000000000,4.0000000000000000,5.0000000000000000,1.0000000000000000,2.0000000000000000,4.0000000000000000,2.0000000000000000,4.0000000000000000,6.0000000000000000,6.0000000000000000,0.0000000000000000,2.0000000000000000,4.0000000000000000,5.0000000000000000,1.0000000000000000,3.0000000000000000,4.0000000000000000,0.0000000000000000,4.0000000000000000,5.0000000000000000,1.0000000000000000,4.0000000000000000,5.0000000000000000,};
-	float col_node_f_jac[25] = {0.0000000000000000,0.0000000000000000,0.0000000000000000,0.0000000000000000,0.0000000000000000,1.0000000000000000,1.0000000000000000,1.0000000000000000,2.0000000000000000,2.0000000000000000,2.0000000000000000,3.0000000000000000,4.0000000000000000,4.0000000000000000,4.0000000000000000,4.0000000000000000,5.0000000000000000,5.0000000000000000,5.0000000000000000,6.0000000000000000,6.0000000000000000,6.0000000000000000,7.0000000000000000,7.0000000000000000,7.0000000000000000,};
-	float num_node_f_jac[25] = {1.0000000000000000,2.0000000000000000,3.0000000000000000,4.0000000000000000,5.0000000000000000,7.0000000000000000,8.0000000000000000,9.0000000000000000,11.0000000000000000,12.0000000000000000,13.0000000000000000,15.0000000000000000,16.0000000000000000,17.0000000000000000,18.0000000000000000,19.0000000000000000,20.0000000000000000,21.0000000000000000,22.0000000000000000,23.0000000000000000,24.0000000000000000,25.0000000000000000,26.0000000000000000,27.0000000000000000,28.0000000000000000,};
+	int row_node_f_jac[25] = {0,2,3,4,5,1,2,4,2,4,6,6,0,2,4,5,1,3,4,0,4,5,1,4,5,};
+	int col_node_f_jac[25] = {0,0,0,0,0,1,1,1,2,2,2,3,4,4,4,4,5,5,5,6,6,6,7,7,7,};
+	int num_node_f_jac[25] = {1,2,3,4,5,7,8,9,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,};
 
 	// node gwg reading info 
-	float col_gwg[1] = {2.0000000000000000,};
-	float num_gwg[1] = {10.0000000000000000,};
+	int col_gwg[1] = {2,};
+	int num_gwg[1] = {10,};
 
-	for(i = 0; i < N; i++)
-	{
-		block = &all_blocks[i*nnz_block_tril];
-		node_lambda_over_g = &all_lambda_over_g[i*n_bounds];
+	int upper_bounds_indeces[1] = {2,};
+	int lower_bounds_indeces[1] = {2,};
 
-		node_hessian_eval(node_hessian, &all_theta[i*n_node_theta]);
-		f_jac_eval(f_jac, &all_theta[i*n_node_theta]);
+	node_hessian_eval(node_hessian, node_theta);
+	f_jac_eval(node_jac_2d, node_theta);
 
-		// read hessian
-		for(i = 0; i < nnz_node_hessian_tril; i++)
-			block[num_node_hessian_tril[i]] = node_hessian_eval[row_node_hessian_tril[i]][col_node_hessian_tril[i]];
+	// read hessian
+	for(i = 0; i < nnz_node_hessian_tril; i++)
+		block[num_node_hessian_tril[i]] = node_hessian[row_node_hessian_tril[i]][col_node_hessian_tril[i]];
 
-		// read jacobian
-		for(i = 0; i < nnz_f_jac; i++)
-			block[num_node_f_jac[i]] = f_jac[row_node_f_jac[i]][col_node_f_jac[i]];
+	// read jacobian
+	for(i = 0; i < nnz_f_jac; i++)
+		block[num_node_f_jac[i]] = node_jac_2d[row_node_f_jac[i]][col_node_f_jac[i]];
 
-		// calculate and read gwg
-		for(i = 0; i < n_states+m_inputs+n_node_slack; i++) // reset node_gwg[]
-			node_gwg[i] = 0; 
-		for(i = 0; i < n_upper_bounds; i++) //handle upper bounds
-			node_gwg[upper_bounds_indeces[i]] += node_lambda_over_g[i];
-		for(i = n_upper_bounds, j = 0; i < n_bounds; i++, j++) //handle lower bounds
-			node_gwg[lower_bounds_indeces[j]] += node_lambda_over_g[i];
-		for(i = 0; i < nnz_gwg; i++)
-			block[num_gwg[i]] = node_gwg[col_gwg[i]]; // read gwg
-	}
+	// calculate and read gwg
+	float node_gwg[n_node_theta];
+	for(i = 0; i < n_states+m_inputs+n_node_slack; i++) // reset node_gwg[]
+		node_gwg[i] = 0; 
+	for(i = 0; i < n_upper_bounds; i++) //handle upper bounds
+		node_gwg[upper_bounds_indeces[i]] -= node_lambda_over_g[i];
+	for(i = n_upper_bounds, j = 0; i < n_bounds; i++, j++) //handle lower bounds
+		node_gwg[lower_bounds_indeces[j]] -= node_lambda_over_g[i];
+	for(i = 0; i < nnz_gwg; i++)
+		block[num_gwg[i]] += node_gwg[col_gwg[i]]; // read gwg
+}
+
+// this function evaluates the terminal block 
+void term_block_eval(float term_block[nnz_term_block_tril],float term_jac_2d[n_term_eq][n_term_theta],float term_theta[n_term_theta])
+{
+	int i, j, k;
+	float term_hessian[n_term_theta][n_term_theta];
+
+	// term Hessian reading info 
+	int row_term_hessian_tril[2] = {0,1,};
+	int col_term_hessian_tril[2] = {0,1,};
+	int num_term_hessian_tril[2] = {0,2,};
+
+	// term Jacobian reading info 
+	int row_term_f_jac[2] = {0,0,};
+	int col_term_f_jac[2] = {0,2,};
+	int num_term_f_jac[2] = {1,3,};
+
+	term_hessian_eval(term_hessian, term_theta);
+	term_f_jac_eval(term_jac_2d, term_theta);
+
+	// read term hessian
+	for(i = 0; i < nnz_term_hessian_tril; i++)
+		term_block[num_term_hessian_tril[i]] = term_hessian[row_term_hessian_tril[i]][col_term_hessian_tril[i]];
+
+	// read term jacobian
+	for(i = 0; i < nnz_term_f_jac; i++)
+		term_block[num_term_f_jac[i]] = term_jac_2d[row_term_f_jac[i]][col_term_f_jac[i]];
+
 }

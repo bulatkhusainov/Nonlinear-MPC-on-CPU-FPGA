@@ -6,11 +6,6 @@ cd ../code_generator
 generate_c_code;
 cd ../integration_testing
 
-% add mex files to path
-addpath(strcat(pwd,'/../code_generator/gradient_code/unit_test_files'));
-addpath(strcat(pwd,'/../code_generator/hessian_code/unit_test_files'));
-addpath(strcat(pwd,'/../code_generator/jacobian_code/unit_test_files'));
-addpath(strcat(pwd,'/../code_generator/bounds_code/unit_test_files'));
 
 %clear the workspace and load only problem data
 clear;
@@ -28,14 +23,14 @@ theta_all = zeros(n_node_theta*N+n_term_theta,1); % optimization variables
 nu_all = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
 lambda_all = ones(N*n_bounds, 1); % inequality dual variables
 
-mu = 0.1; % barrier parameter
+mu = 0.001; % barrier parameter
 
 
 n_z = size(theta_all,1) + size(nu_all,1); 
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 20;
+ip_iter_max = 15;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);
@@ -224,7 +219,9 @@ for ip_iter = 1:ip_iter_max
     end
     
     % update barrier 
-    mu = mu*0.8;
+%     if mu > 000012
+%     mu = mu*0.8;
+%     end
 end
 
 % plot convergence of the algorithm
