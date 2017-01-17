@@ -43,6 +43,9 @@ cd block_code;
 generate_block_code;
 cd ..;
 
-
+% generate C file for residual evaluation
+cd residual_code;
+generate_residual_code;
+cd ..;
 
 

@@ -36,7 +36,7 @@ term_s = term_theta(n_states+1:n_states+n_term_slack);
 % define objective (function of x,u,s)
 node_objective_residual = [ sqrt(1)*(x(1)); 
                             sqrt(1)*(x(2)); 
-                            sqrt(1)*(s(1))]; % least squares format
+                            sqrt(0.001)*(s(1))]; % least squares format
 term_objective_residual = [sqrt(1)*(term_x(1)); 
                            sqrt(1)*(term_x(2))]; % least squares format
 

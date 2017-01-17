@@ -30,7 +30,7 @@ n_z = size(theta_all,1) + size(nu_all,1);
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 15;
+ip_iter_max = 20;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);
@@ -158,7 +158,15 @@ for ip_iter = 1:ip_iter_max
     mu_store(ip_iter) = mu;
     
     % solve a system on linear equations
-    d_z = A\b;
+    if false
+        M = sqrt(diag(sum(abs(A'))))^-1;
+        d_z = minres(M*A*M,M*b,[],round(max(size(A))));
+        d_z = M*d_z;
+    elseif false
+        d_z = minres(A,b,[],max(size(A)));
+    else
+        d_z = A\b;
+    end
 
     % extract d_theta_all and d_nu_all
     d_theta_all = zeros(size(theta_all));
