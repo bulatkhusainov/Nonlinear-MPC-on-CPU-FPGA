@@ -29,7 +29,7 @@ fprintf(fileID, '#define n_bounds %d  // # of bounds per node \n\n',n_bounds);
 
 fprintf(fileID, '//data for optimization problem \n');
 fprintf(fileID, '#define n_all_theta %d  // # of optimization variables \n',n_node_theta*N + n_term_theta);
-fprintf(fileID, '#define n_all_nu %d  // # of equality constraints \n',n_node_eq*N + n_term_eq);
+fprintf(fileID, '#define n_all_nu %d  // # of equality constraints \n',n_node_eq*N + n_term_eq+n_states);
 fprintf(fileID, '#define n_all_lambda %d  // # of inequality constraints (assume no inequalities for terminal term) \n\n',n_bounds*N);
 
 fprintf(fileID, '#endif');

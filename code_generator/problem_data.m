@@ -1,16 +1,16 @@
 %% this part is problem dependent
 % define integrator Butcher table
-%butcher_table_A = [0]; % Euler integrator
-%butcher_table_beta =  [1];
-butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
-butcher_table_beta =  [0.5; 0.5];
+butcher_table_A = [0]; % Euler integrator
+butcher_table_beta =  [1];
+%butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
+%butcher_table_beta =  [0.5; 0.5];
 %butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
 %butcher_table_beta =  [1/6; 2/3; 1/6];
 
 
 
 d_type = 'float';
-N = 30;
+N = 150;
 Ts = 0.5;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
