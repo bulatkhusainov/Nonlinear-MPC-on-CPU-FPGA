@@ -15,6 +15,7 @@ void term_f_eval(float term_f[n_term_eq],float term_theta[n_term_theta]);
 void term_f_jac_eval(float term_f_jac[n_term_eq][n_term_theta],float term_theta[n_term_theta]);
 void node_residual_eval(float residual[n_node_theta+n_node_eq],float node_theta[n_node_theta],float node_nu[n_node_eq],float node_mu_over_g[n_bounds],float node_jac_2d[n_node_eq][n_node_theta],float mu);
 void term_residual_eval(float term_residual[n_term_theta+n_term_eq],float term_theta[n_term_theta],float term_nu[n_term_eq],float term_jac_2d[n_term_eq][n_term_theta]);
+void mv_mult(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float x_in[n_all_theta+n_all_nu]);
 
 
 #endif

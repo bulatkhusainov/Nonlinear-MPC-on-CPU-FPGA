@@ -1,5 +1,6 @@
 #include "user_main_header.h"
 #include "user_nnz_header.h"
+#include "user_prototypes_header.h"
 
 void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_all_theta], float all_nu[n_all_nu], float all_lambda[n_all_lambda], float x_hat[n_states])
 {
@@ -26,14 +27,14 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 	// initial guess
 	for(i = 0; i < n_all_theta; i++)
-		all_theta[i] = 0; // make sure guess is feasible w.r.t. inequalities
+		all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
 	for(i = 0; i < n_all_nu; i++)
-		all_nu[i] = 0;
+		all_nu[i] = 0.5*sinf((float)(i+1));
 	for(i = 0; i < n_all_lambda; i++)
 		all_lambda[i] = 1;
 
-	all_theta[901] = 12;
-	all_nu[300] = 4;
+	//all_theta[901] = 12;
+	//all_nu[300] = 4;
 
 	// interior point iterations
 	for(ip_counter = 0; ip_counter < 1; ip_counter++)
@@ -87,10 +88,13 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 				local_ptr1[j] += local_ptr2[j];
 		}
 
+		// evaluate mat vec multiplication
+		mv_mult(d_x,blocks,b);
+
 		// print the residual for debugging purpose
 		for(i = 0; i < n_all_theta + n_all_nu; i++)
 		{
-			debug_output[i] = b[i];
+			debug_output[i] = d_x[i];
 		}
 
 

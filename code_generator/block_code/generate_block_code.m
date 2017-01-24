@@ -47,7 +47,11 @@ num_gwg = coo_gwg(:,3);
 % block pattern (recover from block_tril)
 tmp_vector = ~ismember(coo_block_tril(:,1),coo_block_tril(:,2));
 tmp_vector = coo_block_tril(tmp_vector,:);
-coo_block_tril = [coo_block_tril; tmp_vector(:,2) tmp_vector(:,1) tmp_vector(:,3)];
+coo_block = [coo_block_tril; tmp_vector(:,2) tmp_vector(:,1) tmp_vector(:,3)];
+row_block = coo_block(:,1);
+col_block = coo_block(:,2);
+num_block = coo_block(:,3);
+nnz_block = size(col_block,1);
 
 %% handle terminal block
 % for the moment there are no inequalities in the terminal node
@@ -84,7 +88,11 @@ num_term_f_jac = coo_term_f_jac(:,3);
 % terminal block pattern (recover from term_block_tril)
 tmp_vector = ~ismember(coo_term_block_tril(:,1),coo_term_block_tril(:,2));
 tmp_vector = coo_term_block_tril(tmp_vector,:);
-coo_term_block_tril = [coo_term_block_tril; tmp_vector(:,2) tmp_vector(:,1) tmp_vector(:,3)];
+coo_term_block = [coo_term_block_tril; tmp_vector(:,2) tmp_vector(:,1) tmp_vector(:,3)];
+row_term_block = coo_term_block(:,1);
+col_term_block = coo_term_block(:,2);
+num_term_block = coo_term_block(:,3);
+nnz_term_block = size(col_term_block,1);
 
 %% Generate nnz header
 cd ..

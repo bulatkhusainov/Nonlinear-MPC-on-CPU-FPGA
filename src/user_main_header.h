@@ -5,7 +5,7 @@
 #include <stdlib.h>  
 #include <stdio.h>  
 
-#define N 150 
+#define N 3 
 #define Ts 5.000000e-01 // sampling frequency 
 
 //data for shooting node 
@@ -24,8 +24,8 @@
 #define n_bounds 2  // # of bounds per node 
 
 //data for optimization problem 
-#define n_all_theta 903  // # of optimization variables 
-#define n_all_nu 753  // # of equality constraints 
-#define n_all_lambda 300  // # of inequality constraints (assume no inequalities for terminal term) 
+#define n_all_theta 21  // # of optimization variables 
+#define n_all_nu 18  // # of equality constraints 
+#define n_all_lambda 6  // # of inequality constraints (assume no inequalities for terminal term) 
 
 #endif

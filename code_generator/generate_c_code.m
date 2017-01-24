@@ -48,4 +48,8 @@ cd residual_code;
 generate_residual_code;
 cd ..;
 
+% generate C file for mat-vec nmultiplication
+cd mv_mult_code;
+generate_mv_mult_code;
+cd ..;
 

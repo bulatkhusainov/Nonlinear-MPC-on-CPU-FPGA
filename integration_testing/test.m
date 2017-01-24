@@ -19,15 +19,15 @@ cd ../integration_testing
 x_init = [0.5;0];
 
 % intial guess
-all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables
-%all_theta = 0.77*sin((1:(n_node_theta*N+n_term_theta))');
-all_nu = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
-%all_nu = 0.5*sin((1:(n_states + n_node_eq*N + n_term_eq))');
+%all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables
+all_theta = 0.77*sin((1:(n_node_theta*N+n_term_theta))');
+%all_nu = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
+all_nu = 0.5*sin((1:(n_states + n_node_eq*N + n_term_eq))');
 all_lambda = ones(N*n_bounds, 1); % inequality dual variables
 
 
-all_theta(902) = 12;
-all_nu(301) = 4;
+%all_theta(902) = 12;
+%all_nu(301) = 4;
 
 mu = 0.001; % barrier parameter
 
@@ -36,7 +36,7 @@ n_z = size(all_theta,1) + size(all_nu,1);
 A = zeros(n_z,n_z);
 b = zeros(n_z, 1);
 
-ip_iter_max = 20;
+ip_iter_max = 1;
 % store resudal to observe algorithm convergence
 r_dual_store = zeros(1,ip_iter_max);
 r_eq_store = zeros(1,ip_iter_max);
@@ -63,14 +63,14 @@ for ip_iter = 1:ip_iter_max
         node_jacobian = vec2mat(node_jacobian, n_node_theta);
         block = [node_Hessian node_jacobian'; node_jacobian zeros(size(node_jacobian,1))];
         A_index = ((1:(n_node_theta+n_node_eq)) + n_states+(i-1)*(n_node_theta+n_node_eq));
-        A(A_index,A_index) = block;
+        A(A_index,A_index) = block; 
 
         A_index_row = (1:n_states) + n_states + (n_node_theta+n_node_eq) + (i-1)*(n_node_theta+n_node_eq);
         A_index_col = (1:n_states) + n_states + size(node_Hessian,1) + (i-1)*(n_node_theta+n_node_eq);
         A(A_index_row,A_index_col) = -eye(n_states);
 
     end
-    % terminal hessian
+    % terminal hessian and jacobian
     term_hessian = term_hessian_eval(all_theta((1:n_term_theta)+(N)*(n_node_theta) ));
     term_hessian = vec2mat(term_hessian, n_term_theta);
     term_jacobian = term_f_jac_eval( all_theta((1:n_term_theta)+(N)*(n_node_theta) ) )';
