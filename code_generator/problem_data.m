@@ -10,7 +10,7 @@ butcher_table_beta =  [1];
 
 
 d_type = 'float';
-N = 3;
+N = 5;
 Ts = 0.5;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;

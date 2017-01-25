@@ -138,42 +138,42 @@ for ip_iter = 1:ip_iter_max
     
     b( (1:n_term_theta+n_term_eq) + n_states + N*(n_node_theta + n_node_eq)) = [block_x_term; block_c_term];
     
-%     % current resudual vector (extract from b for testing purposes only)
-%     r_dual = zeros(size(all_theta));
-%     r_eq = zeros(size(all_nu));
-%     for i=1:N
-%         r_dual((1:n_node_theta) + (i-1)*n_node_theta) = b((1:n_node_theta) + n_states + (i-1)*(n_node_theta+n_node_eq));
-%     end
-%     r_dual((1:n_term_theta) + (N)*n_node_theta) = b((1:n_term_theta) + n_states + (N)*(n_node_theta+n_node_eq));
-%     r_eq(1:n_states) = b(1:n_states);
-%     for i=1:N
-%         r_eq((1:n_node_eq) + n_states + (i-1)*n_node_eq) = b((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
-%     end
-%     r_eq((1:n_term_eq) + n_states + N*n_node_eq) = b((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
-%     r_dual_store(ip_iter) = max(abs(r_dual));
-%     r_eq_store(ip_iter) = max(abs(r_eq));
-%     
-%     % calculate complementary slackness
-%     r_slackness = zeros(n_bounds*N,1);
-%     for i = 1:N
-%         % evaluate bound constraints
-%         node_bounds = node_bounds_eval(all_theta((1:n_node_theta)+(i-1)*(n_node_theta) ));
-%         r_slackness((1:n_bounds) + (i-1)*n_bounds) = node_bounds.*all_lambda((1:n_bounds) + (i-1)*n_bounds);
-%     end
-%     r_slackness_store(ip_iter) = max(abs(r_slackness));
-%     mu_store(ip_iter) = mu;
-%     
-%     % solve a system on linear equations
-%     if false
-%         M = sqrt(diag(sum(abs(A'))))^-1;
-%         d_z = minres(M*A*M,M*b,[],round(max(size(A))));
-%         d_z = M*d_z;
-%     elseif false
-%         d_z = minres(A,b,[],max(size(A)));
-%     else
-%         d_z = A\b;
-%     end
-% 
+    % current resudual vector (extract from b for testing purposes only)
+    r_dual = zeros(size(all_theta));
+    r_eq = zeros(size(all_nu));
+    for i=1:N
+        r_dual((1:n_node_theta) + (i-1)*n_node_theta) = b((1:n_node_theta) + n_states + (i-1)*(n_node_theta+n_node_eq));
+    end
+    r_dual((1:n_term_theta) + (N)*n_node_theta) = b((1:n_term_theta) + n_states + (N)*(n_node_theta+n_node_eq));
+    r_eq(1:n_states) = b(1:n_states);
+    for i=1:N
+        r_eq((1:n_node_eq) + n_states + (i-1)*n_node_eq) = b((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
+    end
+    r_eq((1:n_term_eq) + n_states + N*n_node_eq) = b((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
+    r_dual_store(ip_iter) = max(abs(r_dual));
+    r_eq_store(ip_iter) = max(abs(r_eq));
+    
+    % calculate complementary slackness
+    r_slackness = zeros(n_bounds*N,1);
+    for i = 1:N
+        % evaluate bound constraints
+        node_bounds = node_bounds_eval(all_theta((1:n_node_theta)+(i-1)*(n_node_theta) ));
+        r_slackness((1:n_bounds) + (i-1)*n_bounds) = node_bounds.*all_lambda((1:n_bounds) + (i-1)*n_bounds);
+    end
+    r_slackness_store(ip_iter) = max(abs(r_slackness));
+    mu_store(ip_iter) = mu;
+    
+    % solve a system on linear equations
+    if false
+        M = sqrt(diag(sum(abs(A'))))^-1;
+        d_z = minres(M*A*M,M*b,[],round(max(size(A))));
+        d_z = M*d_z;
+    elseif false
+        d_z = minres(A,b,[],max(size(A)));
+    else
+        d_z = A\b;
+    end
+
 %     % extract d_theta_all and d_nu_all
 %     d_theta_all = zeros(size(all_theta));
 %     d_nu_all = zeros(size(all_nu));

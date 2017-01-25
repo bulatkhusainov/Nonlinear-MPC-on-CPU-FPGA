@@ -89,7 +89,10 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		}
 
 		// evaluate mat vec multiplication
-		mv_mult(d_x,blocks,b);
+		//mv_mult(d_x,blocks,b);
+
+		// solve linear system with Minres
+		minres(blocks, b, d_x);
 
 		// print the residual for debugging purpose
 		for(i = 0; i < n_all_theta + n_all_nu; i++)
