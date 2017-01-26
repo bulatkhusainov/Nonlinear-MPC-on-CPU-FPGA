@@ -15,6 +15,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	float all_one_over_g[n_all_lambda];
 	float all_mu_over_g[n_all_lambda];
 	float all_lambda_over_g[n_all_lambda];
+	float d_all_theta_search[n_all_lambda];
 
 	float mu = 0.001; // barrier parameter
 
@@ -25,24 +26,31 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	float node_jac_2d[N][n_node_eq][n_node_theta]={0,};
 	float term_jac_2d[n_term_eq][n_term_theta]={0,};
 
+	float *local_ptr1, *local_ptr2, *local_ptr3, *local_ptr4, *local_ptr5; // local pointers for efficient handling of nested loops
+
 	// initial guess
 	for(i = 0; i < n_all_theta; i++)
-		all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
+		all_theta[i] = 0;
+		//all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
 	for(i = 0; i < n_all_nu; i++)
-		all_nu[i] = 0.5*sinf((float)(i+1));
+		all_nu[i] = 0;
+		//all_nu[i] = 0.5*sinf((float)(i+1));
 	for(i = 0; i < n_all_lambda; i++)
 		all_lambda[i] = 1;
 
 	//all_theta[901] = 12;
 	//all_nu[300] = 4;
 
+	
+
 	// interior point iterations
-	for(ip_counter = 0; ip_counter < 1; ip_counter++)
+	for(ip_counter = 0; ip_counter < IP_iter; ip_counter++)
 	{
+
 		// evaluate bound constraints
 		for(i = 0; i < N; i++)
 			node_bounds_eval(&bounds[i*n_bounds], &all_theta[i*n_node_theta]);
-	
+
 		for(i = 0; i < n_all_lambda; i++) // precalculate 1 over g
 			all_one_over_g[i] = 1/bounds[i];
 		for(i = 0; i < n_all_lambda; i++) // precalculate lambda over g
@@ -72,7 +80,6 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 		for(i = 0; i < n_states; i++) // handle negative identities for optimality error
 			b[n_states + i] += all_nu[i];
-		float *local_ptr1, *local_ptr2; 
 		for(i = 1; i < N+1; i++)
 		{
 			local_ptr1 = &b[n_states+i*(n_node_theta+n_node_eq)];
@@ -91,22 +98,42 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		// evaluate mat vec multiplication
 		//mv_mult(d_x,blocks,b);
 
-		// solve linear system with Minres
+		// solve linear system with minres
 		minres(blocks, b, d_x);
 
-		// print the residual for debugging purpose
-		for(i = 0; i < n_all_theta + n_all_nu; i++)
+		// recover solution
+		rec_sol(d_all_theta, d_all_nu, d_all_lambda, d_all_theta_search, d_x, all_lambda, all_mu_over_g, all_lambda_over_g);
+
+		// line search
+		float alfa;
+		int lsearch_counter;
+		alfa = 1;
+		lsearch_counter = 0;
+		while(lsearch_counter < n_all_lambda)
 		{
-			debug_output[i] = d_x[i];
+			if(   (  (all_lambda[lsearch_counter] + alfa*d_all_lambda[lsearch_counter]) < 0  ) ||
+			  	  (  (     bounds[lsearch_counter] + alfa*d_all_theta_search[lsearch_counter]) > 0  )   )
+				alfa = alfa*0.9;
+			else
+				lsearch_counter += 1;	
 		}
 
+		// perform step
+		for(i = 0; i < n_all_theta; i++)
+			all_theta[i] += alfa*d_all_theta[i];
+		for(i = 0; i < n_all_nu; i++)
+			all_nu[i] += alfa*d_all_nu[i];
+		for(i = 0; i < n_all_lambda; i++)
+			all_lambda[i] += alfa*d_all_lambda[i];
+
+		printf("iteration: %d, alfa: %f\n",ip_counter,alfa );
 
 
-
-			
-
-
-
+		// print for debugging purpose
+		for(i = 0; i < n_all_theta; i++)
+		{
+			debug_output[i] = all_theta[i];
+		}
 	}
 
 

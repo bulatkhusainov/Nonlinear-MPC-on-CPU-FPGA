@@ -53,3 +53,8 @@ cd mv_mult_code;
 generate_mv_mult_code;
 cd ..;
 
+% generate C file for recovering solution
+cd rec_sol_code;
+generate_rec_sol_code;
+cd ..;
+

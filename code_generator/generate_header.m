@@ -30,8 +30,12 @@ fprintf(fileID, '#define n_bounds %d  // # of bounds per node \n\n',n_bounds);
 fprintf(fileID, '//data for optimization problem \n');
 fprintf(fileID, '#define n_all_theta %d  // # of optimization variables \n',n_node_theta*N + n_term_theta);
 fprintf(fileID, '#define n_all_nu %d  // # of equality constraints \n',n_node_eq*N + n_term_eq+n_states);
-fprintf(fileID, '#define n_all_lambda %d  // # of inequality constraints (assume no inequalities for terminal term) \n\n',n_bounds*N);
+fprintf(fileID, '#define n_all_lambda %d  // # of inequality constraints (assume no inequalities for terminal term) \n',n_bounds*N);
+fprintf(fileID, '#define n_linear (%s)  // # of linear system dimension \n\n','n_all_theta+n_all_nu');
 
+fprintf(fileID, '//number of iterations for iterative algorithms \n');
+fprintf(fileID, '#define IP_iter %d  // # of interior point iterations \n',IP_iter);
+fprintf(fileID, '#define MINRES_iter (%s)  // # of MINRES iterations \n\n',MINRES_iter);
 fprintf(fileID, '#endif');
 fclose(fileID);
 cd ../code_generator

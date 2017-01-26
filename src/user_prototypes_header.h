@@ -19,6 +19,6 @@ void node_residual_eval(float residual[n_node_theta+n_node_eq],float node_theta[
 void term_residual_eval(float term_residual[n_term_theta+n_term_eq],float term_theta[n_term_theta],float term_nu[n_term_eq],float term_jac_2d[n_term_eq][n_term_theta]);
 void mv_mult(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float x_in[n_all_theta+n_all_nu]);
 void minres(float* block, float* b,float* x_current); // to be updated
-void lanczos(int init, float blocks[], float v_tmp1[], float v_tmp2[], float v_current_out[], float sc_in[5], float sc_out[5]); // to be updated
-
+void lanczos(int init, float blocks[], float v_tmp1[], float v_tmp2[], float **v_current_out, float sc_in[5], float sc_out[5]); // to be updated
+void rec_sol(float d_all_theta[n_all_theta],float d_all_nu[n_all_nu],float d_all_lambda[n_all_lambda],float d_all_theta_search[n_all_lambda],float d_x[n_linear],float all_lambda[n_all_lambda],float all_mu_over_g[n_all_lambda],float all_lambda_over_g[n_all_lambda]);
 #endif

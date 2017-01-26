@@ -10,6 +10,8 @@ butcher_table_beta =  [1];
 
 
 d_type = 'float';
+IP_iter = 20;
+MINRES_iter = '100000';
 N = 5;
 Ts = 0.5;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
@@ -58,9 +60,9 @@ term_f(1) = term_x(1) - term_s(1);
 
 % define bounds on x,u,s
 % bound indeces [x' u' s']'
-upper_bounds_indeces = [3]-1; % in C format
+upper_bounds_indeces = [2,3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [0.38];
+upper_bounds = [2, 0.38];
 lower_bounds = [-0.38];
 
 n_upper_bounds = max(size(upper_bounds_indeces));

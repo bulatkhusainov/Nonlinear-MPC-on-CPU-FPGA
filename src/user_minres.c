@@ -2,8 +2,7 @@
 #include "user_prototypes_header.h"
 #include <math.h>  
 
-#define n_linear (n_all_theta+n_all_nu)
-#define MINRES_iter (300)
+//#define n_linear (n_all_theta+n_all_nu)
 
 float vv_mult(float *x_1, float *x_2)
 {
@@ -24,7 +23,7 @@ void minres(float* blocks, float* b,float* x_current)
 	int counter = 1, i; 
 	float x_new[n_linear];
 		//x_current[n_linear] // x_current is a solution guess (is coming from function interface)
-	float v_current[n_linear], v_current_alg[n_linear], v_tmp1[n_linear], v_tmp2[n_linear]; // initial Lanczos vectors
+	float *v_current, v_current_alg[n_linear], v_tmp1[n_linear], v_tmp2[n_linear]; // initial Lanczos vectors
 	float beta_current, over_beta_current, beta_new, beta_nnew;
 	float nu_current, nu_new;
 	float gamma_prev = 1, gamma_current = 1, gamma_new;
@@ -61,7 +60,7 @@ void minres(float* blocks, float* b,float* x_current)
 	for(i = 0; i < n_linear; i++)
 		v_tmp2[i] = v_tmp2[i]/beta_current;
 	sc_in[0] = beta_current;
-	lanczos(1, blocks, v_tmp1, v_tmp2, v_current, sc_in, sc_out);
+	lanczos(1, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 
 	// main loop
 	for(counter = 0; counter < MINRES_iter; counter++)
@@ -74,7 +73,7 @@ void minres(float* blocks, float* b,float* x_current)
 		beta_new = sc_out[2];
 
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
-		lanczos(0, blocks, v_tmp1, v_tmp2, v_current, sc_in, sc_out);
+		lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 
 		// Calculate QR factors
 		delta = gamma_current*alfa_current - gamma_prev*sigma_current*beta_current;
