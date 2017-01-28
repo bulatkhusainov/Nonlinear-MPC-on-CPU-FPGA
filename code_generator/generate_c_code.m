@@ -48,7 +48,7 @@ cd residual_code;
 generate_residual_code;
 cd ..;
 
-% generate C file for mat-vec nmultiplication
+% generate C file for mat-vec multiplication
 cd mv_mult_code;
 generate_mv_mult_code;
 cd ..;
@@ -58,3 +58,7 @@ cd rec_sol_code;
 generate_rec_sol_code;
 cd ..;
 
+% generate C file for prescaler
+cd prescaler_code;
+generate_prescaler_code;
+cd ..;

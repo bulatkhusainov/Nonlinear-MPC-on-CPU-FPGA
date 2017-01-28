@@ -13,6 +13,11 @@ block_pattern = [node_hessian_pattern_augmented f_jac_pattern'; f_jac_pattern ze
 nnz_block_tril = size(col_block_tril,1);
 coo_block_tril = [row_block_tril, col_block_tril, (1:nnz_block_tril)'];
 coo_block_tril = coo_block_tril - 1;  % use zero indexing for C
+row_block_tril = coo_block_tril(:,1);
+col_block_tril = coo_block_tril(:,2);
+num_block_tril = coo_block_tril(:,3);
+
+
 
 %node hessian lower triangular pattern
 [row_node_hessian_tril, col_node_hessian_tril] =  find(sparse(tril(node_hessian_pattern)));
@@ -62,6 +67,9 @@ term_block_pattern = [term_hessian_pattern term_f_jac_pattern'; term_f_jac_patte
 nnz_term_block_tril = size(col_term_block_tril,1);
 coo_term_block_tril = [row_term_block_tril, col_term_block_tril, (1:nnz_term_block_tril)'];
 coo_term_block_tril = coo_term_block_tril - 1;  % use zero indexing for C
+row_term_block_tril = coo_term_block_tril(:,1);
+col_term_block_tril = coo_term_block_tril(:,2);
+num_term_block_tril = coo_term_block_tril(:,3);
 
 %term hessian lower triangular pattern
 [row_term_hessian_tril, col_term_hessian_tril] =  find(sparse(tril(term_hessian_pattern)));

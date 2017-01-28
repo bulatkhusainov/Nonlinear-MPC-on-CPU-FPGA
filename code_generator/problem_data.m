@@ -8,10 +8,10 @@ butcher_table_beta =  [1];
 %butcher_table_beta =  [1/6; 2/3; 1/6];
 
 
-
+MINRES_prescaler = 1;
 d_type = 'float';
-IP_iter = 20;
-MINRES_iter = '100000';
+IP_iter = 1;
+MINRES_iter = '1000';
 N = 5;
 Ts = 0.5;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node

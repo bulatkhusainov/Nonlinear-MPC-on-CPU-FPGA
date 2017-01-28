@@ -35,7 +35,12 @@ fprintf(fileID, '#define n_linear (%s)  // # of linear system dimension \n\n','n
 
 fprintf(fileID, '//number of iterations for iterative algorithms \n');
 fprintf(fileID, '#define IP_iter %d  // # of interior point iterations \n',IP_iter);
-fprintf(fileID, '#define MINRES_iter (%s)  // # of MINRES iterations \n\n',MINRES_iter);
+fprintf(fileID, '#define MINRES_iter %s // # of MINRES iterations \n',MINRES_iter);
+if MINRES_prescaler
+    fprintf(fileID, '#define MINRES_prescaler // # use/do not use prescaler \n\n');
+end
+
+
 fprintf(fileID, '#endif');
 fclose(fileID);
 cd ../code_generator
