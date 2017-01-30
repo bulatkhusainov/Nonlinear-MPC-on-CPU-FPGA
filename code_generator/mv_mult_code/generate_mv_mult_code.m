@@ -94,15 +94,15 @@ fprintf(fileID,strcat('\t\t','y_out[i] = 0;\n\n'));
 
 fprintf(fileID,strcat('\t','// handle negative identities\n'));
 fprintf(fileID,strcat('\t','for(i = 0; i < n_states; i++)\n'));
-fprintf(fileID,strcat('\t\t','y_out[i] = x_in[n_states+i]*M[i];\n'));
+fprintf(fileID,strcat('\t\t','y_out[i] = x_in[n_states+i]*out_block[i];\n'));
 fprintf(fileID,strcat('\t','for(i = 0; i < n_states; i++)\n'));
-fprintf(fileID,strcat('\t\t','y_out[n_states+i] = x_in[i]*M[i];\n'));
+fprintf(fileID,strcat('\t\t','y_out[n_states+i] = x_in[i]*out_block[i];\n'));
 fprintf(fileID,strcat('\t','for(i = n_states+n_node_theta, k = n_states; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq), k+=n_states)\n'));
 fprintf(fileID,strcat('\t\t','for(j = 0; j < n_states; j++)\n'));
-fprintf(fileID,strcat('\t\t\t','y_out[i+j+n_node_eq] = x_in[i+j]*M[k+j];\n'));
-fprintf(fileID,strcat('\t','for(i = n_states+n_node_theta; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq))\n'));
+fprintf(fileID,strcat('\t\t\t','y_out[i+j+n_node_eq] = x_in[i+j]*out_block[k+j];\n'));
+fprintf(fileID,strcat('\t','for(i = n_states+n_node_theta, k = n_states; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq), k+=n_states)\n'));
 fprintf(fileID,strcat('\t\t','for(j = 0; j < n_states; j++)\n'));
-fprintf(fileID,strcat('\t\t\t','y_out[i+j] = x_in[i+j+n_node_eq]*M[k+j];\n\n'));
+fprintf(fileID,strcat('\t\t\t','y_out[i+j] = x_in[i+j+n_node_eq]*out_block[k+j];\n\n'));
 
 fprintf(fileID,strcat('\t','int i_offset1, i_offset2;\n'));
 fprintf(fileID,strcat('\t','// handle nonzero elements in node blocks\n'));

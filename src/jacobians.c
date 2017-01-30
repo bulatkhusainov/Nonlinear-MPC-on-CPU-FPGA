@@ -1,8 +1,8 @@
 #include "user_main_header.h"
 
 // Butcher table data
-float butcher_table_A[1][1] = {0.0000000000000000,};
-float butcher_table_beta[1] = {1.0000000000000000,};
+float butcher_table_A[3][3] = {0.0000000000000000,0.0000000000000000,0.0000000000000000,0.2083333333333333,0.3333333333333333,-0.0416666666666667,0.1666666666666667,0.6666666666666666,0.1666666666666667,};
+float butcher_table_beta[3] = {0.1666666666666667,0.6666666666666666,0.1666666666666667,};
 
 // this function evaluates dynamics ODE
 void ode_eval(float x_dot[n_states],float x_u[n_states+m_inputs])
@@ -92,32 +92,92 @@ void f_jac_eval(float f_jac[n_node_eq][n_node_theta],float node_theta[n_node_the
 	f_jac[0][1] =   0.0;
 	f_jac[0][2] =   0.0;
 	f_jac[0][3] =   0.0;
-	f_jac[0][4] =   1.0/2.0;
+	f_jac[0][4] =   1.0/1.2E1;
 	f_jac[0][5] =   0.0;
+	f_jac[0][6] =   1.0/3.0;
+	f_jac[0][7] =   0.0;
+	f_jac[0][8] =   1.0/1.2E1;
+	f_jac[0][9] =   0.0;
 	f_jac[1][0] =   0.0;
 	f_jac[1][1] =   1.0;
 	f_jac[1][2] =   0.0;
 	f_jac[1][3] =   0.0;
 	f_jac[1][4] =   0.0;
-	f_jac[1][5] =   1.0/2.0;
+	f_jac[1][5] =   1.0/1.2E1;
+	f_jac[1][6] =   0.0;
+	f_jac[1][7] =   1.0/3.0;
+	f_jac[1][8] =   0.0;
+	f_jac[1][9] =   1.0/1.2E1;
 	f_jac[2][0] =   -node_theta[2-1]*node_theta[2-1]+1.0;
 	f_jac[2][1] =   node_theta[1-1]*node_theta[2-1]*-2.0-1.0;
 	f_jac[2][2] =   1.0;
 	f_jac[2][3] =   0.0;
 	f_jac[2][4] =   -1.0;
 	f_jac[2][5] =   0.0;
+	f_jac[2][6] =   0.0;
+	f_jac[2][7] =   0.0;
+	f_jac[2][8] =   0.0;
+	f_jac[2][9] =   0.0;
 	f_jac[3][0] =   1.0;
 	f_jac[3][1] =   0.0;
 	f_jac[3][2] =   0.0;
 	f_jac[3][3] =   0.0;
 	f_jac[3][4] =   0.0;
 	f_jac[3][5] =   -1.0;
-	f_jac[4][0] =   0.0;
-	f_jac[4][1] =   0.0;
+	f_jac[3][6] =   0.0;
+	f_jac[3][7] =   0.0;
+	f_jac[3][8] =   0.0;
+	f_jac[3][9] =   0.0;
+	f_jac[4][0] =   -pow(node_theta[2-1]+node_theta[6-1]*(5.0/4.8E1)+node_theta[8-1]*(1.0/6.0)-node_theta[10-1]*(1.0/4.8E1),2.0)+1.0;
+	f_jac[4][1] =   -(node_theta[1-1]+node_theta[5-1]*(5.0/4.8E1)+node_theta[7-1]*(1.0/6.0)-node_theta[9-1]*(1.0/4.8E1))*(node_theta[2-1]*2.0+node_theta[6-1]*(5.0/2.4E1)+node_theta[8-1]*(1.0/3.0)-node_theta[10-1]*(1.0/2.4E1))-1.0;
 	f_jac[4][2] =   1.0;
-	f_jac[4][3] =   -1.0;
-	f_jac[4][4] =   0.0;
-	f_jac[4][5] =   0.0;
+	f_jac[4][3] =   0.0;
+	f_jac[4][4] =   pow(node_theta[2-1]+node_theta[6-1]*(5.0/4.8E1)+node_theta[8-1]*(1.0/6.0)-node_theta[10-1]*(1.0/4.8E1),2.0)*(-5.0/4.8E1)+5.0/4.8E1;
+	f_jac[4][5] =   -(node_theta[1-1]+node_theta[5-1]*(5.0/4.8E1)+node_theta[7-1]*(1.0/6.0)-node_theta[9-1]*(1.0/4.8E1))*(node_theta[2-1]*(5.0/2.4E1)+node_theta[6-1]*2.170138888888889E-2+node_theta[8-1]*(5.0/1.44E2)-node_theta[10-1]*4.340277777777778E-3)-5.0/4.8E1;
+	f_jac[4][6] =   pow(node_theta[2-1]+node_theta[6-1]*(5.0/4.8E1)+node_theta[8-1]*(1.0/6.0)-node_theta[10-1]*(1.0/4.8E1),2.0)*(-1.0/6.0)-5.0/6.0;
+	f_jac[4][7] =   -(node_theta[1-1]+node_theta[5-1]*(5.0/4.8E1)+node_theta[7-1]*(1.0/6.0)-node_theta[9-1]*(1.0/4.8E1))*(node_theta[2-1]*(1.0/3.0)+node_theta[6-1]*(5.0/1.44E2)+node_theta[8-1]*(1.0/1.8E1)-node_theta[10-1]*(1.0/1.44E2))-1.0/6.0;
+	f_jac[4][8] =   pow(node_theta[2-1]+node_theta[6-1]*(5.0/4.8E1)+node_theta[8-1]*(1.0/6.0)-node_theta[10-1]*(1.0/4.8E1),2.0)*(1.0/4.8E1)-1.0/4.8E1;
+	f_jac[4][9] =   (node_theta[1-1]+node_theta[5-1]*(5.0/4.8E1)+node_theta[7-1]*(1.0/6.0)-node_theta[9-1]*(1.0/4.8E1))*(node_theta[2-1]*(1.0/2.4E1)+node_theta[6-1]*4.340277777777778E-3+node_theta[8-1]*(1.0/1.44E2)-node_theta[10-1]*8.680555555555556E-4)+1.0/4.8E1;
+	f_jac[5][0] =   1.0;
+	f_jac[5][1] =   0.0;
+	f_jac[5][2] =   0.0;
+	f_jac[5][3] =   0.0;
+	f_jac[5][4] =   5.0/4.8E1;
+	f_jac[5][5] =   0.0;
+	f_jac[5][6] =   1.0/6.0;
+	f_jac[5][7] =   -1.0;
+	f_jac[5][8] =   -1.0/4.8E1;
+	f_jac[5][9] =   0.0;
+	f_jac[6][0] =   -pow(node_theta[2-1]+node_theta[6-1]*(1.0/1.2E1)+node_theta[8-1]*(1.0/3.0)+node_theta[10-1]*(1.0/1.2E1),2.0)+1.0;
+	f_jac[6][1] =   -(node_theta[1-1]+node_theta[5-1]*(1.0/1.2E1)+node_theta[7-1]*(1.0/3.0)+node_theta[9-1]*(1.0/1.2E1))*(node_theta[2-1]*2.0+node_theta[6-1]*(1.0/6.0)+node_theta[8-1]*(2.0/3.0)+node_theta[10-1]*(1.0/6.0))-1.0;
+	f_jac[6][2] =   1.0;
+	f_jac[6][3] =   0.0;
+	f_jac[6][4] =   pow(node_theta[2-1]+node_theta[6-1]*(1.0/1.2E1)+node_theta[8-1]*(1.0/3.0)+node_theta[10-1]*(1.0/1.2E1),2.0)*(-1.0/1.2E1)+1.0/1.2E1;
+	f_jac[6][5] =   -(node_theta[1-1]+node_theta[5-1]*(1.0/1.2E1)+node_theta[7-1]*(1.0/3.0)+node_theta[9-1]*(1.0/1.2E1))*(node_theta[2-1]*(1.0/6.0)+node_theta[6-1]*(1.0/7.2E1)+node_theta[8-1]*(1.0/1.8E1)+node_theta[10-1]*(1.0/7.2E1))-1.0/1.2E1;
+	f_jac[6][6] =   pow(node_theta[2-1]+node_theta[6-1]*(1.0/1.2E1)+node_theta[8-1]*(1.0/3.0)+node_theta[10-1]*(1.0/1.2E1),2.0)*(-1.0/3.0)+1.0/3.0;
+	f_jac[6][7] =   -(node_theta[1-1]+node_theta[5-1]*(1.0/1.2E1)+node_theta[7-1]*(1.0/3.0)+node_theta[9-1]*(1.0/1.2E1))*(node_theta[2-1]*(2.0/3.0)+node_theta[6-1]*(1.0/1.8E1)+node_theta[8-1]*(2.0/9.0)+node_theta[10-1]*(1.0/1.8E1))-1.0/3.0;
+	f_jac[6][8] =   pow(node_theta[2-1]+node_theta[6-1]*(1.0/1.2E1)+node_theta[8-1]*(1.0/3.0)+node_theta[10-1]*(1.0/1.2E1),2.0)*(-1.0/1.2E1)-1.1E1/1.2E1;
+	f_jac[6][9] =   -(node_theta[1-1]+node_theta[5-1]*(1.0/1.2E1)+node_theta[7-1]*(1.0/3.0)+node_theta[9-1]*(1.0/1.2E1))*(node_theta[2-1]*(1.0/6.0)+node_theta[6-1]*(1.0/7.2E1)+node_theta[8-1]*(1.0/1.8E1)+node_theta[10-1]*(1.0/7.2E1))-1.0/1.2E1;
+	f_jac[7][0] =   1.0;
+	f_jac[7][1] =   0.0;
+	f_jac[7][2] =   0.0;
+	f_jac[7][3] =   0.0;
+	f_jac[7][4] =   1.0/1.2E1;
+	f_jac[7][5] =   0.0;
+	f_jac[7][6] =   1.0/3.0;
+	f_jac[7][7] =   0.0;
+	f_jac[7][8] =   1.0/1.2E1;
+	f_jac[7][9] =   -1.0;
+	f_jac[8][0] =   0.0;
+	f_jac[8][1] =   0.0;
+	f_jac[8][2] =   1.0;
+	f_jac[8][3] =   -1.0;
+	f_jac[8][4] =   0.0;
+	f_jac[8][5] =   0.0;
+	f_jac[8][6] =   0.0;
+	f_jac[8][7] =   0.0;
+	f_jac[8][8] =   0.0;
+	f_jac[8][9] =   0.0;
 }
 
 // this function evaluates terminal equality constraints function 

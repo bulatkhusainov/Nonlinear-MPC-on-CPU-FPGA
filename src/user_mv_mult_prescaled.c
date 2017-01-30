@@ -2,7 +2,7 @@
 #include "user_nnz_header.h"
 
 // this function performs matrix vector multiplication 
-void mv_mult(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float x_in[n_all_theta+n_all_nu])
+void mv_mult_prescaled(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float out_block[(N+1)*n_states],float x_in[n_all_theta+n_all_nu])
 {
 	int i,j,k;
 	// block pattern in COO format
@@ -21,15 +21,15 @@ void mv_mult(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nn
 
 	// handle negative identities
 	for(i = 0; i < n_states; i++)
-		y_out[i] = -x_in[n_states+i];
+		y_out[i] = x_in[n_states+i]*out_block[i];
 	for(i = 0; i < n_states; i++)
-		y_out[n_states+i] = -x_in[i];
-	for(i = n_states+n_node_theta; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq))
+		y_out[n_states+i] = x_in[i]*out_block[i];
+	for(i = n_states+n_node_theta, k = n_states; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq), k+=n_states)
 		for(j = 0; j < n_states; j++)
-			y_out[i+j+n_node_eq] = -x_in[i+j];
-	for(i = n_states+n_node_theta; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq))
+			y_out[i+j+n_node_eq] = x_in[i+j]*out_block[k+j];
+	for(i = n_states+n_node_theta, k = n_states; i < n_states+n_node_theta + N*(n_node_theta+n_node_eq); i+=(n_node_theta+n_node_eq), k+=n_states)
 		for(j = 0; j < n_states; j++)
-			y_out[i+j] = -x_in[i+j+n_node_eq];
+			y_out[i+j] = x_in[i+j+n_node_eq]*out_block[k+j];
 
 	int i_offset1, i_offset2;
 	// handle nonzero elements in node blocks

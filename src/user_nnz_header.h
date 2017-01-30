@@ -2,10 +2,10 @@
 #define NNZ_HEADER
 
 //nnz for nodes 
-#define nnz_block 28   
-#define nnz_block_tril 16   
+#define nnz_block 92   
+#define nnz_block_tril 48   
 #define nnz_node_hessian_tril 3   
-#define nnz_f_jac 12   
+#define nnz_f_jac 44   
 #define nnz_gwg 2   
 
 //nnz for terminal node 

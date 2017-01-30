@@ -17,16 +17,16 @@ void node_block_eval(float block[nnz_block_tril],float node_jac_2d[n_node_eq][n_
 	// node Hessian reading info 
 	int row_node_hessian_tril[3] = {0,1,3,};
 	int col_node_hessian_tril[3] = {0,1,3,};
-	int num_node_hessian_tril[3] = {0,4,10,};
+	int num_node_hessian_tril[3] = {0,8,18,};
 
 	// node Jacobian reading info 
-	int row_node_f_jac[12] = {0,2,3,1,2,2,4,4,0,2,1,3,};
-	int col_node_f_jac[12] = {0,0,0,1,1,2,2,3,4,4,5,5,};
-	int num_node_f_jac[12] = {1,2,3,5,6,8,9,11,12,13,14,15,};
+	int row_node_f_jac[44] = {0,2,3,4,5,6,7,1,2,4,6,2,4,6,8,8,0,2,4,5,6,7,1,3,4,6,0,4,5,6,7,1,4,5,6,0,4,5,6,7,1,4,6,7,};
+	int col_node_f_jac[44] = {0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,4,4,4,4,4,4,5,5,5,5,6,6,6,6,6,7,7,7,7,8,8,8,8,8,9,9,9,9,};
+	int num_node_f_jac[44] = {1,2,3,4,5,6,7,9,10,11,12,14,15,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,};
 
 	// node gwg reading info 
 	int col_gwg[2] = {1,2,};
-	int num_gwg[2] = {4,7,};
+	int num_gwg[2] = {8,13,};
 
 	int upper_bounds_indeces[2] = {1,2,};
 	int lower_bounds_indeces[1] = {2,};

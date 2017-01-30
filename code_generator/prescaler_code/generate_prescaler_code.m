@@ -3,7 +3,8 @@
 cd ../../src 
 fileID = fopen('user_prescaler.c','w');
 fprintf(fileID,'#include "user_main_header.h"\n');
-fprintf(fileID,'#include "user_nnz_header.h"\n\n');
+fprintf(fileID,'#include "user_nnz_header.h"\n');
+fprintf(fileID,'#include "user_prototypes_header.h"\n\n');
 
 fprintf(fileID,'// this function prescales orginal linear system and calls MINRES solver,\n');
 fprintf(fileID,strcat('void prescaler('));
@@ -71,19 +72,18 @@ fprintf(fileID,strcat('\t','for(i = 0; i < nnz_term_block; i++)\n'));
 fprintf(fileID,strcat('\t\t\t','M[i_offset1 + row_term_block[i]] += fabsf(blocks[i_offset2 + num_term_block[i]]);\n\n'));
 
 fprintf(fileID,strcat('\t','// calculate prescaler\n'));
-fprintf(fileID,strcat('\t','for(i = 0; i < n_all_theta+n_all_nu; i++) x_current[i] = 1/sqrtf(M[i]);\n\n'));
-%fprintf(fileID,strcat('\t','for(i = 0; i < n_all_theta+n_all_nu; i++) x_current[i] = (M[i]);\n\n'));
+fprintf(fileID,strcat('\t','for(i = 0; i < n_all_theta+n_all_nu; i++) M[i] = 1/sqrtf(M[i]);\n\n'));
 
 fprintf(fileID,strcat('\t','// apply prescaler to out_blocks[] \n'));
-fprintf(fileID,strcat('\t','for(i = 0; i < n_states; i++) out_blocks[i] = M[i]*M[i+1];\n'));
+fprintf(fileID,strcat('\t','for(i = 0; i < n_states; i++) out_blocks[i] = -M[i]*M[i+n_states];\n'));
 fprintf(fileID,strcat('\t','for(i = 1; i < N+1; i++)\n'));
 fprintf(fileID,strcat('\t','{\n'));
-fprintf(fileID,strcat('\t\t','i_offset1 = n_states + n_node_theta + n_node_eq;\n'));
-fprintf(fileID,strcat('\t\t','i_offset2 = n_states + n_node_theta;\n'));
+fprintf(fileID,strcat('\t\t','i_offset1 = n_states + (n_node_theta + n_node_eq)*i;\n'));
+fprintf(fileID,strcat('\t\t','i_offset2 = n_states + n_node_theta +  (n_node_theta + n_node_eq)*(i-1);\n'));
 fprintf(fileID,strcat('\t\t','i_offset3 = i*n_states;\n'));
 fprintf(fileID,strcat('\t\t','for(j = 0; j < n_states; j++)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t','out_blocks[i_offset3 + j] = M[i_offset1 + j]*M[i_offset2 + j]; \n'));
+fprintf(fileID,strcat('\t\t\t','out_blocks[i_offset3 + j] = -M[i_offset1 + j]*M[i_offset2 + j]; \n'));
 fprintf(fileID,strcat('\t\t','}\n'));
 fprintf(fileID,strcat('\t','}\n'));
 
@@ -100,6 +100,9 @@ fprintf(fileID,strcat('\t','local_ptr2 = &M[n_states + N*(n_node_theta+n_node_eq
 fprintf(fileID,strcat('\t','for(i = 0; i < nnz_term_block_tril; i++)\n'));
 fprintf(fileID,strcat('\t\t','local_ptr1[num_term_block_tril[i]] *= local_ptr2[row_term_block_tril[i]]*local_ptr2[col_term_block_tril[i]];\n'));
 
+fprintf(fileID,'\t\n');
+
+fprintf(fileID,'\tmv_mult_prescaled(x_current,blocks, out_blocks,b);\n');
 
 fprintf(fileID,'}\n');
 

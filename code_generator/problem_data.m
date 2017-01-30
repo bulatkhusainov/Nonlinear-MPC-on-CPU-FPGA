@@ -1,11 +1,11 @@
 %% this part is problem dependent
 % define integrator Butcher table
-butcher_table_A = [0]; % Euler integrator
-butcher_table_beta =  [1];
+%butcher_table_A = [0]; % Euler integrator
+%butcher_table_beta =  [1];
 %butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
 %butcher_table_beta =  [0.5; 0.5];
-%butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
-%butcher_table_beta =  [1/6; 2/3; 1/6];
+butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
+butcher_table_beta =  [1/6; 2/3; 1/6];
 
 
 MINRES_prescaler = 1;
