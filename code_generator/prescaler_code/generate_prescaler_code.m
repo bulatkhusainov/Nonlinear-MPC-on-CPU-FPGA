@@ -98,11 +98,25 @@ fprintf(fileID,strcat('\t','}\n'));
 fprintf(fileID,strcat('\t','local_ptr1 = &blocks[N*nnz_block_tril];\n'));
 fprintf(fileID,strcat('\t','local_ptr2 = &M[n_states + N*(n_node_theta+n_node_eq)];\n'));
 fprintf(fileID,strcat('\t','for(i = 0; i < nnz_term_block_tril; i++)\n'));
-fprintf(fileID,strcat('\t\t','local_ptr1[num_term_block_tril[i]] *= local_ptr2[row_term_block_tril[i]]*local_ptr2[col_term_block_tril[i]];\n'));
+fprintf(fileID,strcat('\t\t','local_ptr1[num_term_block_tril[i]] *= local_ptr2[row_term_block_tril[i]]*local_ptr2[col_term_block_tril[i]];\n\n'));
 
-fprintf(fileID,'\t\n');
+fprintf(fileID,strcat('\t','// apply prescaler to b[] \n'));
+fprintf(fileID,'\tfor(i = 0; i < n_all_theta+n_all_nu; i++)\n');
+fprintf(fileID,'\t\tb[i] = b[i]*M[i];\n\n');
 
-fprintf(fileID,'\tmv_mult_prescaled(x_current,blocks, out_blocks,b);\n');
+fprintf(fileID,strcat('\t','// solve scaled problem \n'));
+fprintf(fileID,strcat('\t','// ifdef is to ensure propper compilation in unprescaled mode \n'));
+fprintf(fileID,strcat('\t','#ifdef MINRES_prescaled\n'));
+fprintf(fileID,strcat('\t','minres(blocks, out_blocks, b, x_current);\n'));
+fprintf(fileID,strcat('\t','#endif\n'));
+
+%fprintf(fileID,strcat('\t','minres(blocks, out_blocks, b, x_current);\n\n'));
+
+fprintf(fileID,strcat('\t','// recover solution \n'));
+fprintf(fileID,'\tfor(i = 0; i < n_all_theta+n_all_nu; i++)\n');
+fprintf(fileID,'\t\tx_current[i] *= M[i];\n\n');
+
+fprintf(fileID,'\t//mv_mult_prescaled(x_current,blocks, out_blocks,b);\n');
 
 fprintf(fileID,'}\n');
 

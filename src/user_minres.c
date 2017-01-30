@@ -15,7 +15,11 @@ float vv_mult(float *x_1, float *x_2)
 	return sos;
 }
 
-void minres(float* blocks, float* b,float* x_current)
+#ifdef MINRES_prescaled
+	void minres(float* blocks, float* out_blocks, float* b,float* x_current)
+#else
+	void minres(float* blocks, float* b,float* x_current)
+#endif
 {
 
 
@@ -60,7 +64,14 @@ void minres(float* blocks, float* b,float* x_current)
 	for(i = 0; i < n_linear; i++)
 		v_tmp2[i] = v_tmp2[i]/beta_current;
 	sc_in[0] = beta_current;
-	lanczos(1, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+
+
+	#ifdef MINRES_prescaled
+		lanczos(1, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+	#else
+		lanczos(1, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+	#endif
+	
 
 	// main loop
 	for(counter = 0; counter < MINRES_iter; counter++)
@@ -73,8 +84,12 @@ void minres(float* blocks, float* b,float* x_current)
 		beta_new = sc_out[2];
 
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
+		#ifdef MINRES_prescaled
+		lanczos(0, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+		#else
 		lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
-
+		#endif
+		
 		// Calculate QR factors
 		delta = gamma_current*alfa_current - gamma_prev*sigma_current*beta_current;
 		over_ro_1 = 1/(sqrtf(delta*delta + beta_new*beta_new));

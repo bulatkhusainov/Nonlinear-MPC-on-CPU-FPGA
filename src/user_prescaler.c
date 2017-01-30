@@ -91,6 +91,19 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	local_ptr2 = &M[n_states + N*(n_node_theta+n_node_eq)];
 	for(i = 0; i < nnz_term_block_tril; i++)
 		local_ptr1[num_term_block_tril[i]] *= local_ptr2[row_term_block_tril[i]]*local_ptr2[col_term_block_tril[i]];
-	
-	mv_mult_prescaled(x_current,blocks, out_blocks,b);
+
+	// apply prescaler to b[] 
+	for(i = 0; i < n_all_theta+n_all_nu; i++)
+		b[i] = b[i]*M[i];
+
+	// solve scaled problem 
+	// ifdef is to ensure propper compilation in unprescaled mode 
+	#ifdef MINRES_prescaled
+	minres(blocks, out_blocks, b, x_current);
+	#endif
+	// recover solution 
+	for(i = 0; i < n_all_theta+n_all_nu; i++)
+		x_current[i] *= M[i];
+
+	//mv_mult_prescaled(x_current,blocks, out_blocks,b);
 }

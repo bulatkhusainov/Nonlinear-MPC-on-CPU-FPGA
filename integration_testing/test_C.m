@@ -15,4 +15,4 @@ eval(tmp_str);
 
 [all_theta_C, all_nu_C, all_lambda_C, debug_output] = mex_nlp_solver(x_init);
 
-max(abs((M*A*M*b) -debug_output))
+max(abs(d_z - debug_output))

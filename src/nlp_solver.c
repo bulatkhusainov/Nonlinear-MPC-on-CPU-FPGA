@@ -97,7 +97,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		//mv_mult(d_x,blocks,b);
 
 		// solve linear system with minres
-		#ifdef MINRES_prescaler
+		#ifdef MINRES_prescaled
 			prescaler(blocks, b,d_x);
 		#else
 			minres(blocks, b, d_x);

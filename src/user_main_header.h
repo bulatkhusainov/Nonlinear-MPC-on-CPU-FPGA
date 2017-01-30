@@ -31,7 +31,7 @@
 
 //number of iterations for iterative algorithms 
 #define IP_iter 1  // # of interior point iterations 
-#define MINRES_iter 1000 // # of MINRES iterations 
-#define MINRES_prescaler // # use/do not use prescaler 
+#define MINRES_iter 200 // # of MINRES iterations 
+#define MINRES_prescaled // # use/do not use prescaler 
 
 #endif

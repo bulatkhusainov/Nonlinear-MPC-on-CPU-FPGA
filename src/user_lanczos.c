@@ -16,7 +16,12 @@ float vv_mult1(float *x_1, float *x_2)
 	return sos;
 }
 
-void lanczos(int init, float blocks[], float v_tmp1[], float v_tmp2[], float **v_current_out, float sc_in[5], float sc_out[5])
+
+#ifdef MINRES_prescaled
+	void lanczos(int init, float blocks[], float out_blocks[], float v_tmp1[], float v_tmp2[], float **v_current_out, float sc_in[5], float sc_out[5])
+#else
+	void lanczos(int init, float blocks[], float v_tmp1[], float v_tmp2[], float **v_current_out, float sc_in[5], float sc_out[5])
+#endif
 {
 	int i;
 	static float *v_current, *v_prev, *tmp_pointer;
@@ -29,7 +34,13 @@ void lanczos(int init, float blocks[], float v_tmp1[], float v_tmp2[], float **v
 	v_prev = (float *)((init * ((uintptr_t)v_tmp1)) + ((!init) * ((uintptr_t)v_current)));
 	v_current = (float *)((init * ((uintptr_t)v_tmp2)) + ((!init) * ((uintptr_t)tmp_pointer)));
 
-	mv_mult(A_mult_v,blocks,v_current); // calculate mat-vec product
+
+	#ifdef MINRES_prescaled
+		mv_mult_prescaled(A_mult_v, blocks, out_blocks,v_current); // calculate mat-vec product
+	#else
+		mv_mult(A_mult_v,blocks,v_current); // calculate mat-vec product
+	#endif
+
 	alfa = vv_mult1(A_mult_v,v_current); // calculate alfa
 	for(i = 0; i < n_linear; i++) // calculate new v_current
 	{
