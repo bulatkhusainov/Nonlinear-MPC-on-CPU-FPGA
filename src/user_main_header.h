@@ -5,7 +5,7 @@
 #include <stdlib.h>  
 #include <stdio.h>  
 
-#define N 5 
+#define N 20 
 #define Ts 5.000000e-01 // sampling frequency 
 
 //data for shooting node 
@@ -19,19 +19,19 @@
 #define n_node_theta 10  // # of optimization variables 
 #define n_term_theta 3  // # of optimization variables for terminal term 
 #define n_node_eq 9  // # of equality constraints per node 
-#define n_upper_bounds 2  // # of upper bounds per node 
-#define n_lower_bounds 2  // # of lower bounds per node 
-#define n_bounds 3  // # of bounds per node 
+#define n_upper_bounds 1  // # of upper bounds per node 
+#define n_lower_bounds 1  // # of lower bounds per node 
+#define n_bounds 2  // # of bounds per node 
 
 //data for optimization problem 
-#define n_all_theta 53  // # of optimization variables 
-#define n_all_nu 48  // # of equality constraints 
-#define n_all_lambda 15  // # of inequality constraints (assume no inequalities for terminal term) 
+#define n_all_theta 203  // # of optimization variables 
+#define n_all_nu 183  // # of equality constraints 
+#define n_all_lambda 40  // # of inequality constraints (assume no inequalities for terminal term) 
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 
-#define IP_iter 1  // # of interior point iterations 
-#define MINRES_iter 200 // # of MINRES iterations 
+#define IP_iter 20  // # of interior point iterations 
+#define MINRES_iter n_linear // # of MINRES iterations 
 #define MINRES_prescaled // # use/do not use prescaler 
 
 #endif

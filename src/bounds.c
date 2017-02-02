@@ -3,10 +3,10 @@
 // this function evaluates bounds constraints 
 void node_bounds_eval(float node_bounds[n_bounds],float node_theta[n_node_theta])
 {
-	int upper_bounds_indeces[2] = {1,2,};
+	int upper_bounds_indeces[1] = {2,};
 	int lower_bounds_indeces[1] = {2,};
-	float upper_bounds[2] = {2.0000000000000000,0.3800000000000000,};
-	float lower_bounds[1] = {-0.3800000000000000,};
+	float upper_bounds[1] = {0.5000000000000000,};
+	float lower_bounds[1] = {-100.0000000000000000,};
 
 	int i, j;
 
@@ -26,7 +26,7 @@ void node_bounds_eval(float node_bounds[n_bounds],float node_theta[n_node_theta]
 // this function evaluates node gwg 
 void node_gwg_eval(float node_gwg[n_states+m_inputs+n_node_slack],float node_bounds[n_bounds],float node_lambda[n_bounds])
 {
-	int upper_bounds_indeces[2] = {1,2,};
+	int upper_bounds_indeces[1] = {2,};
 	int lower_bounds_indeces[1] = {2,};
 
 	int i, j;

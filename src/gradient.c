@@ -3,7 +3,7 @@
 // this function evaluates node gradient 
 void node_gradient_eval(float node_gradient[n_node_theta],float node_theta[n_node_theta])
 {
-	node_gradient[0] =   node_theta[1-1]*2.0;
+	node_gradient[0] =   (node_theta[1-1]*node_theta[1-1]*node_theta[1-1])*4.0;
 	node_gradient[1] =   node_theta[2-1]*2.0;
 	node_gradient[2] =   0.0;
 	node_gradient[3] =   node_theta[4-1]*(1.0/5.0E2);

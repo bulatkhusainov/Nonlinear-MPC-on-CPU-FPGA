@@ -10,9 +10,9 @@ butcher_table_beta =  [1/6; 2/3; 1/6];
 
 MINRES_prescaled = 1;
 d_type = 'float';
-IP_iter = 1;
-MINRES_iter = '200';
-N = 5;
+IP_iter = 20;
+MINRES_iter = 'n_linear';
+N = 20;
 Ts = 0.5;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
@@ -36,7 +36,7 @@ term_x = term_theta(1:n_states);
 term_s = term_theta(n_states+1:n_states+n_term_slack);
 
 % define objective (function of x,u,s)
-node_objective_residual = [ sqrt(1)*(x(1)); 
+node_objective_residual = [ sqrt(1)*(x(1)*(x(1))); 
                             sqrt(1)*(x(2)); 
                             sqrt(0.001)*(s(1))]; % least squares format
 term_objective_residual = [sqrt(1)*(term_x(1)); 
@@ -60,10 +60,10 @@ term_f(1) = term_x(1) - term_s(1);
 
 % define bounds on x,u,s
 % bound indeces [x' u' s']'
-upper_bounds_indeces = [2,3]-1; % in C format
+upper_bounds_indeces = [3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [2, 0.38];
-lower_bounds = [-0.38];
+upper_bounds = [ 0.5];
+lower_bounds = [ -100];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));

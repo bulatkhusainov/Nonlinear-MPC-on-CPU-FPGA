@@ -30,9 +30,11 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 	// initial guess
 	for(i = 0; i < n_all_theta; i++)
-		all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
+		all_theta[i] = 0; 
+		//all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
 	for(i = 0; i < n_all_nu; i++)
-		all_nu[i] = 0.5*sinf((float)(i+1));
+		all_nu[i] = 0;
+		//all_nu[i] = 0.5*sinf((float)(i+1));
 	for(i = 0; i < n_all_lambda; i++)
 		all_lambda[i] = 1;
 
@@ -103,9 +105,12 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 			minres(blocks, b, d_x);
 		#endif
 
-/*
+
 		// recover solution
 		rec_sol(d_all_theta, d_all_nu, d_all_lambda, d_all_theta_search, d_x, all_lambda, all_mu_over_g, all_lambda_over_g);
+
+
+
 
 		// line search
 		float alfa;
@@ -131,16 +136,13 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 		printf("iteration: %d, alfa: %f\n",ip_counter,alfa );
 
-*/
-		// print for debugging purpose
-		for(i = 0; i < n_linear; i++)
-		{
-			debug_output[i] = d_x[i];
-		}
+
 	}
 
-
-
-
+	// print for debugging purpose
+	for(i = 0; i < n_all_theta; i++)
+	{
+		debug_output[i] = all_theta[i];
+	}
 
 }
