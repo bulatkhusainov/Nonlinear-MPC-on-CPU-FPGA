@@ -13,8 +13,8 @@ void node_residual_eval(float residual[n_node_theta+n_node_eq],float node_theta[
 	float tmp_array[n_node_theta];
 
 	// bounds indices
-	int upper_bounds_indeces[1] = {2,};
-	int lower_bounds_indeces[1] = {2,};
+	int upper_bounds_indeces[2] = {2,1,};
+	int lower_bounds_indeces[2] = {2,1,};
 
 	// evaluate gradient
 	node_gradient_eval(tmp_array, node_theta); 

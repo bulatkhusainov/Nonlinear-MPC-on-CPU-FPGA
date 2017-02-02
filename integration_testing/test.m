@@ -19,7 +19,7 @@ cd ../integration_testing
 x_init = [0.5;0];
 
 % intial guess
-all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables
+all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables (make sure the guess is feasible)
 %all_theta = 0.77*sin((1:(n_node_theta*N+n_term_theta))');
 all_nu = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
 %all_nu = 0.5*sin((1:(n_states + n_node_eq*N + n_term_eq))');
@@ -29,7 +29,7 @@ all_lambda = ones(N*n_bounds, 1); % inequality dual variables
 %all_theta(902) = 12;
 %all_nu(301) = 4;
 
-mu = 0.001; % barrier parameter
+mu = 1; % barrier parameter
 
 
 n_z = size(all_theta,1) + size(all_nu,1); 
@@ -232,13 +232,15 @@ for ip_iter = 1:IP_iter
     if (n_bounds > 0)
         all_lambda = alfa*d_lambda_all + all_lambda;
     end
+    
+
         
-%     % update barrier 
-% %     if mu <= 0.001
-% %         mu = 0.001;
-% %     else
-% %         mu = mu*0.5;
-% %     end
+    % update barrier 
+    if mu <= 0.001
+        mu = 0.001;
+    else
+        mu = mu*0.5;
+    end
 end
 % 
 % plot convergence of the algorithm

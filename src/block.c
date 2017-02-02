@@ -25,11 +25,11 @@ void node_block_eval(float block[nnz_block_tril],float node_jac_2d[n_node_eq][n_
 	int num_node_f_jac[44] = {1,2,3,4,5,6,7,9,10,11,12,14,15,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,};
 
 	// node gwg reading info 
-	int col_gwg[1] = {2,};
-	int num_gwg[1] = {13,};
+	int col_gwg[2] = {1,2,};
+	int num_gwg[2] = {8,13,};
 
-	int upper_bounds_indeces[1] = {2,};
-	int lower_bounds_indeces[1] = {2,};
+	int upper_bounds_indeces[2] = {2,1,};
+	int lower_bounds_indeces[2] = {2,1,};
 
 	node_hessian_eval(node_hessian, node_theta);
 	f_jac_eval(node_jac_2d, node_theta);

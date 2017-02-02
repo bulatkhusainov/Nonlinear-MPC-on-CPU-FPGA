@@ -36,9 +36,9 @@ term_x = term_theta(1:n_states);
 term_s = term_theta(n_states+1:n_states+n_term_slack);
 
 % define objective (function of x,u,s)
-node_objective_residual = [ sqrt(1)*(x(1)*(x(1))); 
+node_objective_residual = [ sqrt(1)*(sin(x(1))); 
                             sqrt(1)*(x(2)); 
-                            sqrt(0.001)*(s(1))]; % least squares format
+                            sqrt(0.0001)*(s(1));]; % least squares format
 term_objective_residual = [sqrt(1)*(term_x(1)); 
                            sqrt(1)*(term_x(2))]; % least squares format
 
@@ -51,7 +51,8 @@ ode(2) = x(1);
 % define equality constraints with slack variables (function of x,u,s)
 %f_slack = [];
 f_slack = sym(zeros(n_node_slack_eq,1));
-f_slack(1) = u(1) - s(1);
+f_slack(1) = u(1)- s(1) ;
+
 
 %term_f = [];
 term_f = sym(zeros(n_term_eq,1));
@@ -60,10 +61,10 @@ term_f(1) = term_x(1) - term_s(1);
 
 % define bounds on x,u,s
 % bound indeces [x' u' s']'
-upper_bounds_indeces = [3]-1; % in C format
-lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [ 0.5];
-lower_bounds = [ -100];
+upper_bounds_indeces = [3,2]-1; % in C format
+lower_bounds_indeces = [3,2]-1; % in C format
+upper_bounds = [ 0.5,1];
+lower_bounds = [ -0.5,-1];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));

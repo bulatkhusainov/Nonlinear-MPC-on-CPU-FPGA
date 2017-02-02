@@ -134,7 +134,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		for(i = 0; i < n_all_lambda; i++)
 			all_lambda[i] += alfa*d_all_lambda[i];
 
-		printf("iteration: %d, alfa: %f\n",ip_counter,alfa );
+		//printf("iteration: %d, alfa: %f\n",ip_counter,alfa );
 
 
 	}

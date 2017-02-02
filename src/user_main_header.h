@@ -19,14 +19,14 @@
 #define n_node_theta 10  // # of optimization variables 
 #define n_term_theta 3  // # of optimization variables for terminal term 
 #define n_node_eq 9  // # of equality constraints per node 
-#define n_upper_bounds 1  // # of upper bounds per node 
-#define n_lower_bounds 1  // # of lower bounds per node 
-#define n_bounds 2  // # of bounds per node 
+#define n_upper_bounds 2  // # of upper bounds per node 
+#define n_lower_bounds 2  // # of lower bounds per node 
+#define n_bounds 4  // # of bounds per node 
 
 //data for optimization problem 
 #define n_all_theta 203  // # of optimization variables 
 #define n_all_nu 183  // # of equality constraints 
-#define n_all_lambda 40  // # of inequality constraints (assume no inequalities for terminal term) 
+#define n_all_lambda 80  // # of inequality constraints (assume no inequalities for terminal term) 
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 

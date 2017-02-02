@@ -134,7 +134,7 @@ if test_enable == 1
     
     
     mismatch = mex_data - block_golden;
-    if max(abs(mismatch(:))) > test_tol
+    if max(abs(mismatch(:)))/max(abs(block_golden(:))) > test_tol
         error('"node_residual_eval" C function failed the test');
     else
         disp('"node_residual_eval" C function passed the test')
