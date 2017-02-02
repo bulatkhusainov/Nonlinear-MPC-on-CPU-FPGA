@@ -3,7 +3,7 @@
 
 #include "../../../src/user_main_header.h"
 #include "../../../src/user_nnz_header.h"
-#include "../../../src/block.c"
+#include "../../../src/user_block.c"
 
 
 

@@ -57,7 +57,7 @@ end
 
 %% Generate code for constraints and jacobians evaluations
 cd ../../src 
-fileID = fopen('jacobians.c','w');
+fileID = fopen('user_jacobians.c','w');
 fprintf(fileID,'#include "user_main_header.h"\n\n');
 
 fprintf(fileID,strcat('// Butcher table data\n'));

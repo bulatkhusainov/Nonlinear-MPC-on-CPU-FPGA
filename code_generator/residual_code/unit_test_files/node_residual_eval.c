@@ -2,7 +2,7 @@
 #include "matrix.h"
 
 #include "../../../src/user_main_header.h"
-#include "../../../src/residual.c"
+#include "../../../src/user_residual.c"
 
 
 

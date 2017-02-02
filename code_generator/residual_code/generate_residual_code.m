@@ -1,7 +1,7 @@
 
 %% Generate code for residual evaluation file (without handling identity)
 cd ../../src 
-fileID = fopen('residual.c','w');
+fileID = fopen('user_residual.c','w');
 fprintf(fileID,'#include "user_main_header.h"\n\n');
 
 fprintf(fileID,'// functions prototypes \n');
@@ -115,7 +115,7 @@ if test_enable == 1
     random_mu = 10*rand();
     
     cd unit_test_files
-        mex node_residual_eval.c ../../../src/gradient.c ../../../src/jacobians.c
+        mex node_residual_eval.c ../../../src/user_gradient.c ../../../src/user_jacobians.c
         [mex_data] = node_residual_eval(random_node_theta,random_node_nu,random_node_mu_over_g,random_jac_2d,random_mu);
     cd ..
     % construct block manually to build golden output    
@@ -146,7 +146,7 @@ if test_enable == 1
     random_term_jac_2d = 10*rand(n_term_eq*n_term_theta,1);
     
     cd unit_test_files
-        mex term_residual_eval.c ../../../src/gradient.c ../../../src/jacobians.c
+        mex term_residual_eval.c ../../../src/user_gradient.c ../../../src/user_jacobians.c
         [mex_data] = term_residual_eval(random_term_theta,random_term_nu,random_term_jac_2d);
     cd ..
     % construct block manually to build golden output    

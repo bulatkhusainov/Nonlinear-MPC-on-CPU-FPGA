@@ -109,7 +109,7 @@ cd block_code
 
 %% Generate code for block evaluation file
 cd ../../src 
-fileID = fopen('block.c','w');
+fileID = fopen('user_block.c','w');
 fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n\n');
 
@@ -212,7 +212,7 @@ if test_enable == 1
     random_input1 = 10*rand(1,n_node_theta);
     random_input2 = 10*rand(1,n_bounds);
     cd unit_test_files
-        mex node_block_eval.c ../../../src/hessians.c ../../../src/jacobians.c
+        mex node_block_eval.c ../../../src/user_hessians.c ../../../src/user_jacobians.c
         [mex_data1, mex_data2] = node_block_eval(random_input1,random_input2);
         test_block = zeros(n_node_theta+n_node_eq);
         for i = 1:size(coo_block_tril,1)
@@ -248,7 +248,7 @@ if test_enable == 1
     % test "term_block_eval" C function
     random_input1 = 10*rand(1,n_term_theta);
     cd unit_test_files
-        mex term_block_eval.c ../../../src/hessians.c ../../../src/jacobians.c
+        mex term_block_eval.c ../../../src/user_hessians.c ../../../src/user_jacobians.c
         [mex_data1, mex_data2] = term_block_eval(random_input1);
         test_block = zeros(n_term_theta+n_term_eq);
         for i = 1:size(coo_term_block_tril,1)

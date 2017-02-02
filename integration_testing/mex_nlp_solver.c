@@ -4,7 +4,7 @@
 #include "../src/user_main_header.h"
 #include "../src/user_nnz_header.h"
 #include "../src/user_prototypes_header.h"
-#include "../src/nlp_solver.c"
+#include "../src/user_nlp_solver.c"
 
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[])

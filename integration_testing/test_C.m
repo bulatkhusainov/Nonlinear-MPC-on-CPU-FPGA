@@ -1,10 +1,10 @@
 tmp_str = 'mex mex_nlp_solver.c';
-tmp_str = strcat(tmp_str, ' ../src/block.c');
-tmp_str = strcat(tmp_str, ' ../src/bounds.c');
-tmp_str = strcat(tmp_str, ' ../src/gradient.c');
-tmp_str = strcat(tmp_str, ' ../src/hessians.c');
-tmp_str = strcat(tmp_str, ' ../src/jacobians.c');
-tmp_str = strcat(tmp_str, ' ../src/residual.c');
+tmp_str = strcat(tmp_str, ' ../src/user_block.c');
+tmp_str = strcat(tmp_str, ' ../src/user_bounds.c');
+tmp_str = strcat(tmp_str, ' ../src/user_gradient.c');
+tmp_str = strcat(tmp_str, ' ../src/user_hessians.c');
+tmp_str = strcat(tmp_str, ' ../src/user_jacobians.c');
+tmp_str = strcat(tmp_str, ' ../src/user_residual.c');
 tmp_str = strcat(tmp_str, ' ../src/user_mv_mult.c');
 tmp_str = strcat(tmp_str, ' ../src/user_lanczos.c');
 tmp_str = strcat(tmp_str, ' ../src/user_minres.c');

@@ -31,7 +31,7 @@ end
 
 %% Generate code for hessian evaluation file
 cd ../../src 
-fileID = fopen('hessians.c','w');
+fileID = fopen('user_hessians.c','w');
 fprintf(fileID,'#include "user_main_header.h"\n\n');
 
 fprintf(fileID,'// this function evaluates node Hessian \n');
