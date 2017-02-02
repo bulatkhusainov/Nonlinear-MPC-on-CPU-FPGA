@@ -1,4 +1,3 @@
-clear;
 
 addpath(strcat(pwd,'/auxilary_functions')); % add current folder to path to use variables_declaration.m
 

@@ -12,8 +12,9 @@ MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
 MINRES_iter = 'n_linear';
-N = 20;
-Ts = 0.5;
+%any(strcmp('dsd',fieldnames(design))) % this is to be improved
+if exist('N','var'); N = design.N; else N = 20; end;
+if exist('Ts','var'); Ts = design.Ts; else Ts = 0.5; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
 m_inputs = 1;
