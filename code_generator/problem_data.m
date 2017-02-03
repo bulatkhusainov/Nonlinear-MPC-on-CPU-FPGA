@@ -7,14 +7,15 @@
 butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
 butcher_table_beta =  [1/6; 2/3; 1/6];
 
-
+x_init = [0.5;0];
+Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
 MINRES_iter = 'n_linear';
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('N','var'); N = design.N; else N = 20; end;
-if exist('Ts','var'); Ts = design.Ts; else Ts = 0.5; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 20; end;
+if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.5; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
 m_inputs = 1;
@@ -37,9 +38,9 @@ term_x = term_theta(1:n_states);
 term_s = term_theta(n_states+1:n_states+n_term_slack);
 
 % define objective (function of x,u,s)
-node_objective_residual = [ sqrt(1)*(sin(x(1))); 
-                            sqrt(1)*(x(2)); 
-                            sqrt(0.0001)*(s(1));]; % least squares format
+node_objective_residual = sqrt(Ts)*[ sqrt(1)*(sin(x(1))); 
+                                     sqrt(1)*(x(2)); 
+                                     sqrt(0.0001)*(s(1));]; % least squares format
 term_objective_residual = [sqrt(1)*(term_x(1)); 
                            sqrt(1)*(term_x(2))]; % least squares format
 
@@ -63,12 +64,24 @@ term_f(1) = term_x(1) - term_s(1);
 % define bounds on x,u,s
 % bound indeces [x' u' s']'
 upper_bounds_indeces = [3,2]-1; % in C format
-lower_bounds_indeces = [3,2]-1; % in C format
-upper_bounds = [ 0.5,1];
-lower_bounds = [ -0.5,-1];
+lower_bounds_indeces = [3]-1; % in C format
+upper_bounds = [ 0.5,2];
+lower_bounds = [ -0.5];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));
 n_bounds = n_upper_bounds + n_lower_bounds;
 
+% optimization problem dimensions
+n_all_theta = n_node_theta*N + n_term_theta;
+n_all_nu = n_node_eq*N + n_term_eq+n_states;
+n_all_lambda = n_bounds*N;
+n_linear = n_all_theta+n_all_nu;
+
+% simulation data (calculate the required number of calculations)
+N_sim_full = floor(Tsim/Ts);
+Tsim_last = Tsim - N_sim_full*Ts;
+
+% save the workspace
+save problem_data
 

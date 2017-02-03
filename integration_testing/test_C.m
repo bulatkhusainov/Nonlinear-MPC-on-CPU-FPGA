@@ -18,7 +18,7 @@ eval(tmp_str);
 
 %tmp_var = max(size(all_lambda));
 
-%debug_output = debug_output(1:tmp_var);
+debug_output;
 
 max(abs(all_theta_C - all_theta))
 

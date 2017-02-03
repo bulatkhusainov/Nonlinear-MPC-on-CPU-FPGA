@@ -1,5 +1,6 @@
 % solve OCP problem using gradient, hessian, jacobian info from C 
 % files using mex interfaces
+clear;
 
 % generate C code, compile mex and perform unit testing
 cd ../code_generator

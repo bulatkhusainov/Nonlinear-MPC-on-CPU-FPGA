@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xd:acceleratorMap xmlns:xd="http://www.xilinx.com/xidane" xd:functionName="foo" xd:componentRef="foo" xd:initiationInterval="432" xd:clockPeriod="10.000000" xd:sequential="true" xd:hostMachine="64" xd:reset="control">
+  <xd:controlReg xd:name="control" xd:interfaceRef="s_axi_BUS_A" xd:busTypeRef="axilite" xd:type="generic_axi_lite" xd:offset="0x0"/>
+  <xd:arg xd:name="byte_block_in_offset" xd:originalName="byte_block_in_offset" xd:direction="in" xd:interfaceRef="s_axi_BUS_A" xd:busTypeRef="axilite" xd:offset="0x10" xd:handshakeRef="ap_none" xd:dataWidth="32"/>
+  <xd:arg xd:name="byte_x_in_in_offset" xd:originalName="byte_x_in_in_offset" xd:direction="in" xd:interfaceRef="s_axi_BUS_A" xd:busTypeRef="axilite" xd:offset="0x18" xd:handshakeRef="ap_none" xd:dataWidth="32"/>
+  <xd:arg xd:name="byte_y_out_out_offset" xd:originalName="byte_y_out_out_offset" xd:direction="in" xd:interfaceRef="s_axi_BUS_A" xd:busTypeRef="axilite" xd:offset="0x20" xd:handshakeRef="ap_none" xd:dataWidth="32"/>
+  <xd:arg xd:name="*(memory_inout)" xd:originalName="memory_inout" xd:direction="inout" xd:interfaceRef="m_axi_memory_inout" xd:busTypeRef="aximm" xd:arraySize="15" xd:dataWidth="32" xd:bufferDirection="inout"/>
+  <xd:latencyEstimates xd:best-case="396" xd:worst-case="431" xd:average-case="414"/>
+  <xd:resourceEstimates xd:LUT="1639" xd:FF="1611" xd:BRAM="0" xd:DSP="2"/>
+</xd:acceleratorMap>

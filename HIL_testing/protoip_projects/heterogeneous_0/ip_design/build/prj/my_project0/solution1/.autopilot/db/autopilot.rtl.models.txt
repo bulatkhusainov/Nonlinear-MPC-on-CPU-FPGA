@@ -1,0 +1,7 @@
+foo_fadd_32ns_32ns_32_5_full_dsp
+foo_block_in_int
+foo_y_out_out_int
+foo_BUS_A_s_axi
+foo_memory_inout_m_axi
+foo_foo_user
+foo

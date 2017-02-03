@@ -1,0 +1,57 @@
+<AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
+    <sourceFile name="">
+        <directive functionName="foo" label="" functionLabel="">
+            <pragma name="INTERFACE">
+                <option name="m_axi" value="" positionalBoolean="mode"/>
+                <option name="depth" value="15"/>
+                <option name="port" value="memory_inout" positionalBoolean="4"/>
+            </pragma>
+        </directive>
+        <directive functionName="foo" label="" functionLabel="">
+            <pragma name="INTERFACE">
+                <option name="s_axilite" value="" positionalBoolean="mode"/>
+                <option name="port" value="return" positionalBoolean="4"/>
+                <option name="bundle" value="BUS_A"/>
+            </pragma>
+        </directive>
+        <directive functionName="foo" label="" functionLabel="">
+            <pragma name="INTERFACE">
+                <option name="s_axilite" value="" positionalBoolean="mode"/>
+                <option name="register" value="" positionalBoolean="1"/>
+                <option name="port" value="byte_block_in_offset" positionalBoolean="4"/>
+                <option name="bundle" value="BUS_A"/>
+            </pragma>
+        </directive>
+        <directive functionName="foo" label="" functionLabel="">
+            <pragma name="INTERFACE">
+                <option name="s_axilite" value="" positionalBoolean="mode"/>
+                <option name="register" value="" positionalBoolean="1"/>
+                <option name="port" value="byte_x_in_in_offset" positionalBoolean="4"/>
+                <option name="bundle" value="BUS_A"/>
+            </pragma>
+        </directive>
+        <directive functionName="foo" label="" functionLabel="">
+            <pragma name="INTERFACE">
+                <option name="s_axilite" value="" positionalBoolean="mode"/>
+                <option name="register" value="" positionalBoolean="1"/>
+                <option name="port" value="byte_y_out_out_offset" positionalBoolean="4"/>
+                <option name="bundle" value="BUS_A"/>
+            </pragma>
+        </directive>
+        <directive functionName="foo_user" label="" functionLabel="">
+            <pragma name="INLINE">
+                <option name="off" value="" positionalBoolean="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="foo" label="input_cast_loop_block" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="foo" label="input_cast_loop_x_in" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="foo" label="output_cast_loop_y_out" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+    </sourceFile>
+</AutoPilot:ProjectResources>
+

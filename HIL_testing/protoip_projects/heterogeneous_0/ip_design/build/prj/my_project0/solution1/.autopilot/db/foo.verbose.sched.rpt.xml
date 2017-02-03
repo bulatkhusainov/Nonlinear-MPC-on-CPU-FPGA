@@ -1,0 +1,115 @@
+<profile>
+
+<section name = "Vivado HLS Report for 'foo'" level="0">
+<item name = "Date">Fri Feb  3 10:31:24 2017
+</item>
+<item name = "Version">2015.2 (Build 1266856 on Fri Jun 26 16:57:37 PM 2015)</item>
+<item name = "Project">my_project0</item>
+<item name = "Solution">solution1</item>
+<item name = "Product family">zynq</item>
+<item name = "Target device">xc7z020clg484-1</item>
+</section>
+
+<section name = "Performance Estimates" level="0">
+<item name = "Timing (ns)">
+<section name = "" level="1">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="4">Clock, Target, Estimated, Uncertainty</keys>
+<column name="ap_clk">10.00, 8.75, 1.25</column>
+</table>
+</item>
+</section>
+</item>
+<item name = "Latency (clock cycles)">
+<section name = "" level="1">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">, min, max, min, max, Type</keys>
+<column name="">396, 431, 397, 432, none</column>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="0">
+<keys size="7">Instance, Module, min, max, min, max, Type</keys>
+</table>
+</item>
+<item name = "Loop"><table name="" hasTotal="0">
+<keys size="8">Loop Name, min, max, Latency, achieved, target, Count, Pipelined</keys>
+<column name="- memcpy.foo(unsigned int, unsigned int, unsigned int, float volatile*)::block_in_int.memory_inout">6, 6, 3, 1, 1, 5, yes</column>
+<column name="- memcpy.foo(unsigned int, unsigned int, unsigned int, float volatile*)::x_in_in_int.memory_inout">6, 6, 3, 1, 1, 5, yes</column>
+<column name="- memcpy.memory_inout.y_out_out_int.gep">6, 6, 3, 1, 1, 5, yes</column>
+</table>
+</item>
+</section>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Utilization Estimates" level="0">
+<item name = "Summary"><table name="" hasTotal="1">
+<keys size="5">Name, BRAM_18K, DSP48E, FF, LUT</keys>
+<column name="Expression">-, -, -, -</column>
+<column name="FIFO">-, -, -, -</column>
+<column name="Instance">-, -, -, -</column>
+<column name="Memory">-, -, -, -</column>
+<column name="Multiplexer">-, -, -, -</column>
+<column name="Register">-, -, -, -</column>
+<specialColumn name="Available">280, 220, 106400, 53200</specialColumn>
+<specialColumn name="Utilization (%)">0, 0, 0, 0</specialColumn>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="1">
+<keys size="6">Instance, Module, BRAM_18K, DSP48E, FF, LUT</keys>
+</table>
+</item>
+<item name = "Memory"><table name="" hasTotal="1">
+<keys size="9">Memory, Module, BRAM_18K, FF, LUT, Words, Bits, Banks, W*Bits*Banks</keys>
+</table>
+</item>
+<item name = "FIFO"><table name="" hasTotal="1">
+<keys size="7">Name, BRAM_18K, FF, LUT, Depth, Bits, Size:D*B</keys>
+</table>
+</item>
+<item name = "Expression"><table name="" hasTotal="1">
+<keys size="7">Variable Name, Operation, DSP48E, FF, LUT, Bitwidth P0, Bitwidth P1</keys>
+</table>
+</item>
+<item name = "Multiplexer"><table name="" hasTotal="1">
+<keys size="5">Name, LUT, Input Size, Bits, Total Bits</keys>
+</table>
+</item>
+<item name = "Register"><table name="" hasTotal="1">
+<keys size="5">Name, FF, LUT, Bits, Const Bits</keys>
+</table>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Interface" level="0">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">RTL Ports, Dir, Bits, Protocol, Source Object, C Type</keys>
+<column name="s_axi_BUS_A_AWVALID">in, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_AWREADY">out, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_AWADDR">in, 6, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_WVALID">in, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_WREADY">out, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_WDATA">in, 32, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_WSTRB">in, 4, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_ARVALID">in, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_ARREADY">out, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_ARADDR">in, 6, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_RVALID">out, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_RREADY">in, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_RDATA">out, 32, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_RRESP">out, 2, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_BVALID">out, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_BREADY">in, 1, s_axi, BUS_A, scalar</column>
+<column name="s_axi_BUS_A_BRESP">out, 2, s_axi, BUS_A, scalar</column>
+</table>
+</item>
+</section>
+</profile>
