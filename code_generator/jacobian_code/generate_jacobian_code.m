@@ -303,7 +303,7 @@ if test_enable == 1
     cd .. 
     golden_data = f_func(random_input');
     mismatch = abs(golden_data - mex_data);
-    if max(mismatch(:)) > test_tol
+    if max(mismatch(:))/max(golden_data(:)) > test_tol
         error('"f_eval" C function failed the test');
     else
         disp('"f_eval" C function passed the test')

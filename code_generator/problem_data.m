@@ -1,11 +1,25 @@
 %% this part is problem dependent
 % define integrator Butcher table
-%butcher_table_A = [0]; % Euler integrator
-%butcher_table_beta =  [1];
+butcher_table_A = [0]; % Euler integrator
+butcher_table_beta =  [1];
 %butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
 %butcher_table_beta =  [0.5; 0.5];
-butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
-butcher_table_beta =  [1/6; 2/3; 1/6];
+%butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
+%butcher_table_beta =  [1/6; 2/3; 1/6];
+
+if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
+    if design.Integrator == 1
+        butcher_table_A = [0]; % Euler integrator
+        butcher_table_beta =  [1];
+    elseif design.Integrator == 2
+        butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
+        butcher_table_beta =  [0.5; 0.5];
+    elseif design.Integrator == 3
+        butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
+        butcher_table_beta =  [1/6; 2/3; 1/6];
+    end
+end;
+
 
 x_init = [0.5;0];
 Tsim = 10;
@@ -14,8 +28,8 @@ d_type = 'float';
 IP_iter = 20;
 MINRES_iter = 'n_linear';
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 20; end;
-if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.5; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
+if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 5; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
 m_inputs = 1;
@@ -38,15 +52,15 @@ term_x = term_theta(1:n_states);
 term_s = term_theta(n_states+1:n_states+n_term_slack);
 
 % define objective (function of x,u,s)
-node_objective_residual = sqrt(Ts)*[ sqrt(1)*(sin(x(1))); 
-                                     sqrt(1)*(x(2)); 
+node_objective_residual = sqrt(Ts)*[ sqrt(0.01)*((x(1))); 
+                                     sqrt(50)*(x(2)); 
                                      sqrt(0.0001)*(s(1));]; % least squares format
-term_objective_residual = [sqrt(1)*(term_x(1)); 
-                           sqrt(1)*(term_x(2))]; % least squares format
+term_objective_residual = [sqrt(0.01)*(term_x(1)); 
+                           sqrt(50)*(term_x(2))]; % least squares format
 
 % define ode (function of x,u)
 ode(1) = (1-x(2)^2)*x(1) - x(2) + u(1);
-ode(2) = x(1);
+ode(2) = 0.02*x(1);
 %ode(1) = x(2);
 %ode(2) = u(1);
 
@@ -63,10 +77,10 @@ term_f(1) = term_x(1) - term_s(1);
 
 % define bounds on x,u,s
 % bound indeces [x' u' s']'
-upper_bounds_indeces = [3,2]-1; % in C format
+upper_bounds_indeces = [3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [ 0.5,2];
-lower_bounds = [ -0.5];
+upper_bounds = [ 10];
+lower_bounds = [ -10];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));

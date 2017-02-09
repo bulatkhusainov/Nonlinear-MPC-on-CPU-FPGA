@@ -24,6 +24,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	float node_theta[n_node_theta];
 	float f[n_node_eq] = {0};
 
+	for(i = 0; i < n_node_eq; i++) f[i] = 0;
+
 	// input interface loop
 	for(i = 0; i < n_node_theta; i++)
 	{

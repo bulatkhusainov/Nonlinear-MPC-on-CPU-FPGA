@@ -6,7 +6,7 @@
 #define nnz_block_tril 48   
 #define nnz_node_hessian_tril 3   
 #define nnz_f_jac 44   
-#define nnz_gwg 2   
+#define nnz_gwg 1   
 
 //nnz for terminal node 
 #define nnz_term_block 6   

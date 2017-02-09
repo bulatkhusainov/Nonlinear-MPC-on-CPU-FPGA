@@ -18,6 +18,6 @@ cd ../..;
 
 
 %% calculate output data
-output = 1;
+output = [performance; cpu_time];
 
 end
