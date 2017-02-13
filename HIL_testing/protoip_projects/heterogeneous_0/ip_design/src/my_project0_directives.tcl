@@ -22,3 +22,4 @@ set_directive_pipeline "foo/input_cast_loop_x_in"
 # pipeline the for loop named "output_cast_loop_*" in foo.cpp
 set_directive_pipeline "foo/output_cast_loop_y_out"
 
+

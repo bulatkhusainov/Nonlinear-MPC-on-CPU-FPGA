@@ -40,6 +40,14 @@ if MINRES_prescaled
     fprintf(fileID, '#define MINRES_prescaled // # use/do not use prescaler \n\n');
 end
 
+fprintf(fileID, '//parallalization related parameters \n');
+fprintf(fileID, '#define PAR %d  // # of parallel processors for the main part \n',PAR);
+fprintf(fileID, '#define part_size %d  // # partition size in terms nodes \n',part_size);
+if rem_partition > 0
+fprintf(fileID, '#define rem_partition %d  // # of shooting nodes in the remainder \n',rem_partition);
+end
+fprintf(fileID, '#define heterogeneity %d  // # degree of heterogeneouty \n\n',heterogeneity);
+
 
 fprintf(fileID, '#endif');
 fclose(fileID);

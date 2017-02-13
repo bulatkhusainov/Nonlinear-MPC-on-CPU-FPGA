@@ -20,16 +20,17 @@ if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
     end
 end;
 
-
+heterogeneity = 1;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
 MINRES_iter = 'n_linear';
+PAR = 3;
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
-if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 5; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 150; end;
+if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
 m_inputs = 1;
@@ -52,15 +53,15 @@ term_x = term_theta(1:n_states);
 term_s = term_theta(n_states+1:n_states+n_term_slack);
 
 % define objective (function of x,u,s)
-node_objective_residual = sqrt(Ts)*[ sqrt(0.01)*((x(1))); 
-                                     sqrt(50)*(x(2)); 
-                                     sqrt(0.0001)*(s(1));]; % least squares format
-term_objective_residual = [sqrt(0.01)*(term_x(1)); 
-                           sqrt(50)*(term_x(2))]; % least squares format
+node_objective_residual = sqrt(Ts)*[ sqrt(1)*((x(1))); 
+                                     sqrt(1)*(x(2)); 
+                                     sqrt(0.001)*(s(1));]; % least squares format
+term_objective_residual = [sqrt(1)*(term_x(1)); 
+                           sqrt(1)*(term_x(2))]; % least squares format
 
 % define ode (function of x,u)
 ode(1) = (1-x(2)^2)*x(1) - x(2) + u(1);
-ode(2) = 0.02*x(1);
+ode(2) = x(1);
 %ode(1) = x(2);
 %ode(2) = u(1);
 
@@ -79,8 +80,8 @@ term_f(1) = term_x(1) - term_s(1);
 % bound indeces [x' u' s']'
 upper_bounds_indeces = [3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [ 10];
-lower_bounds = [ -10];
+upper_bounds = [ 0.5];
+lower_bounds = [ -0.5];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));
@@ -95,6 +96,12 @@ n_linear = n_all_theta+n_all_nu;
 % simulation data (calculate the required number of calculations)
 N_sim_full = floor(Tsim/Ts);
 Tsim_last = Tsim - N_sim_full*Ts;
+
+% parallelization/pipelining data
+part_size = ceil(N/PAR);
+PAR = floor(N/part_size);
+rem_partition = N - PAR*part_size;
+ii_required = 8;
 
 % save the workspace
 save problem_data

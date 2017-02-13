@@ -17,3 +17,6 @@ slprj/
 
 # Session info
 octave-workspace
+
+# Vivado related projects
+HIL_testing/protoip_projects/heterogeneous_0/soc_prototype/test/prj/my_project0.zedboard/*

@@ -6,7 +6,7 @@
 ================================================================
 @I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-59-generic) on Fri Feb 03 10:30:24 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Thu Feb 09 14:37:32 GMT 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0'
 @I [HLS-10] Creating and opening project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0'.
 @I [HLS-10] Adding design file '../../src/foo_data.h' to the project
@@ -27,7 +27,7 @@
 @I [XFORM-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:74:3).
 @I [XFORM-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:101:3).
 @I [XFORM-811] Inferring bus burst write of length 5 on port 'memory_inout' (../../src/foo.cpp:138:3).
-@I [HLS-111] Elapsed time: 8.25402 seconds; current memory usage: 160 MB.
+@I [HLS-111] Elapsed time: 8.17056 seconds; current memory usage: 160 MB.
 @I [HLS-10] Starting hardware synthesis ...
 @I [HLS-10] Synthesizing 'foo' ...
 @I [HLS-10] ----------------------------------------------------------------
@@ -35,7 +35,7 @@
 @I [HLS-10] ----------------------------------------------------------------
 @I [SCHED-11] Starting scheduling ...
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.040946 seconds; current memory usage: 161 MB.
+@I [HLS-111] Elapsed time: 0.038478 seconds; current memory usage: 161 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -44,7 +44,7 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.01458 seconds; current memory usage: 161 MB.
+@I [HLS-111] Elapsed time: 0.014764 seconds; current memory usage: 161 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -56,7 +56,7 @@
 @I [SCHED-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.gep'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.040742 seconds; current memory usage: 161 MB.
+@I [HLS-111] Elapsed time: 0.043028 seconds; current memory usage: 161 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -65,13 +65,13 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.026964 seconds; current memory usage: 161 MB.
+@I [HLS-111] Elapsed time: 0.028631 seconds; current memory usage: 161 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
 @I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
-@I [HLS-111] Elapsed time: 0.038764 seconds; current memory usage: 162 MB.
+@I [HLS-111] Elapsed time: 0.040718 seconds; current memory usage: 162 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -81,7 +81,7 @@
 @I [RTGEN-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
 @I [RTGEN-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
 @I [RTGEN-100] Finished creating RTL model for 'foo'.
-@I [HLS-111] Elapsed time: 0.071027 seconds; current memory usage: 164 MB.
+@I [HLS-111] Elapsed time: 0.073416 seconds; current memory usage: 164 MB.
 @I [RTMG-278] Implementing memory 'foo_block_in_int_ram' using distributed RAMs with power-on initialization.
 @I [RTMG-278] Implementing memory 'foo_y_out_out_int_ram' using distributed RAMs.
 @I [HLS-10] Finished generating all RTL models.
@@ -109,11 +109,11 @@ INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_3_ful
     ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 
 source /home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/labtool_webtalk.tcl -notrace
-INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Fri Feb  3 10:31:36 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
-INFO: [Common 17-206] Exiting Webtalk at Fri Feb  3 10:31:36 2017...
+INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Thu Feb  9 14:38:39 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Thu Feb  9 14:38:39 2017...
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Fri Feb  3 10:31:36 2017...
-@I [HLS-112] Total elapsed time: 86.612 seconds; peak memory usage: 164 MB.
+INFO: [Common 17-206] Exiting Vivado at Thu Feb  9 14:38:39 2017...
+@I [HLS-112] Total elapsed time: 81.531 seconds; peak memory usage: 164 MB.
 @I [LIC-101] Checked in feature [ap_opencl]
