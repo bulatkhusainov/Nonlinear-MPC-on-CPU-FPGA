@@ -36,7 +36,12 @@ float vv_mult1(float *x_1, float *x_2)
 
 
 	#ifdef MINRES_prescaled
-		mv_mult_prescaled(A_mult_v, blocks, out_blocks,v_current); // calculate mat-vec product
+		#if heterogeneity > 0
+				
+		#else
+			// SW implementation
+			mv_mult_prescaled(A_mult_v, blocks, out_blocks,v_current); // calculate mat-vec product
+		#endif
 	#else
 		mv_mult(A_mult_v,blocks,v_current); // calculate mat-vec product
 	#endif

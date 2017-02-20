@@ -17,7 +17,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	float all_lambda_over_g[n_all_lambda];
 	float d_all_theta_search[n_all_lambda];
 
-	float mu = 0.001; // barrier parameter
+	float mu = 1; // barrier parameter
 
 	float blocks[N*nnz_block_tril + nnz_term_block_tril]={0}; // linear system for calculating Newton's step
 	float b[n_all_theta + n_all_nu]={0,}; // residual
@@ -36,11 +36,9 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 	// initial guess
 	for(i = 0; i < n_all_theta; i++)
-		all_theta[i] = 0; 
-		//all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
+		all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
 	for(i = 0; i < n_all_nu; i++)
-		all_nu[i] = 0;
-		//all_nu[i] = 0.5*sinf((float)(i+1));
+		all_nu[i] = 0.5*sinf((float)(i+1));
 	for(i = 0; i < n_all_lambda; i++)
 		all_lambda[i] = 1;
 
@@ -106,11 +104,15 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 				local_ptr1[j] += local_ptr2[j];
 		}
 
-		// evaluate mat vec multiplication
+		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
 
 
+		// debugging code starts
+		prescaler(blocks, b, d_x);
+		// debugging code ends
 
+/*
 
 		// solve linear system with minres
 		#ifdef MINRES_prescaled
@@ -145,14 +147,14 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 			all_lambda[i] += alfa*d_all_lambda[i];
 
 		//printf("iteration: %d, alfa: %f\n",ip_counter,alfa );
-
+*/
 
 	}
 
 	// print for debugging purpose
-	for(i = 0; i < n_all_theta; i++)
+	for(i = 0; i < n_all_theta+n_all_nu; i++)
 	{
-		//debug_output[i] = all_theta[i];
+		debug_output[i] = d_x[i];
 	}
 
 }

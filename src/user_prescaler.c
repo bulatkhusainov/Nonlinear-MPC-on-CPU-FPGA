@@ -95,7 +95,7 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	// apply prescaler to b[] 
 	for(i = 0; i < n_all_theta+n_all_nu; i++)
 		b[i] = b[i]*M[i];
-
+/*
 	// solve scaled problem 
 	// ifdef is to ensure propper compilation in unprescaled mode 
 	#ifdef MINRES_prescaled
@@ -104,6 +104,7 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	// recover solution 
 	for(i = 0; i < n_all_theta+n_all_nu; i++)
 		x_current[i] *= M[i];
+*/
 
-	//mv_mult_prescaled(x_current,blocks, out_blocks,b);
+	mv_mult_prescaled(x_current,blocks, out_blocks,b);
 }

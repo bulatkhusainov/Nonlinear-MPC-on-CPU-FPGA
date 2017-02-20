@@ -3,9 +3,9 @@
 // this function evaluates node Hessian 
 void node_hessian_eval(float node_hessian[n_node_theta][n_node_theta],float node_theta[n_node_theta])
 {
-	node_hessian[0][0] =   1.0/5.0;
-	node_hessian[1][1] =   1.0/5.0;
-	node_hessian[3][3] =   2.0E-4;
+	node_hessian[0][0] =   1.0/5.0E1;
+	node_hessian[1][1] =   1.0/5.0E1;
+	node_hessian[3][3] =   2.0E-5;
 }
 
 // this function evaluates terminal Hessian 

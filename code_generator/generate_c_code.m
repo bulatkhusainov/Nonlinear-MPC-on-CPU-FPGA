@@ -59,5 +59,5 @@ cd ..;
 
 % generate C file for prescaler
 cd prescaler_code;
-generate_prescaler_code;
+%generate_prescaler_code;
 cd ..;

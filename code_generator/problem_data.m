@@ -20,17 +20,17 @@ if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
     end
 end;
 
-heterogeneity = 1;
+heterogeneity = 0;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
-IP_iter = 20;
+IP_iter = 1;
 MINRES_iter = 'n_linear';
-PAR = 3;
+PAR = 2;
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 150; end;
-if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 2; end;
+if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.01; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
 m_inputs = 1;
@@ -80,8 +80,8 @@ term_f(1) = term_x(1) - term_s(1);
 % bound indeces [x' u' s']'
 upper_bounds_indeces = [3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [ 0.5];
-lower_bounds = [ -0.5];
+upper_bounds = [ 3];
+lower_bounds = [ -3];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));
