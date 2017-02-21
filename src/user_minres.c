@@ -64,8 +64,6 @@ float vv_mult(float *x_1, float *x_2)
 	for(i = 0; i < n_linear; i++)
 		v_tmp2[i] = v_tmp2[i]/beta_current;
 	sc_in[0] = beta_current;
-
-
 	#ifdef MINRES_prescaled
 		lanczos(1, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 	#else

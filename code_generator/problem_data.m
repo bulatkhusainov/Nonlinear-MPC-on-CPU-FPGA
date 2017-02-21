@@ -29,7 +29,7 @@ IP_iter = 20;
 MINRES_iter = 'n_linear';
 PAR = 5;
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 50; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 51; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;

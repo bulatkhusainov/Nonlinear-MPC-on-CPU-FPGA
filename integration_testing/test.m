@@ -237,8 +237,8 @@ for ip_iter = 1:IP_iter
 
         
     % update barrier 
-    if mu <= 0.00001
-        mu = 0.00001;
+    if mu <= 0.001
+        mu = 0.001;
     else
         mu = mu*0.1;
     end
