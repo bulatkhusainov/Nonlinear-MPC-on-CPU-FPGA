@@ -1,6 +1,7 @@
 #include "user_main_header.h"
 #include "user_nnz_header.h"
 #include "user_structure_header.h"
+#include "user_prototypes_header.h"
 
 
 void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float out_block[(N+1)*n_states],float x_in[n_all_theta+n_all_nu])
@@ -23,7 +24,7 @@ void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*n
 
 	// pack matrix into structure
 	for(i = 0, k = 0; i < PAR; i++)
-		for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++, k++) block_struct.mat[i][j] = block[k];
+		for(j = 0; j < part_size*nnz_block_tril; j++, k++) block_struct.mat[i][j] = block[k];
 	#ifdef rem_partition		
 		for(i = 0; i < rem_partition*nnz_block_tril; i++, k++) block_struct.mat_rem[i] = block[k];
 	#endif
@@ -31,6 +32,7 @@ void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*n
 
 	// call the function
 	mv_mult_prescaled_HW( &y_out_struct, &block_struct, out_block, &x_in_struct);
+
 
 
 	// unpack structure into a vector

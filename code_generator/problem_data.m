@@ -1,9 +1,9 @@
 %% this part is problem dependent
 % define integrator Butcher table
-butcher_table_A = [0]; % Euler integrator
-butcher_table_beta =  [1];
-%butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
-%butcher_table_beta =  [0.5; 0.5];
+%butcher_table_A = [0]; % Euler integrator
+%butcher_table_beta =  [1];
+butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
+butcher_table_beta =  [0.5; 0.5];
 %butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
 %butcher_table_beta =  [1/6; 2/3; 1/6];
 
@@ -20,17 +20,17 @@ if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
     end
 end;
 
-heterogeneity = 0;
+heterogeneity = 1;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
-IP_iter = 1;
+IP_iter = 20;
 MINRES_iter = 'n_linear';
-PAR = 2;
+PAR = 5;
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 2; end;
-if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.01; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 50; end;
+if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;
 m_inputs = 1;
@@ -80,8 +80,8 @@ term_f(1) = term_x(1) - term_s(1);
 % bound indeces [x' u' s']'
 upper_bounds_indeces = [3]-1; % in C format
 lower_bounds_indeces = [3]-1; % in C format
-upper_bounds = [ 3];
-lower_bounds = [ -3];
+upper_bounds = [ 0.5];
+lower_bounds = [ -0.5];
 
 n_upper_bounds = max(size(upper_bounds_indeces));
 n_lower_bounds = max(size(lower_bounds_indeces));
@@ -101,7 +101,7 @@ Tsim_last = Tsim - N_sim_full*Ts;
 part_size = ceil(N/PAR);
 PAR = floor(N/part_size);
 rem_partition = N - PAR*part_size;
-ii_required = 8;
+ii_required = 1;
 
 % save the workspace
 save problem_data

@@ -18,6 +18,10 @@ problem_data;
 % generate header file for all C files
 generate_header;
 
+% generate header file for structures
+generate_structure_header;
+
+% generate C file for gradient evaluation
 cd gradient_code;
 generate_gradient_code;
 cd ..;
@@ -59,5 +63,5 @@ cd ..;
 
 % generate C file for prescaler
 cd prescaler_code;
-%generate_prescaler_code;
+generate_prescaler_code;
 cd ..;

@@ -5,8 +5,8 @@ void node_bounds_eval(float node_bounds[n_bounds],float node_theta[n_node_theta]
 {
 	int upper_bounds_indeces[1] = {2,};
 	int lower_bounds_indeces[1] = {2,};
-	float upper_bounds[1] = {3.0000000000000000,};
-	float lower_bounds[1] = {-3.0000000000000000,};
+	float upper_bounds[1] = {0.5000000000000000,};
+	float lower_bounds[1] = {-0.5000000000000000,};
 
 	int i, j;
 

@@ -20,10 +20,10 @@ cd ../integration_testing
 x_init = [0.5;0];
 
 % intial guess
-%all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables (make sure the guess is feasible)
-all_theta = 0.77*sin((1:(n_node_theta*N+n_term_theta))');
-%all_nu = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
-all_nu = 0.5*sin((1:(n_states + n_node_eq*N + n_term_eq))');
+all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables (make sure the guess is feasible)
+%all_theta = 0.77*sin((1:(n_node_theta*N+n_term_theta))');
+all_nu = zeros(n_states + n_node_eq*N + n_term_eq,1); % equality dual variables
+%all_nu = 0.5*sin((1:(n_states + n_node_eq*N + n_term_eq))');
 all_lambda = ones(N*n_bounds, 1); % inequality dual variables
 
 
@@ -165,7 +165,7 @@ for ip_iter = 1:IP_iter
     mu_store(ip_iter) = mu;
     
     % solve a system on linear equations
-    if true
+    if false
         debug_gold = sum(abs(A'));
         M = sqrt(diag(sum(abs(A'))))^-1;
         d_z = minres(M*A*M,M*b,[],round(max(size(A))));
@@ -175,104 +175,104 @@ for ip_iter = 1:IP_iter
     else
         d_z = A\b;
     end
-% 
-%     % extract d_theta_all and d_nu_all
-%     d_theta_all = zeros(size(all_theta));
-%     d_nu_all = zeros(size(all_nu));
-%     for i=1:N
-%         d_theta_all((1:n_node_theta) + (i-1)*n_node_theta) = d_z((1:n_node_theta) + n_states + (i-1)*(n_node_theta+n_node_eq));
-%     end
-%     d_theta_all((1:n_term_theta) + (N)*n_node_theta) = d_z((1:n_term_theta) + n_states + (N)*(n_node_theta+n_node_eq));
-% 
-%     d_nu_all(1:n_states) = d_z(1:n_states);
-%     for i=1:N
-%         d_nu_all((1:n_node_eq) + n_states + (i-1)*n_node_eq) = d_z((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
-%     end
-%     d_nu_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
-%     
-%     % recover d_lambda_all
-%     if (n_bounds > 0)
-%         d_lambda_all = zeros(N*n_bounds, 1);
-%         for i = 1:N
-%             d_theta_local = d_theta_all((1:n_node_theta)+(i-1)*(n_node_theta) );
-%             tmp_vector_upper = d_theta_local(upper_bounds_indeces+1);
-%             tmp_vector_lower = -d_theta_local(lower_bounds_indeces+1);
-%             tmp_vector = [tmp_vector_upper; tmp_vector_lower];
-%             tmp_vector = all_lambda((1:n_bounds) + (i-1)*n_bounds).*tmp_vector;
-%             tmp_vector = mu*ones(n_bounds,1) + tmp_vector;
-%             % evaluate bound constraints
-%             node_bounds = node_bounds_eval(all_theta((1:n_node_theta)+(i-1)*(n_node_theta) ));
-%             tmp_vector = tmp_vector ./ node_bounds;
-%             d_lambda_all((1:n_bounds) + (i-1)*n_bounds) = -all_lambda((1:n_bounds) + (i-1)*n_bounds) - tmp_vector;
-%         end
-%     end
-% 
-%     
-%     % line search (required only if bounds are present)
-%     alfa = 1;
-%     if (n_bounds > 0)
-%         d_g_search = zeros(N*n_bounds,1);
-%         g_all = zeros(N*n_bounds,1);
-%         for i = 1:N
-%             d_theta_local = d_theta_all((1:n_node_theta)+(i-1)*(n_node_theta) );
-%             tmp_vector_upper = d_theta_local(upper_bounds_indeces+1);
-%             tmp_vector_lower = -d_theta_local(lower_bounds_indeces+1);
-%             d_g_search((1:n_bounds) + (i-1)*n_bounds) = [tmp_vector_upper; tmp_vector_lower];
-%             g_all((1:n_bounds) + (i-1)*n_bounds) = node_bounds_eval(all_theta((1:n_node_theta)+(i-1)*(n_node_theta) ));
-%         end
-%         
-%   
-%         while ( max(g_all + alfa*d_g_search) > 0 || min(all_lambda + alfa*d_lambda_all) < 0)
-%             alfa = alfa*0.9;
-%         end
-%     end
-%  
-%     % perform step
-%     all_theta = alfa*d_theta_all + all_theta;
-%     all_nu = alfa*d_nu_all + all_nu;
-%     if (n_bounds > 0)
-%         all_lambda = alfa*d_lambda_all + all_lambda;
-%     end
-%     
-% 
-%         
-%     % update barrier 
-%     if mu <= 0.001
-%         mu = 0.001;
-%     else
-%         mu = mu*0.5;
-%     end
+
+    % extract d_theta_all and d_nu_all
+    d_theta_all = zeros(size(all_theta));
+    d_nu_all = zeros(size(all_nu));
+    for i=1:N
+        d_theta_all((1:n_node_theta) + (i-1)*n_node_theta) = d_z((1:n_node_theta) + n_states + (i-1)*(n_node_theta+n_node_eq));
+    end
+    d_theta_all((1:n_term_theta) + (N)*n_node_theta) = d_z((1:n_term_theta) + n_states + (N)*(n_node_theta+n_node_eq));
+
+    d_nu_all(1:n_states) = d_z(1:n_states);
+    for i=1:N
+        d_nu_all((1:n_node_eq) + n_states + (i-1)*n_node_eq) = d_z((1:n_node_eq) + n_states + n_node_theta + (i-1)*(n_node_theta+n_node_eq));
+    end
+    d_nu_all((1:n_term_eq) + n_states + N*n_node_eq) = d_z((1:n_term_eq) + n_states + n_term_theta + N*(n_node_theta+n_node_eq));
+    
+    % recover d_lambda_all
+    if (n_bounds > 0)
+        d_lambda_all = zeros(N*n_bounds, 1);
+        for i = 1:N
+            d_theta_local = d_theta_all((1:n_node_theta)+(i-1)*(n_node_theta) );
+            tmp_vector_upper = d_theta_local(upper_bounds_indeces+1);
+            tmp_vector_lower = -d_theta_local(lower_bounds_indeces+1);
+            tmp_vector = [tmp_vector_upper; tmp_vector_lower];
+            tmp_vector = all_lambda((1:n_bounds) + (i-1)*n_bounds).*tmp_vector;
+            tmp_vector = mu*ones(n_bounds,1) + tmp_vector;
+            % evaluate bound constraints
+            node_bounds = node_bounds_eval(all_theta((1:n_node_theta)+(i-1)*(n_node_theta) ));
+            tmp_vector = tmp_vector ./ node_bounds;
+            d_lambda_all((1:n_bounds) + (i-1)*n_bounds) = -all_lambda((1:n_bounds) + (i-1)*n_bounds) - tmp_vector;
+        end
+    end
+
+    
+    % line search (required only if bounds are present)
+    alfa = 1;
+    if (n_bounds > 0)
+        d_g_search = zeros(N*n_bounds,1);
+        g_all = zeros(N*n_bounds,1);
+        for i = 1:N
+            d_theta_local = d_theta_all((1:n_node_theta)+(i-1)*(n_node_theta) );
+            tmp_vector_upper = d_theta_local(upper_bounds_indeces+1);
+            tmp_vector_lower = -d_theta_local(lower_bounds_indeces+1);
+            d_g_search((1:n_bounds) + (i-1)*n_bounds) = [tmp_vector_upper; tmp_vector_lower];
+            g_all((1:n_bounds) + (i-1)*n_bounds) = node_bounds_eval(all_theta((1:n_node_theta)+(i-1)*(n_node_theta) ));
+        end
+        
+  
+        while ( max(g_all + alfa*d_g_search) > 0 || min(all_lambda + alfa*d_lambda_all) < 0)
+            alfa = alfa*0.9;
+        end
+    end
+ 
+    % perform step
+    all_theta = alfa*d_theta_all + all_theta;
+    all_nu = alfa*d_nu_all + all_nu;
+    if (n_bounds > 0)
+        all_lambda = alfa*d_lambda_all + all_lambda;
+    end
+    
+
+        
+    % update barrier 
+    if mu <= 0.00001
+        mu = 0.00001;
+    else
+        mu = mu*0.1;
+    end
 end
-% 
-% % plot convergence of the algorithm
-% subplot(3,1,1);
-% plot(0:(IP_iter-1), r_dual_store);
-% title('optimality error');
-% subplot(3,1,2);
-% plot(0:(IP_iter-1), r_eq_store);
-% title('feasibility error');
-% subplot(3,1,3);
-% plot(0:(IP_iter-1), r_slackness_store,0:(IP_iter-1),mu_store, '--');
-% title('complementary slackness');
-% 
-% 
-% %plot solution
-% figure
-% x_trajectory = zeros(n_states,N+1);
-% u_trajectory = zeros(m_inputs,N);
-% s_trajectory = zeros(n_node_slack,N);
-% for i=1:N
-%     x_trajectory(:,i) = all_theta((1:n_states) + (i-1)*n_node_theta);
-%     u_trajectory(:,i) = all_theta((1:m_inputs) + n_states + (i-1)*n_node_theta);
-%     s_trajectory(:,i) = all_theta((1:n_node_slack) + n_states + m_inputs + (i-1)*n_node_theta);
-% end
-% x_trajectory(:,N+1) = all_theta((1:n_states) + (N)*n_node_theta);
-% plot((0:N), x_trajectory(1,:)); % first state
-% hold on
-% plot((0:N), x_trajectory(2,:)); % second state
-% stairs((0:N-1), u_trajectory(1,:)) % first input
-% %plot((0:N-1), s_trajectory(1,:)) % first slack
-% legend('state 1', 'state 2','input 1');
+
+% plot convergence of the algorithm
+subplot(3,1,1);
+plot(0:(IP_iter-1), r_dual_store);
+title('optimality error');
+subplot(3,1,2);
+plot(0:(IP_iter-1), r_eq_store);
+title('feasibility error');
+subplot(3,1,3);
+plot(0:(IP_iter-1), r_slackness_store,0:(IP_iter-1),mu_store, '--');
+title('complementary slackness');
+
+
+%plot solution
+figure
+x_trajectory = zeros(n_states,N+1);
+u_trajectory = zeros(m_inputs,N);
+s_trajectory = zeros(n_node_slack,N);
+for i=1:N
+    x_trajectory(:,i) = all_theta((1:n_states) + (i-1)*n_node_theta);
+    u_trajectory(:,i) = all_theta((1:m_inputs) + n_states + (i-1)*n_node_theta);
+    s_trajectory(:,i) = all_theta((1:n_node_slack) + n_states + m_inputs + (i-1)*n_node_theta);
+end
+x_trajectory(:,N+1) = all_theta((1:n_states) + (N)*n_node_theta);
+plot((0:N), x_trajectory(1,:)); % first state
+hold on
+plot((0:N), x_trajectory(2,:)); % second state
+stairs((0:N-1), u_trajectory(1,:)) % first input
+%plot((0:N-1), s_trajectory(1,:)) % first slack
+legend('state 1', 'state 2','input 1');
 
 
 %% compile and test full C implementation

@@ -2,7 +2,7 @@
 #define STRUCT_HEADER
 
 typedef struct part_vector_tag { 
-	float vec0 [n_states]; 
+	float vec0[n_states]; 
 	float vec[PAR][part_size*(n_node_theta+n_node_eq)]; 
 	float vec_term[n_term_theta+n_term_eq]; 
 } part_vector; 

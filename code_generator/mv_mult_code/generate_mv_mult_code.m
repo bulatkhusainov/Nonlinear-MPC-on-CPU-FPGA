@@ -1,16 +1,23 @@
 %schedule for pipelining
-indeces.row_block = row_block; indeces.col_block = col_block; indeces.num_block = num_block;
-[ indeces_sched, ii_achieved ] = schedule_pipeline( indeces, ii_required, n_node_theta + n_node_eq);
-row_block_sched = indeces_sched.row_block_sched;
-col_block_sched = indeces_sched.col_block_sched;
-num_block_sched = indeces_sched.num_block_sched;
+% indeces.row_block = row_block; indeces.col_block = col_block; indeces.num_block = num_block;
+% [ indeces_sched, ii_achieved ] = schedule_pipeline( indeces, ii_required, n_node_theta + n_node_eq);
+% row_block_sched = indeces_sched.row_block_sched;
+% col_block_sched = indeces_sched.col_block_sched;
+% num_block_sched = indeces_sched.num_block_sched;
+% 
+% indeces.row_block = row_term_block; indeces.col_block = col_term_block; indeces.num_block = num_term_block;
+% [ indeces_sched, ii_achieved ] = schedule_pipeline( indeces, ii_required, n_term_theta + n_term_eq);
+% row_term_block_sched = indeces_sched.row_block_sched; 
+% col_term_block_sched = indeces_sched.col_block_sched; 
+% num_term_block_sched = indeces_sched.num_block_sched; 
 
-indeces.row_block = row_term_block; indeces.col_block = col_term_block; indeces.num_block = num_term_block;
-[ indeces_sched, ii_achieved ] = schedule_pipeline( indeces, ii_required, n_term_theta + n_term_eq);
-row_term_block_sched = indeces_sched.row_block_sched; 
-col_term_block_sched = indeces_sched.col_block_sched; 
-num_term_block_sched = indeces_sched.num_block_sched; 
+row_block_sched = row_block;
+col_block_sched = col_block;
+num_block_sched = num_block;
 
+row_term_block_sched = row_term_block; 
+col_term_block_sched = col_term_block; 
+num_term_block_sched = num_term_block; 
 
 cd ../../src 
 %% Generate code for matrix vector calculation (no prescaler)
@@ -197,28 +204,28 @@ fprintf(fileID,strcat('\t','for(i = n_node_theta+n_node_eq, l=1; i < (n_node_the
 fprintf(fileID,strcat('\t\t','for(j = 0; j < n_states; j++)\n'));
 fprintf(fileID,strcat('\t\t\t','for(k = 0; k < PAR; k++)\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t\t','y_out->vec[k][i+j-n_node_eq] = x_in->vec[k][i+j]*out_block[k*part_size+l*n_states+j];\n'));
-fprintf(fileID,strcat('\t\t\t\t','y_out->vec[k][i+j] = x_in->vec[k][i+j-n_node_eq]*out_block[k*part_size+l*n_states+j];\n'));
+fprintf(fileID,strcat('\t\t\t\t','y_out->vec[k][i+j-n_node_eq] = x_in->vec[k][i+j]*out_block[(k*part_size+l)*n_states+j];\n'));
+fprintf(fileID,strcat('\t\t\t\t','y_out->vec[k][i+j] = x_in->vec[k][i+j-n_node_eq]*out_block[(k*part_size+l)*n_states+j];\n'));
 fprintf(fileID,strcat('\t\t\t','}\n\n'));
 
 fprintf(fileID,strcat('\t','#ifdef rem_partition\n'));
 fprintf(fileID,strcat('\t','// glue remainder partition\n'));
 fprintf(fileID,strcat('\t','for(i = 0; i < n_states; i++){\n'));
-fprintf(fileID,strcat('\t\t','y_out->vec[PAR-1][n_node_theta+i] = x_in->vec_rem[i]*out_block[PAR*partsize*n_states + i];\n'));
-fprintf(fileID,strcat('\t\t','y_out->vec_rem[i] = x_in->vec[PAR-1][n_node_theta+i]*out_block[PAR*partsize*n_states + i];}\n\n'));
+fprintf(fileID,strcat('\t\t','y_out->vec[PAR-1][part_size*(n_node_theta+n_node_eq) - n_node_eq+i] = x_in->vec_rem[i]*out_block[PAR*part_size*n_states + i];\n'));
+fprintf(fileID,strcat('\t\t','y_out->vec_rem[i] = x_in->vec[PAR-1][part_size*(n_node_theta+n_node_eq)-n_node_eq+i]*out_block[PAR*part_size*n_states + i];}\n\n'));
 
 fprintf(fileID,strcat('\t','// handle interior of remainder partition\n'));
-fprintf(fileID,strcat('\t','for(i=(n_node_theta+n_node_eq),l=PAR*part_size*n_states; i < (n_node_theta+n_node_eq)*rem_partition; i+=(n_node_theta+n_node_eq), l+=n_states)\n'));
+fprintf(fileID,strcat('\t','for(i=(n_node_theta+n_node_eq),l=(PAR*part_size+1)*n_states; i < (n_node_theta+n_node_eq)*rem_partition; i+=(n_node_theta+n_node_eq), l+=n_states)\n'));
 fprintf(fileID,strcat('\t\t','for(j = 0; j < n_states; j++)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t','y_out->vec_rem[i-n_node_eq+j] = x_in->vec_rem[i+j]*out_block[l+j];\n'));
-fprintf(fileID,strcat('\t\t\t','y_out->vec_rem[i+j] = x_in->vec_rem[[i-n_node_eq+j]*out_block[l+j];\n'));
+fprintf(fileID,strcat('\t\t\t','y_out->vec_rem[i+j] = x_in->vec_rem[i-n_node_eq+j]*out_block[l+j];\n'));
 fprintf(fileID,strcat('\t\t','}\n\n'));
 
 fprintf(fileID,strcat('\t','// glue terminal partition\n'));
 fprintf(fileID,strcat('\t','for(i = 0; i < n_states; i++){\n'));
-fprintf(fileID,strcat('\t\t','y_out->vec_rem[rem_partition*(n_node_theta+n_node_eq)-n_node_eq + i] = x_in->vec_term[i]*out_block[(PAR*part_size+rem_size)*n_states + i];\n'));
-fprintf(fileID,strcat('\t\t','y_out->vec_term[i] = x_in->vec_rem[rem_partition*(n_node_theta+n_node_eq)-n_node_eq + i]*out_block[(PAR*part_size+rem_size)*n_states + i];}\n\n'));
+fprintf(fileID,strcat('\t\t','y_out->vec_rem[rem_partition*(n_node_theta+n_node_eq)-n_node_eq + i] = x_in->vec_term[i]*out_block[(PAR*part_size+rem_partition)*n_states + i];\n'));
+fprintf(fileID,strcat('\t\t','y_out->vec_term[i] = x_in->vec_rem[rem_partition*(n_node_theta+n_node_eq)-n_node_eq + i]*out_block[(PAR*part_size+rem_partition)*n_states + i];}\n\n'));
 
 fprintf(fileID,strcat('\t','#else\n'));
 fprintf(fileID,strcat('\t','// glue terminal partition\n'));
@@ -244,12 +251,22 @@ fprintf(fileID,strcat('\t\t\t\t','y_out->vec[k][i_offset1+row_block_sched[j]] +=
 fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t','}\n\n'));
 
+fprintf(fileID,strcat('\t','#ifdef rem_partition\n'));
+fprintf(fileID,strcat('\t','for(i = 0; i < rem_partition; i++)\n'));
+fprintf(fileID,strcat('\t','{\n'));
+fprintf(fileID,strcat('\t\t','i_offset1 = i*(n_node_theta+n_node_eq);\n'));
+fprintf(fileID,strcat('\t\t','i_offset2 = i*nnz_block_tril;\n'));
+fprintf(fileID,strcat('\t\t','for(j = 0; j < nnz_block; j++)\n'));
+fprintf(fileID,strcat('\t\t','{\n'));
+fprintf(fileID,strcat('\t\t\t','y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];\n'));
+fprintf(fileID,strcat('\t\t','}\n'));
+fprintf(fileID,strcat('\t','}\n'));
+fprintf(fileID,strcat('\t','#endif\n'));
+
 fprintf(fileID,strcat('\t','// handle the terminal block\n'));
-fprintf(fileID,strcat('\t','i_offset1 = n_states + N*(n_node_theta+n_node_eq);\n'));
-fprintf(fileID,strcat('\t','i_offset2 = N*nnz_block_tril;\n'));
 fprintf(fileID,strcat('\t','for(j = 0; j < nnz_term_block; j++)\n'));
 fprintf(fileID,strcat('\t','{\n'));
-fprintf(fileID,strcat('\t\t','y_out[i_offset1+row_term_block_sched[j]] += block[i_offset2 + num_term_block_sched[j]]*x_in->vec[i_offset1+col_term_block_sched[j]];\n'));
+fprintf(fileID,strcat('\t\t','y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];\n'));
 fprintf(fileID,strcat('\t','}\n'));
 
 fprintf(fileID,'}\n');
