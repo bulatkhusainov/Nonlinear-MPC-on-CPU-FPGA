@@ -30,14 +30,14 @@
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 
-#define IP_iter 1  // # of interior point iterations 
-#define MINRES_iter 1 // # of MINRES iterations 
+#define IP_iter 20  // # of interior point iterations 
+#define MINRES_iter n_linear // # of MINRES iterations 
 #define MINRES_prescaled // # use/do not use prescaler 
 
 //parallalization related parameters 
 #define PAR 3  // # of parallel processors for the main part 
 #define part_size 3  // # partition size in terms nodes 
 #define rem_partition 2  // # of shooting nodes in the remainder 
-#define heterogeneity 1  // # degree of heterogeneouty 
+#define heterogeneity 0  // # degree of heterogeneouty 
 
 #endif

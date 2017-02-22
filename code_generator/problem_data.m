@@ -20,13 +20,13 @@ if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
     end
 end;
 
-heterogeneity = 1;
+heterogeneity = 2;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
-IP_iter = 1;
-MINRES_iter = '1';
+IP_iter = 20;
+MINRES_iter = 'n_linear';
 PAR = 5;
 %any(strcmp('dsd',fieldnames(design))) % this is to be improved
 if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 11; end;

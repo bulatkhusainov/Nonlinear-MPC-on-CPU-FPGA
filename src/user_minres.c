@@ -69,18 +69,25 @@ float vv_mult(float *x_1, float *x_2)
 	sc_in[0] = beta_current;
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 1
-			wrap_lanczos_HW(1, blocks, out_blocks, v_tmp2, v_current_alg, sc_in, sc_out); // HW implementation
+			wrap_lanczos_HW(1, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
 		#else
 			lanczos(1, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out); // SW implementation
 		#endif
 	#else
 		lanczos(1, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 	#endif
+
+	for(i = 0; i < n_linear; i++)
+	{
+		//printf("error[%d] = %f\n", i, v_current_HW[i] - v_current[i]);
+	}
 	
 
 	// main loop
 	for(counter = 0; counter < MINRES_iter; counter++)
-	{
+	{	
+
+
 		// extract reqired info from the lanczos kernel
 		#if heterogeneity > 1
 			for(i = 0; i < n_linear; i++)
@@ -93,15 +100,24 @@ float vv_mult(float *x_1, float *x_2)
 		beta_current = sc_out[1];
 		beta_new = sc_out[2];
 
-		// Stopped here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
 		#ifdef MINRES_prescaled
-		lanczos(0, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+			#if heterogeneity > 1
+				wrap_lanczos_HW(0, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+			#else
+				lanczos(0, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out); // SW implementation
+			#endif
 		#else
-		lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+			lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 		#endif
-		
+
+		for(i = 0; i < n_linear; i++)
+		{
+			//printf("error[%d] = %f\n", i, v_current_HW[i] - v_current[i]);
+		}
+	
+
 		// Calculate QR factors
 		delta = gamma_current*alfa_current - gamma_prev*sigma_current*beta_current;
 		over_ro_1 = 1/(sqrtf(delta*delta + beta_new*beta_new));
@@ -135,9 +151,11 @@ float vv_mult(float *x_1, float *x_2)
     	gamma_current = gamma_new;
 
     	sigma_prev = sigma_current;
-    	sigma_current = sigma_new;  
+    	sigma_current = sigma_new;
+
 	}
-*/
+
+	
 }
 
 
