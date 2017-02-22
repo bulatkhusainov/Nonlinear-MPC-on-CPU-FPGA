@@ -38,3 +38,4 @@ load('moo_nomad.mat');
 loglog( f_val_exploration(1,:),f_val_exploration(2,:),'o', fval_overal(1,:),fval_overal(2,:),'-o');
 xlabel('Performance'); ylabel('CPU time');
 axis([0,0.03,0,0.5]);
+grid on;

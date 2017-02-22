@@ -5,7 +5,7 @@
 #include <stdlib.h>  
 #include <stdio.h>  
 
-#define N 51 
+#define N 11 
 #define Ts 1.000000e-01 // sampling frequency 
 
 //data for shooting node 
@@ -24,20 +24,20 @@
 #define n_bounds 2  // # of bounds per node 
 
 //data for optimization problem 
-#define n_all_theta 411  // # of optimization variables 
-#define n_all_nu 360  // # of equality constraints 
-#define n_all_lambda 102  // # of inequality constraints (assume no inequalities for terminal term) 
+#define n_all_theta 91  // # of optimization variables 
+#define n_all_nu 80  // # of equality constraints 
+#define n_all_lambda 22  // # of inequality constraints (assume no inequalities for terminal term) 
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 
-#define IP_iter 20  // # of interior point iterations 
-#define MINRES_iter n_linear // # of MINRES iterations 
+#define IP_iter 1  // # of interior point iterations 
+#define MINRES_iter 1 // # of MINRES iterations 
 #define MINRES_prescaled // # use/do not use prescaler 
 
 //parallalization related parameters 
-#define PAR 4  // # of parallel processors for the main part 
-#define part_size 11  // # partition size in terms nodes 
-#define rem_partition 7  // # of shooting nodes in the remainder 
+#define PAR 3  // # of parallel processors for the main part 
+#define part_size 3  // # partition size in terms nodes 
+#define rem_partition 2  // # of shooting nodes in the remainder 
 #define heterogeneity 1  // # degree of heterogeneouty 
 
 #endif
