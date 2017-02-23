@@ -99,7 +99,11 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	// solve scaled problem 
 	// ifdef is to ensure propper compilation in unprescaled mode 
 	#ifdef MINRES_prescaled
-	minres(blocks, out_blocks, b, x_current);
+		#if heterogeneity > 2
+		wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization
+		#else
+		minres(blocks, out_blocks, b, x_current); // SW realization
+		#endif
 	#endif
 	// recover solution 
 	for(i = 0; i < n_all_theta+n_all_nu; i++)

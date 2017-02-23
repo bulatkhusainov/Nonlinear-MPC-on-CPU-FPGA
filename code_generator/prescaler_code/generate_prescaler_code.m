@@ -107,7 +107,11 @@ fprintf(fileID,'\t\tb[i] = b[i]*M[i];\n\n');
 fprintf(fileID,strcat('\t','// solve scaled problem \n'));
 fprintf(fileID,strcat('\t','// ifdef is to ensure propper compilation in unprescaled mode \n'));
 fprintf(fileID,strcat('\t','#ifdef MINRES_prescaled\n'));
-fprintf(fileID,strcat('\t','minres(blocks, out_blocks, b, x_current);\n'));
+fprintf(fileID,strcat('\t\t','#if heterogeneity > 2\n'));
+fprintf(fileID,strcat('\t\t','wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization\n'));
+fprintf(fileID,strcat('\t\t','#else\n'));
+fprintf(fileID,strcat('\t\t','minres(blocks, out_blocks, b, x_current); // SW realization\n'));
+fprintf(fileID,strcat('\t\t','#endif\n'));
 fprintf(fileID,strcat('\t','#endif\n'));
 
 %fprintf(fileID,strcat('\t','minres(blocks, out_blocks, b, x_current);\n\n'));

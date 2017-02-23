@@ -3,7 +3,7 @@
 #include <math.h>  
 #include "mex.h"
 
-float vv_mult(float *x_1, float *x_2)
+float vv_mult_HW(float *x_1, float *x_2)
 {
 	int i;
 	float sos = 0;
@@ -15,7 +15,7 @@ float vv_mult(float *x_1, float *x_2)
 }
 
 
-void minres(float* blocks, float* out_blocks, float* b,float* x_current)
+void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current)
 {
 
 
@@ -46,7 +46,7 @@ void minres(float* blocks, float* out_blocks, float* b,float* x_current)
 	for(i = 0; i < n_linear; i++)
 		v_current_HW_in[i] = b[i]; // initially this vector stores v_current
 
-	beta_current = sqrtf(vv_mult(v_current_HW_in,v_current_HW_in));
+	beta_current = sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
 	nu_current = beta_current;
 
 	// manually perform first iteration of Lanczos kernel to achieve pipelining
@@ -54,7 +54,7 @@ void minres(float* blocks, float* out_blocks, float* b,float* x_current)
 		v_current_HW_in[i] = v_current_HW_in[i]/beta_current;
 	sc_in[0] = beta_current;
 	#ifdef MINRES_prescaled
-		lanczos_HW(1, &blocks, out_blocks, v_current_HW_in,  v_current_HW, sc_in, sc_out);
+		lanczos_HW(1, blocks, out_blocks, v_current_HW_in,  v_current_HW, sc_in, sc_out);
 	#else
 		// no hardware realization of unprescaled implementation
 	#endif
@@ -73,7 +73,7 @@ void minres(float* blocks, float* out_blocks, float* b,float* x_current)
 
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
 		#ifdef MINRES_prescaled
-			lanczos_HW(0, &blocks, out_blocks, v_current_HW_in,  v_current_HW, sc_in, sc_out);
+			lanczos_HW(0, blocks, out_blocks, v_current_HW_in,  v_current_HW, sc_in, sc_out);
 		#else
 			// no hardware realization of unprescaled implementation
 		#endif

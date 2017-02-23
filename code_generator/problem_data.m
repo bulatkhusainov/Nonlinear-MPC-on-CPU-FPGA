@@ -20,7 +20,7 @@ if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
     end
 end;
 
-heterogeneity = 2;
+heterogeneity = 3;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;

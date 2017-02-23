@@ -27,6 +27,8 @@ void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*n
 void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,float out_block[(N+1)*n_states],part_vector *x_in);
 void lanczos_HW(int init, part_matrix *blocks, float out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5]);
 void wrap_lanczos_HW(int init, float blocks[], float out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5]);
+void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current);
+void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_current[]);
 
 
 #ifdef MINRES_prescaled
