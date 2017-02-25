@@ -2,6 +2,7 @@
 %% Generate code for solution  recovery file 
 cd ../../src 
 fileID = fopen('user_rec_sol.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n\n');
 

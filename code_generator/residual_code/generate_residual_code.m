@@ -2,6 +2,7 @@
 %% Generate code for residual evaluation file (without handling identity)
 cd ../../src 
 fileID = fopen('user_residual.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n\n');
 
 fprintf(fileID,'// functions prototypes \n');

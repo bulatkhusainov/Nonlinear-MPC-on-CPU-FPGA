@@ -22,6 +22,7 @@ num_term_block_sched = num_term_block;
 cd ../../src 
 %% Generate code for matrix vector calculation (no prescaler)
 fileID = fopen('user_mv_mult.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n\n');
 
@@ -85,6 +86,7 @@ fprintf(fileID,'}\n');
 
 %% Generate code for matrix vector calculation (with prescaler)
 fileID = fopen('user_mv_mult_prescaled.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n\n');
 
@@ -151,6 +153,7 @@ fclose(fileID);
 
 %% Generate code for HW matrix vector calculation (with prescaler)
 fileID = fopen('user_mv_mult_prescaled_HW.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n');
 fprintf(fileID,'#include "user_structure_header.h"\n\n');

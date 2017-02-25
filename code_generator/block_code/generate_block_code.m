@@ -110,6 +110,7 @@ cd block_code
 %% Generate code for block evaluation file
 cd ../../src 
 fileID = fopen('user_block.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n\n');
 

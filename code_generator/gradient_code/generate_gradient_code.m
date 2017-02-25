@@ -14,6 +14,7 @@ term_gradient_func = matlabFunction(term_gradient,'Vars', {term_theta});
 %% Generate code for gradient evaluation file
 cd ../../src 
 fileID = fopen('user_gradient.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n\n');
 
 fprintf(fileID,'// this function evaluates node gradient \n');

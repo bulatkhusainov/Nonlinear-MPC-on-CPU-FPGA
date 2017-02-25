@@ -46,7 +46,7 @@ SoC Input and output vectors:
 Name			| Direction		| Number of data 
 
 x_hat			 	| Input         | SOC_X_HAT_IN_LENGTH=2
-u_opt			 	| Output         | SOC_U_OPT_OUT_LENGTH=9
+u_opt			 	| Output         | SOC_U_OPT_OUT_LENGTH=83
 
 NOTE: SoC interfaces use single precision floating point arithmetics.
 

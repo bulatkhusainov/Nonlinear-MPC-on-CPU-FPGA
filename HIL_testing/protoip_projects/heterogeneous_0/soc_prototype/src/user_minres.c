@@ -1,8 +1,9 @@
+#include "user_protoip_definer.h"
 #include "user_main_header.h"
 #include "user_prototypes_header.h"
 #include <math.h>  
+//#include "mex.h"
 
-//#define n_linear (n_all_theta+n_all_nu)
 
 float vv_mult(float *x_1, float *x_2)
 {
@@ -27,7 +28,9 @@ float vv_mult(float *x_1, float *x_2)
 	int counter = 1, i; 
 	float x_new[n_linear];
 		//x_current[n_linear] // x_current is a solution guess (is coming from function interface)
-	float *v_current, v_current_alg[n_linear], v_tmp1[n_linear], v_tmp2[n_linear]; // initial Lanczos vectors
+	float *v_current, v_tmp1[n_linear], v_tmp2[n_linear]; // Lanczos vectors for SW implementation
+	float v_current_HW[n_linear]; // v_current for HW realization
+	float v_current_alg[n_linear]; // v_current for MINRES algorithm
 	float beta_current, over_beta_current, beta_new, beta_nnew;
 	float nu_current, nu_new;
 	float gamma_prev = 1, gamma_current = 1, gamma_new;
@@ -64,32 +67,45 @@ float vv_mult(float *x_1, float *x_2)
 	for(i = 0; i < n_linear; i++)
 		v_tmp2[i] = v_tmp2[i]/beta_current;
 	sc_in[0] = beta_current;
-
-
 	#ifdef MINRES_prescaled
-		lanczos(1, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+		#if heterogeneity > 1
+			wrap_lanczos_HW(1, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+		#else
+			lanczos(1, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out); // SW implementation
+		#endif
 	#else
 		lanczos(1, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 	#endif
-	
 
 	// main loop
 	for(counter = 0; counter < MINRES_iter; counter++)
-	{
+	{	
+
+
 		// extract reqired info from the lanczos kernel
-		for(i = 0; i < n_linear; i++)
-			v_current_alg[i] = v_current[i];
+		#if heterogeneity > 1
+			for(i = 0; i < n_linear; i++)
+				v_current_alg[i] = v_current_HW[i];
+		#else
+			for(i = 0; i < n_linear; i++)
+				v_current_alg[i] = v_current[i];
+		#endif
 		alfa_current = sc_out[0];
 		beta_current = sc_out[1];
 		beta_new = sc_out[2];
 
+
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
 		#ifdef MINRES_prescaled
-		lanczos(0, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+			#if heterogeneity > 1
+				wrap_lanczos_HW(0, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+			#else
+				lanczos(0, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out); // SW implementation
+			#endif
 		#else
-		lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
+			lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 		#endif
-		
+
 		// Calculate QR factors
 		delta = gamma_current*alfa_current - gamma_prev*sigma_current*beta_current;
 		over_ro_1 = 1/(sqrtf(delta*delta + beta_new*beta_new));
@@ -123,9 +139,11 @@ float vv_mult(float *x_1, float *x_2)
     	gamma_current = gamma_new;
 
     	sigma_prev = sigma_current;
-    	sigma_current = sigma_new;  
+    	sigma_current = sigma_new;
+
 	}
 
+	
 }
 
 

@@ -1,12 +1,5 @@
 %% this part is problem dependent
 % define integrator Butcher table
-%butcher_table_A = [0]; % Euler integrator
-%butcher_table_beta =  [1];
-butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
-butcher_table_beta =  [0.5; 0.5];
-%butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
-%butcher_table_beta =  [1/6; 2/3; 1/6];
-
 if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
     if design.Integrator == 1
         butcher_table_A = [0]; % Euler integrator
@@ -18,18 +11,25 @@ if exist('design','var') && any(strcmp('Integrator',fieldnames(design)))
         butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
         butcher_table_beta =  [1/6; 2/3; 1/6];
     end
+else
+    %butcher_table_A = [0]; % Euler integrator
+    %butcher_table_beta =  [1];
+    butcher_table_A = [ 0 0; 0.5 0.5]; % Trapezoidal integrator
+    butcher_table_beta =  [0.5; 0.5];
+    %butcher_table_A = [0 0 0; 5/24 1/3 -1/24; 1/6 2/3 1/6]; % Simpson integrator
+    %butcher_table_beta =  [1/6; 2/3; 1/6];   
 end;
 
-heterogeneity = 3;
+%heterogeneity = 0;
+if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 1; end;
 x_init = [0.5;0];
-Tsim = 10;
+Tsim = 1;
 MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
 MINRES_iter = 'n_linear';
 PAR = 5;
-%any(strcmp('dsd',fieldnames(design))) % this is to be improved
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 11; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
 n_states = 2;

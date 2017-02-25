@@ -1,3 +1,4 @@
+#include "user_protoip_definer.h"
 #include "user_main_header.h"
 #include "user_nnz_header.h"
 #include "user_prototypes_header.h"
@@ -12,9 +13,9 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	float out_blocks[(N+1)*n_states];
 
 	// block pattern in COO format
-	int row_block[28] = {0,6,8,9,1,7,8,2,8,10,3,10,6,8,7,9,0,0,0,1,1,2,2,3,4,4,5,5,};
-	int col_block[28] = {0,0,0,0,1,1,1,2,2,2,3,3,4,4,5,5,6,8,9,7,8,8,10,10,6,8,7,9,};
-	int num_block[28] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1,2,3,5,6,8,9,11,12,13,14,15,};
+	int row_block[54] = {0,8,10,11,12,13,1,9,10,12,2,10,12,14,3,14,8,10,12,13,9,11,12,8,12,13,9,12,13,0,0,0,0,0,1,1,1,2,2,2,3,4,4,4,4,5,5,5,6,6,6,7,7,7,};
+	int col_block[54] = {0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,4,4,4,4,5,5,5,6,6,6,7,7,7,8,10,11,12,13,9,10,12,10,12,14,14,8,10,12,13,9,11,12,8,12,13,9,12,13,};
+	int num_block[54] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,1,2,3,4,5,7,8,9,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,};
 
 	// term_block pattern in COO format
 	int row_term_block[6] = {0,3,1,3,0,2,};
@@ -22,9 +23,9 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	int num_term_block[6] = {0,1,2,3,1,3,};
 
 	// block_tril pattern in COO format
-	int row_block_tril[16] = {0,6,8,9,1,7,8,2,8,10,3,10,6,8,7,9,};
-	int col_block_tril[16] = {0,0,0,0,1,1,1,2,2,2,3,3,4,4,5,5,};
-	int num_block_tril[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,};
+	int row_block_tril[29] = {0,8,10,11,12,13,1,9,10,12,2,10,12,14,3,14,8,10,12,13,9,11,12,8,12,13,9,12,13,};
+	int col_block_tril[29] = {0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,4,4,4,4,5,5,5,6,6,6,7,7,7,};
+	int num_block_tril[29] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,};
 
 	// term_block_tril pattern in COO format
 	int row_term_block_tril[4] = {0,3,1,3,};
@@ -99,7 +100,11 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	// solve scaled problem 
 	// ifdef is to ensure propper compilation in unprescaled mode 
 	#ifdef MINRES_prescaled
-	minres(blocks, out_blocks, b, x_current);
+		#if heterogeneity > 2
+		wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization
+		#else
+		minres(blocks, out_blocks, b, x_current); // SW realization
+		#endif
 	#endif
 	// recover solution 
 	for(i = 0; i < n_all_theta+n_all_nu; i++)

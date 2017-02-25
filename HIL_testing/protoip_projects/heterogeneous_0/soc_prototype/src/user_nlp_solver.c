@@ -1,3 +1,4 @@
+#include "user_protoip_definer.h"
 #include "user_main_header.h"
 #include "user_nnz_header.h"
 #include "user_prototypes_header.h"
@@ -36,7 +37,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 	// initial guess
 	for(i = 0; i < n_all_theta; i++)
-		all_theta[i] = 0; 
+		all_theta[i] = 0; // make sure guess is feasible w.r.t. inequalities
 		//all_theta[i] = 0.77*sinf((float)(i+1)); // make sure guess is feasible w.r.t. inequalities
 	for(i = 0; i < n_all_nu; i++)
 		all_nu[i] = 0;
@@ -106,10 +107,8 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 				local_ptr1[j] += local_ptr2[j];
 		}
 
-		// evaluate mat vec multiplication
+		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
-
-
 
 
 		// solve linear system with minres
@@ -145,14 +144,12 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 			all_lambda[i] += alfa*d_all_lambda[i];
 
 		//printf("iteration: %d, alfa: %f\n",ip_counter,alfa );
-
-
 	}
 
 	// print for debugging purpose
-	for(i = 0; i < n_all_theta; i++)
+	for(i = 0; i < n_all_theta+n_all_nu; i++)
 	{
-		//debug_output[i] = all_theta[i];
+		//debug_output[i] = d_x[i];
 	}
 
 }

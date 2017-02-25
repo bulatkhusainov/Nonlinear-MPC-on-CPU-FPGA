@@ -2,6 +2,7 @@
 %% Generate code for bounds evaluation file
 cd ../../src 
 fileID = fopen('user_bounds.c','w');
+fprintf(fileID,'#include "user_protoip_definer.h"\n');
 fprintf(fileID,'#include "user_main_header.h"\n\n');
 
 fprintf(fileID,'// this function evaluates bounds constraints \n');
