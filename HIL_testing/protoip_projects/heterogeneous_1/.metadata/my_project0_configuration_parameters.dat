@@ -3,7 +3,7 @@ my_project0
 #Input
 3
 block
-294
+164
 0
 0
 0
@@ -13,14 +13,14 @@ out_block
 0
 0
 x_in
-156
+116
 0
 0
 0
 #Output
 1
 y_out
-156
+116
 0
 0
 0
@@ -52,7 +52,7 @@ x_hat
 #soc_Output
 1
 u_opt
-83
+63
 0
 0
 0

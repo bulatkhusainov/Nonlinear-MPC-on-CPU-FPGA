@@ -1,10 +1,167 @@
-================================================================
-  Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC
-  Version 2015.2
-  Build 1266856 on Fri Jun 26 16:57:37 PM 2015
-  Copyright (C) 2015 Xilinx Inc. All rights reserved.
-================================================================
+@I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Fri Feb 24 17:10:41 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Mon Feb 27 17:05:45 GMT 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj'
-@I [HLS-10] Bringing up Vivado HLS GUI ... 
+@I [HLS-10] Opening project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0'.
+@I [HLS-10] Adding design file '../../src/foo.cpp' to the project
+@I [HLS-10] Adding design file '../../src/foo_user.cpp' to the project
+@I [HLS-10] Adding design file '../../src/foo_data.h' to the project
+@I [HLS-10] Adding design file '../../src/user_mv_mult_prescaled_HW.cpp' to the project
+@I [HLS-10] Opening solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1'.
+@I [SYN-201] Setting up clock 'default' with a period of 10ns.
+@I [HLS-10] Setting target device to 'xc7z020clg484-1'
+@I [HLS-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/foo.cpp' ... 
+@I [HLS-10] Validating synthesis directives ...
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_block' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_out_block' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
+@I [HLS-10] Starting code transformations ...
+@I [HLS-10] Checking synthesizability ...
+@I [XFORM-502] Unrolling all sub-loops inside loop 'my_loop' (../../src/foo.cpp:64) in function 'foo' for pipelining.
+@W [XFORM-505] Ignored pipeline directive for loop 'memcpy..memory_inout' because its parent loop or function is pipelined.
+@I [XFORM-501] Unrolling loop 'memcpy..memory_inout' in function 'foo' completely.
+@I [XFORM-102] Automatically partitioning small array 'block_in_int.mat_term' (../../src/foo.cpp:34) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'x_in_in_int.vec0' (../../src/foo.cpp:36) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'x_in_in_int.vec_term' (../../src/foo.cpp:36) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'y_out_struct.vec0' (../../src/foo_user.cpp:29) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'y_out_struct.vec_term' (../../src/foo_user.cpp:29) completely based on array size.
+@I [XFORM-101] Partitioning array 'x_in_in_int.vec' (../../src/foo.cpp:36) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'y_out_struct.vec'  in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'block_in_int.mat_term' (../../src/foo.cpp:34) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'x_in_in_int.vec0' (../../src/foo.cpp:36) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'x_in_in_int.vec_term' (../../src/foo.cpp:36) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'y_out_struct.vec0' (../../src/foo_user.cpp:29) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'y_out_struct.vec_term' (../../src/foo_user.cpp:29) in dimension 1 completely.
+@I [XFORM-401] Performing if-conversion on hyperblock to (../../src/user_mv_mult_prescaled_HW.cpp:40:4) in function 'mv_mult_prescaled_HW'... converting 6 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:41:4) to (../../src/user_mv_mult_prescaled_HW.cpp:41:4) in function 'mv_mult_prescaled_HW'... converting 6 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock to (../../src/user_mv_mult_prescaled_HW.cpp:76:3) in function 'mv_mult_prescaled_HW'... converting 4 basic blocks.
+@I [XFORM-811] Inferring bus burst read of length 32 on port 'memory_inout' (../../src/foo.cpp:43:4).
+@I [XFORM-811] Inferring bus burst read of length 22 on port 'memory_inout' (../../src/foo.cpp:56:3).
+@I [XFORM-811] Inferring bus burst read of length 2 on port 'memory_inout' (../../src/foo.cpp:62:3).
+@I [XFORM-811] Inferring bus burst write of length 116 on port 'memory_inout' (../../src/foo.cpp:91:3).
+@I [HLS-111] Elapsed time: 10.2473 seconds; current memory usage: 181 MB.
+@I [HLS-10] Starting hardware synthesis ...
+@I [HLS-10] Synthesizing 'foo' ...
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_mv_mult_prescaled_HW' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.315037 seconds; current memory usage: 185 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_mv_mult_prescaled_HW' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.111615 seconds; current memory usage: 186 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.149641 seconds; current memory usage: 187 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.043603 seconds; current memory usage: 187 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::out_block_in_int.memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'memcpy.x_in_in_int.vec0.gep.memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'my_loop'.
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 1, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 2, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 3, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 4, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 10, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 16, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 19, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 20, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 21, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:66) and bus request on port 'memory_inout' (../../src/foo.cpp:66).
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 22, Depth: 30.
+@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+@I [SCHED-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.gep'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.62637 seconds; current memory usage: 189 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.260612 seconds; current memory usage: 192 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_mv_mult_prescaled_HW' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 3 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_5to1_sel3_32_1': 3 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_mv_mult_prescaled_HW'.
+@I [HLS-111] Elapsed time: 0.333902 seconds; current memory usage: 194 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_5to1_sel3_32_1': 1 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
+@I [HLS-111] Elapsed time: 0.344215 seconds; current memory usage: 201 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_block_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_out_block_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_x_in_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_y_out_out_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
+@I [RTGEN-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
+@I [RTGEN-100] Finished creating RTL model for 'foo'.
+@I [HLS-111] Elapsed time: 0.340098 seconds; current memory usage: 206 MB.
+@I [RTMG-279] Implementing memory 'foo_mv_mult_prescaled_HW_num_block_sched3_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_mv_mult_prescaled_HW_col_block_sched2_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_mv_mult_prescaled_HW_row_block_sched1_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_mv_mult_prescaled_HW_num_term_block_sched6_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_mv_mult_prescaled_HW_col_term_block_sched5_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_mv_mult_prescaled_HW_row_term_block_sched4_rom' using distributed ROMs.
+@I [RTMG-278] Implementing memory 'foo_foo_user_y_out_struct_vec_0_ram' using distributed RAMs.
+@I [RTMG-278] Implementing memory 'foo_out_block_in_int_ram' using distributed RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_y_out_out_int_ram' using block RAMs.
+@I [RTMG-278] Implementing memory 'foo_block_in_int_mat_ram' using block RAMs.
+@I [HLS-10] Finished generating all RTL models.
+@I [WSYSC-301] Generating RTL SystemC for 'foo'.
+@I [WVHDL-304] Generating RTL VHDL for 'foo'.
+@I [WVLOG-307] Generating RTL Verilog for 'foo'.
+@I [HLS-112] Total elapsed time: 58.372 seconds; peak memory usage: 206 MB.
+@I [LIC-101] Checked in feature [ap_opencl]

@@ -3,7 +3,7 @@
 ## Please DO NOT edit it.
 ## Copyright (C) 2015 Xilinx Inc. All rights reserved.
 ############################################################
-set_directive_interface -mode m_axi -depth 628 "foo" memory_inout
+set_directive_interface -mode m_axi -depth 418 "foo" memory_inout
 set_directive_interface -mode s_axilite -bundle BUS_A "foo"
 set_directive_interface -mode s_axilite -register -bundle BUS_A "foo" byte_block_in_offset
 set_directive_interface -mode s_axilite -register -bundle BUS_A "foo" byte_out_block_in_offset

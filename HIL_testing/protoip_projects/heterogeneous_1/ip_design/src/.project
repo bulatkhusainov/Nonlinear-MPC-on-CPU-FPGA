@@ -42,6 +42,11 @@
 			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/src/user_main_header.h</location>
 		</link>
 		<link>
+			<name>.reference/user_structure_header.h</name>
+			<type>1</type>
+			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/src/user_structure_header.h</location>
+		</link>
+		<link>
 			<name>solution1/constraints</name>
 			<type>2</type>
 			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1/.tcls</location>

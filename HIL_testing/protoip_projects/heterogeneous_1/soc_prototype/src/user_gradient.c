@@ -10,8 +10,6 @@ void node_gradient_eval(float node_gradient[n_node_theta],float node_theta[n_nod
 	node_gradient[3] =   node_theta[4-1]*2.0E-4;
 	node_gradient[4] =   0.0;
 	node_gradient[5] =   0.0;
-	node_gradient[6] =   0.0;
-	node_gradient[7] =   0.0;
 }
 
 // this function evaluates terminal gradient 

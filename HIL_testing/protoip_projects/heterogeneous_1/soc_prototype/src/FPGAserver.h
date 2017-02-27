@@ -26,21 +26,21 @@
 
 
 //IP interface arrays lengths:
-#define BLOCK_IN_VECTOR_LENGTH 294
+#define BLOCK_IN_VECTOR_LENGTH 164
 #define OUT_BLOCK_IN_VECTOR_LENGTH 22
-#define X_IN_IN_VECTOR_LENGTH 156
-#define Y_OUT_OUT_VECTOR_LENGTH 156
+#define X_IN_IN_VECTOR_LENGTH 116
+#define Y_OUT_OUT_VECTOR_LENGTH 116
 
 //SOC interface arrays lengths:
 #define SOC_X_HAT_IN_VECTOR_LENGTH 2
 
-#define SOC_U_OPT_OUT_VECTOR_LENGTH 83
+#define SOC_U_OPT_OUT_VECTOR_LENGTH 63
 ////////////////////////////////////////////////////////////
 //FPGA vectors memory maps
 #define block_IN_DEFINED_MEM_ADDRESS 33554432
-#define out_block_IN_DEFINED_MEM_ADDRESS 33555608
-#define x_in_IN_DEFINED_MEM_ADDRESS 33555696
-#define y_out_OUT_DEFINED_MEM_ADDRESS 33556320
+#define out_block_IN_DEFINED_MEM_ADDRESS 33555088
+#define x_in_IN_DEFINED_MEM_ADDRESS 33555176
+#define y_out_OUT_DEFINED_MEM_ADDRESS 33555640
 
 
 ////////////////////////////////////////////////////////////
