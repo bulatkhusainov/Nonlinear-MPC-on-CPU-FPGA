@@ -6,6 +6,7 @@
 // this function performs matrix vector multiplication 
 void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,float out_block[(N+1)*n_states],part_vector *x_in)
 {
+#pragma HLS INLINE
 	int i,j,k,l;
 	// block pattern in COO format
 	int row_block_sched[28] = {0,6,8,9,1,7,8,2,8,10,3,10,6,8,7,9,0,0,0,1,1,2,2,3,4,4,5,5,};

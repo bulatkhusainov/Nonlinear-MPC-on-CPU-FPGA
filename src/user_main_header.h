@@ -35,8 +35,9 @@
 #define MINRES_prescaled // # use/do not use prescaler 
 
 //parallalization related parameters 
-#define PAR 5  // # of parallel processors for the main part 
-#define part_size 2  // # partition size in terms nodes 
+#define PAR 3  // # of parallel processors for the main part 
+#define part_size 3  // # partition size in terms nodes 
+#define rem_partition 1  // # of shooting nodes in the remainder 
 #define heterogeneity 1  // # degree of heterogeneouty 
 
 #endif

@@ -166,6 +166,7 @@ fprintf(fileID,strcat('part_matrix',' *block,'));
 fprintf(fileID,strcat(d_type,' out_block[(N+1)*n_states],'));
 fprintf(fileID,strcat('part_vector',' *x_in)\n'));
 fprintf(fileID,'{\n');
+fprintf(fileID,'#pragma HLS INLINE\n');
 fprintf(fileID,strcat('\t','int', ' i,j,k,l;','\n'));
 
 fprintf(fileID,strcat('\t','// block pattern in COO format\n'));
