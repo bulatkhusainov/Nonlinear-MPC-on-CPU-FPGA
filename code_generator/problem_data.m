@@ -20,7 +20,6 @@ else
     %butcher_table_beta =  [1/6; 2/3; 1/6];   
 end;
 
-%heterogeneity = 0;
 if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 1; end;
 x_init = [0.5;0];
 Tsim = 1;

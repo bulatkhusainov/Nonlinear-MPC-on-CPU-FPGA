@@ -6,7 +6,7 @@
 ================================================================
 @I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Tue Feb 28 12:07:04 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Thu Mar 02 12:32:27 GMT 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1'
 @I [HLS-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0'.
 @I [HLS-10] Adding design file '../../src/foo_data.h' to the project
@@ -33,8 +33,11 @@
 @W [XFORM-505] Ignored pipeline directive for loop 'memcpy..memory_inout' because its parent loop or function is pipelined.
 @I [XFORM-502] Unrolling all sub-loops inside loop 'interface_loop_y_out' (../../src/foo.cpp:97) in function 'foo' for pipelining.
 @W [XFORM-505] Ignored pipeline directive for loop 'memcpy.memory_inout.' because its parent loop or function is pipelined.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-2' (../../src/user_mv_mult_prescaled_HW.cpp:27) in function 'foo_user' for pipelining.
 @I [XFORM-501] Unrolling loop 'memcpy..memory_inout' in function 'foo' completely.
 @I [XFORM-501] Unrolling loop 'memcpy.memory_inout.' in function 'foo' completely.
+@I [XFORM-501] Unrolling loop 'Loop-2.1' (../../src/user_mv_mult_prescaled_HW.cpp:30) in function 'foo_user' completely.
+@I [XFORM-501] Unrolling loop 'Loop-11.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:126) in function 'foo_user' completely.
 @I [XFORM-102] Automatically partitioning small array 'block_in_int.mat_term' completely based on array size.
 @I [XFORM-102] Automatically partitioning small array 'x_in_in_int.vec0' (../../src/foo.cpp:31) completely based on array size.
 @I [XFORM-102] Automatically partitioning small array 'x_in_in_int.vec_term' (../../src/foo.cpp:31) completely based on array size.
@@ -48,10 +51,13 @@
 @I [XFORM-101] Partitioning array 'x_in_in_int.vec_term' (../../src/foo.cpp:31) in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'y_out_out_int.vec0' (../../src/foo.cpp:33) in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'y_out_out_int.vec_term' (../../src/foo.cpp:33) in dimension 1 completely.
-@I [XFORM-401] Performing if-conversion on hyperblock to (../../src/user_mv_mult_prescaled_HW.cpp:41:4) in function 'foo_user'... converting 4 basic blocks.
-@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:42:4) to (../../src/user_mv_mult_prescaled_HW.cpp:42:4) in function 'foo_user'... converting 4 basic blocks.
-@I [XFORM-401] Performing if-conversion on hyperblock to (../../src/user_mv_mult_prescaled_HW.cpp:71:3) in function 'foo_user'... converting 4 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:61:4) to (../../src/user_mv_mult_prescaled_HW.cpp:64:2) in function 'foo_user'... converting 4 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:65:4) to (../../src/user_mv_mult_prescaled_HW.cpp:65:4) in function 'foo_user'... converting 4 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:100:3) to (../../src/user_mv_mult_prescaled_HW.cpp:103:3) in function 'foo_user'... converting 4 basic blocks.
 @I [XFORM-11] Balancing expressions in function 'foo' (../../src/foo.cpp:21)...6 expression(s) balanced.
+@I [XFORM-541] Flattening a loop nest 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:59:6) in function 'foo_user'.
+@I [XFORM-541] Flattening a loop nest 'Loop-7.1' (../../src/user_mv_mult_prescaled_HW.cpp:70:7) in function 'foo_user'.
+@I [XFORM-541] Flattening a loop nest 'Loop-7' (../../src/user_mv_mult_prescaled_HW.cpp:69:6) in function 'foo_user'.
 @I [XFORM-811] Inferring bus burst read of length 16 on port 'memory_inout' (../../src/foo.cpp:47:3).
 @I [XFORM-811] Inferring bus burst read of length 22 on port 'memory_inout' (../../src/foo.cpp:61:3).
 @I [XFORM-811] Inferring bus burst read of length 2 on port 'memory_inout' (../../src/foo.cpp:67:3).
@@ -59,15 +65,33 @@
 @I [XFORM-811] Inferring bus burst write of length 2 on port 'memory_inout' (../../src/foo.cpp:95:3).
 @I [XFORM-811] Inferring bus burst write of length 11 on port 'memory_inout' (../../src/foo.cpp:103:3).
 @I [XFORM-811] Inferring bus burst write of length 33 on port 'memory_inout' (../../src/foo.cpp:99:2).
-@I [HLS-111] Elapsed time: 14.7757 seconds; current memory usage: 181 MB.
+@I [HLS-111] Elapsed time: 16.2373 seconds; current memory usage: 181 MB.
 @I [HLS-10] Starting hardware synthesis ...
 @I [HLS-10] Synthesizing 'foo' ...
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
 @I [SCHED-11] Starting scheduling ...
+@I [SCHED-61] Pipelining loop 'Loop 1'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 2'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 3'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 4'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 5'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining loop 'Loop 6'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 6.
+@I [SCHED-61] Pipelining loop 'Loop 7'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 7.
+@I [SCHED-61] Pipelining loop 'Loop 8'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining loop 'Loop 9'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.546048 seconds; current memory usage: 192 MB.
+@I [HLS-111] Elapsed time: 0.62159 seconds; current memory usage: 192 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -76,7 +100,7 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.153341 seconds; current memory usage: 194 MB.
+@I [HLS-111] Elapsed time: 0.19004 seconds; current memory usage: 194 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -158,7 +182,7 @@
 @I [SCHED-61] Pipelining loop 'memcpy.memory_inout.'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 7.
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 5.32815 seconds; current memory usage: 199 MB.
+@I [HLS-111] Elapsed time: 5.68532 seconds; current memory usage: 199 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -167,16 +191,16 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 1.09581 seconds; current memory usage: 205 MB.
+@I [HLS-111] Elapsed time: 1.14293 seconds; current memory usage: 205 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
-@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 2 instance(s).
-@I [RTGEN-100] Generating core module 'foo_mux_3to1_sel2_32_1': 4 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 3 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 3 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_3to1_sel2_32_1': 2 instance(s).
 @I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 3 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
-@I [HLS-111] Elapsed time: 0.787701 seconds; current memory usage: 208 MB.
+@I [HLS-111] Elapsed time: 0.862296 seconds; current memory usage: 208 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -193,7 +217,7 @@
 @I [RTGEN-100] Generating core module 'foo_mux_3to1_sel2_32_1': 2 instance(s).
 @I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 1 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo'.
-@I [HLS-111] Elapsed time: 1.10017 seconds; current memory usage: 224 MB.
+@I [HLS-111] Elapsed time: 1.20285 seconds; current memory usage: 225 MB.
 @I [RTMG-279] Implementing memory 'foo_foo_user_num_block_sched3_rom' using distributed ROMs.
 @I [RTMG-279] Implementing memory 'foo_foo_user_col_block_sched2_rom' using distributed ROMs.
 @I [RTMG-279] Implementing memory 'foo_foo_user_row_block_sched1_rom' using distributed ROMs.
@@ -233,11 +257,11 @@ INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_3_ful
     ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 
 source /home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/labtool_webtalk.tcl -notrace
-INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Tue Feb 28 12:08:24 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
-INFO: [Common 17-206] Exiting Webtalk at Tue Feb 28 12:08:24 2017...
+INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Thu Mar  2 12:33:50 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Thu Mar  2 12:33:50 2017...
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Tue Feb 28 12:08:24 2017...
-@I [HLS-112] Total elapsed time: 95.278 seconds; peak memory usage: 224 MB.
+INFO: [Common 17-206] Exiting Vivado at Thu Mar  2 12:33:51 2017...
+@I [HLS-112] Total elapsed time: 99.461 seconds; peak memory usage: 225 MB.
 @I [LIC-101] Checked in feature [ap_opencl]
