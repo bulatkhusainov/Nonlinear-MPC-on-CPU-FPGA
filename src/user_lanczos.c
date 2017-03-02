@@ -79,9 +79,13 @@ float vv_mult1(float *x_1, float *x_2)
 		v_prev[i] = v_prev[i]/beta_new;
 
 
-	send_x_in_in(v_prev);
-	// call hardware accelerator assuming all interfaces are involoved
-	start_foo(1,1,1,1);
+	#if heterogeneity > 0
+			#ifdef PROTOIP
+			send_x_in_in(v_prev);
+			// call hardware accelerator assuming all interfaces are involoved
+			start_foo(0,0,1,1);
+		#endif
+	#endif
 
 	// put required information to interface arrays and variables
 	//for(i = 0; i < n_linear; i++)

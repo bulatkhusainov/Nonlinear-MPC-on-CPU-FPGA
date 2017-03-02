@@ -37,6 +37,6 @@
 //parallalization related parameters 
 #define PAR 5  // # of parallel processors for the main part 
 #define part_size 2  // # partition size in terms nodes 
-#define heterogeneity 1  // # degree of heterogeneouty 
+#define heterogeneity 2  // # degree of heterogeneouty 
 
 #endif

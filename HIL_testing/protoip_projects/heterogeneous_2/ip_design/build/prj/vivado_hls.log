@@ -1,0 +1,16 @@
+@I [LIC-101] Checked out feature [ap_opencl]
+@I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Thu Mar 02 16:24:51 GMT 2017
+            in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj'
+@I [HLS-10] Opening project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj/my_project0'.
+@I [HLS-10] Adding design file '../../src/foo.cpp' to the project
+@I [HLS-10] Adding design file '../../src/foo_user.cpp' to the project
+@I [HLS-10] Adding design file '../../src/foo_data.h' to the project
+@I [HLS-10] Adding design file '../../src/user_mv_mult_prescaled_HW.cpp' to the project
+@I [HLS-10] Adding design file '../../src/user_lanczos_HW.cpp' to the project
+@I [HLS-10] Opening solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj/my_project0/solution1'.
+@I [SYN-201] Setting up clock 'default' with a period of 10ns.
+@I [HLS-10] Setting target device to 'xc7z020clg484-1'
+@I [HLS-10] Analyzing design file '../../src/user_lanczos_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 

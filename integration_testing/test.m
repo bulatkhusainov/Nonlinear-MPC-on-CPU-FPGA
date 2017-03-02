@@ -277,6 +277,3 @@ legend('state 1', 'state 2','input 1');
 
 %% compile and test full C implementation
 test_C;
-
-
-
