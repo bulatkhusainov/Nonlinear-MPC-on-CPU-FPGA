@@ -27,7 +27,7 @@ MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
 MINRES_iter = 'n_linear';
-PAR =4;
+PAR =5;
 if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 n_stages = size(butcher_table_A,1); % number of integrator stages per node
