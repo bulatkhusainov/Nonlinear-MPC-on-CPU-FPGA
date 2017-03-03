@@ -16,13 +16,13 @@ void lanczos_HW(int init, part_matrix *blocks, float out_blocks[], float v_curre
 
 void foo_user(  data_t_init_in init_in_int[INIT_IN_LENGTH],
 				data_t_sc_in_in sc_in_in_int[SC_IN_IN_LENGTH],
-				data_t_block_in block_in_int[BLOCK_IN_LENGTH],
+				part_matrix *block_in_int,
 				data_t_out_block_in out_block_in_int[OUT_BLOCK_IN_LENGTH],
 				data_t_v_in_in v_in_in_int[V_IN_IN_LENGTH],
 				data_t_v_out_out v_out_out_int[V_OUT_OUT_LENGTH],
 				data_t_sc_out_out sc_out_out_int[SC_OUT_OUT_LENGTH])
 {
-
+/*
 	int i,j,k;
 
 	// interface structure
@@ -36,9 +36,9 @@ void foo_user(  data_t_init_in init_in_int[INIT_IN_LENGTH],
 		for(i = 0; i < rem_partition*nnz_block_tril; i++, k++) block_struct.mat_rem[i] = block_in_int[k];
 	#endif
 	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = block_in_int[k];
+*/
 
-
-	lanczos_HW((int) init_in_int[0], &block_struct, out_block_in_int, v_in_in_int, v_out_out_int, init_in_int, sc_out_out_int);
+	lanczos_HW((int) init_in_int[0], block_in_int, out_block_in_int, v_in_in_int, v_out_out_int, init_in_int, sc_out_out_int);
 
 
 }

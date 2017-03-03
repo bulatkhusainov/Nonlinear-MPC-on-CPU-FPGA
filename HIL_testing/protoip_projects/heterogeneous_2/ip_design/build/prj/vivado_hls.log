@@ -1,16 +1,393 @@
 @I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Thu Mar 02 16:24:51 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Fri Mar 03 16:37:08 GMT 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj'
 @I [HLS-10] Opening project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj/my_project0'.
 @I [HLS-10] Adding design file '../../src/foo.cpp' to the project
 @I [HLS-10] Adding design file '../../src/foo_user.cpp' to the project
 @I [HLS-10] Adding design file '../../src/foo_data.h' to the project
-@I [HLS-10] Adding design file '../../src/user_mv_mult_prescaled_HW.cpp' to the project
 @I [HLS-10] Adding design file '../../src/user_lanczos_HW.cpp' to the project
+@I [HLS-10] Adding design file '../../src/user_mv_mult_prescaled_HW.cpp' to the project
 @I [HLS-10] Opening solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj/my_project0/solution1'.
 @I [SYN-201] Setting up clock 'default' with a period of 10ns.
 @I [HLS-10] Setting target device to 'xc7z020clg484-1'
-@I [HLS-10] Analyzing design file '../../src/user_lanczos_HW.cpp' ... 
 @I [HLS-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/user_lanczos_HW.cpp' ... 
 @I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/foo.cpp' ... 
+@I [HLS-10] Validating synthesis directives ...
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_init' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_sc_in' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_block' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_out_block' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_v_in' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_v_out' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_sc_out' does not exist in function 'foo'. 
+@I [HLS-10] Starting code transformations ...
+@I [XFORM-603] Inlining function 'ap_fixed_base<78, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>::operator<<' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:371).
+@I [XFORM-603] Inlining function 'ap_fixed_base<1, 33, false, (ap_q_mode)5, (ap_o_mode)0, 0>::overflow_adjust' into 'ap_fixed_base<1, 33, false, (ap_q_mode)5, (ap_o_mode)0, 0>::ap_fixed_base<55, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>' ().
+@I [XFORM-603] Inlining function 'mv_mult_prescaled_HW' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:102).
+@I [XFORM-603] Inlining function 'lanczos_HW' into 'foo_user' (../../src/foo_user.cpp:41).
+@I [HLS-10] Checking synthesizability ...
+@I [XFORM-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:368) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:371) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::__signbit' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:383) automatically.
+@I [XFORM-602] Inlining function '__hls_fptosi_float_i32' into 'foo_user' (../../src/foo_user.cpp:41) automatically.
+@I [XFORM-602] Inlining function 'hls::sqrtf' into 'foo_user' (../../src/user_lanczos_HW.cpp:107->../../src/foo_user.cpp:41) automatically.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'interface_loop_block' (../../src/foo.cpp:68) in function 'foo' for pipelining.
+@W [XFORM-505] Ignored pipeline directive for loop 'memcpy..memory_inout' because its parent loop or function is pipelined.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-2' (../../src/user_mv_mult_prescaled_HW.cpp:27) in function 'foo_user' for pipelining.
+@I [XFORM-501] Unrolling loop 'memcpy..memory_inout' in function 'foo' completely.
+@I [XFORM-501] Unrolling loop 'Loop-2.1' (../../src/user_mv_mult_prescaled_HW.cpp:30) in function 'foo_user' completely.
+@I [XFORM-501] Unrolling loop 'Loop-11.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:126) in function 'foo_user' completely.
+@I [XFORM-102] Automatically partitioning small array 'v_current.vec0' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'v_current.vec_term' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'v_prev.vec0' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'v_prev.vec_term' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'v_new.vec0' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'v_new.vec_term' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'init_in_int' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'block_in_int.mat_term' completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'A_mult_v.vec0' (../../src/user_lanczos_HW.cpp:96) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'A_mult_v.vec_term' (../../src/user_lanczos_HW.cpp:96) completely based on array size.
+@I [XFORM-101] Partitioning array 'block_in_int.mat'  in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_current.vec0' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_current.vec_term' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_prev.vec0' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_prev.vec_term' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_new.vec0' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_new.vec_term' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'init_in_int' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'block_in_int.mat_term' in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'A_mult_v.vec0' (../../src/user_lanczos_HW.cpp:96) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'A_mult_v.vec_term' (../../src/user_lanczos_HW.cpp:96) in dimension 1 completely.
+@I [XFORM-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:368) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:371) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::__signbit' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:383) automatically.
+@I [XFORM-602] Inlining function 'hls::cast_IEEE754<int, float>' into '__hls_fptosi_float_i32' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/lib_floatconversion.cpp:39) automatically.
+@I [XFORM-602] Inlining function '__hls_fptosi_float_i32' into 'foo_user' (../../src/foo_user.cpp:41) automatically.
+@I [XFORM-602] Inlining function 'hls::sqrtf' into 'foo_user' (../../src/user_lanczos_HW.cpp:107->../../src/foo_user.cpp:41) automatically.
+@I [XFORM-401] Performing if-conversion on hyperblock to (../../src/user_lanczos_HW.cpp:60:115) in function 'part_vector_normalize'... converting 6 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock to (../../src/user_lanczos_HW.cpp:99:2) in function 'foo_user'... converting 4 basic blocks.
+@I [XFORM-541] Flattening a loop nest 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:59:6) in function 'foo_user'.
+@I [XFORM-541] Flattening a loop nest 'Loop-7.1' (../../src/user_mv_mult_prescaled_HW.cpp:70:7) in function 'foo_user'.
+@I [XFORM-541] Flattening a loop nest 'Loop-7' (../../src/user_mv_mult_prescaled_HW.cpp:69:6) in function 'foo_user'.
+@I [XFORM-811] Inferring bus burst read of length 3 on port 'memory_inout' (../../src/foo.cpp:51:3).
+@I [XFORM-811] Inferring bus burst read of length 16 on port 'memory_inout' (../../src/foo.cpp:74:3).
+@I [XFORM-811] Inferring bus burst read of length 22 on port 'memory_inout' (../../src/foo.cpp:91:3).
+@I [XFORM-811] Inferring bus burst read of length 116 on port 'memory_inout' (../../src/foo.cpp:100:3).
+@I [XFORM-811] Inferring bus burst write of length 116 on port 'memory_inout' (../../src/foo.cpp:126:3).
+@I [XFORM-811] Inferring bus burst write of length 5 on port 'memory_inout' (../../src/foo.cpp:133:3).
+@I [HLS-111] Elapsed time: 23.1273 seconds; current memory usage: 478 MB.
+@I [HLS-10] Starting hardware synthesis ...
+@I [HLS-10] Synthesizing 'foo' ...
+@W [SYN-103] Legalizing function name 'foo_part_vector_mult.1' to 'foo_part_vector_mult_1'.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_reset_part_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.428494 seconds; current memory usage: 485 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_reset_part_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.025009 seconds; current memory usage: 485 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_copy_vector_to_part_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.053304 seconds; current memory usage: 485 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_copy_vector_to_part_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.03387 seconds; current memory usage: 486 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_part_vector_mult' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.093011 seconds; current memory usage: 486 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_part_vector_mult' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.043899 seconds; current memory usage: 486 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_part_vector_v_new' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.142433 seconds; current memory usage: 487 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_part_vector_v_new' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.063669 seconds; current memory usage: 487 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_part_vector_mult_1' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.123071 seconds; current memory usage: 488 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_part_vector_mult_1' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.03874 seconds; current memory usage: 488 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_part_vector_normalize' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.079753 seconds; current memory usage: 489 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_part_vector_normalize' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.059734 seconds; current memory usage: 489 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_copy_part_vector_to_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.096187 seconds; current memory usage: 489 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_copy_part_vector_to_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.031548 seconds; current memory usage: 490 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-61] Pipelining loop 'Loop 1'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 2'.
+@W [SCHED-69] Unable to schedule 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:33->../../src/user_lanczos_HW.cpp:102->../../src/foo_user.cpp:41) of constant 0 on array 'A_mult_v.vec', ../../src/user_lanczos_HW.cpp:96->../../src/foo_user.cpp:41 due to limited memory ports.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 2, Depth: 2.
+@I [SCHED-61] Pipelining loop 'Loop 3'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 4'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'Loop 5'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining loop 'Loop 6'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining loop 'Loop 7'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 6.
+@I [SCHED-61] Pipelining loop 'Loop 8'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining loop 'Loop 9'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 0.939254 seconds; current memory usage: 493 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.887934 seconds; current memory usage: 497 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Scheduling module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [SCHED-11] Starting scheduling ...
+@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::init_in_int.memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 2.
+@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::sc_in_in_int.memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining loop 'interface_loop_block'.
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 1, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 2, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 3, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 4, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 10, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 22, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 46, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 47, distance = 1)
+   between bus request on port 'memory_inout' (../../src/foo.cpp:70) and bus request on port 'memory_inout' (../../src/foo.cpp:70).
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 48, Depth: 56.
+@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::out_block_in_int.memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::v_in_in_int.memory_inout'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'memcpy.memory_inout.v_out_out_int.gep'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining loop 'memcpy.memory_inout.sc_out_out_int.gep'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 3.21594 seconds; current memory usage: 500 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 0.618344 seconds; current memory usage: 503 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_reset_part_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Finished creating RTL model for 'foo_reset_part_vector'.
+@I [HLS-111] Elapsed time: 0.621455 seconds; current memory usage: 504 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_copy_vector_to_part_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Finished creating RTL model for 'foo_copy_vector_to_part_vector'.
+@I [HLS-111] Elapsed time: 0.077012 seconds; current memory usage: 505 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_part_vector_mult' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 2 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_part_vector_mult'.
+@I [HLS-111] Elapsed time: 0.102329 seconds; current memory usage: 507 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_part_vector_v_new' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fsub_32ns_32ns_32_5_full_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 3 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_part_vector_v_new'.
+@I [HLS-111] Elapsed time: 0.138729 seconds; current memory usage: 509 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_part_vector_mult_1' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 1 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_part_vector_mult_1'.
+@I [HLS-111] Elapsed time: 0.15458 seconds; current memory usage: 512 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_part_vector_normalize' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_fdiv_32ns_32ns_32_16': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 1 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_part_vector_normalize'.
+@I [HLS-111] Elapsed time: 0.126325 seconds; current memory usage: 514 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_copy_part_vector_to_vector' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 1 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_copy_part_vector_to_vector'.
+@I [HLS-111] Elapsed time: 0.161591 seconds; current memory usage: 516 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@W [RTGEN-101] Register 'beta_new' is power-on initialization.
+@W [RTGEN-101] Register 'v_prev_vec0_0' is power-on initialization.
+@W [RTGEN-101] Register 'v_prev_vec0_1' is power-on initialization.
+@W [RTGEN-101] Register 'v_prev_vec_term_0' is power-on initialization.
+@W [RTGEN-101] Register 'v_prev_vec_term_1' is power-on initialization.
+@W [RTGEN-101] Register 'v_prev_vec_term_2' is power-on initialization.
+@W [RTGEN-101] Register 'v_prev_vec_term_3' is power-on initialization.
+@W [RTGEN-101] Register 'v_current_vec0_0' is power-on initialization.
+@W [RTGEN-101] Register 'v_current_vec0_1' is power-on initialization.
+@W [RTGEN-101] Register 'v_current_vec_term_0' is power-on initialization.
+@W [RTGEN-101] Register 'v_current_vec_term_1' is power-on initialization.
+@W [RTGEN-101] Register 'v_current_vec_term_2' is power-on initialization.
+@W [RTGEN-101] Register 'v_current_vec_term_3' is power-on initialization.
+@W [RTGEN-101] Register 'v_new_vec0_0' is power-on initialization.
+@W [RTGEN-101] Register 'v_new_vec0_1' is power-on initialization.
+@W [RTGEN-101] Register 'v_new_vec_term_0' is power-on initialization.
+@W [RTGEN-101] Register 'v_new_vec_term_1' is power-on initialization.
+@W [RTGEN-101] Register 'v_new_vec_term_2' is power-on initialization.
+@W [RTGEN-101] Register 'v_new_vec_term_3' is power-on initialization.
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fsqrt_32ns_32ns_32_12': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_mux_4to1_sel2_32_1': 3 instance(s).
+@I [RTGEN-100] Generating core module 'foo_sitofp_32ns_32_6': 2 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
+@I [HLS-111] Elapsed time: 1.17526 seconds; current memory usage: 524 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_init_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_sc_in_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_block_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_out_block_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_v_in_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_v_out_out_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_sc_out_out_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
+@I [RTGEN-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
+@W [RTGEN-101] Register 'init_in_int_0' is power-on initialization.
+@W [RTGEN-101] Register 'block_in_int_mat_term_0' is power-on initialization.
+@W [RTGEN-101] Register 'block_in_int_mat_term_1' is power-on initialization.
+@W [RTGEN-101] Register 'block_in_int_mat_term_2' is power-on initialization.
+@W [RTGEN-101] Register 'block_in_int_mat_term_3' is power-on initialization.
+@I [RTGEN-100] Finished creating RTL model for 'foo'.
+@I [HLS-111] Elapsed time: 1.51926 seconds; current memory usage: 543 MB.
+@I [RTMG-278] Implementing memory 'foo_foo_user_v_prev_vec_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_foo_user_v_prev_vec_rem_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_foo_user_v_current_vec_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_foo_user_v_current_vec_rem_ram' using block RAMs with power-on initialization.
+@I [RTMG-279] Implementing memory 'foo_foo_user_num_block_sched3_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_col_block_sched2_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_row_block_sched1_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_num_term_block_sched6_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_col_term_block_sched5_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_row_term_block_sched4_rom' using distributed ROMs.
+@I [RTMG-278] Implementing memory 'foo_foo_user_v_new_vec_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_foo_user_v_new_vec_rem_ram' using distributed RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_foo_user_A_mult_v_vec_ram' using block RAMs.
+@I [RTMG-278] Implementing memory 'foo_foo_user_A_mult_v_vec_rem_ram' using distributed RAMs.
+@I [RTMG-278] Implementing memory 'foo_block_in_int_mat_rem_ram' using distributed RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_out_block_in_int_ram' using distributed RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_v_in_in_int_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_block_in_int_mat_0_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_v_out_out_int_ram' using block RAMs.
+@I [RTMG-278] Implementing memory 'foo_sc_out_out_int_ram' using distributed RAMs.
+@I [HLS-10] Finished generating all RTL models.
+@I [WSYSC-301] Generating RTL SystemC for 'foo'.
+@I [WVHDL-304] Generating RTL VHDL for 'foo'.
+@I [WVLOG-307] Generating RTL Verilog for 'foo'.
+@I [HLS-112] Total elapsed time: 104.248 seconds; peak memory usage: 543 MB.
+@I [LIC-101] Checked in feature [ap_opencl]

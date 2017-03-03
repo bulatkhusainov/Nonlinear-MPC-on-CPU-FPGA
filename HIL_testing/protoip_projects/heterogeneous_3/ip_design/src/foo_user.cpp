@@ -5,18 +5,19 @@
 */
 
 #include "foo_data.h"
+#include "user_protoip_definer.h"
 #include "user_main_header.h"
 #include "user_nnz_header.h"
 #include "user_structure_header.h"
 #include "user_prototypes_header.h"
 
 
-void foo_user(  data_t_block_in block_in_int[BLOCK_IN_LENGTH],
+void foo_user(  part_matrix *block_in_int,
 				data_t_out_block_in out_block_in_int[OUT_BLOCK_IN_LENGTH],
 				data_t_x_in_in x_in_in_int[X_IN_IN_LENGTH],
 				data_t_y_out_out y_out_out_int[Y_OUT_OUT_LENGTH])
 {
-
+/*
 	int i,j,k;
 
 	// interface structure
@@ -30,6 +31,6 @@ void foo_user(  data_t_block_in block_in_int[BLOCK_IN_LENGTH],
 		for(i = 0; i < rem_partition*nnz_block_tril; i++, k++) block_struct.mat_rem[i] = block_in_int[k];
 	#endif
 	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = block_in_int[k];
-
-	minres_HW(&block_struct, out_block_in_int, x_in_in_int, y_out_out_int);
+*/
+	minres_HW(block_in_int, out_block_in_int, x_in_in_int, y_out_out_int);
 }

@@ -101,7 +101,16 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	// ifdef is to ensure propper compilation in unprescaled mode 
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 2
-		wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization
+			#ifdef PROTOIP
+			send_block_in(blocks);
+			send_out_block_in(out_blocks);
+			send_x_in_in(b);
+			start_foo(1,1,1,1);
+			while(!(finished_foo())){;} // wait for IP to finish
+			receive_y_out_out(x_current);
+			#else
+			wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization
+			#endif
 		#else
 		minres(blocks, out_blocks, b, x_current); // SW realization
 		#endif

@@ -27,13 +27,28 @@ float part_vector_mult(part_vector *x_1, part_vector *x_2)
 void reset_part_vector(part_vector *instance)
 {
 	int i,j;
-	for(i = 0; i < n_states; i++) instance->vec0[i] = 0;
-	for(i = 0; i < PAR; i++)
-		for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++) instance->vec[i][j] = 0;
+	for(i = 0; i < n_states; i++)
+	{
+		instance->vec0[i] = 0;
+	}
+	for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
+	{	
+		for(i = 0; i < PAR; i++)
+		{
+			instance->vec[i][j] = 0;
+		}
+	}
+		
 	#ifdef rem_partition
-	for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)  instance->vec_rem[i] = 0;
+	for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)  
+	{
+		instance->vec_rem[i] = 0;
+	}
 	#endif
-	for(i = 0; i < n_term_theta+n_term_eq; i++) instance->vec_term[i] = 0;
+	for(i = 0; i < n_term_theta+n_term_eq; i++) 
+	{
+		instance->vec_term[i] = 0;
+	}
 }
 
 void part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part_vector *v_current, part_vector *v_prev, float alfa, float beta_current)
@@ -89,6 +104,7 @@ void copy_vector_to_part_vector(float *vector, part_vector *instance)
 
 void lanczos_HW(int init, part_matrix *blocks, float out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
+	#pragma HLS INLINE
 	static part_vector v_current, v_prev, v_new;
 	static float beta_new = 0;
 	float alfa, beta_current;
