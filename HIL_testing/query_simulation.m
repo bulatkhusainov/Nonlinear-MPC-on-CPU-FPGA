@@ -64,6 +64,31 @@ elseif heterogeneity == 2  % accelerate lanczos kernel on HW
         copyfile(strcat('../src/',current_name),strcat('protoip_projects/heterogeneous_2/ip_design/src/',current_name,'pp'));
     end
     
+elseif heterogeneity == 3  % accelerate MINRES on HW
+     files_to_copy = {'user_block.c', 'user_bounds.c', 'user_gradient.c', ...
+                     'user_hessians.c', 'user_jacobians.c', ...
+                     'user_main_header.h', 'user_nlp_solver.c', ...
+                     'user_nnz_header.h', 'user_prescaler.c', 'user_prototypes_header.h', ...
+                     'user_rec_sol.c', 'user_residual.c', 'user_structure_header.h'};
+    for i = files_to_copy
+        current_name = i{:};
+        copyfile(strcat('../src/',current_name),'protoip_projects/heterogeneous_3/soc_prototype/src/');
+    end
+    
+    files_to_copy = {'user_main_header.h', 'user_nnz_header.h', 'user_prototypes_header.h', ...
+                     'user_structure_header.h'};
+    for i = files_to_copy
+        current_name = i{:};
+        copyfile(strcat('../src/',current_name),'protoip_projects/heterogeneous_3/ip_design/src/');
+    end
+    
+    files_to_copy = {'user_mv_mult_prescaled_HW.c','user_lanczos_HW.c','user_minres_HW.c'};
+    for i = files_to_copy
+        current_name = i{:};
+        copyfile(strcat('../src/',current_name),strcat('protoip_projects/heterogeneous_3/ip_design/src/',current_name,'pp'));
+    end
+    
+    
 end
 
 
