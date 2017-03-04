@@ -20,7 +20,7 @@ void copy_vector_to_part_vector(float *vector, part_vector *instance);
 
 void lanczos_HW(int init, part_matrix *blocks, float out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
-	#pragma HLS INLINE
+	//#pragma HLS INLINE
 	#pragma HLS ALLOCATION instances=part_vector_mult limit=1 function
 	static part_vector v_current, v_prev, v_new;
 #pragma HLS ARRAY_PARTITION variable=v_new.vec complete dim=1
