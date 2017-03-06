@@ -26,10 +26,10 @@
 
 ////////////////////////////////////////////////////////////
 //FPGA vectors memory maps
-#define block_IN_DEFINED_MEM_ADDRESS 0
-#define out_block_IN_DEFINED_MEM_ADDRESS 20
-#define x_in_IN_DEFINED_MEM_ADDRESS 40
-#define y_out_OUT_DEFINED_MEM_ADDRESS 60
+#define block_IN_DEFINED_MEM_ADDRESS 33554432
+#define out_block_IN_DEFINED_MEM_ADDRESS 33555088
+#define x_in_IN_DEFINED_MEM_ADDRESS 33555176
+#define y_out_OUT_DEFINED_MEM_ADDRESS 33555640
 
 
 ////////////////////////////////////////////////////////////

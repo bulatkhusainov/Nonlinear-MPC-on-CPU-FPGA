@@ -198,10 +198,10 @@ void reset_part_vector(part_vector *instance)
 	}
 	for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
 	{
+	#pragma HLS PIPELINE
 		for(i = 0; i < PAR; i++)
 		{
-			#pragma HLS LOOP_FLATTEN
-			#pragma HLS PIPELINE
+#pragma HLS UNROLL skip_exit_check
 			instance->vec[i][j] = 0;
 		}
 	}

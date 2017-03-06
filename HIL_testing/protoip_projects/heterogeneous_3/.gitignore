@@ -1,3 +1,4 @@
 ip_design/build/prj/my_project0/
 ip_prototype/build/prj/my_project0.zedboard
 soc_prototype/test/prj/my_project0.zedboard
+ip_prototype/test/

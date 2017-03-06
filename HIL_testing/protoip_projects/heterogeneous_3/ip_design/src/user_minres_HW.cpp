@@ -57,21 +57,35 @@ void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current
 
 
 	//initialisation
-	for(i = 0; i < n_linear; i++)
+	init_loop:for(i = 0; i < n_linear; i++)
+	{
+		#pragma HLS PIPELINE
 		omega_pprev[i] = 0;
-	for(i = 0; i < n_linear; i++)
 		omega_prev[i] = 0;
-	for(i = 0; i < n_linear; i++)
 		x_current[i] = 0;
-	for(i = 0; i < n_linear; i++)
+		v_current_HW_in[i] = b[i];
+	}
+	/*v_current_set_loop:for(i = 0; i < n_linear; i++)
+	{
+		#pragma HLS PIPELINE
 		v_current_HW_in[i] = b[i]; // initially this vector stores v_current
+	}*/
 
+
+	#ifdef PROTOIP
+	beta_current = hls::sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
+	#else
 	beta_current = sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
+	#endif
 	nu_current = beta_current;
 
 	// manually perform first iteration of Lanczos kernel to achieve pipelining
-	for(i = 0; i < n_linear; i++)
+	init_lanczos_loop: for(i = 0; i < n_linear; i++)
+	{
+		#pragma HLS PIPELINE
 		v_current_HW_in[i] = v_current_HW_in[i]/beta_current;
+	}
+
 	sc_in[0] = beta_current;
 	#ifdef MINRES_prescaled
 		lanczos_HW(1, blocks, out_blocks, v_current_HW_in,  v_current_HW, sc_in, sc_out);
@@ -79,14 +93,17 @@ void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current
 		// no hardware realization of unprescaled implementation
 	#endif
 
+	// extract required info from the lanczos kernel
+	extract_from_lanczos_loop: for(i = 0; i < n_linear; i++)
+	{
+		#pragma HLS PIPELINE
+		v_current_alg[i] = v_current_HW[i];
+	}
+
 	// main loop
-	for(counter = 0; counter < MINRES_iter; counter++)
+	main_loop: for(counter = 0; counter < MINRES_iter; counter++)
 	{	
 
-
-		// extract reqired info from the lanczos kernel
-		for(i = 0; i < n_linear; i++)
-				v_current_alg[i] = v_current_HW[i];
 		alfa_current = sc_out[0];
 		beta_current = sc_out[1];
 		beta_new = sc_out[2];
@@ -113,23 +130,23 @@ void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current
     	sigma_new = beta_new*over_ro_1;
 
     	//update solution
-    	for(i = 0;i < n_linear; i++)
+    	solution_update_loop:for(i = 0;i < n_linear; i++)
+    	{
+    		#pragma HLS PIPELINE
     		omega_current[i] = (v_current_alg[i] - ro_3*omega_pprev[i] - ro_2*omega_prev[i])*over_ro_1;
-    	for(i = 0; i < n_linear; i++)
     		x_new[i] = x_current[i] + gamma_new*nu_current*omega_current[i];
+    	}
+
     	nu_new = -sigma_new*nu_current;
 
-
     	// update variables and pointers
-		for(i = 0; i < n_linear; i++)
+		variables_update_loop: for(i = 0; i < n_linear; i++)
 		{
+			#pragma HLS PIPELINE
 			x_current[i] = x_new[i];
-		}
-
-		for(i = 0; i < n_linear; i++)
-		{
 			omega_pprev[i] = omega_prev[i];
 			omega_prev[i] = omega_current[i];
+			v_current_alg[i] = v_current_HW[i];
 		}
  	
     	nu_current = nu_new; // update variables
@@ -139,7 +156,6 @@ void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current
 
     	sigma_prev = sigma_current;
     	sigma_current = sigma_new;
-
 	}
 
 	
