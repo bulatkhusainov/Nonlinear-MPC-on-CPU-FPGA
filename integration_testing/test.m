@@ -17,7 +17,7 @@ cd ../integration_testing
 
 % formulate and solve optimization problem
 % initial condiiton
-x_init = [0.5;0];
+x_init = [0; 0; 0.05; 0];
 
 % intial guess
 all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables (make sure the guess is feasible)
@@ -30,7 +30,7 @@ all_lambda = ones(N*n_bounds, 1); % inequality dual variables
 %all_theta(902) = 12;
 %all_nu(301) = 4;
 
-mu = 1; % barrier parameter
+mu = 0.001; % barrier parameter
 
 
 n_z = size(all_theta,1) + size(all_nu,1); 
@@ -166,7 +166,6 @@ for ip_iter = 1:IP_iter
     
     % solve a system on linear equations
     if false
-        debug_gold = sum(abs(A'));
         M = sqrt(diag(sum(abs(A'))))^-1;
         d_z = minres(M*A*M,M*b,[],round(max(size(A))));
         d_z = M*d_z;
@@ -237,11 +236,11 @@ for ip_iter = 1:IP_iter
 
         
     % update barrier 
-    if mu <= 0.001
-        mu = 0.001;
-    else
-        mu = mu*0.1;
-    end
+%     if mu <= 0.001
+%         mu = 0.001;
+%     else
+%         mu = mu*0.1;
+%     end
 end
 
 % plot convergence of the algorithm
@@ -256,7 +255,7 @@ plot(0:(IP_iter-1), r_slackness_store,0:(IP_iter-1),mu_store, '--');
 title('complementary slackness');
 
 
-%plot solution
+%extract data for plotting
 figure
 x_trajectory = zeros(n_states,N+1);
 u_trajectory = zeros(m_inputs,N);
@@ -267,12 +266,23 @@ for i=1:N
     s_trajectory(:,i) = all_theta((1:n_node_slack) + n_states + m_inputs + (i-1)*n_node_theta);
 end
 x_trajectory(:,N+1) = all_theta((1:n_states) + (N)*n_node_theta);
-plot((0:N), x_trajectory(1,:)); % first state
-hold on
-plot((0:N), x_trajectory(2,:)); % second state
-stairs((0:N-1), u_trajectory(1,:)) % first input
-%plot((0:N-1), s_trajectory(1,:)) % first slack
-legend('state 1', 'state 2','input 1');
+if(strcmp(model,  'casadi_example'))
+    %plot solution
+    plot((0:N), x_trajectory(1,:)); % first state
+    hold on
+    plot((0:N), x_trajectory(2,:)); % second state
+    stairs((0:N-1), u_trajectory(1,:)) % first input
+    %plot((0:N-1), s_trajectory(1,:)) % first slack
+    legend('state 1', 'state 2','input 1');
+elseif(strcmp(model,  'crane_x'))
+    % not plotting for now
+    subplot(3,2,1); plot((0:N), x_trajectory(1,:)); title('x coordinate'); 
+    subplot(3,2,2); plot((0:N), x_trajectory(2,:)); title('x speed'); 
+    subplot(3,2,3); plot((0:N), x_trajectory(3,:)); title('theta'); 
+    subplot(3,2,4); plot((0:N), x_trajectory(4,:)); title('theta spped'); 
+    subplot(3,2,5); stairs((0:N-1), u_trajectory(1,:)); title('x input');    
+    
+end
 
 
 %% compile and test full C implementation
