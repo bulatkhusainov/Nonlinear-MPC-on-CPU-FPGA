@@ -17,7 +17,7 @@ cd ../integration_testing
 
 % formulate and solve optimization problem
 % initial condiiton
-x_init = [0; 0; 0.05; 0];
+x_init = [0; 0; 0.3; 0; 0.2; 0];
 
 % intial guess
 all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables (make sure the guess is feasible)
@@ -256,7 +256,7 @@ title('complementary slackness');
 
 
 %extract data for plotting
-figure
+
 x_trajectory = zeros(n_states,N+1);
 u_trajectory = zeros(m_inputs,N);
 s_trajectory = zeros(n_node_slack,N);
@@ -267,7 +267,7 @@ for i=1:N
 end
 x_trajectory(:,N+1) = all_theta((1:n_states) + (N)*n_node_theta);
 if(strcmp(model,  'casadi_example'))
-    %plot solution
+    figure
     plot((0:N), x_trajectory(1,:)); % first state
     hold on
     plot((0:N), x_trajectory(2,:)); % second state
@@ -275,13 +275,22 @@ if(strcmp(model,  'casadi_example'))
     %plot((0:N-1), s_trajectory(1,:)) % first slack
     legend('state 1', 'state 2','input 1');
 elseif(strcmp(model,  'crane_x'))
-    % not plotting for now
+    figure
     subplot(3,2,1); plot((0:N), x_trajectory(1,:)); title('x coordinate'); 
     subplot(3,2,2); plot((0:N), x_trajectory(2,:)); title('x speed'); 
     subplot(3,2,3); plot((0:N), x_trajectory(3,:)); title('theta'); 
     subplot(3,2,4); plot((0:N), x_trajectory(4,:)); title('theta spped'); 
-    subplot(3,2,5); stairs((0:N-1), u_trajectory(1,:)); title('x input');    
-    
+    subplot(3,2,5); stairs((0:N-1), u_trajectory(1,:)); title('x input');   
+elseif(strcmp(model,  'crane_xz'))
+    figure
+    subplot(3,3,1); plot((0:N), x_trajectory(1,:)); title('x coordinate'); 
+    subplot(3,3,2); plot((0:N), x_trajectory(2,:)); title('x speed'); 
+    subplot(3,3,3); plot((0:N), x_trajectory(3,:)); title('z coordinate'); 
+    subplot(3,3,4); plot((0:N), x_trajectory(4,:)); title('z speed'); 
+    subplot(3,3,5); plot((0:N), x_trajectory(5,:)); title('theta'); 
+    subplot(3,3,6); plot((0:N), x_trajectory(6,:)); title('theta spped'); 
+    subplot(3,3,7); stairs((0:N-1), u_trajectory(1,:)); title('x input'); 
+    subplot(3,3,8); stairs((0:N-1), u_trajectory(2,:)); title('z input');
 end
 
 
