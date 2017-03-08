@@ -45,11 +45,11 @@
 
 
 //Input vectors size:
-#define BLOCK_IN_LENGTH 164
-#define OUT_BLOCK_IN_LENGTH 22
-#define X_IN_IN_LENGTH 116
+#define BLOCK_IN_LENGTH 838
+#define OUT_BLOCK_IN_LENGTH 66
+#define X_IN_IN_LENGTH 414
 //Output vectors size:
-#define Y_OUT_OUT_LENGTH 116
+#define Y_OUT_OUT_LENGTH 414
 
 
 

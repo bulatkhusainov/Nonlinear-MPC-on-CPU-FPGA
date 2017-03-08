@@ -18,6 +18,7 @@ cd ../integration_testing
 % formulate and solve optimization problem
 % initial condiiton
 x_init = [0; 0; 0.3; 0; 0.2; 0];
+%x_init = [0.5; 0];
 
 % intial guess
 all_theta = zeros(n_node_theta*N+n_term_theta,1); % optimization variables (make sure the guess is feasible)

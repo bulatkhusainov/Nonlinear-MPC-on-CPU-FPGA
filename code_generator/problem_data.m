@@ -26,9 +26,9 @@ Tsim = 1;
 MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
-MINRES_iter = 'n_linear';
-PAR =4;
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 50; end;
+MINRES_iter = '1.5*n_linear';
+PAR = 5;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 
 %model = 'casadi_example';
@@ -115,12 +115,12 @@ elseif(strcmp(model,  'crane_x'))
     
     % define objective (function of x,u,s)
     node_objective_residual = sqrt(Ts)*[ sqrt(1)*(x(1)); 
-                                         sqrt(1)*(x(2));
+                                         sqrt(0)*(x(2));
                                          sqrt(10)*(x(3));
                                          sqrt(1)*(x(4));
-                                         sqrt(0.01)*(u(1));]; % least squares format
+                                         sqrt(0.001)*(u(1))]; % least squares format
     term_objective_residual = [sqrt(1)*(term_x(1));
-                               sqrt(1)*(term_x(2));
+                               sqrt(0)*(term_x(2));
                                sqrt(10)*(term_x(3));
                                sqrt(1)*(term_x(4))]; % least squares format
     % define ode (function of x,u)
@@ -149,7 +149,7 @@ elseif(strcmp(model,  'crane_xz'))
     % model-dependent part (crane_x)
     % parameters
     tau_x = 1/7.75;
-    tau_z = 1/7.75;
+    tau_z = 1/15;
     g = 9.81;
     % dimensions
     n_stages = size(butcher_table_A,1); % number of integrator stages per node
@@ -184,14 +184,15 @@ elseif(strcmp(model,  'crane_xz'))
     
     % define objective (function of x,u,s)
     node_objective_residual = sqrt(Ts)*[ sqrt(1)*(x(1)); 
-                                         sqrt(1)*(x(2));
+                                         sqrt(0.01)*(x(2));
                                          sqrt(10)*(x(3));
                                          sqrt(1)*(x(4));
                                          sqrt(1)*(x(5));
                                          sqrt(1)*(x(6));
-                                         sqrt(0.001)*(u(1));]; % least squares format
+                                         sqrt(0.001)*(u(1));
+                                         sqrt(0.001)*(u(2))]; % least squares format
     term_objective_residual = [sqrt(1)*(term_x(1));
-                               sqrt(1)*(term_x(2));
+                               sqrt(0.01)*(term_x(2));
                                sqrt(10)*(term_x(3));
                                sqrt(1)*(term_x(4));
                                sqrt(1)*(term_x(5));
@@ -212,10 +213,10 @@ elseif(strcmp(model,  'crane_xz'))
     term_f(1) = term_x(1) - term_s(1);
     % define bounds on x,u,s
     % bound indeces [x' u' s']'
-    upper_bounds_indeces = [5]-1; % in C format
-    lower_bounds_indeces = [5]-1; % in C format
-    upper_bounds = [ 0.4];
-    lower_bounds = [ -0.4];
+    upper_bounds_indeces = [7,8]-1; % in C format
+    lower_bounds_indeces = [7,8]-1; % in C format
+    upper_bounds = [ 0.04, 0.04];
+    lower_bounds = [ -0.04, -0.04];
     n_upper_bounds = max(size(upper_bounds_indeces));
     n_lower_bounds = max(size(lower_bounds_indeces));
     n_bounds = n_upper_bounds + n_lower_bounds;   

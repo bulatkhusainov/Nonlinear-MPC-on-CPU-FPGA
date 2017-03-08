@@ -40,14 +40,14 @@ vivado
 #soc_Input
 1
 x_hat
-2
+6
 0
 0
 0
 #soc_Output
 1
 u_opt
-83
+217
 0
 0
 0

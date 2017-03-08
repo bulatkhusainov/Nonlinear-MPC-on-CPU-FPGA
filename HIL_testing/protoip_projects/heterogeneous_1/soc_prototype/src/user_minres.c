@@ -69,7 +69,19 @@ float vv_mult(float *x_1, float *x_2)
 	sc_in[0] = beta_current;
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 1
-			wrap_lanczos_HW(1, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+			#ifdef PROTOIP
+				float init[3] = {1,0,0};
+				// send data to DDR
+				send_init_in(init);
+				send_sc_in_in(sc_in);
+				send_block_in(blocks);
+				send_out_block_in(out_blocks);
+				send_v_in_in(v_tmp2);
+				// call hardware accelerator assuming all interfaces are involoved
+				start_foo(1,1,1,1,1,1,1);
+			#else
+				wrap_lanczos_HW(1, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+			#endif
 		#else
 			lanczos(1, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out); // SW implementation
 		#endif
@@ -84,8 +96,15 @@ float vv_mult(float *x_1, float *x_2)
 
 		// extract reqired info from the lanczos kernel
 		#if heterogeneity > 1
-			for(i = 0; i < n_linear; i++)
-				v_current_alg[i] = v_current_HW[i];
+			#ifdef PROTOIP
+				while(!(finished_foo())){;}
+				// read data from DDR
+				receive_v_out_out(v_current_alg);
+				receive_sc_out_out(sc_out);
+			#else
+				for(i = 0; i < n_linear; i++)
+					v_current_alg[i] = v_current_HW[i];
+			#endif
 		#else
 			for(i = 0; i < n_linear; i++)
 				v_current_alg[i] = v_current[i];
@@ -94,11 +113,18 @@ float vv_mult(float *x_1, float *x_2)
 		beta_current = sc_out[1];
 		beta_new = sc_out[2];
 
-
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
 		#ifdef MINRES_prescaled
 			#if heterogeneity > 1
-				wrap_lanczos_HW(0, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+				#ifdef PROTOIP
+					init[0] = 0;
+					// send data to DDR
+					send_init_in(init);
+					// call hardware accelerator assuming only output interfaces are involoved
+					start_foo(1,0,0,0,0,1,1);
+				#else
+					wrap_lanczos_HW(0, blocks, out_blocks, v_tmp2, v_current_HW, sc_in, sc_out); // HW implementation
+				#endif
 			#else
 				lanczos(0, blocks, out_blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out); // SW implementation
 			#endif

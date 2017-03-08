@@ -4,10 +4,10 @@ Input and output vectors:
 
 Name			| Direction		| Number of data 			| Data representation
 
-block			 	| Input         | BLOCK_IN_LENGTH=164 			|data type "data_t_block_in" is floating-point single precision (32 bits)
-out_block			 	| Input         | OUT_BLOCK_IN_LENGTH=22 			|data type "data_t_out_block_in" is floating-point single precision (32 bits)
-x_in			 	| Input         | X_IN_IN_LENGTH=116 			|data type "data_t_x_in_in" is floating-point single precision (32 bits)
-y_out			 	| Output         | Y_OUT_OUT_LENGTH=116 			|data type "data_t_y_out_in" is floating-point single precision (32 bits)
+block			 	| Input         | BLOCK_IN_LENGTH=838 			|data type "data_t_block_in" is floating-point single precision (32 bits)
+out_block			 	| Input         | OUT_BLOCK_IN_LENGTH=66 			|data type "data_t_out_block_in" is floating-point single precision (32 bits)
+x_in			 	| Input         | X_IN_IN_LENGTH=414 			|data type "data_t_x_in_in" is floating-point single precision (32 bits)
+y_out			 	| Output         | Y_OUT_OUT_LENGTH=414 			|data type "data_t_y_out_in" is floating-point single precision (32 bits)
 
 
 ---------------------------------------------------------
@@ -18,9 +18,9 @@ IP design C/RTL test(s): input and output vectors has been mapped into a virtual
 Name			| Base address in Byte
 
 block			 	| 0x00000000 <- 0
-out_block			 	| 0x00000290 <- (BLOCK_IN_LENGTH)*4
-x_in			 	| 0x000002E8 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
-y_out			 	| 0x000004B8 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
+out_block			 	| 0x00000D18 <- (BLOCK_IN_LENGTH)*4
+x_in			 	| 0x00000E20 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+y_out			 	| 0x00001498 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
 
 
 ---------------------------------------------------------
@@ -46,27 +46,27 @@ Latency:
 ------------------------
 
 * IP
-   latency (clock cycles): 349380
-   latency (us): 3493.8
+   latency (clock cycles): 4953163
+   latency (us): 49531.63
 
 	* User function
-	   latency (clock cycles): 348913
-	   latency (us): 3489.13
+	   latency (clock cycles): 4951347
+	   latency (us): 49513.47
 
 
 Resource utilization:
 ------------------------
 
 * IP
-   BRAM_18K: 48 (17%) used out off 280 available.
-   DSP48E: 48 (21%) used out off 220 available.
-   FF: 15723 (14%) used out off 106400 available.
-   LUT: 23774 (44%) used out off 53200 available.
+   BRAM_18K: 67 (23%) used out off 280 available.
+   DSP48E: 58 (26%) used out off 220 available.
+   FF: 12961 (12%) used out off 106400 available.
+   LUT: 22754 (42%) used out off 53200 available.
 
 	* User function
-	   BRAM_18K: 43 (15%) used out off 280 available.
-	   DSP48E: 48 (21%) used out off 220 available.
-	   FF: 12636 (11%) used out off 106400 available.
-	   LUT: 20031 (37%) used out off 53200 available.
+	   BRAM_18K: 59 (21%) used out off 280 available.
+	   DSP48E: 58 (26%) used out off 220 available.
+	   FF: 11596 (10%) used out off 106400 available.
+	   LUT: 21319 (40%) used out off 53200 available.
 
 NOTE: IP design performance might be enhanced by adding directives from Vivado_HLS GUI interface. Run "tclapp::icl::protoip::ip_design_build_debug" to open my_project0 with Vivado_HLS GUI interface.

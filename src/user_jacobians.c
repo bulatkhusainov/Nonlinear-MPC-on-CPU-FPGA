@@ -11,7 +11,7 @@ void ode_eval(float x_dot[n_states],float x_u[n_states+m_inputs])
 	x_dot[0] =   x_u[2-1];
 	x_dot[1] =   x_u[2-1]*(-3.1E1/4.0)+x_u[7-1]*(3.1E1/4.0);
 	x_dot[2] =   x_u[4-1];
-	x_dot[3] =   x_u[4-1]*(-3.1E1/4.0)+x_u[8-1]*(3.1E1/4.0);
+	x_dot[3] =   x_u[4-1]*-1.5E1+x_u[8-1]*1.5E1;
 	x_dot[4] =   x_u[6-1];
 	x_dot[5] =   -(sin(x_u[5-1])*(9.81E2/1.0E2)-cos(x_u[5-1])*(x_u[2-1]*(3.1E1/4.0)-x_u[7-1]*(3.1E1/4.0))+x_u[4-1]*x_u[6-1]*2.0)/(x_u[3-1]+1.0/2.0);
 }
@@ -40,7 +40,7 @@ void ode_jac_x_eval(float ode_jac_x[n_states][n_states],float x_u[n_states+m_inp
 	ode_jac_x[3][0] =   0.0;
 	ode_jac_x[3][1] =   0.0;
 	ode_jac_x[3][2] =   0.0;
-	ode_jac_x[3][3] =   -3.1E1/4.0;
+	ode_jac_x[3][3] =   -1.5E1;
 	ode_jac_x[3][4] =   0.0;
 	ode_jac_x[3][5] =   0.0;
 	ode_jac_x[4][0] =   0.0;
@@ -67,7 +67,7 @@ void ode_jac_u_eval(float ode_jac_u[n_states][m_inputs],float x_u[n_states+m_inp
 	ode_jac_u[2][0] =   0.0;
 	ode_jac_u[2][1] =   0.0;
 	ode_jac_u[3][0] =   0.0;
-	ode_jac_u[3][1] =   3.1E1/4.0;
+	ode_jac_u[3][1] =   1.5E1;
 	ode_jac_u[4][0] =   0.0;
 	ode_jac_u[4][1] =   0.0;
 	ode_jac_u[5][0] =   (cos(x_u[5-1])*(-3.1E1/4.0))/(x_u[3-1]+1.0/2.0);
@@ -327,11 +327,11 @@ void f_jac_eval(float f_jac[n_node_eq][n_node_theta],float node_theta[n_node_the
 	f_jac[9][0] =   0.0;
 	f_jac[9][1] =   0.0;
 	f_jac[9][2] =   0.0;
-	f_jac[9][3] =   -3.1E1/4.0;
+	f_jac[9][3] =   -1.5E1;
 	f_jac[9][4] =   0.0;
 	f_jac[9][5] =   0.0;
 	f_jac[9][6] =   0.0;
-	f_jac[9][7] =   3.1E1/4.0;
+	f_jac[9][7] =   1.5E1;
 	f_jac[9][8] =   0.0;
 	f_jac[9][9] =   0.0;
 	f_jac[9][10] =   0.0;
@@ -453,22 +453,22 @@ void f_jac_eval(float f_jac[n_node_eq][n_node_theta],float node_theta[n_node_the
 	f_jac[15][0] =   0.0;
 	f_jac[15][1] =   0.0;
 	f_jac[15][2] =   0.0;
-	f_jac[15][3] =   -3.1E1/4.0;
+	f_jac[15][3] =   -1.5E1;
 	f_jac[15][4] =   0.0;
 	f_jac[15][5] =   0.0;
 	f_jac[15][6] =   0.0;
-	f_jac[15][7] =   3.1E1/4.0;
+	f_jac[15][7] =   1.5E1;
 	f_jac[15][8] =   0.0;
 	f_jac[15][9] =   0.0;
 	f_jac[15][10] =   0.0;
 	f_jac[15][11] =   0.0;
-	f_jac[15][12] =   -3.1E1/8.0E1;
+	f_jac[15][12] =   -3.0/4.0;
 	f_jac[15][13] =   0.0;
 	f_jac[15][14] =   0.0;
 	f_jac[15][15] =   0.0;
 	f_jac[15][16] =   0.0;
 	f_jac[15][17] =   0.0;
-	f_jac[15][18] =   -1.11E2/8.0E1;
+	f_jac[15][18] =   -7.0/4.0;
 	f_jac[15][19] =   0.0;
 	f_jac[15][20] =   0.0;
 	f_jac[16][0] =   0.0;

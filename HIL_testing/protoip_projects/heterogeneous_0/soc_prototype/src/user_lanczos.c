@@ -38,7 +38,29 @@ float vv_mult1(float *x_1, float *x_2)
 
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 0
-			wrap_mv_mult_prescaled_HW(A_mult_v, blocks, out_blocks,v_current);
+			#ifdef PROTOIP
+				if(init)
+				{
+					send_block_in(blocks);
+					send_out_block_in(out_blocks);
+					send_x_in_in(v_current);
+					// call hardware accelerator assuming all interfaces are involoved
+					start_foo(1,1,1,1);
+					// wait for IP to finish
+					while(!(finished_foo())){;}
+					// read data from DDR
+					receive_y_out_out(A_mult_v);
+				}
+				else
+				{
+					while(!(finished_foo())){;}
+					// read data from DDR
+					receive_y_out_out(A_mult_v);
+				}
+				
+			#else
+				wrap_mv_mult_prescaled_HW(A_mult_v, blocks, out_blocks,v_current);
+			#endif
 		#else
 			// SW implementation
 			mv_mult_prescaled(A_mult_v, blocks, out_blocks,v_current); // calculate mat-vec product
@@ -55,6 +77,15 @@ float vv_mult1(float *x_1, float *x_2)
 	beta_new = sqrtf(vv_mult1(v_prev,v_prev)); 
 	for(i = 0; i < n_linear; i++)
 		v_prev[i] = v_prev[i]/beta_new;
+
+
+	#if heterogeneity > 0
+			#ifdef PROTOIP
+			send_x_in_in(v_prev);
+			// call hardware accelerator assuming all interfaces are involoved
+			start_foo(0,0,1,1);
+		#endif
+	#endif
 
 	// put required information to interface arrays and variables
 	//for(i = 0; i < n_linear; i++)

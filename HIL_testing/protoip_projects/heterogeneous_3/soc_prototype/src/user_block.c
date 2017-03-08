@@ -16,21 +16,21 @@ void node_block_eval(float block[nnz_block_tril],float node_jac_2d[n_node_eq][n_
 	float node_hessian[n_node_theta][n_node_theta];
 
 	// node Hessian reading info 
-	int row_node_hessian_tril[3] = {0,1,3,};
-	int col_node_hessian_tril[3] = {0,1,3,};
-	int num_node_hessian_tril[3] = {0,4,10,};
+	int row_node_hessian_tril[8] = {0,1,2,3,4,5,6,7,};
+	int col_node_hessian_tril[8] = {0,1,2,3,4,5,6,7,};
+	int num_node_hessian_tril[8] = {0,2,10,14,22,26,32,38,};
 
 	// node Jacobian reading info 
-	int row_node_f_jac[12] = {0,2,3,1,2,2,4,4,0,2,1,3,};
-	int col_node_f_jac[12] = {0,0,0,1,1,2,2,3,4,4,5,5,};
-	int num_node_f_jac[12] = {1,2,3,5,6,8,9,11,12,13,14,15,};
+	int row_node_f_jac[75] = {0,1,6,7,11,12,13,17,2,11,17,3,8,9,11,14,15,17,4,11,17,5,10,11,16,17,7,11,13,17,18,9,15,18,0,6,1,7,12,13,17,2,8,17,3,9,14,15,17,4,10,17,5,11,16,17,0,12,1,12,13,17,2,14,17,3,14,15,17,4,16,17,5,16,17,};
+	int col_node_f_jac[75] = {0,1,1,1,1,1,1,1,2,2,2,3,3,3,3,3,3,3,4,4,4,5,5,5,5,5,6,6,6,6,6,7,7,8,9,9,10,10,10,10,10,11,11,11,12,12,12,12,12,13,13,13,14,14,14,14,15,15,16,16,16,16,17,17,17,18,18,18,18,19,19,19,20,20,20,};
+	int num_node_f_jac[75] = {1,3,4,5,6,7,8,9,11,12,13,15,16,17,18,19,20,21,23,24,25,27,28,29,30,31,33,34,35,36,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,};
 
 	// node gwg reading info 
-	int col_gwg[1] = {2,};
-	int num_gwg[1] = {7,};
+	int col_gwg[2] = {6,7,};
+	int num_gwg[2] = {32,38,};
 
-	int upper_bounds_indeces[1] = {2,};
-	int lower_bounds_indeces[1] = {2,};
+	int upper_bounds_indeces[2] = {6,7,};
+	int lower_bounds_indeces[2] = {6,7,};
 
 	node_hessian_eval(node_hessian, node_theta);
 	f_jac_eval(node_jac_2d, node_theta);
@@ -62,14 +62,14 @@ void term_block_eval(float term_block[nnz_term_block_tril],float term_jac_2d[n_t
 	float term_hessian[n_term_theta][n_term_theta];
 
 	// term Hessian reading info 
-	int row_term_hessian_tril[2] = {0,1,};
-	int col_term_hessian_tril[2] = {0,1,};
-	int num_term_hessian_tril[2] = {0,2,};
+	int row_term_hessian_tril[6] = {0,1,2,3,4,5,};
+	int col_term_hessian_tril[6] = {0,1,2,3,4,5,};
+	int num_term_hessian_tril[6] = {0,2,3,4,5,6,};
 
 	// term Jacobian reading info 
 	int row_term_f_jac[2] = {0,0,};
-	int col_term_f_jac[2] = {0,2,};
-	int num_term_f_jac[2] = {1,3,};
+	int col_term_f_jac[2] = {0,6,};
+	int num_term_f_jac[2] = {1,7,};
 
 	term_hessian_eval(term_hessian, term_theta);
 	term_f_jac_eval(term_jac_2d, term_theta);

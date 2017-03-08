@@ -28,20 +28,21 @@ load ../../../../../code_generator/problem_data
 import casadi.*
 
 % define casadi integration parameters
-x = SX.sym('x',n_states,1); %state vector
-u = SX.sym('u',m_inputs,1); %input vector
-x_dot = [(1-x(2)^2)*x(1)-x(2)+u;0.02*x(1)];
-L = 0.01*(x(1))^2 + 50*x(2)^2 + 0.0001*u(1)^2;
-f = Function('f', {x,u},{x_dot},{'x','u'},{'x_dot', 'L'});
-dae = struct('x',x,'p',u,'ode',x_dot,'quad',L);
-opts = struct('tf',Ts);
-F = integrator('F', 'cvodes', dae, opts);
+% x = SX.sym('x',n_states,1); %state vector
+% u = SX.sym('u',m_inputs,1); %input vector
+% x_dot = [(1-x(2)^2)*x(1)-x(2)+u;0.02*x(1)];
+% L = 0.01*(x(1))^2 + 50*x(2)^2 + 0.0001*u(1)^2;
+% f = Function('f', {x,u},{x_dot},{'x','u'},{'x_dot', 'L'});
+% dae = struct('x',x,'p',u,'ode',x_dot,'quad',L);
+% opts = struct('tf',Ts);
+% F = integrator('F', 'cvodes', dae, opts);
 
 % define initial condition
+x_init = [0; 0; 0.3; 0; 0.2; 0]';
 soc_x_hat_in=x_init';
 
 %for i=1:(N_sim_full+1)
-for i=1:(N_sim_full+1) % the last simulation is for remainder. which can be zero
+for i=1:(1) % the last simulation is for remainder. which can be zero
 	tmp_disp_str=strcat('Test number ',num2str(i));
 	disp(tmp_disp_str)
 
@@ -128,35 +129,35 @@ for i=1:(N_sim_full+1) % the last simulation is for remainder. which can be zero
     
    
     % ode integration 
-    try
-        if i == (N_sim_full+1)
-             % for the remainder simulation could be shorter
-            opts = struct('tf',Tsim_last);
-            F = integrator('F', 'cvodes', dae, opts);
-
-        end
-        u_opt = fpga_soc_u_opt_out(n_states + (1:m_inputs));
-        Fk = F('x0',soc_x_hat_in','p',u_opt);
-        soc_x_hat_in = (full(Fk.xf))';
-        cost_simulated = full(Fk.qf); 
-    catch
-        save(crash_file);
-        soc_x_hat_in = zeros(1, n_states);
-        cost_simulated = 1e10;      
-    end
+%     try
+%         if i == (N_sim_full+1)
+%              % for the remainder simulation could be shorter
+%             opts = struct('tf',Tsim_last);
+%             F = integrator('F', 'cvodes', dae, opts);
+% 
+%         end
+%         u_opt = fpga_soc_u_opt_out(n_states + (1:m_inputs));
+%         Fk = F('x0',soc_x_hat_in','p',u_opt);
+%         soc_x_hat_in = (full(Fk.xf))';
+%         cost_simulated = full(Fk.qf); 
+%     catch
+%         save(crash_file);
+%         soc_x_hat_in = zeros(1, n_states);
+%         cost_simulated = 1e10;      
+%     end
     
     
     %save objective
-	if (TYPE_TEST==0)
-		filename = strcat('../test/results/', project_name ,'/objective.dat');
-	else
-		%filename = strcat('../test/results/', project_name ,'/fpga_time_log.dat');
-	end
-	fid = fopen(filename, 'a+');
-   
-	fprintf(fid, '%2.18f, \n', cost_simulated);
-
-	fclose(fid);
+% 	if (TYPE_TEST==0)
+% 		filename = strcat('../test/results/', project_name ,'/objective.dat');
+% 	else
+% 		%filename = strcat('../test/results/', project_name ,'/fpga_time_log.dat');
+% 	end
+% 	fid = fopen(filename, 'a+');
+%    
+% 	fprintf(fid, '%2.18f, \n', cost_simulated);
+% 
+% 	fclose(fid);
 
 
        

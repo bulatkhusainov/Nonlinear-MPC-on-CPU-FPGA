@@ -9,10 +9,10 @@ void rec_sol(float d_all_theta[n_all_theta],float d_all_nu[n_all_nu],float d_all
 	int i,j,k;
 	float *local_ptr1, *local_ptr2, *local_ptr3, *local_ptr4, *local_ptr5; // local pointers for efficient handling of nested loops
 
-	int upper_bounds_indeces[1] = {2,};
-	int lower_bounds_indeces[1] = {2,};
-	float upper_bounds[1] = {0.5000000000000000,};
-	float lower_bounds[1] = {-0.5000000000000000,};
+	int upper_bounds_indeces[2] = {6,7,};
+	int lower_bounds_indeces[2] = {6,7,};
+	float upper_bounds[2] = {0.0400000000000000,0.0400000000000000,};
+	float lower_bounds[2] = {-0.0400000000000000,-0.0400000000000000,};
 
 	// extract d_all_theta[] from d_x[]
 	for(i = 0; i < N; i++)

@@ -65,13 +65,12 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		for(i = 0; i < n_all_lambda; i++) // precalculate mu over g
 			all_mu_over_g[i] = mu*all_one_over_g[i];
 
-
+	
 		for(i = 0; i < N*nnz_block_tril + nnz_term_block_tril; i++) blocks[i] = 0;
 		// evaluate blocks
 		for(i = 0; i < N; i++) // node blocks
 			node_block_eval(&blocks[i*nnz_block_tril], (float (*)[n_node_theta]) &node_jac_2d[i][0][0], &all_theta[i*n_node_theta], &all_lambda_over_g[i*n_bounds]);
-		 term_block_eval(&blocks[N*nnz_block_tril], term_jac_2d, &all_theta[N*n_node_theta]); // terminal block
-
+	 	term_block_eval(&blocks[N*nnz_block_tril], term_jac_2d, &all_theta[N*n_node_theta]); // terminal block
 
 		/* k = 0;
 		for(i = 0; i < n_node_eq; i++)
