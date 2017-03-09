@@ -8,7 +8,7 @@ addpath(strcat(pwd,'/jacobian_code/unit_test_files'));
 addpath(strcat(pwd,'/bounds_code/unit_test_files'));
 addpath(strcat(pwd,'/block_code/unit_test_files'));
 
-debug_mode = 1;
+debug_mode = 0;
 test_enable = 1; % enable unit testing
 test_tol = 1e-4;
 

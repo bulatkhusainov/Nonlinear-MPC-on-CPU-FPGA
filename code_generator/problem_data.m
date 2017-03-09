@@ -28,7 +28,7 @@ d_type = 'float';
 IP_iter = 20;
 MINRES_iter = '1.5*n_linear';
 PAR = 5;
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 5; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 
 %model = 'casadi_example';
@@ -183,20 +183,20 @@ elseif(strcmp(model,  'crane_xz'))
     input_z     = u(2);
     
     % define objective (function of x,u,s)
-    node_objective_residual = sqrt(Ts)*[ sqrt(1)*(x(1)); 
-                                         sqrt(0.01)*(x(2));
+    node_objective_residual = sqrt(Ts)*[ sqrt(10)*(x(1)); 
+                                         sqrt(0.001)*(x(2));
                                          sqrt(10)*(x(3));
-                                         sqrt(1)*(x(4));
-                                         sqrt(1)*(x(5));
-                                         sqrt(1)*(x(6));
-                                         sqrt(0.001)*(u(1));
-                                         sqrt(0.001)*(u(2))]; % least squares format
-    term_objective_residual = [sqrt(1)*(term_x(1));
-                               sqrt(0.01)*(term_x(2));
+                                         sqrt(0.001)*(x(4));
+                                         sqrt(10)*(x(5));
+                                         sqrt(0.001)*(x(6));
+                                         sqrt(0.0001)*(u(1));
+                                         sqrt(0.0001)*(u(2))]; % least squares format
+    term_objective_residual = [sqrt(10)*(term_x(1));
+                               sqrt(0.001)*(term_x(2));
                                sqrt(10)*(term_x(3));
-                               sqrt(1)*(term_x(4));
-                               sqrt(1)*(term_x(5));
-                               sqrt(1)*(term_x(6))]; % least squares format
+                               sqrt(0.001)*(term_x(4));
+                               sqrt(10)*(term_x(5));
+                               sqrt(0.001)*(term_x(6))]; % least squares format
     % define ode (function of x,u)
     ode(1) = x_speed;
     ode(2) = -(1/tau_x)*x_speed + (1/tau_x)*input_x;
@@ -236,7 +236,7 @@ Tsim_last = Tsim - N_sim_full*Ts;
 part_size = ceil(N/PAR);
 PAR = floor(N/part_size);
 rem_partition = N - PAR*part_size;
-ii_required = 1;
+ii_required = 2;
 
 % save the workspace
 save problem_data

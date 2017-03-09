@@ -27,13 +27,20 @@ F = [alldifferent(x), 1<=x<=nnz];
 counter = 0;
 for i = 1:dimension
     for j = 1:(nnz_per_row(i)-1)
-        F = [F, x(same_row_indeces(counter+j)) - x(same_row_indeces(counter+j+1)) >= ii];      
+        F = [F, (x(same_row_indeces(counter+j)) - x(same_row_indeces(counter+j+1))) >= 8];      
     end
     counter = counter + nnz_per_row(i);
 end
-F = [F,ii <= ii_required];
 ops = sdpsettings('solver','Intlinprog');
-optimize(F, -ii+ii_required, ops);
+ops.verbose = 5;
+ops.showprogress = 1;
+%ops.intlinprog = ''
+%ops = sdpsettings('solver','bnb');
+optimize(F, [], ops);
+
+% F = [F,ii <= ii_required];
+% ops = sdpsettings('solver','Intlinprog');
+% optimize(F, -ii+ii_required, ops);
 
 
 permute_vec = int16(round(value(x)));

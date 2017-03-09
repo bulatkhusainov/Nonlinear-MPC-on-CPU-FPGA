@@ -23,6 +23,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// local input and output matrices
 	float node_theta[n_node_theta];
 	float f_jac[n_node_eq][n_node_theta];
+	
+	for(i = 0; i < n_node_eq; i++)
+		for(j = 0; j < n_node_theta; j++)
+		{
+			f_jac[i][j] = 0;	
+		}
+
 
 	// input interface loop
 	for(i = 0; i < n_node_theta; i++)

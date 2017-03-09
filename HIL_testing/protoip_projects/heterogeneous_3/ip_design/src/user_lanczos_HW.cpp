@@ -201,7 +201,7 @@ void reset_part_vector(part_vector *instance)
 	#pragma HLS PIPELINE
 		for(i = 0; i < PAR; i++)
 		{
-			#pragma HLS UNROLL skip_exit_check
+#pragma HLS UNROLL skip_exit_check
 			instance->vec[i][j] = 0;
 		}
 	}

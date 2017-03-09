@@ -24,6 +24,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	float x_u[n_states+ m_inputs];
 	float ode_jac_u[n_states][m_inputs] = {0};
 
+	for(i = 0; i < n_states; i++)
+		for(j = 0; j < m_inputs; j++)
+		{
+			ode_jac_u[i][j] = 0;	
+		}
+
 	// input interface loop
 	for(i = 0; i < n_states+m_inputs; i++)
 	{

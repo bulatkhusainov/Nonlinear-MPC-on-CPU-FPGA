@@ -92,12 +92,14 @@ replace_expr = '$1-1';
 ode_jac_x = jacobian(ode,x);
 for i = 1:n_states
     for j = 1:n_states
-        tmp_var = ccode(ode_jac_x(i,j));
-        tmp_var = regexprep(tmp_var, match_expr, strcat('x_u[',replace_expr,']'));
-        tmp_var = regexprep(tmp_var, 't0 = ', '');
-        fprintf(fileID,'\tode_jac_x[%d][%d] = ',i-1,j-1);   
-        fprintf(fileID,tmp_var); 
-        fprintf(fileID,strcat('\n'));
+        if ~isequaln(ode_jac_x(i,j),0)
+            tmp_var = ccode(ode_jac_x(i,j));
+            tmp_var = regexprep(tmp_var, match_expr, strcat('x_u[',replace_expr,']'));
+            tmp_var = regexprep(tmp_var, 't0 = ', '');
+            fprintf(fileID,'\tode_jac_x[%d][%d] = ',i-1,j-1);   
+            fprintf(fileID,tmp_var); 
+            fprintf(fileID,strcat('\n'));
+        end
     end
 end
 fprintf(fileID,'}\n\n');
@@ -112,12 +114,14 @@ replace_expr = '$1-1';
 ode_jac_u = jacobian(ode,u);
 for i = 1:n_states
     for j = 1:m_inputs
-        tmp_var = ccode(ode_jac_u(i,j));
-        tmp_var = regexprep(tmp_var, match_expr, strcat('x_u[',replace_expr,']'));
-        tmp_var = regexprep(tmp_var, 't0 = ', '');
-        fprintf(fileID,'\tode_jac_u[%d][%d] = ',i-1,j-1);   
-        fprintf(fileID,tmp_var); 
-        fprintf(fileID,strcat('\n'));
+        if ~isequaln(ode_jac_u(i,j),0)
+            tmp_var = ccode(ode_jac_u(i,j));
+            tmp_var = regexprep(tmp_var, match_expr, strcat('x_u[',replace_expr,']'));
+            tmp_var = regexprep(tmp_var, 't0 = ', '');
+            fprintf(fileID,'\tode_jac_u[%d][%d] = ',i-1,j-1);   
+            fprintf(fileID,tmp_var); 
+            fprintf(fileID,strcat('\n'));
+        end
     end
 end
 fprintf(fileID,'}\n\n');
@@ -200,12 +204,14 @@ match_expr = 'node_theta(\d*)';
 replace_expr = '$1-1';
 for i = 1:n_node_eq
     for j = 1:n_node_theta
-        tmp_var = ccode(f_jac(i,j));
-        tmp_var = regexprep(tmp_var, match_expr, strcat('node_theta[',replace_expr,']'));
-        tmp_var = regexprep(tmp_var, 't0 = ', '');
-        fprintf(fileID,'\tf_jac[%d][%d] = ',i-1,j-1);   
-        fprintf(fileID,tmp_var); 
-        fprintf(fileID,strcat('\n'));
+        if ~isequaln(f_jac(i,j),0)
+            tmp_var = ccode(f_jac(i,j));
+            tmp_var = regexprep(tmp_var, match_expr, strcat('node_theta[',replace_expr,']'));
+            tmp_var = regexprep(tmp_var, 't0 = ', '');
+            fprintf(fileID,'\tf_jac[%d][%d] = ',i-1,j-1);   
+            fprintf(fileID,tmp_var); 
+            fprintf(fileID,strcat('\n'));
+        end
     end
 end
 fprintf(fileID,'}\n\n');
@@ -236,13 +242,15 @@ match_expr = 'term_theta(\d*)';
 replace_expr = '$1-1';
 for i = 1:n_term_eq
     for j = 1:n_term_theta
-        % the body of inner loop has to be rewritten
-        tmp_var = ccode(term_f_jac(i,j));
-        tmp_var = regexprep(tmp_var, match_expr, strcat('term_theta[',replace_expr,']'));
-        tmp_var = regexprep(tmp_var, 't0 = ', '');
-        fprintf(fileID,'\tterm_f_jac[%d][%d] = ',i-1,j-1);   
-        fprintf(fileID,tmp_var); 
-        fprintf(fileID,strcat('\n'));
+        if ~isequaln(term_f_jac(i,j),0)
+            % the body of inner loop has to be rewritten
+            tmp_var = ccode(term_f_jac(i,j));
+            tmp_var = regexprep(tmp_var, match_expr, strcat('term_theta[',replace_expr,']'));
+            tmp_var = regexprep(tmp_var, 't0 = ', '');
+            fprintf(fileID,'\tterm_f_jac[%d][%d] = ',i-1,j-1);   
+            fprintf(fileID,tmp_var); 
+            fprintf(fileID,strcat('\n'));
+        end
     end
 end
 fprintf(fileID,'}\n');
