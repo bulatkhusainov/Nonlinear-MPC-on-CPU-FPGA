@@ -1,23 +1,23 @@
 %schedule for pipelining
-% indeces.row_block = row_block; indeces.col_block = col_block; indeces.num_block = num_block;
-% [ indeces_sched, ii_achieved ] = schedule_pipeline( indeces, ii_required, n_node_theta + n_node_eq);
-% row_block_sched = indeces_sched.row_block_sched;
-% col_block_sched = indeces_sched.col_block_sched;
-% num_block_sched = indeces_sched.num_block_sched;
+indeces.row_block = row_block; indeces.col_block = col_block; indeces.num_block = num_block;
+[ indeces_sched, distance_achieved_node ] = schedule_pipeline( indeces, n_node_theta + n_node_eq);
+row_block_sched = indeces_sched.row_block_sched;
+col_block_sched = indeces_sched.col_block_sched;
+num_block_sched = indeces_sched.num_block_sched;
+
+indeces.row_block = row_term_block; indeces.col_block = col_term_block; indeces.num_block = num_term_block;
+[ indeces_sched, distance_achieved_node_term ] = schedule_pipeline( indeces, n_term_theta + n_term_eq);
+row_term_block_sched = indeces_sched.row_block_sched; 
+col_term_block_sched = indeces_sched.col_block_sched; 
+num_term_block_sched = indeces_sched.num_block_sched; 
+
+% row_block_sched = row_block;
+% col_block_sched = col_block;
+% num_block_sched = num_block;
 % 
-% indeces.row_block = row_term_block; indeces.col_block = col_term_block; indeces.num_block = num_term_block;
-% [ indeces_sched, ii_achieved ] = schedule_pipeline( indeces, ii_required, n_term_theta + n_term_eq);
-% row_term_block_sched = indeces_sched.row_block_sched; 
-% col_term_block_sched = indeces_sched.col_block_sched; 
-% num_term_block_sched = indeces_sched.num_block_sched; 
-
-row_block_sched = row_block;
-col_block_sched = col_block;
-num_block_sched = num_block;
-
-row_term_block_sched = row_term_block; 
-col_term_block_sched = col_term_block; 
-num_term_block_sched = num_term_block; 
+% row_term_block_sched = row_term_block; 
+% col_term_block_sched = col_term_block; 
+% num_term_block_sched = num_term_block; 
 
 cd ../../src 
 %% Generate code for matrix vector calculation (no prescaler)
@@ -282,9 +282,9 @@ fprintf(fileID,strcat('\t\t','//i_offset1 = i*(n_node_theta+n_node_eq);\n'));
 fprintf(fileID,strcat('\t\t','//i_offset2 = i*nnz_block_tril;\n'));
 fprintf(fileID,strcat('\t\t','for(j = 0; j < nnz_block; j++)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t','//#pragma HLS DEPENDENCE variable=y_out->vec array inter distance=8 true\n'));
-fprintf(fileID,strcat('\t\t\t','//#pragma HLS LOOP_FLATTEN\n'));
-fprintf(fileID,strcat('\t\t\t','//#pragma HLS PIPELINE\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec array inter distance=',num2str(distance_achieved_node),' true\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS LOOP_FLATTEN\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS PIPELINE\n'));
 fprintf(fileID,strcat('\t\t\t','for(k = 0; k < PAR; k++)\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS UNROLL skip_exit_check\n'));
@@ -300,8 +300,8 @@ fprintf(fileID,strcat('\t\t','//i_offset1 = i*(n_node_theta+n_node_eq);\n'));
 fprintf(fileID,strcat('\t\t','//i_offset2 = i*nnz_block_tril;\n'));
 fprintf(fileID,strcat('\t\t','for(j = 0; j < nnz_block; j++)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t','//#pragma HLS DEPENDENCE variable=y_out->vec_rem array inter distance=8 true\n'));
-fprintf(fileID,strcat('\t\t\t','//#pragma HLS PIPELINE\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_rem array inter distance=',num2str(distance_achieved_node),' true\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS PIPELINE\n'));
 fprintf(fileID,strcat('\t\t\t','y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];\n'));
 fprintf(fileID,strcat('\t\t','}\n'));
 fprintf(fileID,strcat('\t','}\n'));
@@ -310,9 +310,9 @@ fprintf(fileID,strcat('\t','#endif\n'));
 fprintf(fileID,strcat('\t','// handle the terminal block\n'));
 fprintf(fileID,strcat('\t','for(j = 0; j < nnz_term_block; j++)\n'));
 fprintf(fileID,strcat('\t','{\n'));
-fprintf(fileID,strcat('\t\t','//#pragma HLS PIPELINE\n'));
-fprintf(fileID,strcat('\t\t','//#pragma HLS DEPENDENCE variable=y_out->vec_term array inter distance=8 true\n'));
-fprintf(fileID,strcat('\t\t','//#pragma HLS PIPELINE\n'));
+
+fprintf(fileID,strcat('\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_term array inter distance=',num2str(distance_achieved_node_term),' true\n'));
+fprintf(fileID,strcat('\t\t','#pragma HLS PIPELINE\n'));
 fprintf(fileID,strcat('\t\t','y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];\n'));
 fprintf(fileID,strcat('\t','}\n'));
 

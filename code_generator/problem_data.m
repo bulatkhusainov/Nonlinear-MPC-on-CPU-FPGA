@@ -27,7 +27,7 @@ MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
 MINRES_iter = '1.5*n_linear';
-PAR = 5;
+PAR = 10;
 if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 5; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 

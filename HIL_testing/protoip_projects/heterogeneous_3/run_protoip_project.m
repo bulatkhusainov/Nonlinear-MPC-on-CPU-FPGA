@@ -13,7 +13,7 @@ all_theta_soc_interface = strcat('u_opt:',num2str(n_all_theta),':float'); % assu
 % delete previous test files
 delete('soc_prototype/test/results/my_project0/*.dat');
 
-ip_design_build('project_name','my_project0', 'input', block_interface, 'input',out_block_interface, 'input', x_in_interface, 'output', y_out_interface);
+ip_design_build('project_name','my_project0','fclk',150, 'input', block_interface, 'input',out_block_interface, 'input', x_in_interface, 'output', y_out_interface);
 
 %ip_design_build_debug('project_name','my_project0');
 
