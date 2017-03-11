@@ -5,7 +5,7 @@
 #include "user_prototypes_header.h"
 
 
-void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float out_block[(N+1)*n_states],float x_in[n_all_theta+n_all_nu])
+void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],d_type_lanczos out_block[(N+1)*n_states],float x_in[n_all_theta+n_all_nu])
 {
 	int i,j,k;
 

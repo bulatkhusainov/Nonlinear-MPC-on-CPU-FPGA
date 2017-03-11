@@ -19,7 +19,7 @@ problem_data;
 generate_header;
 
 % generate header file for structures
-generate_structure_header;
+%generate_structure_header;
 
 % generate C file for gradient evaluation
 cd gradient_code;

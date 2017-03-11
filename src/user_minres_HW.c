@@ -35,7 +35,7 @@ float vv_mult_HW(float *x_1, float *x_2)
 }
 
 
-void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current)
+void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current)
 {
 
 

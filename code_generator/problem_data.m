@@ -28,7 +28,7 @@ d_type = 'float';
 IP_iter = 20;
 MINRES_iter = '1.5*n_linear';
 PAR = 10;
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 5; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 
 %model = 'casadi_example';
@@ -236,7 +236,7 @@ Tsim_last = Tsim - N_sim_full*Ts;
 part_size = ceil(N/PAR);
 PAR = floor(N/part_size);
 rem_partition = N - PAR*part_size;
-ii_required = 2;
+lanczos_d_type = 'FLOATING_lacnzos'; %  FIXED_lacnzos / FLOATING_lacnzos
 
 % save the workspace
 save problem_data

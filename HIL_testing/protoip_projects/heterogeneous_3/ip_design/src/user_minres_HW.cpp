@@ -7,35 +7,37 @@
 #include <math.h>  
 //#include "mex.h"
 
-float vv_mult_HW(float *x_1, float *x_2)
+float vv_mult_HW(float *x_1)
 {
 	int i,j;
-	float sos_final, sos[8];
+	float sos_final, sos[2][8];
 	int mask[2] = {0, ~((int) 0)};
 	sos_final = 0;
 	for(i = 0; i < 8; i++)
 	{
 		#pragma HLS PIPELINE
-		sos[i] = 0;
+		sos[0][i] = 0;
+		sos[1][i] = 0;
 	}
 	j = 0;
-	for(i = 0;i < n_linear; i++)
+	for(i = 0;i < n_linear; i+=2)
 	{
 		#pragma HLS DEPENDENCE variable=sos array inter distance=8 true
 		#pragma HLS PIPELINE
-		sos[j] = sos[j] + x_1[i]*x_2[i];
+		sos[0][j]+= + x_1[i]*x_1[i];
+		sos[1][j]+= + x_1[i+1]*x_1[i+1];
 		j = (j+1) & mask[(j+1) != 8];
 	}
 	for(i = 0; i < 8; i++)
 	{
-		sos_final += sos[i];
+		sos_final += sos[0][i]+sos[1][i];
 	}
 
 	return sos_final;
 }
 
 
-void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current)
+void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current)
 {
 
 
@@ -73,9 +75,9 @@ void minres_HW(part_matrix *blocks, float* out_blocks, float* b,float* x_current
 
 
 	#ifdef PROTOIP
-	beta_current = hls::sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
+	beta_current = hls::sqrtf(vv_mult_HW(v_current_HW_in));
 	#else
-	beta_current = sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
+	beta_current = sqrtf(vv_mult_HW(v_current_HW_in));
 	#endif
 	nu_current = beta_current;
 

@@ -4,7 +4,7 @@
 #include "user_structure_header.h"
 
 // this function performs matrix vector multiplication 
-void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,float out_block[(N+1)*n_states],part_vector *x_in)
+void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,d_type_lanczos out_block[(N+1)*n_states],part_vector *x_in)
 {
 #pragma HLS INLINE
 	int i,j,k,l;

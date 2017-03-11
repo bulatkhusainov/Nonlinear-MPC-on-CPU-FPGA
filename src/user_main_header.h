@@ -38,5 +38,6 @@
 #define PAR 10  // # of parallel processors for the main part 
 #define part_size 1  // # partition size in terms nodes 
 #define heterogeneity 3  // # degree of heterogeneouty 
+#define FLOATING_lacnzos  // # fixed/floating point data for lanczos kernel 
 
 #endif

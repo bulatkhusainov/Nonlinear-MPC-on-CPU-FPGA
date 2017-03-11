@@ -46,7 +46,8 @@ fprintf(fileID, '#define part_size %d  // # partition size in terms nodes \n',pa
 if rem_partition > 0
 fprintf(fileID, '#define rem_partition %d  // # of shooting nodes in the remainder \n',rem_partition);
 end
-fprintf(fileID, '#define heterogeneity %d  // # degree of heterogeneouty \n\n',heterogeneity);
+fprintf(fileID, '#define heterogeneity %d  // # degree of heterogeneouty \n',heterogeneity);
+fprintf(fileID, '#define %s  // # fixed/floating point data for lanczos kernel \n\n',lanczos_d_type);
 
 
 fprintf(fileID, '#endif');

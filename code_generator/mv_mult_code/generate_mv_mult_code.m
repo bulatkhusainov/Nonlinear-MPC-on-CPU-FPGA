@@ -163,7 +163,7 @@ fprintf(fileID,'// this function performs matrix vector multiplication \n');
 fprintf(fileID,strcat('void mv_mult_prescaled_HW('));
 fprintf(fileID,strcat('part_vector',' *y_out,'));
 fprintf(fileID,strcat('part_matrix',' *block,'));
-fprintf(fileID,strcat(d_type,' out_block[(N+1)*n_states],'));
+fprintf(fileID,strcat('d_type_lanczos',' out_block[(N+1)*n_states],'));
 fprintf(fileID,strcat('part_vector',' *x_in)\n'));
 fprintf(fileID,'{\n');
 fprintf(fileID,'#pragma HLS INLINE\n');

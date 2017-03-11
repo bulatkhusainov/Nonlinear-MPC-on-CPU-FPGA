@@ -13,7 +13,7 @@
 
 
 void foo_user(  part_matrix *block_in_int,
-				data_t_out_block_in out_block_in_int[OUT_BLOCK_IN_LENGTH],
+				d_type_lanczos out_block_in_int[OUT_BLOCK_IN_LENGTH],
 				data_t_x_in_in x_in_in_int[X_IN_IN_LENGTH],
 				data_t_y_out_out y_out_out_int[Y_OUT_OUT_LENGTH])
 {

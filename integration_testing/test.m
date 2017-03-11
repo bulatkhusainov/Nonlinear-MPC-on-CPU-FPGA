@@ -165,10 +165,11 @@ for ip_iter = 1:IP_iter
     r_slackness_store(ip_iter) = max(abs(r_slackness));
     mu_store(ip_iter) = mu;
     
+    n_iter_minres_max = round(max(size(A)));
     % solve a system on linear equations
     if false
         M = sqrt(diag(sum(abs(A'))))^-1;
-        d_z = minres(M*A*M,M*b,[],round(max(size(A))));
+        d_z = minres(M*A*M,M*b,[],round(1.5*n_iter_minres_max*ip_iter/IP_iter));
         d_z = M*d_z;
     elseif false
         d_z = minres(A,b,[],max(size(A)));
