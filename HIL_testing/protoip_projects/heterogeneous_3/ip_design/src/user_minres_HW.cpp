@@ -7,30 +7,28 @@
 #include <math.h>  
 //#include "mex.h"
 
-float vv_mult_HW(float *x_1)
+float vv_mult_HW(float *x_1, float *x_2)
 {
 	int i,j;
-	float sos_final, sos[2][8];
+	float sos_final, sos[8];
 	int mask[2] = {0, ~((int) 0)};
 	sos_final = 0;
 	for(i = 0; i < 8; i++)
 	{
 		#pragma HLS PIPELINE
-		sos[0][i] = 0;
-		sos[1][i] = 0;
+		sos[i] = 0;
 	}
 	j = 0;
-	for(i = 0;i < n_linear; i+=2)
+	for(i = 0;i < n_linear; i++)
 	{
 		#pragma HLS DEPENDENCE variable=sos array inter distance=8 true
 		#pragma HLS PIPELINE
-		sos[0][j]+= + x_1[i]*x_1[i];
-		sos[1][j]+= + x_1[i+1]*x_1[i+1];
+		sos[j] = sos[j] + x_1[i]*x_2[i];
 		j = (j+1) & mask[(j+1) != 8];
 	}
 	for(i = 0; i < 8; i++)
 	{
-		sos_final += sos[0][i]+sos[1][i];
+		sos_final += sos[i];
 	}
 
 	return sos_final;
@@ -75,9 +73,9 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 
 
 	#ifdef PROTOIP
-	beta_current = hls::sqrtf(vv_mult_HW(v_current_HW_in));
+	beta_current = hls::sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
 	#else
-	beta_current = sqrtf(vv_mult_HW(v_current_HW_in));
+	beta_current = sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
 	#endif
 	nu_current = beta_current;
 
@@ -137,18 +135,29 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
     		#pragma HLS PIPELINE
     		omega_current[i] = (v_current_alg[i] - ro_3*omega_pprev[i] - ro_2*omega_prev[i])*over_ro_1;
     		x_new[i] = x_current[i] + gamma_new*nu_current*omega_current[i];
+
+    		x_current[i] = x_new[i];
+    		omega_pprev[i] = omega_prev[i];
+    		omega_prev[i] = omega_current[i];
+    		v_current_alg[i] = v_current_HW[i];
     	}
 
     	nu_new = -sigma_new*nu_current;
 
     	// update variables and pointers
-		variables_update_loop: for(i = 0; i < n_linear; i++)
-		{
+		/*variables_update_loop: for(i = 0; i < n_linear; i++)
+
 			#pragma HLS PIPELINE
 			x_current[i] = x_new[i];
 			omega_pprev[i] = omega_prev[i];
 			omega_prev[i] = omega_current[i];
 			v_current_alg[i] = v_current_HW[i];
+		}*/
+
+		variables_update_loop2: for(int i1 = 0; i1 < n_linear; i1++)
+		{
+			#pragma HLS PIPELINE
+			//v_current_alg[i1] = v_current_HW[i1];
 		}
  	
     	nu_current = nu_new; // update variables

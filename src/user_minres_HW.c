@@ -135,18 +135,29 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
     		#pragma HLS PIPELINE
     		omega_current[i] = (v_current_alg[i] - ro_3*omega_pprev[i] - ro_2*omega_prev[i])*over_ro_1;
     		x_new[i] = x_current[i] + gamma_new*nu_current*omega_current[i];
+
+    		x_current[i] = x_new[i];
+    		omega_pprev[i] = omega_prev[i];
+    		omega_prev[i] = omega_current[i];
+    		v_current_alg[i] = v_current_HW[i];
     	}
 
     	nu_new = -sigma_new*nu_current;
 
     	// update variables and pointers
-		variables_update_loop: for(i = 0; i < n_linear; i++)
-		{
+		/*variables_update_loop: for(i = 0; i < n_linear; i++)
+
 			#pragma HLS PIPELINE
 			x_current[i] = x_new[i];
 			omega_pprev[i] = omega_prev[i];
 			omega_prev[i] = omega_current[i];
 			v_current_alg[i] = v_current_HW[i];
+		}*/
+
+		variables_update_loop2: for(int i1 = 0; i1 < n_linear; i1++)
+		{
+			#pragma HLS PIPELINE
+			//v_current_alg[i1] = v_current_HW[i1];
 		}
  	
     	nu_current = nu_new; // update variables

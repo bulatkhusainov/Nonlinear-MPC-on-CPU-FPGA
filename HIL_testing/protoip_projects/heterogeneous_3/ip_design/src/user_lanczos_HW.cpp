@@ -10,6 +10,7 @@
 #include "user_structure_header.h"
 
 d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2);
+d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2);
 void reset_part_vector(part_vector *instance);
 void part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part_vector *v_current, part_vector *v_prev, d_type_lanczos alfa, d_type_lanczos beta_current);
 void part_vector_normalize(part_vector *instance, d_type_lanczos scalar);
@@ -20,7 +21,7 @@ void part_vector_copy(part_vector *copy, part_vector *original);
 void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
 	//#pragma HLS INLINE
-	#pragma HLS ALLOCATION instances=part_vector_mult limit=1 function
+	//#pragma HLS ALLOCATION instances=part_vector_mult limit=1 function
 	static part_vector v_current, v_prev, v_new;
 #pragma HLS ARRAY_PARTITION variable=v_new.vec complete dim=1
 #pragma HLS ARRAY_PARTITION variable=v_prev.vec complete dim=1
@@ -30,7 +31,9 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 	part_vector A_mult_v;
 #pragma HLS ARRAY_PARTITION variable=A_mult_v.vec complete dim=1
 
-	beta_current = init*((d_type_lanczos) sc_in[0]) + (!init)*beta_new; // conditionals statement without branching
+	//beta_current = init*((d_type_lanczos) sc_in[0]) + (!init)*beta_new; // conditionals statement without branching
+	beta_current = beta_new;
+	if(init) beta_current = sc_in[0];
 	// else v_prev = v_current;
 	//if(init) copy_vector_to_part_vector(v_current_in, &v_current); else v_current = v_new;
 	v_prev = v_current;
@@ -40,12 +43,12 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 
 	mv_mult_prescaled_HW(&A_mult_v, blocks, out_blocks, &v_current);
 
-	alfa = part_vector_mult(&A_mult_v, &v_current); // calculate alfa
+	alfa = part_vector_mult_par(&A_mult_v, &v_current); // calculate alfa
 	part_vector_v_new(&v_new, &A_mult_v, &v_current, &v_prev, alfa, beta_current);
 	#ifdef PROTOIP
-		beta_new = hls::sqrt(part_vector_mult(&v_new,&v_new));
+		beta_new = hls::sqrt(part_vector_mult_par(&v_new,&v_new));
 	#else
-		beta_new = sqrtf(part_vector_mult(&v_new,&v_new));
+		beta_new = sqrtf(part_vector_mult_par(&v_new,&v_new));
 	#endif 
 	part_vector_normalize(&v_new, beta_new);
 	// put required information to interface arrays and variables
@@ -281,6 +284,62 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 	return sos_final;
 }
 
+
+d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2)
+{
+	//#pragma HLS INLINE off
+	int i, i1,i2, j, k, k1, k2;
+	int mask1[2] = {0, ~((int) 0)};
+	int mask2[2] = {0, ~((int) 0)};
+	d_type_lanczos sos1[8], sos2[8], sos_final;
+	part_vector_mult_init: for(int i = 0; i < 8; i++)
+	{
+		#pragma HLS PIPELINE
+		sos1[i] = 0;
+		sos2[i] = 0;
+	}
+	sos_final = 0;
+	k1 = 0;
+	part_vector_mult_0: for(k1 = 0, i1 = 0; i1 < n_states; i1++)
+	{
+		#pragma HLS DEPENDENCE variable=sos1 pointer inter distance=8 true
+		#pragma HLS PIPELINE
+		sos1[k1] += (x_1->vec0[i1] * x_2->vec0[i1]);
+		k1 = (k1+1) & mask1[(k1+1) != 8];
+	}
+	k2 = 0;
+	part_vector_mult_3:for(i2 = 0; i2 < n_term_theta+n_term_eq; i2++)
+	{
+		#pragma HLS DEPENDENCE variable=sos2 array inter distance=8 true
+		#pragma HLS PIPELINE
+		sos2[k2] += (x_1->vec_term[i2] * x_2->vec_term[i2]);
+		k2 = (k2+1) & mask2[(k2+1) != 8];
+	}
+	k = 0;
+	part_vector_mult_1:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
+	{
+		for(i = 0; i < PAR; i+=2)
+		{
+			#pragma HLS DEPENDENCE variable=sos1 pointer inter distance=8 true
+			#pragma HLS DEPENDENCE variable=sos2 pointer inter distance=8 true
+			#pragma HLS LOOP_FLATTEN
+			#pragma HLS PIPELINE
+			sos1[k] +=  (x_1->vec[i][j] * x_2->vec[i][j]);
+			sos2[k] +=  (x_1->vec[i+1][j] * x_2->vec[i+1][j]);
+			k = (k+1) & mask1[(k+1) != 8];
+		}
+	}
+	#ifdef rem_partition
+	// ramainder is not handled (!)
+	#endif
+
+
+	part_vector_mult_final:for(i = 0; i < 8; i++)
+	{
+		sos_final += sos1[i] + sos2[i];
+	}
+	return sos_final;
+}
 
 /*
 // this function is not needed because structure assignment seems to have the same efficiency
