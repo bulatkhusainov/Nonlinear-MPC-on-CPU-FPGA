@@ -61,7 +61,7 @@ NOTE: SoC interfaces use single precision floating point arithmetics.
 ---------------------------------------------------------
 FPGA circuit clock frequency
 ---------------------------------------------------------
-100 MHz
+160 MHz
 
 NOTE: This clock is also used to clock the IP axi-master and axi-slave interface. Please do not exceed 200MHz in order to guarantee time closure during the ip_prototype_build phase.
 

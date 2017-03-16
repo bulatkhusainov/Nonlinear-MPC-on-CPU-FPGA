@@ -32,26 +32,26 @@ Timing:
 ------------------------
 
 * IP
-   target clock period (ns): 10.00
-   estimated clock period (ns): 9.58
+   target clock period (ns): 6.00
+   estimated clock period (ns): 7.06
 
 	* User function
-	   target clock period (ns): 10.00
-	   estimated clock period (ns): 9.58
+	   target clock period (ns): 6.00
+	   estimated clock period (ns): 7.06
 
-Time constraints might be met during IP prototyping. You can reduce clock target period to build a faster design.
+WARNING: Time constraints might NOT be met during IP prototyping. You might increase clock target period to met time constraints.
 
 
 Latency:
 ------------------------
 
 * IP
-   latency (clock cycles): 1481003
-   latency (us): 14810.03
+   latency (clock cycles): 1703711
+   latency (us): 10222.266
 
 	* User function
-	   latency (clock cycles): 1479137
-	   latency (us): 14791.37
+	   latency (clock cycles): 1701845
+	   latency (us): 10211.07
 
 
 Resource utilization:
@@ -60,13 +60,13 @@ Resource utilization:
 * IP
    BRAM_18K: 120 (42%) used out off 280 available.
    DSP48E: 83 (37%) used out off 220 available.
-   FF: 16014 (15%) used out off 106400 available.
-   LUT: 28422 (53%) used out off 53200 available.
+   FF: 24191 (22%) used out off 106400 available.
+   LUT: 30574 (57%) used out off 53200 available.
 
 	* User function
 	   BRAM_18K: 106 (37%) used out off 280 available.
 	   DSP48E: 83 (37%) used out off 220 available.
-	   FF: 14650 (13%) used out off 106400 available.
-	   LUT: 26951 (50%) used out off 53200 available.
+	   FF: 22827 (21%) used out off 106400 available.
+	   LUT: 29103 (54%) used out off 53200 available.
 
 NOTE: IP design performance might be enhanced by adding directives from Vivado_HLS GUI interface. Run "tclapp::icl::protoip::ip_design_build_debug" to open my_project0 with Vivado_HLS GUI interface.

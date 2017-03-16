@@ -154,6 +154,7 @@ void part_vector_normalize(part_vector *instance, d_type_lanczos scalar)
 		#pragma HLS PIPELINE
 		instance->vec_rem[i] *= over_scalar;
 	}
+	
 	#endif
 	part_vector_normalize_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
 	{
@@ -168,8 +169,8 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 	#pragma HLS INLINE
 	int i,j,k,l;
 	int mask[2] = {0, ~((int) 0)};
-	d_type_lanczos sos[8], sos_final, tmp_var;
-	part_vector_mult_init: for(i = 0; i < 8; i++)
+	d_type_lanczos sos[10], sos_final, tmp_var;
+	part_vector_mult_init: for(i = 0; i < 10; i++)
 	{
 		#pragma HLS PIPELINE
 		sos[i] = 0;
@@ -180,12 +181,12 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 	part_vector_v_new_0:for(i = 0; i < n_states; i++)
 	{
 		#pragma HLS PIPELINE
-		#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
+		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		tmp_var = A_mult_v->vec0[i] - alfa*v_current->vec0[i] - beta_current*v_prev->vec0[i];
 		v_current_out[l] = v_current->vec0[i];
 		v_new->vec0[i] = tmp_var;
 		sos[k] += tmp_var*tmp_var;
-		k = (k+1) & mask[(k+1) != 8];
+		k = (k+1) & mask[(k+1) != 10];
 		l++;
 	}
 	part_vector_v_new_1:for(i = 0; i < PAR; i++)
@@ -194,12 +195,12 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 		{
 			#pragma HLS LOOP_FLATTEN
 			#pragma HLS PIPELINE
-			#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
+			#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 			tmp_var = A_mult_v->vec[i][j] - alfa*v_current->vec[i][j] - beta_current*v_prev->vec[i][j];
 			v_current_out[l] = v_current->vec[i][j];
 			v_new->vec[i][j] = tmp_var;
 			sos[k] += tmp_var*tmp_var;
-			k = (k+1) & mask[(k+1) != 8];
+			k = (k+1) & mask[(k+1) != 10];
 			l++;
 		}
 	}
@@ -207,28 +208,28 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 	part_vector_v_new_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
 	{
 		#pragma HLS PIPELINE
-		#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
+		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		tmp_var = A_mult_v->vec_rem[i] - alfa*v_current->vec_rem[i] - beta_current*v_prev->vec_rem[i];
 		v_current_out[l] = v_current->vec_rem[i];
 		v_new->vec_rem[i] = tmp_var;
 		sos[k] += tmp_var*tmp_var;
-		k = (k+1) & mask[(k+1) != 8];
+		k = (k+1) & mask[(k+1) != 10];
 		l++;
 	}
 	#endif
 	part_vector_v_new_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
 	{
 		#pragma HLS PIPELINE
-		#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
+		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		tmp_var = A_mult_v->vec_term[i] - alfa*v_current->vec_term[i] - beta_current*v_prev->vec_term[i];
 		v_current_out[l] = v_current->vec_term[i];
 		v_new->vec_term[i] = tmp_var;
 		sos[k] += tmp_var*tmp_var;
-		k = (k+1) & mask[(k+1) != 8];
+		k = (k+1) & mask[(k+1) != 10];
 		l++;
 	}
 
-	part_vector_mult_final:for(i = 0; i < 8; i++)
+	part_vector_mult_final:for(i = 0; i < 10; i++)
 	{
 		sos_final += sos[i];
 	}
@@ -287,7 +288,7 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 	d_type_lanczos sos[8], sos_final;
 	part_vector_mult_init: for(i = 0; i < 8; i++)
 	{
-		#pragma HLS PIPELINE
+		//#pragma HLS PIPELINE
 		sos[i] = 0;
 	}
 	sos_final = 0;
@@ -295,7 +296,7 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 	part_vector_mult_0: for(k = 0, i = 0; i < n_states; i++)
 	{
 		#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
-		#pragma HLS PIPELINE
+		//#pragma HLS PIPELINE
 		sos[k] += (x_1->vec0[i] * x_2->vec0[i]);
 		k = (k+1) & mask[(k+1) != 8];
 	}
@@ -305,7 +306,7 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 		{
 			#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
 			#pragma HLS LOOP_FLATTEN
-			#pragma HLS PIPELINE
+			//#pragma HLS PIPELINE
 			sos[k] +=  (x_1->vec[i][j] * x_2->vec[i][j]);
 			k = (k+1) & mask[(k+1) != 8];
 		}
@@ -314,7 +315,7 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 	part_vector_mult_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
 	{
 		#pragma HLS DEPENDENCE variable=sos array inter distance=8 true
-		#pragma HLS PIPELINE
+		//#pragma HLS PIPELINE
 		sos[k]+= (x_1->vec_rem[i] * x_2->vec_rem[i]);
 		k = (k+1) & mask[(k+1) != 8];
 	}
@@ -322,7 +323,7 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 	part_vector_mult_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
 	{
 		#pragma HLS DEPENDENCE variable=sos array inter distance=8 true
-		#pragma HLS PIPELINE
+		//#pragma HLS PIPELINE
 		sos[k] += (x_1->vec_term[i] * x_2->vec_term[i]);
 		k = (k+1) & mask[(k+1) != 8];
 	}
@@ -341,8 +342,8 @@ d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2)
 	int i, i1,i2, j, k, k1, k2;
 	int mask1[2] = {0, ~((int) 0)};
 	int mask2[2] = {0, ~((int) 0)};
-	d_type_lanczos sos1[8], sos2[8], sos_final;
-	part_vector_mult_init: for(int i = 0; i < 8; i++)
+	d_type_lanczos sos1[10], sos2[10], sos_final;
+	part_vector_mult_init: for(int i = 0; i < 10; i++)
 	{
 		#pragma HLS PIPELINE
 		sos1[i] = 0;
@@ -352,31 +353,31 @@ d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2)
 	k1 = 0;
 	part_vector_mult_0: for(k1 = 0, i1 = 0; i1 < n_states; i1++)
 	{
-		#pragma HLS DEPENDENCE variable=sos1 pointer inter distance=8 true
+		#pragma HLS DEPENDENCE variable=sos1 pointer inter distance=10 true
 		#pragma HLS PIPELINE
 		sos1[k1] += (x_1->vec0[i1] * x_2->vec0[i1]);
-		k1 = (k1+1) & mask1[(k1+1) != 8];
+		k1 = (k1+1) & mask1[(k1+1) != 10];
 	}
 	k2 = 0;
 	part_vector_mult_3:for(i2 = 0; i2 < n_term_theta+n_term_eq; i2++)
 	{
-		#pragma HLS DEPENDENCE variable=sos2 array inter distance=8 true
+		#pragma HLS DEPENDENCE variable=sos2 array inter distance=10 true
 		#pragma HLS PIPELINE
 		sos2[k2] += (x_1->vec_term[i2] * x_2->vec_term[i2]);
-		k2 = (k2+1) & mask2[(k2+1) != 8];
+		k2 = (k2+1) & mask2[(k2+1) != 10];
 	}
 	k = 0;
 	part_vector_mult_1:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
 	{
 		for(i = 0; i < PAR; i+=2)
 		{
-			#pragma HLS DEPENDENCE variable=sos1 pointer inter distance=8 true
-			#pragma HLS DEPENDENCE variable=sos2 pointer inter distance=8 true
+			#pragma HLS DEPENDENCE variable=sos1 pointer inter distance=10 true
+			#pragma HLS DEPENDENCE variable=sos2 pointer inter distance=10 true
 			#pragma HLS LOOP_FLATTEN
 			#pragma HLS PIPELINE
 			sos1[k] +=  (x_1->vec[i][j] * x_2->vec[i][j]);
 			sos2[k] +=  (x_1->vec[i+1][j] * x_2->vec[i+1][j]);
-			k = (k+1) & mask1[(k+1) != 8];
+			k = (k+1) & mask1[(k+1) != 10];
 		}
 	}
 	#ifdef rem_partition
@@ -384,7 +385,7 @@ d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2)
 	#endif
 
 
-	part_vector_mult_final:for(i = 0; i < 8; i++)
+	part_vector_mult_final:for(i = 0; i < 10; i++)
 	{
 		sos_final += sos1[i] + sos2[i];
 	}

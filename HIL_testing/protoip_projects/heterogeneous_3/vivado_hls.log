@@ -6,7 +6,7 @@
 ================================================================
 @I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-66-generic) on Tue Mar 14 12:06:50 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-66-generic) on Thu Mar 16 10:36:17 GMT 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3'
 @I [HLS-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0'.
 @I [HLS-10] Adding design file '../../src/foo_data.h' to the project
@@ -15,7 +15,7 @@
 @I [HLS-10] Opening and resetting solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1'.
 @I [HLS-10] Cleaning up the solution database.
 @I [HLS-10] Setting target device to '{xc7z020clg484-1}'
-@I [SYN-201] Setting up clock 'default' with a period of 10ns.
+@I [SYN-201] Setting up clock 'default' with a period of 6ns.
 @I [HLS-10] Analyzing design file '../../src/foo.cpp' ... 
 @I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 
 @I [HLS-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
@@ -33,70 +33,70 @@
 @I [XFORM-603] Inlining function 'part_vector_v_new' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:47).
 @I [XFORM-603] Inlining function 'part_vector_normalize' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:53).
 @I [HLS-10] Checking synthesizability ...
-@I [XFORM-602] Inlining function 'hls::sqrt' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:238->../../src/user_lanczos_HW.cpp:47) automatically.
+@I [XFORM-602] Inlining function 'hls::sqrt' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:239->../../src/user_lanczos_HW.cpp:47) automatically.
 @I [XFORM-602] Inlining function 'hls::sqrtf' into 'minres_HW' (../../src/user_minres_HW.cpp:76) automatically.
-@I [XFORM-502] Unrolling all sub-loops inside loop 'reset_part_vector_1' (../../src/user_lanczos_HW.cpp:258) in function 'lanczos_HW' for pipelining.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'reset_part_vector_1' (../../src/user_lanczos_HW.cpp:259) in function 'lanczos_HW' for pipelining.
 @I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-8' (../../src/user_mv_mult_prescaled_HW.cpp:27) in function 'lanczos_HW' for pipelining.
 @I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-14.1' (../../src/user_mv_mult_prescaled_HW.cpp:121) in function 'lanczos_HW' for pipelining.
 @I [XFORM-502] Unrolling all sub-loops inside loop 'part_vector_normalize_1_0' (../../src/user_lanczos_HW.cpp:143) in function 'lanczos_HW' for pipelining.
-@I [XFORM-501] Unrolling loop 'Loop-2.1' (../../src/user_lanczos_HW.cpp:260) in function 'lanczos_HW' completely.
+@I [XFORM-501] Unrolling loop 'Loop-2.1' (../../src/user_lanczos_HW.cpp:261) in function 'lanczos_HW' completely.
 @I [XFORM-501] Unrolling loop 'Loop-8.1' (../../src/user_mv_mult_prescaled_HW.cpp:30) in function 'lanczos_HW' completely.
 @I [XFORM-501] Unrolling loop 'Loop-14.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:126) in function 'lanczos_HW' completely.
 @I [XFORM-501] Unrolling loop 'part_vector_normalize_1_1' (../../src/user_lanczos_HW.cpp:146) in function 'lanczos_HW' completely.
 @I [XFORM-102] Partitioning array 'sc_in' (../../src/user_minres_HW.cpp:56) automatically.
 @I [XFORM-102] Partitioning array 'sc_out' (../../src/user_minres_HW.cpp:56) automatically.
-@I [XFORM-102] Automatically partitioning small array 'mask1' (../../src/user_lanczos_HW.cpp:342) completely based on array size.
-@I [XFORM-102] Automatically partitioning small array 'mask2' (../../src/user_lanczos_HW.cpp:343) completely based on array size.
-@I [XFORM-102] Automatically partitioning small array 'mask' (../../src/user_lanczos_HW.cpp:170) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'mask1' (../../src/user_lanczos_HW.cpp:343) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'mask2' (../../src/user_lanczos_HW.cpp:344) completely based on array size.
+@I [XFORM-102] Automatically partitioning small array 'mask' (../../src/user_lanczos_HW.cpp:171) completely based on array size.
 @I [XFORM-102] Automatically partitioning small array 'mask' (../../src/user_minres_HW.cpp:14) completely based on array size.
 @I [XFORM-101] Partitioning array 'block_in_int.mat'  in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'v_new.vec'  in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'v_prev.vec'  in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'v_current.vec'  in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'A_mult_v.vec' (../../src/user_lanczos_HW.cpp:31) in dimension 1 completely.
-@I [XFORM-101] Partitioning array 'mask1' (../../src/user_lanczos_HW.cpp:342) in dimension 1 completely.
-@I [XFORM-101] Partitioning array 'mask2' (../../src/user_lanczos_HW.cpp:343) in dimension 1 completely.
-@I [XFORM-101] Partitioning array 'mask' (../../src/user_lanczos_HW.cpp:170) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'mask1' (../../src/user_lanczos_HW.cpp:343) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'mask2' (../../src/user_lanczos_HW.cpp:344) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'mask' (../../src/user_lanczos_HW.cpp:171) in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'mask' (../../src/user_minres_HW.cpp:14) in dimension 1 completely.
-@I [XFORM-602] Inlining function 'hls::sqrt' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:238->../../src/user_lanczos_HW.cpp:47) automatically.
+@I [XFORM-602] Inlining function 'hls::sqrt' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:239->../../src/user_lanczos_HW.cpp:47) automatically.
 @I [XFORM-602] Inlining function 'hls::sqrtf' into 'minres_HW' (../../src/user_minres_HW.cpp:76) automatically.
 @I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:61:4) to (../../src/user_mv_mult_prescaled_HW.cpp:64:2) in function 'lanczos_HW'... converting 11 basic blocks.
 @I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:65:4) to (../../src/user_mv_mult_prescaled_HW.cpp:65:4) in function 'lanczos_HW'... converting 11 basic blocks.
-@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_lanczos_HW.cpp:372:4) to (../../src/user_lanczos_HW.cpp:371:71) in function 'part_vector_mult_par'... converting 25 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_lanczos_HW.cpp:373:4) to (../../src/user_lanczos_HW.cpp:372:71) in function 'part_vector_mult_par'... converting 25 basic blocks.
 @W [XFORM-542] Cannot flatten a loop nest 'main_loop' (../../src/user_minres_HW.cpp:105:3) in function 'minres_HW' : 
                the outer loop is not a perfect loop.
-@I [XFORM-541] Flattening a loop nest 'part_vector_mult_1' (../../src/user_lanczos_HW.cpp:370:3) in function 'part_vector_mult_par'.
+@I [XFORM-541] Flattening a loop nest 'part_vector_mult_1' (../../src/user_lanczos_HW.cpp:371:3) in function 'part_vector_mult_par'.
 @I [XFORM-541] Flattening a loop nest 'copy_vector_to_part_vector_1' (../../src/user_lanczos_HW.cpp:74:3) in function 'lanczos_HW'.
 @I [XFORM-541] Flattening a loop nest 'Loop-11' (../../src/user_mv_mult_prescaled_HW.cpp:59:6) in function 'lanczos_HW'.
 @I [XFORM-541] Flattening a loop nest 'Loop-13' (../../src/user_mv_mult_prescaled_HW.cpp:117:6) in function 'lanczos_HW'.
-@I [XFORM-541] Flattening a loop nest 'part_vector_v_new_1' (../../src/user_lanczos_HW.cpp:192:3) in function 'lanczos_HW'.
+@I [XFORM-541] Flattening a loop nest 'part_vector_v_new_1' (../../src/user_lanczos_HW.cpp:193:3) in function 'lanczos_HW'.
 @I [XFORM-811] Inferring bus burst read of length 83 on port 'memory_inout' (../../src/foo.cpp:46:5).
 @I [XFORM-811] Inferring bus burst read of length 8 on port 'memory_inout' (../../src/foo.cpp:67:2).
 @I [XFORM-811] Inferring bus burst read of length 66 on port 'memory_inout' (../../src/foo.cpp:85:4).
 @I [XFORM-811] Inferring bus burst read of length 414 on port 'memory_inout' (../../src/foo.cpp:100:3).
 @I [XFORM-811] Inferring bus burst write of length 414 on port 'memory_inout' (../../src/foo.cpp:120:3).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:13) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos1' (../../src/user_lanczos_HW.cpp:344) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos1' (../../src/user_lanczos_HW.cpp:344) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos2' (../../src/user_lanczos_HW.cpp:344) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos2' (../../src/user_lanczos_HW.cpp:344) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:171) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:171) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:171) (distance = 8).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_0' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_1' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_2' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_3' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_4' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_5' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_6' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_7' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_8' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_9' (../../src/user_lanczos_HW.cpp:31) (distance = 9).
-@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_term' (../../src/user_lanczos_HW.cpp:31) (distance = 4).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:13) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos1' (../../src/user_lanczos_HW.cpp:345) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos1' (../../src/user_lanczos_HW.cpp:345) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos2' (../../src/user_lanczos_HW.cpp:345) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos2' (../../src/user_lanczos_HW.cpp:345) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_0' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_1' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_2' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_3' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_4' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_5' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_6' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_7' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_8' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_9' (../../src/user_lanczos_HW.cpp:31) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'A_mult_v_vec_term' (../../src/user_lanczos_HW.cpp:31) (distance = 8).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:172) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:172) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:172) (distance = 10).
 @W [ANALYSIS-52] Setting false inter dependency for variable 'v_new_vec_term'.
 @W [ANALYSIS-52] Setting false inter dependency for variable 'v_new_vec0'.
-@I [HLS-111] Elapsed time: 187.634 seconds; current memory usage: 313 MB.
+@I [HLS-111] Elapsed time: 176.403 seconds; current memory usage: 313 MB.
 @I [HLS-10] Starting hardware synthesis ...
 @I [HLS-10] Synthesizing 'foo' ...
 @I [HLS-10] ----------------------------------------------------------------
@@ -106,9 +106,13 @@
 @I [SCHED-61] Pipelining loop 'Loop 1'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
 @I [SCHED-61] Pipelining loop 'Loop 2'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 11.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 16.
+@W [SCHED-21] Estimated clock period (6.74ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+@W [SCHED-21] The critical path consists of the following:
+	'load' operation ('sos_load', ../../src/user_minres_HW.cpp:26) on array 'sos', ../../src/user_minres_HW.cpp:13 (2.39 ns)
+	'fadd' operation ('tmp_21', ../../src/user_minres_HW.cpp:26) (4.35 ns)
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 1.28411 seconds; current memory usage: 314 MB.
+@I [HLS-111] Elapsed time: 1.24641 seconds; current memory usage: 314 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_vv_mult_HW' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -117,7 +121,7 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.036241 seconds; current memory usage: 315 MB.
+@I [HLS-111] Elapsed time: 0.041599 seconds; current memory usage: 315 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo_part_vector_mult_par' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -125,13 +129,17 @@
 @I [SCHED-61] Pipelining loop 'part_vector_mult_init'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
 @I [SCHED-61] Pipelining loop 'part_vector_mult_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 11.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 16.
 @I [SCHED-61] Pipelining loop 'part_vector_mult_3'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 11.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 16.
 @I [SCHED-61] Pipelining loop 'part_vector_mult_1_L'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 12.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 18.
+@W [SCHED-21] Estimated clock period (6.74ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+@W [SCHED-21] The critical path consists of the following:
+	'load' operation ('sos1_load', ../../src/user_lanczos_HW.cpp:358) on array 'sos1', ../../src/user_lanczos_HW.cpp:345 (2.39 ns)
+	'fadd' operation ('tmp_41', ../../src/user_lanczos_HW.cpp:358) (4.35 ns)
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.144781 seconds; current memory usage: 315 MB.
+@I [HLS-111] Elapsed time: 0.131981 seconds; current memory usage: 315 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_part_vector_mult_par' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -140,7 +148,7 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.134318 seconds; current memory usage: 316 MB.
+@I [HLS-111] Elapsed time: 0.15129 seconds; current memory usage: 316 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo_lanczos_HW' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -154,7 +162,7 @@
 @I [SCHED-61] Pipelining loop 'copy_vector_to_part_vector_0'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 2.
 @I [SCHED-61] Pipelining loop 'copy_vector_to_part_vector_1_copy_vector_to_part_vector_1_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 2.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 4.
 @I [SCHED-61] Pipelining loop 'copy_vector_to_part_vector_3'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 2.
 @I [SCHED-61] Pipelining loop 'Loop 7'.
@@ -164,33 +172,37 @@
 @I [SCHED-61] Pipelining loop 'Loop 9'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
 @I [SCHED-61] Pipelining loop 'Loop 10'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
 @I [SCHED-61] Pipelining loop 'Loop 11'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 7.
-@I [SCHED-61] Pipelining loop 'Loop 12'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
-@I [SCHED-61] Pipelining loop 'Loop 13'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 12.
+@I [SCHED-61] Pipelining loop 'Loop 12'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+@I [SCHED-61] Pipelining loop 'Loop 13'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 19.
 @I [SCHED-61] Pipelining loop 'Loop 14'.
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 1, distance = 4)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 1, distance = 8)
    between 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:152->../../src/user_lanczos_HW.cpp:44) of variable 'tmp_74', ../../src/user_mv_mult_prescaled_HW.cpp:152->../../src/user_lanczos_HW.cpp:44 on array 'A_mult_v.vec_term', ../../src/user_lanczos_HW.cpp:31 and 'load' operation ('A_mult_v_vec_term_load', ../../src/user_mv_mult_prescaled_HW.cpp:152->../../src/user_lanczos_HW.cpp:44) on array 'A_mult_v.vec_term', ../../src/user_lanczos_HW.cpp:31.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 2, Depth: 12.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 2, Depth: 18.
 @I [SCHED-61] Pipelining loop 'part_vector_mult_init'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
 @I [SCHED-61] Pipelining loop 'part_vector_v_new_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 25.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 39.
 @I [SCHED-61] Pipelining loop 'part_vector_v_new_1_part_vector_v_new_1_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 26.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 40.
 @I [SCHED-61] Pipelining loop 'part_vector_v_new_3'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 25.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 39.
 @I [SCHED-61] Pipelining loop 'part_vector_normalize_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
 @I [SCHED-61] Pipelining loop 'part_vector_normalize_1_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
 @I [SCHED-61] Pipelining loop 'part_vector_normalize_3'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+@W [SCHED-21] Estimated clock period (7.06ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+@W [SCHED-21] The critical path consists of the following:
+	'load' operation ('A_mult_v_vec_0_load', ../../src/user_mv_mult_prescaled_HW.cpp:129->../../src/user_lanczos_HW.cpp:44) on array 'A_mult_v.vec[0]', ../../src/user_lanczos_HW.cpp:31 (2.71 ns)
+	'fadd' operation ('tmp_85', ../../src/user_mv_mult_prescaled_HW.cpp:129->../../src/user_lanczos_HW.cpp:44) (4.35 ns)
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 3.60756 seconds; current memory usage: 324 MB.
+@I [HLS-111] Elapsed time: 3.8106 seconds; current memory usage: 325 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_lanczos_HW' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -199,21 +211,21 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 2.41782 seconds; current memory usage: 333 MB.
+@I [HLS-111] Elapsed time: 2.96022 seconds; current memory usage: 334 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo_minres_HW' 
 @I [HLS-10] ----------------------------------------------------------------
 @I [SCHED-11] Starting scheduling ...
 @I [SCHED-61] Pipelining loop 'init_loop'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 2.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
 @I [SCHED-61] Pipelining loop 'init_lanczos_loop'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 19.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 33.
 @I [SCHED-61] Pipelining loop 'extract_from_lanczos_loop'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 2.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
 @I [SCHED-61] Pipelining loop 'solution_update_loop'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 29.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 45.
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 1.98121 seconds; current memory usage: 334 MB.
+@I [HLS-111] Elapsed time: 2.2121 seconds; current memory usage: 336 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_minres_HW' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -222,13 +234,13 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.352555 seconds; current memory usage: 335 MB.
+@I [HLS-111] Elapsed time: 0.464119 seconds; current memory usage: 337 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
 @I [SCHED-11] Starting scheduling ...
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.406925 seconds; current memory usage: 335 MB.
+@I [HLS-111] Elapsed time: 0.490664 seconds; current memory usage: 338 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -237,7 +249,7 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.122856 seconds; current memory usage: 335 MB.
+@I [HLS-111] Elapsed time: 0.134098 seconds; current memory usage: 338 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -253,7 +265,7 @@
 @I [SCHED-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.gep'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.333672 seconds; current memory usage: 336 MB.
+@I [HLS-111] Elapsed time: 0.362344 seconds; current memory usage: 338 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -262,50 +274,50 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.216493 seconds; current memory usage: 337 MB.
+@I [HLS-111] Elapsed time: 0.234449 seconds; current memory usage: 339 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_vv_mult_HW' 
 @I [HLS-10] ----------------------------------------------------------------
-@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_9_full_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_5_max_dsp': 1 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo_vv_mult_HW'.
-@I [HLS-111] Elapsed time: 0.384773 seconds; current memory usage: 338 MB.
+@I [HLS-111] Elapsed time: 0.418035 seconds; current memory usage: 340 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_part_vector_mult_par' 
 @I [HLS-10] ----------------------------------------------------------------
-@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 2 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_9_full_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_5_max_dsp': 2 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo_part_vector_mult_par'.
-@I [HLS-111] Elapsed time: 0.129349 seconds; current memory usage: 340 MB.
+@I [HLS-111] Elapsed time: 0.15106 seconds; current memory usage: 343 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_lanczos_HW' 
 @I [HLS-10] ----------------------------------------------------------------
 @W [RTGEN-101] Register 'beta_new' is power-on initialization.
-@I [RTGEN-100] Generating core module 'foo_dsqrt_64ns_64ns_64_31': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 8 instance(s).
-@I [RTGEN-100] Generating core module 'foo_faddfsub_32ns_32ns_32_5_full_dsp': 2 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fdiv_32ns_32ns_32_16': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 10 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fpext_32ns_64_1': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fptrunc_64ns_32_1': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_dsqrt_64ns_64ns_64_57': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_9_full_dsp': 8 instance(s).
+@I [RTGEN-100] Generating core module 'foo_faddfsub_32ns_32ns_32_9_full_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fdiv_32ns_32ns_32_30': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_5_max_dsp': 10 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fpext_32ns_64_2': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fptrunc_64ns_32_2': 1 instance(s).
 @I [RTGEN-100] Generating core module 'foo_mux_10to1_sel4_32_1': 3 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo_lanczos_HW'.
-@I [HLS-111] Elapsed time: 3.38275 seconds; current memory usage: 351 MB.
+@I [HLS-111] Elapsed time: 3.79689 seconds; current memory usage: 355 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_minres_HW' 
 @I [HLS-10] ----------------------------------------------------------------
-@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_faddfsub_32ns_32ns_32_5_full_dsp': 2 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fdiv_32ns_32ns_32_16': 1 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 4 instance(s).
-@I [RTGEN-100] Generating core module 'foo_fsqrt_32ns_32ns_32_12': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_9_full_dsp': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_faddfsub_32ns_32ns_32_9_full_dsp': 2 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fdiv_32ns_32ns_32_30': 1 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_5_max_dsp': 4 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fsqrt_32ns_32ns_32_28': 1 instance(s).
 @I [RTGEN-100] Finished creating RTL model for 'foo_minres_HW'.
-@I [HLS-111] Elapsed time: 3.36304 seconds; current memory usage: 387 MB.
+@I [HLS-111] Elapsed time: 3.72103 seconds; current memory usage: 394 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
 @I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
-@I [HLS-111] Elapsed time: 0.835254 seconds; current memory usage: 391 MB.
+@I [HLS-111] Elapsed time: 0.971625 seconds; current memory usage: 398 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Generating RTL for module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -316,7 +328,7 @@
 @I [RTGEN-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
 @I [RTGEN-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
 @I [RTGEN-100] Finished creating RTL model for 'foo'.
-@I [HLS-111] Elapsed time: 0.536565 seconds; current memory usage: 394 MB.
+@I [HLS-111] Elapsed time: 0.6382 seconds; current memory usage: 401 MB.
 @I [RTMG-278] Implementing memory 'foo_vv_mult_HW_sos_ram' using block RAMs.
 @I [RTMG-278] Implementing memory 'foo_lanczos_HW_v_prev_vec0_ram' using block RAMs with power-on initialization.
 @I [RTMG-278] Implementing memory 'foo_lanczos_HW_v_prev_vec_0_ram' using block RAMs with power-on initialization.
@@ -359,20 +371,20 @@ source run_ippack.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fmul_2_max_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fmul_2_max_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_faddfsub_3_full_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_faddfsub_3_full_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fsqrt_10_no_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fsqrt_10_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_dsqrt_55_no_dsp_64'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_dsqrt_55_no_dsp_64'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fdiv_28_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fdiv_28_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fmul_3_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fmul_3_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fadd_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_7_full_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fptrunc_0_no_dsp_64'...
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fptrunc_0_no_dsp_64'...
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fadd_3_full_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_3_full_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fdiv_14_no_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fdiv_14_no_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_dsqrt_29_no_dsp_64'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_dsqrt_29_no_dsp_64'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_faddfsub_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_faddfsub_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fsqrt_26_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fsqrt_26_no_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fpext_0_no_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fpext_0_no_dsp_32'...
 ****** Webtalk v2015.2 (64-bit)
@@ -381,11 +393,11 @@ INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fpext_0_no
     ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 
 source /home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/labtool_webtalk.tcl -notrace
-INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Tue Mar 14 12:12:06 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
-INFO: [Common 17-206] Exiting Webtalk at Tue Mar 14 12:12:06 2017...
+INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Thu Mar 16 10:41:25 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Thu Mar 16 10:41:25 2017...
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Tue Mar 14 12:12:07 2017...
-@I [HLS-112] Total elapsed time: 343.91 seconds; peak memory usage: 394 MB.
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 16 10:41:26 2017...
+@I [HLS-112] Total elapsed time: 336.190 seconds; peak memory usage: 401 MB.
 @I [LIC-101] Checked in feature [ap_opencl]
