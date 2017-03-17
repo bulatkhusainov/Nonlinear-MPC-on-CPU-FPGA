@@ -12,13 +12,15 @@
 #include "user_prototypes_header.h"
 
 
-void foo_user(  part_matrix *block_in_int,
+void foo_user(  data_t_minres_data_in minres_data_in_int[MINRES_DATA_IN_LENGTH],
+				part_matrix *block_in_int,
 				d_type_lanczos out_block_in_int[OUT_BLOCK_IN_LENGTH],
 				data_t_x_in_in x_in_in_int[X_IN_IN_LENGTH],
 				data_t_y_out_out y_out_out_int[Y_OUT_OUT_LENGTH]);
 
 
 void foo	(
+				uint32_t byte_minres_data_in_offset,
 				uint32_t byte_block_in_offset,
 				uint32_t byte_out_block_in_offset,
 				uint32_t byte_x_in_in_offset,
@@ -26,12 +28,19 @@ void foo	(
 				volatile data_t_memory *memory_inout)
 {
 
-	
+	static data_t_minres_data_in  minres_data_in_int[MINRES_DATA_IN_LENGTH];
 	static part_matrix  block_in_int;
-#pragma HLS ARRAY_PARTITION variable=block_in_int.mat complete dim=1
+	#pragma HLS ARRAY_PARTITION variable=block_in_int.mat complete dim=1
 	static d_type_lanczos  out_block_in_int[OUT_BLOCK_IN_LENGTH];
 	static data_t_x_in_in  x_in_in_int[X_IN_IN_LENGTH];
 	data_t_y_out_out  y_out_out_int[Y_OUT_OUT_LENGTH];
+
+
+
+	if(!(byte_minres_data_in_offset & (1<<31)))
+	{
+			memcpy(minres_data_in_int,(const data_t_memory*)(memory_inout+byte_minres_data_in_offset/4),MINRES_DATA_IN_LENGTH*sizeof(data_t_memory));
+	}
 
 	///////////////////////////////////////
 	//load input vectors from memory (DDR)
@@ -100,18 +109,23 @@ void foo	(
 		memcpy(x_in_in_int,(const data_t_memory*)(memory_inout+byte_x_in_in_offset/4),X_IN_IN_LENGTH*sizeof(data_t_memory));
 	}
 
+
+
 	///////////////////////////////////////
 	//USER algorithm function (foo_user.cpp) call
 	//Input vectors are:
+	//minres_data_in_int[MINRES_DATA_IN_LENGTH] -> data type is data_t_minres_data_in
 	//block_in_int[BLOCK_IN_LENGTH] -> data type is data_t_block_in
 	//out_block_in_int[OUT_BLOCK_IN_LENGTH] -> data type is data_t_out_block_in
 	//x_in_in_int[X_IN_IN_LENGTH] -> data type is data_t_x_in_in
 	//Output vectors are:
 	//y_out_out_int[Y_OUT_OUT_LENGTH] -> data type is data_t_y_out_out
-	foo_user_top: foo_user(	&block_in_int,
+	foo_user_top: foo_user(	minres_data_in_int,
+							&block_in_int,
 							out_block_in_int,
 							x_in_in_int,
 							y_out_out_int);
+
 
 	///////////////////////////////////////
 	//write results vector y_out to DDR
@@ -119,5 +133,7 @@ void foo	(
 	{
 		memcpy((data_t_memory *)(memory_inout+byte_y_out_out_offset/4),y_out_out_int,Y_OUT_OUT_LENGTH*sizeof(data_t_memory));
 	}
+
+
 
 }

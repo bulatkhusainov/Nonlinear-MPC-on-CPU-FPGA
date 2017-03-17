@@ -20,12 +20,12 @@ else
     %butcher_table_beta =  [1/6; 2/3; 1/6];   
 end;
 
-if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 3; end;
+if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 0; end;
 x_init = [0.5;0];
 Tsim = 1;
 MINRES_prescaled = 1;
 d_type = 'float';
-IP_iter = 20;
+IP_iter = 15;
 MINRES_iter = '1.5*n_linear';
 PAR = 10;
 if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;

@@ -13,6 +13,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 void soc_user(float soc_x_hat_in[SOC_X_HAT_IN_VECTOR_LENGTH],float soc_u_opt_out[SOC_U_OPT_OUT_VECTOR_LENGTH])
 {
+
 	int i,j,k;
 	float debug_output[n_all_theta + n_all_nu]={0};
 	float all_theta[n_all_theta]={0,};
@@ -43,20 +44,22 @@ void soc_user(float soc_x_hat_in[SOC_X_HAT_IN_VECTOR_LENGTH],float soc_u_opt_out
 }
 
 
-	/*
-	// declare input and output interfaces arrays
-	float *block_in,*out_block_in,*x_in_in;
+/*
+
+// declare input and output interfaces arrays
+	float *minres_data_in,*block_in,*out_block_in,*x_in_in;
 	float *y_out_out;
 
 
 	// send data to DDR
+	send_minres_data_in(minres_data_in);
 	send_block_in(block_in);
 	send_out_block_in(out_block_in);
 	send_x_in_in(x_in_in);
 
 
 	// call hardware accelerator assuming all interfaces are involoved
-	start_foo(1,1,1,1);
+	start_foo(1,1,1,1,1);
 
 
 	// wait for IP to finish
@@ -66,4 +69,5 @@ void soc_user(float soc_x_hat_in[SOC_X_HAT_IN_VECTOR_LENGTH],float soc_u_opt_out
 	// read data from DDR
 	receive_y_out_out(y_out_out);
 
-	*/
+
+*/

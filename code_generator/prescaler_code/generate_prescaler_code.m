@@ -7,6 +7,8 @@ fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n');
 fprintf(fileID,'#include "user_prototypes_header.h"\n\n');
 
+fprintf(fileID,'extern float minres_data[5];\n\n');
+
 fprintf(fileID,'// this function prescales orginal linear system and calls MINRES solver,\n');
 fprintf(fileID,strcat('void prescaler('));
 fprintf(fileID,strcat(d_type,' blocks[N*nnz_block_tril + nnz_term_block_tril],'));
@@ -110,17 +112,18 @@ fprintf(fileID,strcat('\t','// ifdef is to ensure propper compilation in unpresc
 fprintf(fileID,strcat('\t','#ifdef MINRES_prescaled\n'));
 fprintf(fileID,strcat('\t\t','#if heterogeneity > 2\n'));
 fprintf(fileID,strcat('\t\t\t','#ifdef PROTOIP\n'));
+fprintf(fileID,strcat('\t\t\t','send_minres_data_in(minres_data);\n'));
 fprintf(fileID,strcat('\t\t\t','send_block_in(blocks);\n'));
 fprintf(fileID,strcat('\t\t\t','send_out_block_in(out_blocks);\n'));
 fprintf(fileID,strcat('\t\t\t','send_x_in_in(b);\n'));
-fprintf(fileID,strcat('\t\t\t','start_foo(1,1,1,1);\n'));
+fprintf(fileID,strcat('\t\t\t','start_foo(1,1,1,1,1);\n'));
 fprintf(fileID,strcat('\t\t\t','while(!(finished_foo())){;} // wait for IP to finish\n'));
 fprintf(fileID,strcat('\t\t\t','receive_y_out_out(x_current);\n'));
 fprintf(fileID,strcat('\t\t\t','#else\n'));
-fprintf(fileID,strcat('\t\t\t','wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization\n'));
+fprintf(fileID,strcat('\t\t\t','wrap_minres_HW(blocks, out_blocks, b, x_current, minres_data); // HW realization\n'));
 fprintf(fileID,strcat('\t\t\t','#endif\n'));
 fprintf(fileID,strcat('\t\t','#else\n'));
-fprintf(fileID,strcat('\t\t','minres(blocks, out_blocks, b, x_current); // SW realization\n'));
+fprintf(fileID,strcat('\t\t','minres(blocks, out_blocks, b, x_current, minres_data); // SW realization\n'));
 fprintf(fileID,strcat('\t\t','#endif\n'));
 fprintf(fileID,strcat('\t','#endif\n'));
 

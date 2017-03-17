@@ -118,7 +118,7 @@ for i=1:NUM_TEST
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%% compute with Matlab and save in a file simulation results
-%	[matlab_u_opt_out] = foo_user(project_name,block_in, out_block_in, x_in_in);
+%	[matlab_u_opt_out] = foo_user(project_name,minres_data_in, block_in, out_block_in, x_in_in);
 
 end
 

@@ -12,12 +12,14 @@
 ////////////////////////////////////////////////////////////
 // Define FLOAT_FIX_VECTOR_NAME=1 to enable  fixed-point (up to 32 bits word length) arithmetic precision or 
 // FLOAT_FIX_VECTOR_NAME=0 to enable floating-point single arithmetic precision.
+#define FLOAT_FIX_MINRES_DATA_IN 0
 #define FLOAT_FIX_BLOCK_IN 0
 #define FLOAT_FIX_OUT_BLOCK_IN 0
 #define FLOAT_FIX_X_IN_IN 0
 #define FLOAT_FIX_Y_OUT_OUT 0
 
 //Input vectors FRACTIONLENGTH:
+#define MINRES_DATA_IN_FRACTIONLENGTH 0
 #define BLOCK_IN_FRACTIONLENGTH 0
 #define OUT_BLOCK_IN_FRACTIONLENGTH 0
 #define X_IN_IN_FRACTIONLENGTH 0
@@ -26,10 +28,11 @@
 
 ////////////////////////////////////////////////////////////
 //FPGA vectors memory maps
-#define block_IN_DEFINED_MEM_ADDRESS 33554432
-#define out_block_IN_DEFINED_MEM_ADDRESS 33555088
-#define x_in_IN_DEFINED_MEM_ADDRESS 33555176
-#define y_out_OUT_DEFINED_MEM_ADDRESS 33555640
+#define minres_data_IN_DEFINED_MEM_ADDRESS 0
+#define block_IN_DEFINED_MEM_ADDRESS 20
+#define out_block_IN_DEFINED_MEM_ADDRESS 40
+#define x_in_IN_DEFINED_MEM_ADDRESS 60
+#define y_out_OUT_DEFINED_MEM_ADDRESS 80
 
 
 ////////////////////////////////////////////////////////////

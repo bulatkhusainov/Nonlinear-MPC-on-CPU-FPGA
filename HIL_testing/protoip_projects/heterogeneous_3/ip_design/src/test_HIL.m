@@ -22,6 +22,27 @@ for i=1:NUM_TEST
 
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% generate random stimulus vector minres_data_in. (-5<=minres_data_in <=5)
+	minres_data_in=rand(1,MINRES_DATA_IN_LENGTH)*10-5;
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%save minres_data_in_log
+	if (TYPE_TEST==0)
+		filename = strcat('../../ip_prototype/test/results/', project_name ,'/minres_data_in_log.dat');
+	else
+		filename = strcat('../test/results/', project_name ,'/minres_data_in_log.dat');
+	end
+	fid = fopen(filename, 'a+');
+   
+	for j=1:length(minres_data_in)
+		fprintf(fid, '%2.18f,',minres_data_in(j));
+	end
+	fprintf(fid, '\n');
+
+	fclose(fid);
+
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%% generate random stimulus vector block_in. (-5<=block_in <=5)
 	block_in=rand(1,BLOCK_IN_LENGTH)*10-5;
 
@@ -99,23 +120,30 @@ for i=1:NUM_TEST
 
 
 	% send data to FPGA
-	% send block_in
+	% send minres_data_in
 	Packet_type=3; % 1 for reset, 2 for start, 3 for write to IP vector packet_internal_ID, 4 for read from IP vector packet_internal_ID of size packet_output_size
 	packet_internal_ID=0;
+	packet_output_size=1;
+	data_to_send=minres_data_in;
+	FPGAclientMATLAB(data_to_send,Packet_type,packet_internal_ID,packet_output_size);
+
+	% send block_in
+	Packet_type=3; % 1 for reset, 2 for start, 3 for write to IP vector packet_internal_ID, 4 for read from IP vector packet_internal_ID of size packet_output_size
+	packet_internal_ID=1;
 	packet_output_size=1;
 	data_to_send=block_in;
 	FPGAclientMATLAB(data_to_send,Packet_type,packet_internal_ID,packet_output_size);
 
 	% send out_block_in
 	Packet_type=3; % 1 for reset, 2 for start, 3 for write to IP vector packet_internal_ID, 4 for read from IP vector packet_internal_ID of size packet_output_size
-	packet_internal_ID=1;
+	packet_internal_ID=2;
 	packet_output_size=1;
 	data_to_send=out_block_in;
 	FPGAclientMATLAB(data_to_send,Packet_type,packet_internal_ID,packet_output_size);
 
 	% send x_in_in
 	Packet_type=3; % 1 for reset, 2 for start, 3 for write to IP vector packet_internal_ID, 4 for read from IP vector packet_internal_ID of size packet_output_size
-	packet_internal_ID=2;
+	packet_internal_ID=3;
 	packet_output_size=1;
 	data_to_send=x_in_in;
 	FPGAclientMATLAB(data_to_send,Packet_type,packet_internal_ID,packet_output_size);
@@ -174,7 +202,7 @@ for i=1:NUM_TEST
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%% compute with Matlab and save in a file simulation results
-	[matlab_y_out_out] = foo_user(project_name,block_in, out_block_in, x_in_in);
+	[matlab_y_out_out] = foo_user(project_name,minres_data_in, block_in, out_block_in, x_in_in);
 
 
 	%save matlab_y_out_out_log

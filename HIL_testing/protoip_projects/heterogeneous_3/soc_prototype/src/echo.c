@@ -45,6 +45,7 @@ XScuTimer Timer;
 unsigned int CntValue1 = 0;
 unsigned int CntValue2 = 0;
 
+Xint32 *minres_data_in_ptr_ddr = (Xint32 *)minres_data_IN_DEFINED_MEM_ADDRESS;
 Xint32 *block_in_ptr_ddr = (Xint32 *)block_IN_DEFINED_MEM_ADDRESS;
 Xint32 *out_block_in_ptr_ddr = (Xint32 *)out_block_IN_DEFINED_MEM_ADDRESS;
 Xint32 *x_in_in_ptr_ddr = (Xint32 *)x_in_IN_DEFINED_MEM_ADDRESS;

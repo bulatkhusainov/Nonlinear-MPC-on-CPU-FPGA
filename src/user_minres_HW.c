@@ -35,7 +35,7 @@ float vv_mult_HW(float *x_1, float *x_2)
 }
 
 
-void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current)
+void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current, float* minres_data)
 {
 
 
@@ -101,7 +101,8 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 	}
 
 	// main loop
-	main_loop: for(counter = 0; counter < MINRES_iter; counter++)
+	//main_loop: for(counter = 0; counter < MINRES_iter; counter++)
+	main_loop: for(counter = 0; counter < (int) minres_data[0]; counter++)
 	{	
 
 		alfa_current = sc_out[0];

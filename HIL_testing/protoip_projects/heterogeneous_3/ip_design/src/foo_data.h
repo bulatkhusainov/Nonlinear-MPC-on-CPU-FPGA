@@ -23,12 +23,14 @@
 
 // Define FLOAT_FIX_VECTOR_NAME=1 to enable  fixed-point (up to 32 bits word length) arithmetic precision or 
 // FLOAT_FIX_VECTOR_NAME=0 to enable floating-point single arithmetic precision.
+#define FLOAT_FIX_MINRES_DATA_IN 0
 #define FLOAT_FIX_BLOCK_IN 0
 #define FLOAT_FIX_OUT_BLOCK_IN 0
 #define FLOAT_FIX_X_IN_IN 0
 #define FLOAT_FIX_Y_OUT_OUT 0
 
 //Input vectors INTEGERLENGTH:
+#define MINRES_DATA_IN_INTEGERLENGTH 0
 #define BLOCK_IN_INTEGERLENGTH 0
 #define OUT_BLOCK_IN_INTEGERLENGTH 0
 #define X_IN_IN_INTEGERLENGTH 0
@@ -37,6 +39,7 @@
 
 
 //Input vectors FRACTIONLENGTH:
+#define MINRES_DATA_IN_FRACTIONLENGTH 0
 #define BLOCK_IN_FRACTIONLENGTH 0
 #define OUT_BLOCK_IN_FRACTIONLENGTH 0
 #define X_IN_IN_FRACTIONLENGTH 0
@@ -45,6 +48,7 @@
 
 
 //Input vectors size:
+#define MINRES_DATA_IN_LENGTH 5
 #define BLOCK_IN_LENGTH 838
 #define OUT_BLOCK_IN_LENGTH 66
 #define X_IN_IN_LENGTH 414
@@ -57,6 +61,10 @@
 typedef float data_t_memory;
 
 
+#if FLOAT_FIX_MINRES_DATA_IN == 1
+	typedef ap_fixed<MINRES_DATA_IN_INTEGERLENGTH+MINRES_DATA_IN_FRACTIONLENGTH,MINRES_DATA_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_minres_data_in;
+	typedef ap_fixed<32,32-MINRES_DATA_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_minres_data_in;
+#endif
 #if FLOAT_FIX_BLOCK_IN == 1
 	typedef ap_fixed<BLOCK_IN_INTEGERLENGTH+BLOCK_IN_FRACTIONLENGTH,BLOCK_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_block_in;
 	typedef ap_fixed<32,32-BLOCK_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_block_in;
@@ -68,6 +76,10 @@ typedef float data_t_memory;
 #if FLOAT_FIX_X_IN_IN == 1
 	typedef ap_fixed<X_IN_IN_INTEGERLENGTH+X_IN_IN_FRACTIONLENGTH,X_IN_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_x_in_in;
 	typedef ap_fixed<32,32-X_IN_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_x_in_in;
+#endif
+#if FLOAT_FIX_MINRES_DATA_IN == 0
+	typedef float data_t_minres_data_in;
+	typedef float data_t_interface_minres_data_in;
 #endif
 #if FLOAT_FIX_BLOCK_IN == 0
 	typedef float data_t_block_in;

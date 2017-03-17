@@ -3,6 +3,8 @@
 #include "user_nnz_header.h"
 #include "user_prototypes_header.h"
 
+extern float minres_data[5];
+
 // this function prescales orginal linear system and calls MINRES solver,
 void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_all_theta+n_all_nu],float x_current[n_all_theta+n_all_nu])
 {
@@ -102,17 +104,18 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 2
 			#ifdef PROTOIP
+			send_minres_data_in(minres_data);
 			send_block_in(blocks);
 			send_out_block_in(out_blocks);
 			send_x_in_in(b);
-			start_foo(1,1,1,1);
+			start_foo(1,1,1,1,1);
 			while(!(finished_foo())){;} // wait for IP to finish
 			receive_y_out_out(x_current);
 			#else
-			wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization
+			wrap_minres_HW(blocks, out_blocks, b, x_current, minres_data); // HW realization
 			#endif
 		#else
-		minres(blocks, out_blocks, b, x_current); // SW realization
+		minres(blocks, out_blocks, b, x_current, minres_data); // SW realization
 		#endif
 	#endif
 	// recover solution 

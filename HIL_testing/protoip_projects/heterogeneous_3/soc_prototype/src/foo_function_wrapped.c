@@ -12,6 +12,25 @@ typedef uint32_t           Xint32;
 XFoo xcore;
 
 //functions for sending data from PS to DDR
+void send_minres_data_in(float* minres_data_in)
+{
+	Xint32 *minres_data_in_ptr_ddr = (Xint32 *)minres_data_IN_DEFINED_MEM_ADDRESS;
+	int32_t inputvec_fix[MINRES_DATA_IN_VECTOR_LENGTH];
+	int i;
+
+	//write minres_data_in to DDR
+	if (FLOAT_FIX_MINRES_DATA_IN == 1)
+	{
+		for(i = 0; i < MINRES_DATA_IN_VECTOR_LENGTH; i++) // convert floating point to fixed
+		{
+			inputvec_fix[i] = (int32_t)(minres_data_in[i]*pow(2, MINRES_DATA_IN_FRACTIONLENGTH));
+		}
+		memcpy(minres_data_in_ptr_ddr, inputvec_fix, MINRES_DATA_IN_VECTOR_LENGTH*4);
+	}
+	else { //floating point
+		memcpy(minres_data_in_ptr_ddr, minres_data_in, MINRES_DATA_IN_VECTOR_LENGTH*4);
+	}
+}
 void send_block_in(float* block_in)
 {
 	Xint32 *block_in_ptr_ddr = (Xint32 *)block_IN_DEFINED_MEM_ADDRESS;
@@ -71,11 +90,19 @@ void send_x_in_in(float* x_in_in)
 }
 
 //function for calling foo_user IP
-void start_foo(uint32_t block_in_required,uint32_t out_block_in_required,uint32_t x_in_in_required,uint32_t y_out_out_required)
+void start_foo(uint32_t minres_data_in_required,uint32_t block_in_required,uint32_t out_block_in_required,uint32_t x_in_in_required,uint32_t y_out_out_required)
 {
 	xcore.Bus_a_BaseAddress = 0x43c00000;
 	xcore.IsReady = XIL_COMPONENT_IS_READY;
 
+		if(minres_data_in_required)
+		{
+			XFoo_Set_byte_minres_data_in_offset(&xcore,minres_data_IN_DEFINED_MEM_ADDRESS);
+		}
+		else
+		{
+			XFoo_Set_byte_minres_data_in_offset(&xcore,(1<<31));
+		}
 		if(block_in_required)
 		{
 			XFoo_Set_byte_block_in_offset(&xcore,block_IN_DEFINED_MEM_ADDRESS);

@@ -12,12 +12,14 @@
 ////////////////////////////////////////////////////////////
 // Define FLOAT_FIX_VECTOR_NAME=1 to enable  fixed-point (up to 32 bits word length) arithmetic precision or 
 // FLOAT_FIX_VECTOR_NAME=0 to enable floating-point single arithmetic precision.
+#define FLOAT_FIX_MINRES_DATA_IN 0
 #define FLOAT_FIX_BLOCK_IN 0
 #define FLOAT_FIX_OUT_BLOCK_IN 0
 #define FLOAT_FIX_X_IN_IN 0
 #define FLOAT_FIX_Y_OUT_OUT 0
 
 //Input vectors FRACTIONLENGTH:
+#define MINRES_DATA_IN_FRACTIONLENGTH 0
 #define BLOCK_IN_FRACTIONLENGTH 0
 #define OUT_BLOCK_IN_FRACTIONLENGTH 0
 #define X_IN_IN_FRACTIONLENGTH 0
@@ -26,6 +28,7 @@
 
 
 //IP interface arrays lengths:
+#define MINRES_DATA_IN_VECTOR_LENGTH 5
 #define BLOCK_IN_VECTOR_LENGTH 838
 #define OUT_BLOCK_IN_VECTOR_LENGTH 66
 #define X_IN_IN_VECTOR_LENGTH 414
@@ -37,10 +40,11 @@
 #define SOC_U_OPT_OUT_VECTOR_LENGTH 217
 ////////////////////////////////////////////////////////////
 //FPGA vectors memory maps
-#define block_IN_DEFINED_MEM_ADDRESS 33554432
-#define out_block_IN_DEFINED_MEM_ADDRESS 33557784
-#define x_in_IN_DEFINED_MEM_ADDRESS 33558048
-#define y_out_OUT_DEFINED_MEM_ADDRESS 33559704
+#define minres_data_IN_DEFINED_MEM_ADDRESS 33554432
+#define block_IN_DEFINED_MEM_ADDRESS 33554452
+#define out_block_IN_DEFINED_MEM_ADDRESS 33557804
+#define x_in_IN_DEFINED_MEM_ADDRESS 33558068
+#define y_out_OUT_DEFINED_MEM_ADDRESS 33559724
 
 
 ////////////////////////////////////////////////////////////

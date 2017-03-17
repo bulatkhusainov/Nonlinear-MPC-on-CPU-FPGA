@@ -5,6 +5,7 @@
 //#include "mex.h"
 
 
+
 float vv_mult(float *x_1, float *x_2)
 {
 	int i;
@@ -17,9 +18,9 @@ float vv_mult(float *x_1, float *x_2)
 }
 
 #ifdef MINRES_prescaled
-	void minres(float* blocks, float* out_blocks, float* b,float* x_current)
+	void minres(float* blocks, float* out_blocks, float* b,float* x_current, float* minres_data)
 #else
-	void minres(float* blocks, float* b,float* x_current)
+	void minres(float* blocks, float* b,float* x_current, float* minres_data)
 #endif
 {
 
@@ -90,7 +91,8 @@ float vv_mult(float *x_1, float *x_2)
 	#endif
 
 	// main loop
-	for(counter = 0; counter < MINRES_iter; counter++)
+	//for(counter = 0; counter < MINRES_iter; counter++)
+	for(counter = 0; counter < minres_data[0]; counter++)
 	{	
 
 

@@ -13,12 +13,13 @@
 #include <stdint.h>
 #include <math.h>
 //functions for sending data from PS to DDR
+void send_minres_data_in(float* minres_data_in);
 void send_block_in(float* block_in);
 void send_out_block_in(float* out_block_in);
 void send_x_in_in(float* x_in_in);
 
 //function for calling foo_user IP
-void start_foo(uint32_t block_in_required,uint32_t out_block_in_required,uint32_t x_in_in_required,uint32_t y_out_out_required);
+void start_foo(uint32_t minres_data_in_required,uint32_t block_in_required,uint32_t out_block_in_required,uint32_t x_in_in_required,uint32_t y_out_out_required);
 
 //function for checking foo_user IP
 uint32_t finished_foo(void);

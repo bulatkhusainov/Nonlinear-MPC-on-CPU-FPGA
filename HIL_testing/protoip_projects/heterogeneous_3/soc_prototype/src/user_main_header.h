@@ -30,7 +30,7 @@
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 
-#define IP_iter 20  // # of interior point iterations 
+#define IP_iter 15  // # of interior point iterations 
 #define MINRES_iter 1.5*n_linear // # of MINRES iterations 
 #define MINRES_prescaled // # use/do not use prescaler 
 

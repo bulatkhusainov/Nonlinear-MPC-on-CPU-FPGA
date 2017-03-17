@@ -1,5 +1,6 @@
 % figure out vector interfaces lengths
 % ip interfaces
+minres_data = strcat('minres_data:',num2str(5),':float');
 block_interface = strcat('block:',num2str(5),':float');
 out_block_interface = strcat('out_block:',num2str(5),':float');
 x_in_interface = strcat('x_in:',num2str(5),':float');
@@ -10,7 +11,7 @@ x_hat_soc_interface = strcat('x_hat:',num2str(5),':float');
 all_theta_soc_interface = strcat('u_opt:',num2str(5),':float'); % assume all optimization variables go here
 
 
-%make_template('type','SOC','project_name','my_project0','input',block_interface,'input',out_block_interface,'input',x_in_interface,'output',y_out_interface,'soc_input',x_hat_soc_interface,'soc_output',all_theta_soc_interface);
+%make_template('type','SOC','project_name','my_project0','input', minres_data,'input',block_interface,'input',out_block_interface,'input',x_in_interface,'output',y_out_interface,'soc_input',x_hat_soc_interface,'soc_output',all_theta_soc_interface);
 
 %ip_design_build('project_name','my_project0', 'input', block_interface, 'input', out_block_interface,'input', x_in_interface, 'output', y_out_interface);
 

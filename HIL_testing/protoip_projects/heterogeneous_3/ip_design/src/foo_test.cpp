@@ -10,6 +10,7 @@
 
 
 void foo	(	
+				uint32_t byte_minres_data_in_offset,
 				uint32_t byte_block_in_offset,
 				uint32_t byte_out_block_in_offset,
 				uint32_t byte_x_in_in_offset,
@@ -21,10 +22,11 @@ using namespace std;
 #define BUF_SIZE 64
 
 //Input and Output vectors base addresses in the virtual memory
-#define block_IN_DEFINED_MEM_ADDRESS 0
-#define out_block_IN_DEFINED_MEM_ADDRESS (BLOCK_IN_LENGTH)*4
-#define x_in_IN_DEFINED_MEM_ADDRESS (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
-#define y_out_OUT_DEFINED_MEM_ADDRESS (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
+#define minres_data_IN_DEFINED_MEM_ADDRESS 0
+#define block_IN_DEFINED_MEM_ADDRESS (MINRES_DATA_IN_LENGTH)*4
+#define out_block_IN_DEFINED_MEM_ADDRESS (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH)*4
+#define x_in_IN_DEFINED_MEM_ADDRESS (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+#define y_out_OUT_DEFINED_MEM_ADDRESS (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
 
 
 int main()
@@ -34,6 +36,7 @@ int main()
 
     int max_iter;
 
+	uint32_t byte_minres_data_in_offset;
 	uint32_t byte_block_in_offset;
 	uint32_t byte_out_block_in_offset;
 	uint32_t byte_x_in_in_offset;
@@ -42,6 +45,7 @@ int main()
 	int32_t tmp_value;
 
 	//assign the input/output vectors base address in the DDR memory
+	byte_minres_data_in_offset=minres_data_IN_DEFINED_MEM_ADDRESS;
 	byte_block_in_offset=block_IN_DEFINED_MEM_ADDRESS;
 	byte_out_block_in_offset=out_block_IN_DEFINED_MEM_ADDRESS;
 	byte_x_in_in_offset=x_in_IN_DEFINED_MEM_ADDRESS;
@@ -49,13 +53,15 @@ int main()
 
 	//allocate a memory named address of uint32_t or float words. Number of words is 1024 * (number of inputs and outputs vectors)
 	data_t_memory *memory_inout;
-	memory_inout = (data_t_memory *)malloc((BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH+Y_OUT_OUT_LENGTH)*4); //malloc size should be sum of input and output vector lengths * 4 Byte
+	memory_inout = (data_t_memory *)malloc((MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH+Y_OUT_OUT_LENGTH)*4); //malloc size should be sum of input and output vector lengths * 4 Byte
 
 	FILE *stimfile;
 	FILE * pFile;
 	int count_data;
 
 
+	float *minres_data_in;
+	minres_data_in = (float *)malloc(MINRES_DATA_IN_LENGTH*sizeof (float));
 	float *block_in;
 	block_in = (float *)malloc(BLOCK_IN_LENGTH*sizeof (float));
 	float *out_block_in;
@@ -67,10 +73,10 @@ int main()
 
 
 	////////////////////////////////////////
-	//read block_in vector
+	//read minres_data_in vector
 
-	// Open stimulus block_in.dat file for reading
-	sprintf(filename,"block_in.dat");
+	// Open stimulus minres_data_in.dat file for reading
+	sprintf(filename,"minres_data_in.dat");
 	stimfile = fopen(filename, "r");
 
 	// read data from file
@@ -88,8 +94,44 @@ int main()
 	//fill in input vector
 	for (int i = 0; i<count_data; i++)
 	{
+		if  (i < MINRES_DATA_IN_LENGTH) {
+			minres_data_in[i]=(float)myValues1[i];
+
+			#if FLOAT_FIX_MINRES_DATA_IN == 1
+				tmp_value=(int32_t)(minres_data_in[i]*(float)pow(2,(MINRES_DATA_IN_FRACTIONLENGTH)));
+				memory_inout[i+byte_minres_data_in_offset/4] = *(uint32_t*)&tmp_value;
+			#elif FLOAT_FIX_MINRES_DATA_IN == 0
+				memory_inout[i+byte_minres_data_in_offset/4] = (float)minres_data_in[i];
+			#endif
+		}
+
+	}
+
+
+	////////////////////////////////////////
+	//read block_in vector
+
+	// Open stimulus block_in.dat file for reading
+	sprintf(filename,"block_in.dat");
+	stimfile = fopen(filename, "r");
+
+	// read data from file
+	ifstream input2(filename);
+	vector<float> myValues2;
+
+	count_data=0;
+
+	for (float f; input2 >> f; )
+	{
+		myValues2.push_back(f);
+		count_data++;
+	}
+
+	//fill in input vector
+	for (int i = 0; i<count_data; i++)
+	{
 		if  (i < BLOCK_IN_LENGTH) {
-			block_in[i]=(float)myValues1[i];
+			block_in[i]=(float)myValues2[i];
 
 			#if FLOAT_FIX_BLOCK_IN == 1
 				tmp_value=(int32_t)(block_in[i]*(float)pow(2,(BLOCK_IN_FRACTIONLENGTH)));
@@ -110,14 +152,14 @@ int main()
 	stimfile = fopen(filename, "r");
 
 	// read data from file
-	ifstream input2(filename);
-	vector<float> myValues2;
+	ifstream input3(filename);
+	vector<float> myValues3;
 
 	count_data=0;
 
-	for (float f; input2 >> f; )
+	for (float f; input3 >> f; )
 	{
-		myValues2.push_back(f);
+		myValues3.push_back(f);
 		count_data++;
 	}
 
@@ -125,7 +167,7 @@ int main()
 	for (int i = 0; i<count_data; i++)
 	{
 		if  (i < OUT_BLOCK_IN_LENGTH) {
-			out_block_in[i]=(float)myValues2[i];
+			out_block_in[i]=(float)myValues3[i];
 
 			#if FLOAT_FIX_OUT_BLOCK_IN == 1
 				tmp_value=(int32_t)(out_block_in[i]*(float)pow(2,(OUT_BLOCK_IN_FRACTIONLENGTH)));
@@ -146,14 +188,14 @@ int main()
 	stimfile = fopen(filename, "r");
 
 	// read data from file
-	ifstream input3(filename);
-	vector<float> myValues3;
+	ifstream input4(filename);
+	vector<float> myValues4;
 
 	count_data=0;
 
-	for (float f; input3 >> f; )
+	for (float f; input4 >> f; )
 	{
-		myValues3.push_back(f);
+		myValues4.push_back(f);
 		count_data++;
 	}
 
@@ -161,7 +203,7 @@ int main()
 	for (int i = 0; i<count_data; i++)
 	{
 		if  (i < X_IN_IN_LENGTH) {
-			x_in_in[i]=(float)myValues3[i];
+			x_in_in[i]=(float)myValues4[i];
 
 			#if FLOAT_FIX_X_IN_IN == 1
 				tmp_value=(int32_t)(x_in_in[i]*(float)pow(2,(X_IN_IN_FRACTIONLENGTH)));
@@ -178,6 +220,7 @@ int main()
 	// foo c-simulation
 	
 	foo(	
+				byte_minres_data_in_offset,
 				byte_block_in_offset,
 				byte_out_block_in_offset,
 				byte_x_in_in_offset,

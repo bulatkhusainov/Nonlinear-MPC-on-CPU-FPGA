@@ -32,6 +32,7 @@
 ////////////////////////////////////////////////////////////
 
 //Input vectors size:
+#define MINRES_DATA_IN_LENGTH 5
 #define BLOCK_IN_LENGTH 838
 #define OUT_BLOCK_IN_LENGTH 66
 #define X_IN_IN_LENGTH 414
@@ -608,7 +609,18 @@ int write_stimuli(double input_data[], unsigned packet_internal_ID)
 	int i;
 	switch (packet_internal_ID)
 	{
-	case 0: //block_in
+	case 0: //minres_data_in
+		// store minres_data_in into ../../ip_design/test/stimuli/my_project0/minres_data_in.dat
+		pFile = fopen ("../../ip_design/test/stimuli/my_project0/minres_data_in.dat","w+");
+
+		for (i = 0; i < MINRES_DATA_IN_LENGTH; i++)
+		{
+			fprintf(pFile,"%2.18f \n",input_data[i]);
+		}
+		fprintf(pFile,"\n");
+		fclose (pFile);
+		
+	case 1: //block_in
 		// store block_in into ../../ip_design/test/stimuli/my_project0/block_in.dat
 		pFile = fopen ("../../ip_design/test/stimuli/my_project0/block_in.dat","w+");
 
@@ -619,7 +631,7 @@ int write_stimuli(double input_data[], unsigned packet_internal_ID)
 		fprintf(pFile,"\n");
 		fclose (pFile);
 		
-	case 1: //out_block_in
+	case 2: //out_block_in
 		// store out_block_in into ../../ip_design/test/stimuli/my_project0/out_block_in.dat
 		pFile = fopen ("../../ip_design/test/stimuli/my_project0/out_block_in.dat","w+");
 
@@ -630,7 +642,7 @@ int write_stimuli(double input_data[], unsigned packet_internal_ID)
 		fprintf(pFile,"\n");
 		fclose (pFile);
 		
-	case 2: //x_in_in
+	case 3: //x_in_in
 		// store x_in_in into ../../ip_design/test/stimuli/my_project0/x_in_in.dat
 		pFile = fopen ("../../ip_design/test/stimuli/my_project0/x_in_in.dat","w+");
 

@@ -5,7 +5,7 @@
 #include "user_prototypes_header.h"
 
 
-void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_current[])
+void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_current[], float minres_data[])
 {
 	int i,j,k;
 
@@ -22,5 +22,5 @@ void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_curre
 	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = blocks[k];
 
 	// call the function
-	minres_HW(&block_struct,  out_blocks, b, x_current);
+	minres_HW(&block_struct,  out_blocks, b, x_current, minres_data);
 }

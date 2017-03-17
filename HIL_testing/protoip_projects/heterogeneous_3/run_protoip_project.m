@@ -1,5 +1,6 @@
 % figure out vector interfaces length
 % ip interfaces
+minres_data = strcat('minres_data:',num2str(5),':float');
 block_interface = strcat('block:',num2str(N*nnz_block_tril + nnz_term_block_tril),':float');
 out_block_interface = strcat('out_block:',num2str((N+1)*n_states),':float');
 x_in_interface = strcat('x_in:',num2str(n_linear),':float');
@@ -13,11 +14,11 @@ all_theta_soc_interface = strcat('u_opt:',num2str(n_all_theta),':float'); % assu
 % delete previous test files
 delete('soc_prototype/test/results/my_project0/*.dat');
 
-ip_design_build('project_name','my_project0','fclk',160, 'input', block_interface, 'input',out_block_interface, 'input', x_in_interface, 'output', y_out_interface);
+%ip_design_build('project_name','my_project0','fclk',160, 'input', minres_data, 'input', block_interface, 'input',out_block_interface, 'input', x_in_interface, 'output', y_out_interface);
 
 %ip_design_build_debug('project_name','my_project0');
 
-ip_prototype_build('project_name','my_project0','board_name','zedboard');
+%ip_prototype_build('project_name','my_project0','board_name','zedboard');
 
 %ip_prototype_build_debug('project_name','my_project0','board_name','zedboard');
 

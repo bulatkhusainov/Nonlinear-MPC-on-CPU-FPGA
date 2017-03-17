@@ -37,39 +37,9 @@
 			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/.apc/.tb</location>
 		</link>
 		<link>
-			<name>.reference/ap_int.h</name>
-			<type>1</type>
-			<location>/opt/Xilinx/Vivado_HLS/2015.2/include/ap_int.h</location>
-		</link>
-		<link>
-			<name>.reference/ap_private.h</name>
-			<type>1</type>
-			<location>/opt/Xilinx/Vivado_HLS/2015.2/include/etc/ap_private.h</location>
-		</link>
-		<link>
-			<name>.reference/hls_sqrt.h</name>
-			<type>1</type>
-			<location>/opt/Xilinx/Vivado_HLS/2015.2/include/hls/hls_sqrt.h</location>
-		</link>
-		<link>
-			<name>.reference/user_main_header.h</name>
-			<type>1</type>
-			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_main_header.h</location>
-		</link>
-		<link>
 			<name>.reference/user_protoip_definer.h</name>
 			<type>1</type>
 			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_protoip_definer.h</location>
-		</link>
-		<link>
-			<name>.reference/user_prototypes_header.h</name>
-			<type>1</type>
-			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_prototypes_header.h</location>
-		</link>
-		<link>
-			<name>.reference/user_structure_header.h</name>
-			<type>1</type>
-			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_structure_header.h</location>
 		</link>
 		<link>
 			<name>solution1/constraints</name>

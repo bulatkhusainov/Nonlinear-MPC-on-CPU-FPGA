@@ -27,16 +27,16 @@ void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*n
 void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,d_type_lanczos out_block[(N+1)*n_states],part_vector *x_in);
 void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5]);
 void wrap_lanczos_HW(int init, float blocks[], float out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5]);
-void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current);
-void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_current[]);
+void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current, float* minres_data);
+void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_current[], float minres_data[]);
 
 
 #ifdef MINRES_prescaled
-	void minres(float* blocks, float* out_blocks, float* b,float* x_current);
+	void minres(float* blocks, float* out_blocks, float* b,float* x_current, float* minres_data);
 	void lanczos(int init, float blocks[], float out_blocks[], float v_tmp1[], float v_tmp2[], float **v_current_out, float sc_in[5], float sc_out[5]);
 
 #else
-	void minres(float* block, float* b,float* x_current); // to be updated
+	void minres(float* blocks, float* b,float* x_current, float* minres_data);
 	void lanczos(int init, float blocks[], float v_tmp1[], float v_tmp2[], float **v_current_out, float sc_in[5], float sc_out[5]); // to be updated
 #endif
 

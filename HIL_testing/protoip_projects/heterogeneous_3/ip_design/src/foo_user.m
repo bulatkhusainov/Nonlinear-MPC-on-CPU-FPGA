@@ -5,7 +5,7 @@
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-function [y_out_out_int] = foo_user(project_name,block_in_int, out_block_in_int, x_in_in_int)
+function [y_out_out_int] = foo_user(project_name,minres_data_in_int, block_in_int, out_block_in_int, x_in_in_int)
 
 
 	% load project configuration parameters: input and output vectors (name, size, type, NUM_TEST, TYPE_TEST)
@@ -15,6 +15,9 @@ function [y_out_out_int] = foo_user(project_name,block_in_int, out_block_in_int,
 	% compute with Matlab and save in a file simulation results y_out_out_int
 	for i=1:Y_OUT_OUT_LENGTH
 		y_out_out_int(i)=0;
+		for i_minres_data = 1:MINRES_DATA_IN_LENGTH
+			y_out_out_int(i)=y_out_out_int(i) + minres_data_in_int(i_minres_data);
+		end
 		for i_block = 1:BLOCK_IN_LENGTH
 			y_out_out_int(i)=y_out_out_int(i) + block_in_int(i_block);
 		end

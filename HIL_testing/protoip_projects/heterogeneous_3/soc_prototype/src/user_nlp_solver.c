@@ -3,6 +3,8 @@
 #include "user_nnz_header.h"
 #include "user_prototypes_header.h"
 
+float minres_data[5];
+
 void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_all_theta], float all_nu[n_all_nu], float all_lambda[n_all_lambda], float x_hat[n_states])
 {
 	// counters
@@ -109,12 +111,12 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
 
-
+		minres_data[0] = 0.7*n_linear;
 		// solve linear system with minres
 		#ifdef MINRES_prescaled
 			prescaler(blocks, b,d_x);
 		#else
-			minres(blocks, b, d_x);
+			minres(blocks, b, d_x, minres_data);
 		#endif
 
 		// recover solution

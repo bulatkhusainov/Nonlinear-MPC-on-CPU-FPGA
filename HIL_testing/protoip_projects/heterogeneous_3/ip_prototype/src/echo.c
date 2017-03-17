@@ -44,6 +44,7 @@ XScuTimer Timer;
 unsigned int CntValue1 = 0;
 unsigned int CntValue2 = 0;
 
+Xint32 *minres_data_in_ptr_ddr = (Xint32 *)minres_data_IN_DEFINED_MEM_ADDRESS;
 Xint32 *block_in_ptr_ddr = (Xint32 *)block_IN_DEFINED_MEM_ADDRESS;
 Xint32 *out_block_in_ptr_ddr = (Xint32 *)out_block_IN_DEFINED_MEM_ADDRESS;
 Xint32 *x_in_in_ptr_ddr = (Xint32 *)x_in_IN_DEFINED_MEM_ADDRESS;
@@ -246,6 +247,7 @@ void udp_server_function(void *arg, struct udp_pcb *pcb,
 								if (DEBUG)
 									printf("Start IP ...\n");
 
+								XFoo_Set_byte_minres_data_in_offset(&xcore,minres_data_IN_DEFINED_MEM_ADDRESS);
 								XFoo_Set_byte_block_in_offset(&xcore,block_IN_DEFINED_MEM_ADDRESS);
 								XFoo_Set_byte_out_block_in_offset(&xcore,out_block_IN_DEFINED_MEM_ADDRESS);
 								XFoo_Set_byte_x_in_in_offset(&xcore,x_in_IN_DEFINED_MEM_ADDRESS);
@@ -300,7 +302,23 @@ void udp_server_function(void *arg, struct udp_pcb *pcb,
 
 						switch (packet_internal_ID)
 						{
-							case 0: //block_in
+							case 0: //minres_data_in
+							if (DEBUG)
+									printf("write minres_data_in\n\r");
+
+							if (FLOAT_FIX_MINRES_DATA_IN==1) {
+								for (i=0; i<ETH_PACKET_LENGTH-2; i++)
+								{
+									tmp_float=*(float*)&inputvec[i];
+									inputvec_fix[i]=(int32_t)(tmp_float*pow(2,MINRES_DATA_IN_FRACTIONLENGTH));
+								}
+								memcpy(minres_data_in_ptr_ddr+(ETH_PACKET_LENGTH-2)*packet_internal_ID_offset,inputvec_fix,(ETH_PACKET_LENGTH-2)*4);
+							} else { //floating-point
+								memcpy(minres_data_in_ptr_ddr+(ETH_PACKET_LENGTH-2)*packet_internal_ID_offset,inputvec,(ETH_PACKET_LENGTH-2)*4);
+							}
+							break;
+							
+							case 1: //block_in
 							if (DEBUG)
 									printf("write block_in\n\r");
 
@@ -316,7 +334,7 @@ void udp_server_function(void *arg, struct udp_pcb *pcb,
 							}
 							break;
 							
-							case 1: //out_block_in
+							case 2: //out_block_in
 							if (DEBUG)
 									printf("write out_block_in\n\r");
 
@@ -332,7 +350,7 @@ void udp_server_function(void *arg, struct udp_pcb *pcb,
 							}
 							break;
 							
-							case 2: //x_in_in
+							case 3: //x_in_in
 							if (DEBUG)
 									printf("write x_in_in\n\r");
 
@@ -546,6 +564,7 @@ err_t tcp_server_function(void *arg, struct tcp_pcb *tpcb,
 								if (DEBUG)
 									printf("Start IP ...\n");
 
+								XFoo_Set_byte_minres_data_in_offset(&xcore,minres_data_IN_DEFINED_MEM_ADDRESS);
 								XFoo_Set_byte_block_in_offset(&xcore,block_IN_DEFINED_MEM_ADDRESS);
 								XFoo_Set_byte_out_block_in_offset(&xcore,out_block_IN_DEFINED_MEM_ADDRESS);
 								XFoo_Set_byte_x_in_in_offset(&xcore,x_in_IN_DEFINED_MEM_ADDRESS);
@@ -582,7 +601,23 @@ err_t tcp_server_function(void *arg, struct tcp_pcb *tpcb,
 
 						switch (packet_internal_ID)
 						{
-							case 0: //block_in
+							case 0: //minres_data_in
+							if (DEBUG)
+									printf("write minres_data_in\n\r");
+
+							if (FLOAT_FIX_MINRES_DATA_IN==1) {
+								for (i=0; i<ETH_PACKET_LENGTH-2; i++)
+								{
+									tmp_float=*(float*)&inputvec[i];
+									inputvec_fix[i]=(int32_t)(tmp_float*pow(2,MINRES_DATA_IN_FRACTIONLENGTH));
+								}
+								memcpy(minres_data_in_ptr_ddr+(ETH_PACKET_LENGTH-2)*packet_internal_ID_offset,inputvec_fix,(ETH_PACKET_LENGTH-2)*4);
+							} else { //floating-point
+								memcpy(minres_data_in_ptr_ddr+(ETH_PACKET_LENGTH-2)*packet_internal_ID_offset,inputvec,(ETH_PACKET_LENGTH-2)*4);
+							}
+							break;
+							
+							case 1: //block_in
 							if (DEBUG)
 									printf("write block_in\n\r");
 
@@ -598,7 +633,7 @@ err_t tcp_server_function(void *arg, struct tcp_pcb *tpcb,
 							}
 							break;
 							
-							case 1: //out_block_in
+							case 2: //out_block_in
 							if (DEBUG)
 									printf("write out_block_in\n\r");
 
@@ -614,7 +649,7 @@ err_t tcp_server_function(void *arg, struct tcp_pcb *tpcb,
 							}
 							break;
 							
-							case 2: //x_in_in
+							case 3: //x_in_in
 							if (DEBUG)
 									printf("write x_in_in\n\r");
 
