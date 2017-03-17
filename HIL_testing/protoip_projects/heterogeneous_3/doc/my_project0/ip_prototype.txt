@@ -52,7 +52,7 @@ Timing (post Place & Route):
 
 * FPGA
 target clock period (ns): 6.00
-clock slack (ns): 0.275
+clock slack (ns): 0.296
 Time constraints NOT met during IP prototyping. You have to increase clock target period to met time constraints.
 
 
@@ -61,36 +61,36 @@ Resource measurement (post Place & Route):
 
 * FPGA
    BRAM_18K: 120 (42%) used out off 280 available.
-   DSP48E: 83 (37%) used out off 220 available.
-   FF: 25889 (24%) used out off 106400 available.
-   LUT: 20311 (38%)  used out off 53200 available.
+   DSP48E: 89 (40%) used out off 220 available.
+   FF: 26151 (24%) used out off 106400 available.
+   LUT: 20426 (38%)  used out off 53200 available.
 
 	* IP
    	BRAM_18K: 120 (42%) used out off 280 available.
-   	DSP48E: 83 (37%) used out off 220 available.
-   	FF: 24956 (23%) used out off 106400 available.
-   	LUT: 19586 (36%)  used out off 53200 available.
+   	DSP48E: 89 (40%) used out off 220 available.
+   	FF: 25218 (23%) used out off 106400 available.
+   	LUT: 19695 (37%)  used out off 53200 available.
 
 		* user function
    		BRAM_18K: 106 (37%) used out off 280 available.
-   		DSP48E: 83 (37%) used out off 220 available.
-   		FF: 22764 (21%) used out off 106400 available.
-   		LUT: 18010 (33%)  used out off 53200 available.
+   		DSP48E: 89 (40%) used out off 220 available.
+   		FF: 23026 (21%) used out off 106400 available.
+   		LUT: 18128 (34%)  used out off 53200 available.
 
 
 Power estimation with average toggle rate of 12.5/% (post Place & Route):
 -------------------------------------------------------------------------
 
 * FPGA
-   Total power on-chip (W): 3.139
-   Dynamic power on-chip (W): 2.925
-   Static power on-chip (W): 0.214
+   Total power on-chip (W): 2.952
+   Dynamic power on-chip (W): 2.747
+   Static power on-chip (W): 0.205
 
 	* ARM Cortex-A9
    	   Total ARM Cortex-A9 power (W): 1.535
 
 	* IP
-   	   Total IP power (W): 1.376
+   	   Total IP power (W): 1.198
 
 		* user function
    		   Total IP power (W): 0
@@ -103,36 +103,36 @@ Post Synthesis resource estimation:
 
 * FPGA
    BRAM_18K: 120 (42%) used out off 280 available.
-   DSP48E: 83 (37%) used out off 220 available.
-   FF: 27472 (25%) used out off 106400 available.
-   LUT: 21805 (40%)  used out off 53200 available.
+   DSP48E: 89 (40%) used out off 220 available.
+   FF: 27742 (26%) used out off 106400 available.
+   LUT: 21976 (41%)  used out off 53200 available.
 
 	* IP
    	BRAM_18K: 120 (42%) used out off 280 available.
-   	DSP48E: 83 (37%) used out off 220 available.
-   	FF: 26302 (24%) used out off 106400 available.
-   	LUT: 20738 (38%)  used out off 53200 available.
+   	DSP48E: 89 (40%) used out off 220 available.
+   	FF: 26572 (24%) used out off 106400 available.
+   	LUT: 20909 (39%)  used out off 53200 available.
 
 		* user function
    		BRAM_18K: 106 (37%) used out off 280 available.
-   		DSP48E: 83 (37%) used out off 220 available.
-   		FF: 24109 (22%) used out off 106400 available.
-   		LUT: 19006 (35%)  used out off 53200 available.
+   		DSP48E: 89 (40%) used out off 220 available.
+   		FF: 24379 (22%) used out off 106400 available.
+   		LUT: 19186 (36%)  used out off 53200 available.
 
 
 Post Synthesis power estimation (average toggle rate 12.5/%):
 -------------------------------------------------------------
 
 * FPGA
-   Total power on-chip (W): 3.088
-   Dynamic power on-chip (W): 2.877
-   Static power on-chip (W): 0.211
+   Total power on-chip (W): 2.910
+   Dynamic power on-chip (W): 2.707
+   Static power on-chip (W): 0.203
 
 	* ARM Cortex-A9
    	   Total ARM Cortex-A9 power (W): 1.535
 
 	* IP
-   	   Total IP power (W): 1.321
+   	   Total IP power (W): 1.151
 
 		* user function
    		   Total IP power (W): 0

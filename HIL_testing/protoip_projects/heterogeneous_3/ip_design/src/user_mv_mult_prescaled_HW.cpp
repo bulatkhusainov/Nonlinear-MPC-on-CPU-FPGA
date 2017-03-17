@@ -19,33 +19,35 @@ void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,d_type_lanczos o
 	int num_term_block_sched[10] = {0,1,2,3,4,5,6,7,1,7,};
 
 	// reset output
-	for(i = 0; i < n_states; i++)
-	{
-		#pragma HLS PIPELINE
-		y_out->vec0[i] = 0;
-	}
-	for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
-	{
-		#pragma HLS PIPELINE
-		for(i = 0; i < PAR; i++)
+	merge_reset:{
+		#pragma HLS LOOP_MERGE
+		for(i = 0; i < n_states; i++)
 		{
-			#pragma HLS UNROLL skip_exit_check
-			y_out->vec[i][j] = 0;
+			#pragma HLS PIPELINE
+			y_out->vec0[i] = 0;
+		}
+		for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
+		{
+			#pragma HLS PIPELINE
+			for(i = 0; i < PAR; i++)
+			{
+				#pragma HLS UNROLL skip_exit_check
+				y_out->vec[i][j] = 0;
+			}
+		}
+		#ifdef rem_partition
+		for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++) 
+		{
+			#pragma HLS PIPELINE
+			y_out->vec_rem[i] = 0;
+		}
+		#endif
+		for(i = 0; i < n_term_theta+n_term_eq; i++)
+		{
+			#pragma HLS PIPELINE
+			y_out->vec_term[i] = 0;
 		}
 	}
-	#ifdef rem_partition
-	for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++) 
-	{
-		#pragma HLS PIPELINE
-		y_out->vec_rem[i] = 0;
-	}
-	#endif
-	for(i = 0; i < n_term_theta+n_term_eq; i++)
-	{
-		#pragma HLS PIPELINE
-		y_out->vec_term[i] = 0;
-	}
-
 	// handle negative identities
 	// glue the main part to initial condition part
 	for(i = 0; i < n_states; i++)
@@ -113,42 +115,46 @@ void mv_mult_prescaled_HW(part_vector *y_out,part_matrix *block,d_type_lanczos o
 	#endif
 
 	int i_offset1, i_offset2;
-	// handle nonzero elements in node blocks
-	for(i = 0,  i_offset1 = 0, i_offset2 = 0; i < part_size; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)
-	{
-		//i_offset1 = i*(n_node_theta+n_node_eq);
-		//i_offset2 = i*nnz_block_tril;
-		for(j = 0; j < nnz_block; j++)
+	merge_mv_mult:{
+		//#pragma HLS LOOP_MERGE
+		// handle nonzero elements in node blocks
+		for(i = 0,  i_offset1 = 0, i_offset2 = 0; i < part_size; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)
 		{
-			#pragma HLS DEPENDENCE variable=y_out->vec array inter distance=10 true
-			#pragma HLS LOOP_FLATTEN
-			#pragma HLS PIPELINE
-			for(k = 0; k < PAR; k++)
+			//i_offset1 = i*(n_node_theta+n_node_eq);
+			//i_offset2 = i*nnz_block_tril;
+			for(j = 0; j < nnz_block; j++)
 			{
-				#pragma HLS UNROLL skip_exit_check
-				y_out->vec[k][i_offset1+row_block_sched[j]] += block->mat[k][i_offset2 + num_block_sched[j]]*x_in->vec[k][i_offset1+col_block_sched[j]];
+				#pragma HLS DEPENDENCE variable=y_out->vec array inter distance=10 true
+				#pragma HLS LOOP_FLATTEN
+				#pragma HLS PIPELINE
+				for(k = 0; k < PAR; k++)
+				{
+					#pragma HLS UNROLL skip_exit_check
+					y_out->vec[k][i_offset1+row_block_sched[j]] += block->mat[k][i_offset2 + num_block_sched[j]]*x_in->vec[k][i_offset1+col_block_sched[j]];
+				}
 			}
 		}
-	}
 
-	#ifdef rem_partition
-	for(i = 0, i_offset1 = 0, i_offset2 = 0; i < rem_partition; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)
-	{
-		//i_offset1 = i*(n_node_theta+n_node_eq);
-		//i_offset2 = i*nnz_block_tril;
-		for(j = 0; j < nnz_block; j++)
+		#ifdef rem_partition
+		for(i = 0, i_offset1 = 0, i_offset2 = 0; i < rem_partition; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)
 		{
-			#pragma HLS DEPENDENCE variable=y_out->vec_rem array inter distance=10 true
-			#pragma HLS PIPELINE
-			y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];
+			//i_offset1 = i*(n_node_theta+n_node_eq);
+			//i_offset2 = i*nnz_block_tril;
+			for(j = 0; j < nnz_block; j++)
+			{
+				#pragma HLS DEPENDENCE variable=y_out->vec_rem array inter distance=10 true
+				#pragma HLS PIPELINE
+				y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];
+			}
 		}
-	}
-	#endif
-	// handle the terminal block
-	for(j = 0; j < nnz_term_block; j++)
-	{
-		#pragma HLS DEPENDENCE variable=y_out->vec_term array inter distance=8 true
-		#pragma HLS PIPELINE
-		y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];
-	}
+		#endif
+	} // exclude the terminal block, because it might have different II
+
+		// handle the terminal block
+		for(j = 0; j < nnz_term_block; j++)
+		{
+			#pragma HLS DEPENDENCE variable=y_out->vec_term array inter distance=8 true
+			#pragma HLS PIPELINE
+			y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];
+		}
 }

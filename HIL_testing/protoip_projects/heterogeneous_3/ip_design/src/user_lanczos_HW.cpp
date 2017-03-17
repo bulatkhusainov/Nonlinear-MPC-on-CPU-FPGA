@@ -38,6 +38,8 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 	//if(init) copy_vector_to_part_vector(v_current_in, &v_current); else v_current = v_new;
 	v_prev = v_current;
 	v_current = v_new;
+
+
 	if(init) reset_part_vector(&v_prev);
 	if(init) copy_vector_to_part_vector(v_current_in, &v_current);
 
@@ -133,34 +135,38 @@ void part_vector_normalize(part_vector *instance, d_type_lanczos scalar)
 	int i,j;
 	d_type_lanczos over_scalar;
 	over_scalar = 1/scalar;
-	part_vector_normalize_0: for(i = 0; i < n_states; i++)
-	{
-		#pragma HLS DEPENDENCE variable=instance->vec0 inter false
-		#pragma HLS PIPELINE
-		instance->vec0[i] *= over_scalar;
-	}
-	part_vector_normalize_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
-	{
-		#pragma HLS PIPELINE
-		part_vector_normalize_1_1:for(i = 0; i < PAR; i++)
+
+	merge_noramalize_loops:{
+		#pragma HLS LOOP_MERGE
+		part_vector_normalize_0: for(i = 0; i < n_states; i++)
 		{
-			#pragma HLS UNROLL skip_exit_check
-			instance->vec[i][j] *= over_scalar;
+			#pragma HLS DEPENDENCE variable=instance->vec0 inter false
+			#pragma HLS PIPELINE
+			instance->vec0[i] *= over_scalar;
 		}
-	}
-	#ifdef rem_partition
-	part_vector_normalize_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
-	{
-		#pragma HLS PIPELINE
-		instance->vec_rem[i] *= over_scalar;
-	}
-	
-	#endif
-	part_vector_normalize_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
-	{
-		#pragma HLS DEPENDENCE variable=instance->vec_term inter false
-		#pragma HLS PIPELINE
-		instance->vec_term[i] *= over_scalar;
+		part_vector_normalize_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
+		{
+			#pragma HLS PIPELINE
+			part_vector_normalize_1_1:for(i = 0; i < PAR; i++)
+			{
+				#pragma HLS UNROLL skip_exit_check
+				instance->vec[i][j] *= over_scalar;
+			}
+		}
+		#ifdef rem_partition
+		part_vector_normalize_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
+		{
+			#pragma HLS PIPELINE
+			instance->vec_rem[i] *= over_scalar;
+		}
+		
+		#endif
+		part_vector_normalize_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
+		{
+			#pragma HLS DEPENDENCE variable=instance->vec_term inter false
+			#pragma HLS PIPELINE
+			instance->vec_term[i] *= over_scalar;
+		}
 	}
 }
 
