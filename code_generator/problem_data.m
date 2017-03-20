@@ -22,7 +22,7 @@ end;
 
 if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 0; end;
 x_init = [0.5;0];
-Tsim = 1;
+Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 15;
@@ -188,7 +188,7 @@ elseif(strcmp(model,  'crane_xz'))
                                          sqrt(10)*(x(3));
                                          sqrt(0.001)*(x(4));
                                          sqrt(10)*(x(5));
-                                         sqrt(0.001)*(x(6));
+                                         sqrt(0.01)*(x(6));
                                          sqrt(0.0001)*(u(1));
                                          sqrt(0.0001)*(u(2))]; % least squares format
     term_objective_residual = [sqrt(10)*(term_x(1));

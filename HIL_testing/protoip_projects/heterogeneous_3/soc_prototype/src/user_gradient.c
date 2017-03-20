@@ -9,7 +9,7 @@ void node_gradient_eval(float node_gradient[n_node_theta],float node_theta[n_nod
 	node_gradient[2] =   node_theta[3-1]*2.0;
 	node_gradient[3] =   node_theta[4-1]*2.0E-4;
 	node_gradient[4] =   node_theta[5-1]*2.0;
-	node_gradient[5] =   node_theta[6-1]*2.0E-4;
+	node_gradient[5] =   node_theta[6-1]*(1.0/5.0E2);
 	node_gradient[6] =   node_theta[7-1]*2.0E-5;
 	node_gradient[7] =   node_theta[8-1]*2.0E-5;
 	node_gradient[8] =   0.0;

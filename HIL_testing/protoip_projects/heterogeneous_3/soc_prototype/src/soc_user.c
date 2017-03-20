@@ -24,15 +24,15 @@ void soc_user(float soc_x_hat_in[SOC_X_HAT_IN_VECTOR_LENGTH],float soc_u_opt_out
 	// initial condition
 	for(i = 0; i < n_states; i++)
 	{
-		//x_hat[i] = soc_x_hat_in[i];
+		x_hat[i] = soc_x_hat_in[i];
 	}
 
-	x_hat[0] = 0;
+	/*x_hat[0] = 0;
 	x_hat[1] = 0;
 	x_hat[2] = 0.3;
 	x_hat[3] = 0;
 	x_hat[4] = 0.2;
-	x_hat[5] = 0;
+	x_hat[5] = 0;*/
 
 
 	nlp_solver(debug_output, all_theta, all_nu, all_lambda, x_hat);

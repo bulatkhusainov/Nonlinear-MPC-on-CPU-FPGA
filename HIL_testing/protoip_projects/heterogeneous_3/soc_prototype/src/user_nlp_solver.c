@@ -20,7 +20,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	float all_lambda_over_g[n_all_lambda];
 	float d_all_theta_search[n_all_lambda];
 
-	float mu = 0.001; // barrier parameter
+	float mu = 0.0001; // barrier parameter
 
 	float blocks[N*nnz_block_tril + nnz_term_block_tril]={0}; // linear system for calculating Newton's step
 	float b[n_all_theta + n_all_nu]={0,}; // residual
@@ -111,7 +111,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
 
-		minres_data[0] = 0.7*n_linear;
+		minres_data[0] = 1*n_linear;
 		// solve linear system with minres
 		#ifdef MINRES_prescaled
 			prescaler(blocks, b,d_x);

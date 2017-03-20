@@ -9,7 +9,7 @@ void node_hessian_eval(float node_hessian[n_node_theta][n_node_theta],float node
 	node_hessian[2][2] =   2.0;
 	node_hessian[3][3] =   2.0E-4;
 	node_hessian[4][4] =   2.0;
-	node_hessian[5][5] =   2.0E-4;
+	node_hessian[5][5] =   1.0/5.0E2;
 	node_hessian[6][6] =   2.0E-5;
 	node_hessian[7][7] =   2.0E-5;
 }
