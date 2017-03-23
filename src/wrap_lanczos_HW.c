@@ -11,17 +11,23 @@ void wrap_lanczos_HW(int init, float blocks[], float out_blocks[], float v_curre
 
 	// interface structure
 	part_matrix block_struct;
+	d_type_lanczos out_blocks_casted[(N+1)*n_states];
 
 	// pack matrix into structure
 	k = 0;
 	for(i = 0; i < PAR; i++)
-		for(j = 0; j < part_size*nnz_block_tril; j++, k++) block_struct.mat[i][j] = blocks[k];
+		for(j = 0; j < part_size*nnz_block_tril; j++, k++) block_struct.mat[i][j] = (d_type_lanczos) blocks[k];
 	#ifdef rem_partition		
-		for(i = 0; i < rem_partition*nnz_block_tril; i++, k++) block_struct.mat_rem[i] = blocks[k];
+		for(i = 0; i < rem_partition*nnz_block_tril; i++, k++) block_struct.mat_rem[i] = (d_type_lanczos) blocks[k];
 	#endif
-	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = blocks[k];
+	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = (d_type_lanczos) blocks[k];
+
+	// cast out blocks to required precision
+	for(i = 0; i < (N+1)*n_states; i++)
+		out_blocks_casted[i] = (d_type_lanczos) out_blocks[i];
+	
 
 	// call the function
-	lanczos_HW(init, &block_struct,  out_blocks, v_current_in, v_current_out, sc_in, sc_out);
+	lanczos_HW(init, &block_struct,  out_blocks_casted, v_current_in, v_current_out, sc_in, sc_out);
 
 }

@@ -5,6 +5,8 @@
 
 float minres_data[5];
 
+float debug_interface[n_linear];
+
 void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_all_theta], float all_nu[n_all_nu], float all_lambda[n_all_lambda], float x_hat[n_states])
 {
 	// counters
@@ -20,7 +22,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	float all_lambda_over_g[n_all_lambda];
 	float d_all_theta_search[n_all_lambda];
 
-	float mu = 0.0001; // barrier parameter
+	float mu = 0.001; // barrier parameter
 
 	float blocks[N*nnz_block_tril + nnz_term_block_tril]={0}; // linear system for calculating Newton's step
 	float b[n_all_theta + n_all_nu]={0,}; // residual
@@ -67,7 +69,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		for(i = 0; i < n_all_lambda; i++) // precalculate mu over g
 			all_mu_over_g[i] = mu*all_one_over_g[i];
 
-	
+
 		for(i = 0; i < N*nnz_block_tril + nnz_term_block_tril; i++) blocks[i] = 0;
 		// evaluate blocks
 		for(i = 0; i < N; i++) // node blocks
@@ -119,6 +121,9 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 			minres(blocks, b, d_x, minres_data);
 		#endif
 
+
+
+
 		// recover solution
 		rec_sol(d_all_theta, d_all_nu, d_all_lambda, d_all_theta_search, d_x, all_lambda, all_mu_over_g, all_lambda_over_g);
 
@@ -150,7 +155,10 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	// print for debugging purpose
 	for(i = 0; i < n_all_theta+n_all_nu; i++)
 	{
-		//debug_output[i] = d_x[i];
+		debug_output[i] = debug_interface[i];
 	}
+
+
+
 
 }

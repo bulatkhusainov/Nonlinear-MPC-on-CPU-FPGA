@@ -7,10 +7,10 @@
 #include <math.h>  
 //#include "mex.h"
 
-float vv_mult_HW(float *x_1, float *x_2)
+d_type_lanczos vv_mult_HW(d_type_lanczos *x_1, d_type_lanczos *x_2)
 {
 	int i,j;
-	float sos_final, sos[10];
+	d_type_lanczos sos_final, sos[10];
 	int mask[2] = {0, ~((int) 0)};
 	sos_final = 0;
 	for(i = 0; i < 10; i++)
@@ -43,10 +43,11 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 	int counter = 1, i; 
 	float x_new[n_linear];
 		//x_current[n_linear] // x_current is a solution guess (is coming from function interface)
-	float v_current_HW_in[n_linear];
+	d_type_lanczos v_current_HW_in[n_linear];
 	float v_current_HW[n_linear]; // v_current for HW realization
 	float v_current_alg[n_linear]; // v_current for MINRES algorithm
-	float beta_current, over_beta_current, beta_new, beta_nnew;
+	d_type_lanczos beta_current_init;
+	float beta_current, beta_new;
 	float nu_current, nu_new;
 	float gamma_prev = 1, gamma_current = 1, gamma_new;
 	float sigma_prev = 0, sigma_current = 0, sigma_new;
@@ -63,7 +64,7 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 		omega_pprev[i] = 0;
 		omega_prev[i] = 0;
 		x_current[i] = 0;
-		v_current_HW_in[i] = b[i];
+		v_current_HW_in[i] = (d_type_lanczos)b[i];
 	}
 	/*v_current_set_loop:for(i = 0; i < n_linear; i++)
 	{
@@ -73,11 +74,11 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 
 
 	#ifdef PROTOIP
-	beta_current = hls::sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
+	beta_current_init = hls::sqrt(vv_mult_HW(v_current_HW_in,v_current_HW_in));
 	#else
-	beta_current = sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
+	beta_current_init = sqrtf(vv_mult_HW(v_current_HW_in,v_current_HW_in));
 	#endif
-	nu_current = beta_current;
+	nu_current = (float) beta_current_init;
 
 	// manually perform first iteration of Lanczos kernel to achieve pipelining
 	init_lanczos_loop: for(i = 0; i < n_linear; i++)

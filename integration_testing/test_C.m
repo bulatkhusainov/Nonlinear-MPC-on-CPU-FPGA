@@ -21,4 +21,8 @@ eval(tmp_str);
 
 [all_theta_C, all_nu_C, all_lambda_C, debug_output] = mex_nlp_solver(x_init);
 
-max(abs(all_theta - all_theta_C))
+max(abs(all_theta - all_theta_C));
+
+error_C  = all_theta - all_theta_C;
+
+compare_graphs;

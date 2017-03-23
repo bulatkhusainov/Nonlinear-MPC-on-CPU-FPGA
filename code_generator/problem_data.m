@@ -20,15 +20,15 @@ else
     %butcher_table_beta =  [1/6; 2/3; 1/6];   
 end;
 
-if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 0; end;
+if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 3; end;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
-IP_iter = 15;
+IP_iter = 20;
 MINRES_iter = '1.5*n_linear';
 PAR = 10;
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 50; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 
 %model = 'casadi_example';
@@ -139,8 +139,8 @@ elseif(strcmp(model,  'crane_x'))
     % bound indeces [x' u' s']'
     upper_bounds_indeces = [5]-1; % in C format
     lower_bounds_indeces = [5]-1; % in C format
-    upper_bounds = [ 0.4];
-    lower_bounds = [ -0.4];
+    upper_bounds = [ 1000*0.4];
+    lower_bounds = [ -1000*0.4];
     n_upper_bounds = max(size(upper_bounds_indeces));
     n_lower_bounds = max(size(lower_bounds_indeces));
     n_bounds = n_upper_bounds + n_lower_bounds;
@@ -183,20 +183,29 @@ elseif(strcmp(model,  'crane_xz'))
     input_z     = u(2);
     
     % define objective (function of x,u,s)
-    node_objective_residual = sqrt(Ts)*[ sqrt(10)*(x(1)); 
-                                         sqrt(0.001)*(x(2));
-                                         sqrt(10)*(x(3));
-                                         sqrt(0.001)*(x(4));
-                                         sqrt(10)*(x(5));
-                                         sqrt(0.01)*(x(6));
-                                         sqrt(0.0001)*(u(1));
-                                         sqrt(0.0001)*(u(2))]; % least squares format
-    term_objective_residual = [sqrt(10)*(term_x(1));
-                               sqrt(0.001)*(term_x(2));
-                               sqrt(10)*(term_x(3));
-                               sqrt(0.001)*(term_x(4));
-                               sqrt(10)*(term_x(5));
-                               sqrt(0.001)*(term_x(6))]; % least squares format
+    node_objective_residual = sqrt(Ts)*[ (x(1) + (0.5+x(3))*sin(x(5)));
+                                         (  (0.5+x(3))*cos(x(5)) -0.5 );
+                                         sqrt(0.001)*(u(1));
+                                         sqrt(0.001)*(u(2))]; % least squares format
+    term_objective_residual = [(term_x(1) + (0.5+term_x(3))*sin(term_x(5)));
+                                         (  (0.5+term_x(3))*cos(term_x(5)) -0.5 )];
+                                     
+                                     
+% node_objective_residual = sqrt(Ts)*[     sqrt(10)*(x(1)); 
+%                                          sqrt(0.00001)*(x(2));
+%                                          sqrt(10)*(x(3));
+%                                          sqrt(0.00001)*(x(4));
+%                                          sqrt(10)*(x(5));
+%                                          sqrt(0.00001)*(x(6));
+%                                          sqrt(0.00001)*(u(1));
+%                                          sqrt(0.00001)*(u(2))]; % least squares format
+%     term_objective_residual = [sqrt(10)*(term_x(1));
+%                                sqrt(0.00001)*(term_x(2));
+%                                sqrt(10)*(term_x(3));
+%                                sqrt(0.00001)*(term_x(4));
+%                                sqrt(10)*(term_x(5));
+%                                sqrt(0.00001)*(term_x(6))]; % least squares format
+
     % define ode (function of x,u)
     ode(1) = x_speed;
     ode(2) = -(1/tau_x)*x_speed + (1/tau_x)*input_x;
@@ -215,8 +224,9 @@ elseif(strcmp(model,  'crane_xz'))
     % bound indeces [x' u' s']'
     upper_bounds_indeces = [7,8]-1; % in C format
     lower_bounds_indeces = [7,8]-1; % in C format
-    upper_bounds = [ 0.04, 0.04];
-    lower_bounds = [ -0.04, -0.04];
+    upper_bounds = [ 0.2, 0.2];
+    lower_bounds = [ -0.2, -0.2];   
+    
     n_upper_bounds = max(size(upper_bounds_indeces));
     n_lower_bounds = max(size(lower_bounds_indeces));
     n_bounds = n_upper_bounds + n_lower_bounds;   

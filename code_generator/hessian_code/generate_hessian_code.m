@@ -106,7 +106,7 @@ if test_enable == 1
         mex_data = vec2mat(mex_data, n_term_theta); 
     cd .. 
     golden_data = tril(term_hessian_func(random_input'));
-    mismatch = abs(golden_data - mex_data);
+    mismatch = abs(golden_data - mex_data)/max(abs(golden_data(:)));
     if max(mismatch(:)) > test_tol
         error('"term_hessian_eval" C function failed the test');
     else

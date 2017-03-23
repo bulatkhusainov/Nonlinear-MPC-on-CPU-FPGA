@@ -6,6 +6,9 @@
 
 //#define n_linear (n_all_theta+n_all_nu)
 
+extern int counter;
+extern float debug_interface[n_linear];
+
 float vv_mult1(float *x_1, float *x_2)
 {
 	int i;
@@ -35,6 +38,12 @@ float vv_mult1(float *x_1, float *x_2)
 	v_prev = (float *)((init * ((uintptr_t)v_tmp1)) + ((!init) * ((uintptr_t)v_current)));
 	v_current = (float *)((init * ((uintptr_t)v_tmp2)) + ((!init) * ((uintptr_t)tmp_pointer)));
 
+
+	// v_current for debugging
+	/*for(i = 0; i < n_linear; i++)
+	{
+		v_current[i] = i+1;
+	}*/
 
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 0
@@ -69,6 +78,15 @@ float vv_mult1(float *x_1, float *x_2)
 		mv_mult(A_mult_v,blocks,v_current); // calculate mat-vec product
 	#endif
 
+
+		if(counter == 0)
+		{
+				for(int i = 0; i < n_linear; i++)
+				{
+					debug_interface[i] = A_mult_v[i];
+				}	
+		}
+
 	alfa = vv_mult1(A_mult_v,v_current); // calculate alfa
 	for(i = 0; i < n_linear; i++) // calculate new v_current
 	{
@@ -94,6 +112,8 @@ float vv_mult1(float *x_1, float *x_2)
 	sc_out[0] = alfa;
 	sc_out[1] = beta_current;
 	sc_out[2] = beta_new;
+
+
 }
 
 

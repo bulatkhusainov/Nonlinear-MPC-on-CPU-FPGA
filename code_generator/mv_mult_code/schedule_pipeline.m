@@ -10,7 +10,9 @@ nnz_matrix = max(size(row_block));
 indeces_square = zeros(dimension);
 for i = 1:dimension
     index = find(row_block == (i-1));
-    indeces_square(i, 1:max(size(index))) = index;
+    if ~isempty(index)
+        indeces_square(i, 1:max(size(index))) = index;
+    end
 end
 % sort indeces_square according to the number of nz elements
 [~,I] = sort(sum(indeces_square~=0,2), 'descend');

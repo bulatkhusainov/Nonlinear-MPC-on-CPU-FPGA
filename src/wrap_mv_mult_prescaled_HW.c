@@ -5,7 +5,7 @@
 #include "user_prototypes_header.h"
 
 
-void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],d_type_lanczos out_block[(N+1)*n_states],float x_in[n_all_theta+n_all_nu])
+void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*nnz_block_tril + nnz_term_block_tril],float out_block[(N+1)*n_states],float x_in[n_all_theta+n_all_nu])
 {
 	int i,j,k;
 
@@ -13,6 +13,7 @@ void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*n
 	part_vector x_in_struct;
 	part_vector y_out_struct;
 	part_matrix block_struct;
+	d_type_lanczos out_blocks_casted[(N+1)*n_states];
 
 	// pack vector into structure
 	for(i = 0, k = 0; i < n_states; i++, k++) x_in_struct.vec0[i] = x_in[k];
@@ -31,8 +32,13 @@ void wrap_mv_mult_prescaled_HW(float y_out[n_all_theta+n_all_nu],float block[N*n
 	#endif
 	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = block[k];
 
+
+	// cast out blocks to required precision
+	for(i = 0; i < (N+1)*n_states; i++)
+		out_blocks_casted[i] = (d_type_lanczos) out_block[i];
+
 	// call the function
-	mv_mult_prescaled_HW( &y_out_struct, &block_struct, out_block, &x_in_struct);
+	mv_mult_prescaled_HW( &y_out_struct, &block_struct, out_blocks_casted, &x_in_struct);
 
 
 

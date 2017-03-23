@@ -32,8 +32,8 @@ void foo	(
 	static part_matrix  block_in_int;
 	#pragma HLS ARRAY_PARTITION variable=block_in_int.mat complete dim=1
 	static d_type_lanczos  out_block_in_int[OUT_BLOCK_IN_LENGTH];
-	static data_t_x_in_in  x_in_in_int[X_IN_IN_LENGTH];
-	data_t_y_out_out  y_out_out_int[Y_OUT_OUT_LENGTH];
+	static float  x_in_in_int[X_IN_IN_LENGTH];
+	float  y_out_out_int[Y_OUT_OUT_LENGTH];
 
 
 
@@ -44,23 +44,24 @@ void foo	(
 
 	///////////////////////////////////////
 	//load input vectors from memory (DDR)
+	float tmp_cached1[PAR*part_size*nnz_block_tril];
 	if(!(byte_block_in_offset & (1<<31)))
 	{
 		interface_loop_block:for(int i = 0; i < PAR; i++)
 		{
-			float tmp_cached[PAR*part_size*nnz_block_tril];
 			#ifdef FLOATING_lacnzos
 			// this is for floating point
 				//#pragma HLS PIPELINE
 				memcpy(&block_in_int.mat[i][0],(const data_t_memory*)(memory_inout+byte_block_in_offset/4+(i*part_size)*nnz_block_tril),
 					(part_size*nnz_block_tril)*sizeof(data_t_memory));
 			#else
+				float tmp_cached[part_size*nnz_block_tril];
 				// this first fixed point implementation
-				memcpy(tmp_cached,(const data_t_memory*)(memory_inout+byte_block_in_offset/4+(i*part_size)*nnz_block_tril),
+				memcpy(tmp_cached1,(const data_t_memory*)(memory_inout+byte_block_in_offset/4+(i*part_size)*nnz_block_tril),
 								(part_size*nnz_block_tril)*sizeof(data_t_memory));
 
 				for(int j = 0; j < part_size*nnz_block_tril; j++)
-					block_in_int.mat[i][j] = (d_type_lanczos)tmp_cached[j];
+					block_in_int.mat[i][j] = (d_type_lanczos)tmp_cached1[j];
 			#endif
 
 
@@ -76,10 +77,10 @@ void foo	(
 				memcpy(block_in_int.mat_term,(const data_t_memory*)(memory_inout+byte_block_in_offset/4+((PAR*part_size)*nnz_block_tril)),
 						nnz_term_block_tril*sizeof(data_t_memory));
 			#else
-					memcpy(tmp_cached,(const data_t_memory*)(memory_inout+byte_block_in_offset/4+((PAR*part_size)*nnz_block_tril)),
+					memcpy(tmp_cached1,(const data_t_memory*)(memory_inout+byte_block_in_offset/4+((PAR*part_size)*nnz_block_tril)),
 											nnz_term_block_tril*sizeof(data_t_memory));
 					for(int j = 0; j < nnz_term_block_tril; j++)
-						block_in_int.mat_term[j] = (d_type_lanczos)tmp_cached[j];
+						block_in_int.mat_term[j] = (d_type_lanczos)tmp_cached1[j];
 			#endif
 		#endif
 		//memcpy(block_in_int,(const data_t_memory*)(memory_inout+byte_block_in_offset/4),BLOCK_IN_LENGTH*sizeof(data_t_memory));
@@ -95,7 +96,7 @@ void foo	(
 		#else
 			float tmp_cached2[OUT_BLOCK_IN_LENGTH];
 			memcpy(tmp_cached2,(const data_t_memory*)(memory_inout+byte_out_block_in_offset/4),OUT_BLOCK_IN_LENGTH*sizeof(data_t_memory));
-				for(int j = 0; j < OUT_BLOCK_IN_LENGTH; j++)
+			for(int j = 0; j < OUT_BLOCK_IN_LENGTH; j++)
 					out_block_in_int[j] = (d_type_lanczos)tmp_cached2[j];
 
 		#endif

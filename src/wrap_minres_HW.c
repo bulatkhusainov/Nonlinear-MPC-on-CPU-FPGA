@@ -11,6 +11,7 @@ void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_curre
 
 	// interface structure
 	part_matrix block_struct;
+	d_type_lanczos out_blocks_casted[(N+1)*n_states];
 
 	// pack matrix into structure
 	k = 0;
@@ -21,6 +22,10 @@ void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_curre
 	#endif
 	for(i = 0; i < nnz_term_block_tril; i++, k++) block_struct.mat_term[i] = blocks[k];
 
+	// cast out blocks to required precision
+	for(i = 0; i < (N+1)*n_states; i++)
+		out_blocks_casted[i] = (d_type_lanczos) out_blocks[i];
+
 	// call the function
-	minres_HW(&block_struct,  out_blocks, b, x_current, minres_data);
+	minres_HW(&block_struct,  out_blocks_casted, b, x_current, minres_data);
 }
