@@ -16,12 +16,9 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 void part_vector_normalize(part_vector *instance, d_type_lanczos scalar);
 void copy_part_vector_to_vector(part_vector *instance, float *vector);
 void copy_vector_to_part_vector(float *vector, part_vector *instance);
-void part_vector_copy(part_vector *copy, part_vector *original);
 
 void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
-	//#pragma HLS INLINE
-	//#pragma HLS ALLOCATION instances=part_vector_mult limit=1 function
 	static part_vector v_current, v_prev, v_new;
 #pragma HLS ARRAY_PARTITION variable=v_new.vec complete dim=1
 #pragma HLS ARRAY_PARTITION variable=v_prev.vec complete dim=1
@@ -31,14 +28,11 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 	part_vector A_mult_v;
 #pragma HLS ARRAY_PARTITION variable=A_mult_v.vec complete dim=1
 
-	//beta_current = init*((d_type_lanczos) sc_in[0]) + (!init)*beta_new; // conditionals statement without branching
 	beta_current = beta_new;
 	if(init) beta_current = sc_in[0];
-	// else v_prev = v_current;
-	//if(init) copy_vector_to_part_vector(v_current_in, &v_current); else v_current = v_new;
+
 	v_prev = v_current;
 	v_current = v_new;
-
 
 	if(init) reset_part_vector(&v_prev);
 	if(init) copy_vector_to_part_vector(v_current_in, &v_current);
@@ -47,14 +41,9 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 
 	alfa = part_vector_mult_par(&A_mult_v, &v_current); // calculate alfa
 	beta_new = part_vector_v_new(&v_new, &A_mult_v, &v_current, v_current_out, &v_prev, alfa, beta_current);
-	/*#ifdef PROTOIP
-		beta_new = hls::sqrt(part_vector_mult_par(&v_new,&v_new));
-	#else
-		beta_new = sqrtf(part_vector_mult_par(&v_new,&v_new));
-	#endif */
+
 	part_vector_normalize(&v_new, beta_new);
-	// put required information to interface arrays and variables
-	//copy_part_vector_to_vector(&v_current, v_current_out);
+	
 	sc_out[0] = (float) alfa;
 	sc_out[1] = (float) beta_current;
 	sc_out[2] = (float) beta_new;
@@ -189,7 +178,7 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 		#pragma HLS PIPELINE
 		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		tmp_var = A_mult_v->vec0[i] - alfa*v_current->vec0[i] - beta_current*v_prev->vec0[i];
-		v_current_out[l] = v_current->vec0[i];
+		v_current_out[l] = (float) v_current->vec0[i];
 		v_new->vec0[i] = tmp_var;
 		sos[k] += tmp_var*tmp_var;
 		k = (k+1) & mask[(k+1) != 10];
@@ -203,7 +192,7 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 			#pragma HLS PIPELINE
 			#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 			tmp_var = A_mult_v->vec[i][j] - alfa*v_current->vec[i][j] - beta_current*v_prev->vec[i][j];
-			v_current_out[l] = v_current->vec[i][j];
+			v_current_out[l] = (float) v_current->vec[i][j];
 			v_new->vec[i][j] = tmp_var;
 			sos[k] += tmp_var*tmp_var;
 			k = (k+1) & mask[(k+1) != 10];
@@ -216,7 +205,7 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 		#pragma HLS PIPELINE
 		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		tmp_var = A_mult_v->vec_rem[i] - alfa*v_current->vec_rem[i] - beta_current*v_prev->vec_rem[i];
-		v_current_out[l] = v_current->vec_rem[i];
+		v_current_out[l] = (float) v_current->vec_rem[i];
 		v_new->vec_rem[i] = tmp_var;
 		sos[k] += tmp_var*tmp_var;
 		k = (k+1) & mask[(k+1) != 10];
@@ -228,7 +217,7 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 		#pragma HLS PIPELINE
 		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		tmp_var = A_mult_v->vec_term[i] - alfa*v_current->vec_term[i] - beta_current*v_prev->vec_term[i];
-		v_current_out[l] = v_current->vec_term[i];
+		v_current_out[l] = (float) v_current->vec_term[i];
 		v_new->vec_term[i] = tmp_var;
 		sos[k] += tmp_var*tmp_var;
 		k = (k+1) & mask[(k+1) != 10];
@@ -242,7 +231,7 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 
 	// return beta new
 	#ifdef PROTOIP
-		return hls::sqrt(sos_final);
+		return hls::sqrtf(sos_final);
 	#else
 		return sqrtf(sos_final);
 	#endif

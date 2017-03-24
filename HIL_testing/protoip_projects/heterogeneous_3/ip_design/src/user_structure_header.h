@@ -3,17 +3,18 @@
 #include "user_main_header.h"
 #include "user_protoip_definer.h"
 
-//#ifdef __SYNTHESIS__
+#ifdef PROTOIP
 
 	#ifdef FIXED_lacnzos
 		#include "ap_fixed.h"
-		typedef ap_fixed<55,55-45,AP_TRN,AP_SAT> d_type_lanczos;
+		typedef ap_fixed<30,30-25,AP_TRN,AP_SAT> d_type_lanczos;
+//typedef float d_type_lanczos;
 	#else
-		//typedef float d_type_lanczos;
+		typedef float d_type_lanczos;
 	#endif
-//#else
-//	typedef float d_type_lanczos;
-//#endif
+#else
+	typedef float d_type_lanczos;
+#endif
 //typedef float d_type_lanczos;
 
 	

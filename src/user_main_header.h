@@ -5,7 +5,7 @@
 #include <stdlib.h>  
 #include <stdio.h>  
 
-#define N 50 
+#define N 10 
 #define Ts 1.000000e-01 // sampling frequency 
 
 //data for shooting node 
@@ -24,19 +24,19 @@
 #define n_bounds 4  // # of bounds per node 
 
 //data for optimization problem 
-#define n_all_theta 1057  // # of optimization variables 
-#define n_all_nu 957  // # of equality constraints 
-#define n_all_lambda 200  // # of inequality constraints (assume no inequalities for terminal term) 
+#define n_all_theta 217  // # of optimization variables 
+#define n_all_nu 197  // # of equality constraints 
+#define n_all_lambda 40  // # of inequality constraints (assume no inequalities for terminal term) 
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 
 #define IP_iter 20  // # of interior point iterations 
-#define MINRES_iter 1.5*n_linear // # of MINRES iterations 
+#define MINRES_iter 1*n_linear // # of MINRES iterations 
 #define MINRES_prescaled // # use/do not use prescaler 
 
 //parallalization related parameters 
 #define PAR 10  // # of parallel processors for the main part 
-#define part_size 5  // # partition size in terms nodes 
+#define part_size 1  // # partition size in terms nodes 
 #define heterogeneity 3  // # degree of heterogeneouty 
 #define FLOATING_lacnzos  // # fixed/floating point data for lanczos kernel 
 

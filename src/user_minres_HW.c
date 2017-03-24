@@ -86,6 +86,8 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 		v_current_HW_in[i] = v_current_HW_in[i]/beta_current;
 	}
 
+	//sc_in[0] = 1;
+
 	sc_in[0] = beta_current;
 	#ifdef MINRES_prescaled
 		lanczos_HW(1, blocks, out_blocks, v_current_HW_in,  v_current_HW, sc_in, sc_out);

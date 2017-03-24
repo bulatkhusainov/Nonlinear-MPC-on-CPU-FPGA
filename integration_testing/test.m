@@ -167,7 +167,7 @@ for ip_iter = 1:IP_iter
     
     n_iter_minres_max = 1*round(max(size(A)));
     % solve a system on linear equations
-    if true
+    if false
         A_single = single(A);
         M_single = sqrt(diag(sum(abs(A_single'))))^-1;
         b_single = single(b);

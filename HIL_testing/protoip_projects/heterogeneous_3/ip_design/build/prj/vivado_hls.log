@@ -5,6 +5,6 @@
   Copyright (C) 2015 Xilinx Inc. All rights reserved.
 ================================================================
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-67-generic) on Mon Mar 20 16:58:36 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-67-generic) on Fri Mar 24 14:17:08 GMT 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj'
 @I [HLS-10] Bringing up Vivado HLS GUI ... 

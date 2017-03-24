@@ -26,9 +26,9 @@ Tsim = 10;
 MINRES_prescaled = 1;
 d_type = 'float';
 IP_iter = 20;
-MINRES_iter = '1.5*n_linear';
+MINRES_iter = '1*n_linear';
 PAR = 10;
-if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 50; end;
+if exist('design','var') && any(strcmp('N',fieldnames(design))); N = design.N; else N = 10; end;
 if exist('design','var') && any(strcmp('Ts',fieldnames(design))); Ts = design.Ts; else Ts = 0.1; end;
 
 %model = 'casadi_example';
@@ -185,10 +185,12 @@ elseif(strcmp(model,  'crane_xz'))
     % define objective (function of x,u,s)
     node_objective_residual = sqrt(Ts)*[ (x(1) + (0.5+x(3))*sin(x(5)));
                                          (  (0.5+x(3))*cos(x(5)) -0.5 );
+                                         x(6);
                                          sqrt(0.001)*(u(1));
                                          sqrt(0.001)*(u(2))]; % least squares format
     term_objective_residual = [(term_x(1) + (0.5+term_x(3))*sin(term_x(5)));
-                                         (  (0.5+term_x(3))*cos(term_x(5)) -0.5 )];
+                                         (  (0.5+term_x(3))*cos(term_x(5)) -0.5 );
+                                         term_x(6)];
                                      
                                      
 % node_objective_residual = sqrt(Ts)*[     sqrt(10)*(x(1)); 
