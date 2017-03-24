@@ -13,40 +13,44 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2);
 d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2);
 void reset_part_vector(part_vector *instance);
 d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part_vector *v_current, float v_current_out[n_linear], part_vector *v_prev, d_type_lanczos alfa, d_type_lanczos beta_current);
-void part_vector_normalize(part_vector *instance, d_type_lanczos scalar);
-void copy_part_vector_to_vector(part_vector *instance, float *vector);
+void part_vector_normalize_update(part_vector *v_new, part_vector *v_current, part_vector *v_prev, d_type_lanczos scalar);
+//void copy_part_vector_to_vector(part_vector *instance, float *vector);
 void copy_vector_to_part_vector(float *vector, part_vector *instance);
 
 void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
 	static part_vector v_current, v_prev, v_new;
-#pragma HLS ARRAY_PARTITION variable=v_new.vec complete dim=1
-#pragma HLS ARRAY_PARTITION variable=v_prev.vec complete dim=1
-#pragma HLS ARRAY_PARTITION variable=v_current.vec complete dim=1
-	static d_type_lanczos beta_new = 0;
-	d_type_lanczos alfa, beta_current;
+	#pragma HLS ARRAY_PARTITION variable=v_new.vec complete dim=1
+	#pragma HLS ARRAY_PARTITION variable=v_prev.vec complete dim=1
+	#pragma HLS ARRAY_PARTITION variable=v_current.vec complete dim=1
+	static d_type_lanczos beta_new = 0, beta_current;
+	d_type_lanczos alfa;
 	part_vector A_mult_v;
-#pragma HLS ARRAY_PARTITION variable=A_mult_v.vec complete dim=1
+	#pragma HLS ARRAY_PARTITION variable=A_mult_v.vec complete dim=1
 
-	beta_current = beta_new;
-	if(init) beta_current = sc_in[0];
-
-	v_prev = v_current;
-	v_current = v_new;
-
-	if(init) reset_part_vector(&v_prev);
-	if(init) copy_vector_to_part_vector(v_current_in, &v_current);
+	
+	if(init)
+	{
+		beta_current = sc_in[0];
+		reset_part_vector(&v_prev);
+		copy_vector_to_part_vector(v_current_in, &v_current);
+	} 
 
 	mv_mult_prescaled_HW(&A_mult_v, blocks, out_blocks, &v_current);
-
 	alfa = part_vector_mult_par(&A_mult_v, &v_current); // calculate alfa
-	beta_new = part_vector_v_new(&v_new, &A_mult_v, &v_current, v_current_out, &v_prev, alfa, beta_current);
 
-	part_vector_normalize(&v_new, beta_new);
-	
+	beta_new = part_vector_v_new(&v_new, &A_mult_v, &v_current, v_current_out, &v_prev, alfa, beta_current);
+	// normalize and update v_prev, v_current, v_new
+	part_vector_normalize_update(&v_new, &v_current, &v_prev, beta_new);
+
+	// give required data to MINRES (scalars only)
 	sc_out[0] = (float) alfa;
 	sc_out[1] = (float) beta_current;
 	sc_out[2] = (float) beta_new;
+
+	// update beta
+	beta_current = beta_new;
+
 }
 
 
@@ -84,41 +88,8 @@ void copy_vector_to_part_vector(float *vector, part_vector *instance)
 	}
 }
 
-void copy_part_vector_to_vector(part_vector *instance, float *vector)
-{
-	#pragma HLS INLINE
-	int i,j,k;
-	k = 0;
-	copy_part_vector_to_vector_0: for(i = 0; i < n_states; i++, k++)
-	{
-		#pragma HLS PIPELINE
-		vector[k] = (float) instance->vec0[i];
-	}
-	copy_part_vector_to_vector_1: for(i = 0; i < PAR; i++)
-	{
-		copy_part_vector_to_vector_1_0: for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++, k++)
-		{
-			#pragma HLS LOOP_FLATTEN
-			#pragma HLS PIPELINE
-			vector[k] = (float) instance->vec[i][j];
-		}
-	}
 
-	#ifdef rem_partition
-	copy_part_vector_to_vector_2: for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++, k++)
-	{
-		#pragma HLS PIPELINE
-		vector[k] = (float) instance->vec_rem[i];
-	}
-	#endif
-	copy_part_vector_to_vector_3: for(i = 0; i < n_term_theta+n_term_eq; i++, k++)
-	{
-		#pragma HLS PIPELINE
-		vector[k] = (float) instance->vec_term[i];
-	}
-}
-
-void part_vector_normalize(part_vector *instance, d_type_lanczos scalar)
+void part_vector_normalize_update(part_vector *v_new, part_vector *v_current, part_vector *v_prev, d_type_lanczos scalar)
 {
 	#pragma HLS INLINE
 	int i,j;
@@ -129,9 +100,9 @@ void part_vector_normalize(part_vector *instance, d_type_lanczos scalar)
 		#pragma HLS LOOP_MERGE
 		part_vector_normalize_0: for(i = 0; i < n_states; i++)
 		{
-			#pragma HLS DEPENDENCE variable=instance->vec0 inter false
 			#pragma HLS PIPELINE
-			instance->vec0[i] *= over_scalar;
+			v_prev->vec0[i] = v_current->vec0[i];
+			v_current->vec0[i] = over_scalar*v_new->vec0[i];
 		}
 		part_vector_normalize_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
 		{
@@ -139,22 +110,24 @@ void part_vector_normalize(part_vector *instance, d_type_lanczos scalar)
 			part_vector_normalize_1_1:for(i = 0; i < PAR; i++)
 			{
 				#pragma HLS UNROLL skip_exit_check
-				instance->vec[i][j] *= over_scalar;
+				v_prev->vec[i][j] = v_current->vec[i][j];
+				v_current->vec[i][j] = over_scalar*v_new->vec[i][j];
 			}
 		}
 		#ifdef rem_partition
 		part_vector_normalize_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
 		{
 			#pragma HLS PIPELINE
-			instance->vec_rem[i] *= over_scalar;
+			v_prev->vec_rem[i] = v_current->vec_rem[i];
+			v_current->vec_rem[i] = over_scalar*v_new->vec_rem[i];
 		}
 		
 		#endif
 		part_vector_normalize_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
 		{
-			#pragma HLS DEPENDENCE variable=instance->vec_term inter false
 			#pragma HLS PIPELINE
-			instance->vec_term[i] *= over_scalar;
+			v_prev->vec_term[i] = v_current->vec_term[i];
+			v_current->vec_term[i] = over_scalar*v_new->vec_term[i];
 		}
 	}
 }
@@ -421,3 +394,40 @@ void part_vector_copy(part_vector *copy, part_vector *original)
 	}
 }*/
 
+/* 
+
+void copy_part_vector_to_vector(part_vector *instance, float *vector)
+{
+	#pragma HLS INLINE
+	int i,j,k;
+	k = 0;
+	copy_part_vector_to_vector_0: for(i = 0; i < n_states; i++, k++)
+	{
+		#pragma HLS PIPELINE
+		vector[k] = (float) instance->vec0[i];
+	}
+	copy_part_vector_to_vector_1: for(i = 0; i < PAR; i++)
+	{
+		copy_part_vector_to_vector_1_0: for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++, k++)
+		{
+			#pragma HLS LOOP_FLATTEN
+			#pragma HLS PIPELINE
+			vector[k] = (float) instance->vec[i][j];
+		}
+	}
+
+	#ifdef rem_partition
+	copy_part_vector_to_vector_2: for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++, k++)
+	{
+		#pragma HLS PIPELINE
+		vector[k] = (float) instance->vec_rem[i];
+	}
+	#endif
+	copy_part_vector_to_vector_3: for(i = 0; i < n_term_theta+n_term_eq; i++, k++)
+	{
+		#pragma HLS PIPELINE
+		vector[k] = (float) instance->vec_term[i];
+	}
+}
+
+*/

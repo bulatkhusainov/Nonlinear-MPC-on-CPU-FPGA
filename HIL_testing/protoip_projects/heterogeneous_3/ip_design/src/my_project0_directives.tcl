@@ -16,3 +16,4 @@ set_directive_pipeline "foo/input_cast_loop_block"
 set_directive_pipeline "foo/input_cast_loop_out_block"
 set_directive_pipeline "foo/input_cast_loop_x_in"
 set_directive_pipeline "foo/output_cast_loop_y_out"
+

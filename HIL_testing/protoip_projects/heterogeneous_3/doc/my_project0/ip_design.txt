@@ -60,15 +60,15 @@ Resource utilization:
 ------------------------
 
 * IP
-   BRAM_18K: 120 (42%) used out off 280 available.
+   BRAM_18K: 96 (34%) used out off 280 available.
    DSP48E: 89 (40%) used out off 220 available.
-   FF: 14846 (13%) used out off 106400 available.
-   LUT: 27660 (51%) used out off 53200 available.
+   FF: 14948 (14%) used out off 106400 available.
+   LUT: 25038 (47%) used out off 53200 available.
 
 	* User function
-	   BRAM_18K: 106 (37%) used out off 280 available.
+	   BRAM_18K: 82 (29%) used out off 280 available.
 	   DSP48E: 89 (40%) used out off 220 available.
-	   FF: 13264 (12%) used out off 106400 available.
-	   LUT: 26087 (49%) used out off 53200 available.
+	   FF: 13366 (12%) used out off 106400 available.
+	   LUT: 23465 (44%) used out off 53200 available.
 
 NOTE: IP design performance might be enhanced by adding directives from Vivado_HLS GUI interface. Run "tclapp::icl::protoip::ip_design_build_debug" to open my_project0 with Vivado_HLS GUI interface.
