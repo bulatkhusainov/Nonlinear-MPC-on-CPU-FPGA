@@ -9,8 +9,8 @@
 #define nnz_gwg 2   
 
 //nnz for terminal node 
-#define nnz_term_block 12   
-#define nnz_term_block_tril 8   
+#define nnz_term_block 13   
+#define nnz_term_block_tril 9   
 #define nnz_term_hessian_tril 6   
 #define nnz_term_f_jac 2   
 

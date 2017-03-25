@@ -66,7 +66,9 @@ nnz_block = size(col_block,1);
 
 % terminal block lower triangular pattern
 term_block_pattern = [term_hessian_pattern term_f_jac_pattern'; term_f_jac_pattern zeros(n_term_eq, n_term_eq)];
+term_block_pattern(n_term_theta+1,n_term_theta+1) = 1; % add zero element for implementing NOPs 
 [row_term_block_tril, col_term_block_tril] =  find(sparse(tril(term_block_pattern)));
+
 nnz_term_block_tril = size(col_term_block_tril,1);
 coo_term_block_tril = [row_term_block_tril, col_term_block_tril, (1:nnz_term_block_tril)'];
 coo_term_block_tril = coo_term_block_tril - 1;  % use zero indexing for C
@@ -100,6 +102,8 @@ num_term_f_jac = coo_term_f_jac(:,3);
 tmp_vector = ~(coo_term_block_tril(:,1) == coo_term_block_tril(:,2));
 tmp_vector = coo_term_block_tril(tmp_vector,:);
 coo_term_block = [coo_term_block_tril; tmp_vector(:,2) tmp_vector(:,1) tmp_vector(:,3)];
+zero_element = find(ismember(coo_term_block(:,1:2),[n_term_theta,n_term_theta],'rows')); % find the location of the NOP (zero)
+coo_term_block([1,zero_element ],:) = coo_term_block([zero_element, 1],:); % put NOP in the beginning
 row_term_block = coo_term_block(:,1);
 col_term_block = coo_term_block(:,2);
 num_term_block = coo_term_block(:,3);

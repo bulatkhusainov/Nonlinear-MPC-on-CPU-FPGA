@@ -1,4 +1,4 @@
-function [ indeces_sched, distance_achieved ] = schedule_pipeline( indeces, dimension )
+function [ indeces_sched, distance_achieved,  n_NOPs] = schedule_pipeline( indeces, dimension )
 
 %distance required
 distance_required = 12;
@@ -9,12 +9,12 @@ row_block_NOP = indeces.row_block;
 col_block_NOP = indeces.col_block;
 num_block_NOP = indeces.num_block;
 
-row_block = row_block_NOP(1:end);
-col_block = col_block_NOP(1:end);
-num_block = num_block_NOP(1:end);
+row_block = row_block_NOP(2:end);
+col_block = col_block_NOP(2:end);
+num_block = num_block_NOP(2:end);
 
 % take dimensions and allocate memory
-nnz_matrix = max(size(row_block));
+nnz_matrix = max(size(row_block)); % number of "true" nonzeros, excluding one artificial zero
 indeces_square = zeros(dimension);
 for i = 1:dimension
     index = find(row_block == (i-1));
@@ -28,7 +28,7 @@ indeces_square = indeces_square(I,:);
 nnz_per_row = sum(indeces_square~=0,2);
 max_nnz_row = max(nnz_per_row);
 number_max_nnz_row = max(size(find(nnz_per_row==max_nnz_row)));
-n_NOPs = 0;
+n_NOPs = 1;
 while(floor((n_NOPs + nnz_matrix-number_max_nnz_row)/(max_nnz_row-1)) < distance_required)
     n_NOPs = n_NOPs + 1;
 end
@@ -83,15 +83,21 @@ row_block_sched(logical(permute_vec)) = row_block(permute_vec(permute_vec~=0));
 col_block_sched(logical(permute_vec)) = col_block(permute_vec(permute_vec~=0));
 num_block_sched(logical(permute_vec)) = num_block(permute_vec(permute_vec~=0));
 
-% % check if the solution is correct
-% for i=1:dimension
-%     indeces_same_row = find(row_block_sched == i);
-%     for j = 1:(max(size(indeces_same_row))-1)
-%         if( abs(indeces_same_row(j) - indeces_same_row(j+1)) <  distance_achieved)
-%             error('Error: scheduling algorithm failed!');
-%         end
-%     end
-% end
+
+% replace all gaps with -1 to enable testing
+row_block_sched(permute_vec==0) = -1;
+col_block_sched(permute_vec==0) = -1;
+num_block_sched(permute_vec==0) = -1;
+
+% check if the solution is correct
+for i=1:dimension
+    indeces_same_row = find(row_block_sched == (i-1) );
+    for j = 1:(max(size(indeces_same_row))-1)
+        if( abs(indeces_same_row(j) - indeces_same_row(j+1)) <  distance_achieved)
+            error('Error: scheduling algorithm failed!');
+        end
+    end
+end
 
 % replace all gaps with NOP entry
 row_block_sched(permute_vec==0) = row_block_NOP(1);
