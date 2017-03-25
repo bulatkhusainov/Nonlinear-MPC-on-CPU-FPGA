@@ -9,6 +9,7 @@ node_hessian_pattern_augmented = node_hessian_pattern + gwg_pattern;
 
 % block lower triangular pattern
 block_pattern = [node_hessian_pattern_augmented f_jac_pattern'; f_jac_pattern zeros(n_node_eq, n_node_eq)];
+block_pattern(n_node_theta+1,n_node_theta+1) = 1; % add zero element for implementing NOPs 
 [row_block_tril, col_block_tril] =  find(sparse(tril(block_pattern)));
 nnz_block_tril = size(col_block_tril,1);
 coo_block_tril = [row_block_tril, col_block_tril, (1:nnz_block_tril)'];
@@ -53,6 +54,8 @@ num_gwg = coo_gwg(:,3);
 tmp_vector = ~(coo_block_tril(:,1) == coo_block_tril(:,2));
 tmp_vector = coo_block_tril(tmp_vector,:);
 coo_block = [coo_block_tril; tmp_vector(:,2) tmp_vector(:,1) tmp_vector(:,3)];
+zero_element = find(ismember(coo_block(:,1:2),[n_node_theta,n_node_theta],'rows')); % find the location of the NOP (zero)
+coo_block([1,zero_element ],:) = coo_block([zero_element, 1],:); % put NOP in the beginning
 row_block = coo_block(:,1);
 col_block = coo_block(:,2);
 num_block = coo_block(:,3);

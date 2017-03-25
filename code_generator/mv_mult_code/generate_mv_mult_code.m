@@ -14,10 +14,12 @@ num_term_block_sched = indeces_sched.num_block_sched;
 % row_block_sched = row_block;
 % col_block_sched = col_block;
 % num_block_sched = num_block;
-% 
+% distance_achieved_node = 1;
+
 % row_term_block_sched = row_term_block; 
 % col_term_block_sched = col_term_block; 
 % num_term_block_sched = num_term_block; 
+% distance_achieved_node_term = 1;
 
 cd ../../src 
 %% Generate code for matrix vector calculation (no prescaler)

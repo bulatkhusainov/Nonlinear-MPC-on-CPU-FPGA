@@ -1,9 +1,17 @@
 function [ indeces_sched, distance_achieved ] = schedule_pipeline( indeces, dimension )
 
+%distance required
+distance_required = 12;
+
+
 % unpack data
-row_block = indeces.row_block;
-col_block = indeces.col_block;
-num_block = indeces.num_block;
+row_block_NOP = indeces.row_block;
+col_block_NOP = indeces.col_block;
+num_block_NOP = indeces.num_block;
+
+row_block = row_block_NOP(1:end);
+col_block = col_block_NOP(1:end);
+num_block = num_block_NOP(1:end);
 
 % take dimensions and allocate memory
 nnz_matrix = max(size(row_block));
@@ -20,8 +28,12 @@ indeces_square = indeces_square(I,:);
 nnz_per_row = sum(indeces_square~=0,2);
 max_nnz_row = max(nnz_per_row);
 number_max_nnz_row = max(size(find(nnz_per_row==max_nnz_row)));
-distance_achieved = floor((nnz_matrix-number_max_nnz_row)/(max_nnz_row-1));
-remainder_slot_size = (nnz_matrix-number_max_nnz_row) - distance_achieved*(max_nnz_row-1);
+n_NOPs = 0;
+while(floor((n_NOPs + nnz_matrix-number_max_nnz_row)/(max_nnz_row-1)) < distance_required)
+    n_NOPs = n_NOPs + 1;
+end
+distance_achieved = floor((n_NOPs + nnz_matrix-number_max_nnz_row)/(max_nnz_row-1));
+remainder_slot_size = (n_NOPs + nnz_matrix-number_max_nnz_row) - distance_achieved*(max_nnz_row-1);
 
 step_small = distance_achieved;
 step_large = distance_achieved + 1;
@@ -30,7 +42,7 @@ n_steps_small = max_nnz_row -1 - n_steps_large;
 steps_vector = [step_large*ones(n_steps_large,1); step_small*ones(n_steps_small,1)];
 
 % allocate memory for the solution
-permute_vec = zeros(nnz_matrix,1);
+permute_vec = zeros(n_NOPs + nnz_matrix,1);
 
 % put the row with max number of elements into the solution vector
 pointer = 1;
@@ -51,35 +63,54 @@ indeces_no_max_rows(indeces_no_max_rows==0) = [];
 % put remaining vectors into schedule
 current_pointer = 1;
 for i = 1:max(size(indeces_no_max_rows))
-    % walk until zeros is found
+    % walk until 0 is found
     while(permute_vec(current_pointer) ~= 0)
         current_pointer = current_pointer + 1;
     end
     permute_vec(current_pointer) = indeces_no_max_rows(i);
     current_pointer = current_pointer + 1;
-     % walk until nonzeros is found
+     % walk until non 0 is found
     while(permute_vec(current_pointer) == 0)
         current_pointer = current_pointer + 1;
     end
-    if(current_pointer > (nnz_matrix-number_max_nnz_row))
+    if(current_pointer > (n_NOPs + nnz_matrix-number_max_nnz_row))
         current_pointer = 1;
     end
 end
 
 % write solution to output vectors
-indeces_sched.row_block_sched = row_block(permute_vec);
-indeces_sched.col_block_sched = col_block(permute_vec);
-indeces_sched.num_block_sched = num_block(permute_vec);
+row_block_sched(logical(permute_vec)) = row_block(permute_vec(permute_vec~=0));
+col_block_sched(logical(permute_vec)) = col_block(permute_vec(permute_vec~=0));
+num_block_sched(logical(permute_vec)) = num_block(permute_vec(permute_vec~=0));
 
-% check if the solution is correct
-for i=1:dimension
-    indeces_same_row = find(indeces_sched.row_block_sched == i);
-    for j = 1:(max(size(indeces_same_row))-1)
-        if( abs(indeces_same_row(j) - indeces_same_row(j+1)) <  distance_achieved)
-            error('Error: scheduling algorithm failed!');
-        end
-    end
-end
+% % check if the solution is correct
+% for i=1:dimension
+%     indeces_same_row = find(row_block_sched == i);
+%     for j = 1:(max(size(indeces_same_row))-1)
+%         if( abs(indeces_same_row(j) - indeces_same_row(j+1)) <  distance_achieved)
+%             error('Error: scheduling algorithm failed!');
+%         end
+%     end
+% end
+
+% replace all gaps with NOP entry
+row_block_sched(permute_vec==0) = row_block_NOP(1);
+col_block_sched(permute_vec==0) = col_block_NOP(1);
+num_block_sched(permute_vec==0) = num_block_NOP(1);
+
+% write solution to output vectors
+indeces_sched.row_block_sched = row_block_sched;
+indeces_sched.col_block_sched = col_block_sched;
+indeces_sched.num_block_sched = num_block_sched;
+
+
+
+
+
+
+
+
+
 end
 
 %% first custom solution

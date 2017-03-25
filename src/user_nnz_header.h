@@ -2,8 +2,8 @@
 #define NNZ_HEADER
 
 //nnz for nodes 
-#define nnz_block 160   
-#define nnz_block_tril 83   
+#define nnz_block 161   
+#define nnz_block_tril 84   
 #define nnz_node_hessian_tril 8   
 #define nnz_f_jac 75   
 #define nnz_gwg 2   
