@@ -10,8 +10,8 @@ void node_hessian_eval(float node_hessian[n_node_theta][n_node_theta],float node
 	node_hessian[4][0] =   cos(node_theta[5-1])*(node_theta[3-1]+1.0/2.0)*(1.0/5.0);
 	node_hessian[4][4] =   pow(cos(node_theta[5-1]),2.0)*pow(node_theta[3-1]+1.0/2.0,2.0)*(1.0/5.0)+pow(sin(node_theta[5-1]),2.0)*pow(node_theta[3-1]+1.0/2.0,2.0)*(1.0/5.0);
 	node_hessian[5][5] =   1.0/5.0;
-	node_hessian[6][6] =   2.0E-4;
-	node_hessian[7][7] =   2.0E-4;
+	node_hessian[6][6] =   2.0E-5;
+	node_hessian[7][7] =   2.0E-5;
 }
 
 // this function evaluates terminal Hessian 

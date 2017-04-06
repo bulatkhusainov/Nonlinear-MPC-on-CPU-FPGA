@@ -2,7 +2,7 @@
 #include "user_main_header.h"
 #include "user_prototypes_header.h"
 #include <math.h>  
-#include "mex.h"
+//#include "mex.h"
 
 int counter;
 

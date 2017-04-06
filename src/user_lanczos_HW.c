@@ -8,6 +8,9 @@
 #include <math.h>  
 #include <stdint.h>
 #include "user_structure_header.h"
+//#include "mex.h"
+
+extern float debug_interface[n_linear];
 
 d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2);
 d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2);
@@ -35,6 +38,7 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 		reset_part_vector(&v_prev);
 		copy_vector_to_part_vector(v_current_in, &v_current);
 	} 
+
 
 	mv_mult_prescaled_HW(&A_mult_v, blocks, out_blocks, &v_current);
 	alfa = part_vector_mult_par(&A_mult_v, &v_current); // calculate alfa

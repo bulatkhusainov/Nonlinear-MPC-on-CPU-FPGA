@@ -5,7 +5,7 @@ Input and output vectors:
 Name			| Direction		| Number of data 			| Data representation
 
 minres_data			 	| Input         | MINRES_DATA_IN_LENGTH=5 			|data type "data_t_minres_data_in" is floating-point single precision (32 bits)
-block			 	| Input         | BLOCK_IN_LENGTH=838 			|data type "data_t_block_in" is floating-point single precision (32 bits)
+block			 	| Input         | BLOCK_IN_LENGTH=849 			|data type "data_t_block_in" is floating-point single precision (32 bits)
 out_block			 	| Input         | OUT_BLOCK_IN_LENGTH=66 			|data type "data_t_out_block_in" is floating-point single precision (32 bits)
 x_in			 	| Input         | X_IN_IN_LENGTH=414 			|data type "data_t_x_in_in" is floating-point single precision (32 bits)
 y_out			 	| Output         | Y_OUT_OUT_LENGTH=414 			|data type "data_t_y_out_in" is floating-point single precision (32 bits)
@@ -20,9 +20,9 @@ Name			| Base address in Byte
 
 minres_data			 	| 0x02000000 <- 0
 block			 	| 0x02000014 <- (MINRES_DATA_IN_LENGTH)*4
-out_block			 	| 0x02000D2C <- (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH)*4
-x_in			 	| 0x02000E34 <- (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
-y_out			 	| 0x020014AC <- (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
+out_block			 	| 0x02000D58 <- (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH)*4
+x_in			 	| 0x02000E60 <- (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+y_out			 	| 0x020014D8 <- (MINRES_DATA_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
 
 NOTE: the external DDR memory is shared memory between the CPU embedded into the FPGA and the Algorithm implemented into the FPGA programmable logic (PL).
 
@@ -55,7 +55,7 @@ Timing (post Place & Route):
 
 * FPGA
 target clock period (ns): 10.000
-achieved clock period (ns): 0.145
+achieved clock period (ns): 0.163
 Time constraints met during IP prototyping. You might reduce clock target period to build a faster design.
 
 
@@ -65,35 +65,35 @@ Resource measurement (post Place & Route):
 * FPGA
    BRAM_18K: 96 (34%) used out off 280 available.
    DSP48E: 89 (40%) used out off 220 available.
-   FF: 15658 (14%) used out off 106400 available.
-   LUT: 17001 (31%)  used out off 53200 available.
+   FF: 15639 (14%) used out off 106400 available.
+   LUT: 16839 (31%)  used out off 53200 available.
 
 	* IP
    	BRAM_18K: 96 (34%) used out off 280 available.
    	DSP48E: 89 (40%) used out off 220 available.
-   	FF: 14725 (13%) used out off 106400 available.
-   	LUT: 16280 (30%)  used out off 53200 available.
+   	FF: 14706 (13%) used out off 106400 available.
+   	LUT: 16120 (30%)  used out off 53200 available.
 
 		* user function
    		BRAM_18K: 82 (29%) used out off 280 available.
    		DSP48E: 89 (40%) used out off 220 available.
-   		FF: 12352 (11%) used out off 106400 available.
-   		LUT: 14592 (27%)  used out off 53200 available.
+   		FF: 12336 (11%) used out off 106400 available.
+   		LUT: 14438 (27%)  used out off 53200 available.
 
 
 Power estimation with average toggle rate of 12.5/% (post Place & Route):
 -------------------------------------------------------------------------
 
 * FPGA
-   Total power on-chip (W): 2.353
-   Dynamic power on-chip (W): 2.172
-   Static power on-chip (W): 0.181
+   Total power on-chip (W): 2.320
+   Dynamic power on-chip (W): 2.140
+   Static power on-chip (W): 0.180
 
 	* ARM Cortex-A9
    	   Total ARM Cortex-A9 power (W): 1.532
 
 	* IP
-   	   Total IP power (W): 0.631
+   	   Total IP power (W): 0.599
 
 		* user function
    		   Total IP power (W): 0
@@ -107,35 +107,35 @@ Post Synthesis resource estimation:
 * FPGA
    BRAM_18K: 96 (34%) used out off 280 available.
    DSP48E: 89 (40%) used out off 220 available.
-   FF: 16535 (15%) used out off 106400 available.
-   LUT: 18635 (35%)  used out off 53200 available.
+   FF: 16516 (15%) used out off 106400 available.
+   LUT: 18428 (34%)  used out off 53200 available.
 
 	* IP
    	BRAM_18K: 96 (34%) used out off 280 available.
    	DSP48E: 89 (40%) used out off 220 available.
-   	FF: 15365 (14%) used out off 106400 available.
-   	LUT: 17575 (33%)  used out off 53200 available.
+   	FF: 15346 (14%) used out off 106400 available.
+   	LUT: 17368 (32%)  used out off 53200 available.
 
 		* user function
    		BRAM_18K: 82 (29%) used out off 280 available.
    		DSP48E: 89 (40%) used out off 220 available.
-   		FF: 12991 (12%) used out off 106400 available.
-   		LUT: 15730 (29%)  used out off 53200 available.
+   		FF: 12975 (12%) used out off 106400 available.
+   		LUT: 15526 (29%)  used out off 53200 available.
 
 
 Post Synthesis power estimation (average toggle rate 12.5/%):
 -------------------------------------------------------------
 
 * FPGA
-   Total power on-chip (W): 2.324
-   Dynamic power on-chip (W): 2.144
-   Static power on-chip (W): 0.180
+   Total power on-chip (W): 2.291
+   Dynamic power on-chip (W): 2.111
+   Static power on-chip (W): 0.179
 
 	* ARM Cortex-A9
    	   Total ARM Cortex-A9 power (W): 1.532
 
 	* IP
-   	   Total IP power (W): 0.599
+   	   Total IP power (W): 0.567
 
 		* user function
    		   Total IP power (W): 0

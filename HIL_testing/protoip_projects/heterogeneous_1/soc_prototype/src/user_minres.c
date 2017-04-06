@@ -4,6 +4,9 @@
 #include <math.h>  
 //#include "mex.h"
 
+int counter;
+
+extern float debug_interface[n_linear];
 
 float vv_mult(float *x_1, float *x_2)
 {
@@ -17,15 +20,20 @@ float vv_mult(float *x_1, float *x_2)
 }
 
 #ifdef MINRES_prescaled
-	void minres(float* blocks, float* out_blocks, float* b,float* x_current)
+	void minres(float* blocks, float* out_blocks, float* b,float* x_current, float* minres_data)
 #else
-	void minres(float* blocks, float* b,float* x_current)
+	void minres(float* blocks, float* b,float* x_current, float* minres_data)
 #endif
 {
+	/*for(int i = 0; i < n_linear; i++)
+	{
+		debug_interface[i] = b[i];
+	}*/
 
 
 	//variables declaration
-	int counter = 1, i; 
+
+	int i; 
 	float x_new[n_linear];
 		//x_current[n_linear] // x_current is a solution guess (is coming from function interface)
 	float *v_current, v_tmp1[n_linear], v_tmp2[n_linear]; // Lanczos vectors for SW implementation
@@ -63,6 +71,8 @@ float vv_mult(float *x_1, float *x_2)
 	beta_current = sqrtf(vv_mult(v_tmp2,v_tmp2));
 	nu_current = beta_current;
 
+	//printf("beta = %f\n", beta_current);
+
 	// manually perform first iteration of Lanczos kernel to achieve pipelining
 	for(i = 0; i < n_linear; i++)
 		v_tmp2[i] = v_tmp2[i]/beta_current;
@@ -90,8 +100,10 @@ float vv_mult(float *x_1, float *x_2)
 	#endif
 
 	// main loop
-	for(counter = 0; counter < MINRES_iter; counter++)
+	//for(counter = 0; counter < MINRES_iter; counter++)
+	for(counter = 0; counter < minres_data[0]; counter++)
 	{	
+
 
 
 		// extract reqired info from the lanczos kernel
@@ -113,6 +125,10 @@ float vv_mult(float *x_1, float *x_2)
 		beta_current = sc_out[1];
 		beta_new = sc_out[2];
 
+
+		//printf("beta = %f\n", beta_current);
+		//printf("nu_current = %f\n", nu_current);
+
 		// start a new iteration of Lanczos kernel (this function operates in parallel with the rest of MINRES ieration)
 		#ifdef MINRES_prescaled
 			#if heterogeneity > 1
@@ -132,6 +148,15 @@ float vv_mult(float *x_1, float *x_2)
 			lanczos(0, blocks, v_tmp1, v_tmp2, &v_current, sc_in, sc_out);
 		#endif
 
+
+		//if(counter == 0)
+		//{
+		//	for(int i = 0; i < n_linear; i++)
+		//	{
+		//		debug_interface[i] = v_current_alg[i];
+		//	}	
+		//}
+
 		// Calculate QR factors
 		delta = gamma_current*alfa_current - gamma_prev*sigma_current*beta_current;
 		over_ro_1 = 1/(sqrtf(delta*delta + beta_new*beta_new));
@@ -148,6 +173,7 @@ float vv_mult(float *x_1, float *x_2)
     	for(i = 0; i < n_linear; i++)
     		x_new_p[i] = x_current_p[i] + gamma_new*nu_current*omega_current_p[i];
     	nu_new = -sigma_new*nu_current;
+
 
     	// update variables and pointers
 		tmp_pointer = x_current_p; // update pointers the for x
@@ -166,6 +192,13 @@ float vv_mult(float *x_1, float *x_2)
 
     	sigma_prev = sigma_current;
     	sigma_current = sigma_new;
+
+    	if (  (-0.1 < nu_current) & (nu_current < 0.1)  )
+    	{
+    		//printf("nu_current = %f\n", nu_current);
+    		//break;
+    	}
+    		
 
 	}
 

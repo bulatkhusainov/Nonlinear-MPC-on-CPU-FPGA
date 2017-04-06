@@ -3,6 +3,10 @@
 #include "user_nnz_header.h"
 #include "user_prototypes_header.h"
 
+float minres_data[5];
+
+float debug_interface[n_linear];
+
 void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_all_theta], float all_nu[n_all_nu], float all_lambda[n_all_lambda], float x_hat[n_states])
 {
 	// counters
@@ -65,13 +69,14 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		for(i = 0; i < n_all_lambda; i++) // precalculate mu over g
 			all_mu_over_g[i] = mu*all_one_over_g[i];
 
-
-		for(i = 0; i < N*nnz_block_tril + nnz_term_block_tril; i++) blocks[i] = 0;
+		//if(ip_counter == 0)
+		//{
+			for(i = 0; i < N*nnz_block_tril + nnz_term_block_tril; i++) blocks[i] = 0;
+		//}
 		// evaluate blocks
 		for(i = 0; i < N; i++) // node blocks
 			node_block_eval(&blocks[i*nnz_block_tril], (float (*)[n_node_theta]) &node_jac_2d[i][0][0], &all_theta[i*n_node_theta], &all_lambda_over_g[i*n_bounds]);
-		 term_block_eval(&blocks[N*nnz_block_tril], term_jac_2d, &all_theta[N*n_node_theta]); // terminal block
-
+	 	term_block_eval(&blocks[N*nnz_block_tril], term_jac_2d, &all_theta[N*n_node_theta]); // terminal block
 
 		/* k = 0;
 		for(i = 0; i < n_node_eq; i++)
@@ -110,13 +115,16 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
 
-
+		minres_data[0] = 1*n_linear;
 		// solve linear system with minres
 		#ifdef MINRES_prescaled
 			prescaler(blocks, b,d_x);
 		#else
-			minres(blocks, b, d_x);
+			minres(blocks, b, d_x, minres_data);
 		#endif
+
+
+
 
 		// recover solution
 		rec_sol(d_all_theta, d_all_nu, d_all_lambda, d_all_theta_search, d_x, all_lambda, all_mu_over_g, all_lambda_over_g);
@@ -149,7 +157,10 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 	// print for debugging purpose
 	for(i = 0; i < n_all_theta+n_all_nu; i++)
 	{
-		//debug_output[i] = d_x[i];
+		debug_output[i] = debug_interface[i];
 	}
+
+
+
 
 }

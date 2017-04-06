@@ -78,15 +78,6 @@ float vv_mult1(float *x_1, float *x_2)
 		mv_mult(A_mult_v,blocks,v_current); // calculate mat-vec product
 	#endif
 
-
-		if(counter == 0)
-		{
-				for(int i = 0; i < n_linear; i++)
-				{
-					debug_interface[i] = A_mult_v[i];
-				}	
-		}
-
 	alfa = vv_mult1(A_mult_v,v_current); // calculate alfa
 	for(i = 0; i < n_linear; i++) // calculate new v_current
 	{

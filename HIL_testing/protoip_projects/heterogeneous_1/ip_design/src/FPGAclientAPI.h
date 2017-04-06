@@ -32,7 +32,7 @@
 ////////////////////////////////////////////////////////////
 
 //Input vectors size:
-#define BLOCK_IN_LENGTH 838
+#define BLOCK_IN_LENGTH 849
 #define OUT_BLOCK_IN_LENGTH 66
 #define X_IN_IN_LENGTH 414
 //Output vectors size:

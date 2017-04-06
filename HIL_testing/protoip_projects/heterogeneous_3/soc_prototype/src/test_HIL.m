@@ -67,8 +67,8 @@ F = integrator('F', 'cvodes', dae, opts);
 x_init = [0; 0; 0.3; 0; 0.2; 0]';
 soc_x_hat_in=x_init';
 
-for i=1:(N_sim_full+1)
-%for i=1:(1) % the last simulation is for remainder, which can be zero
+%for i=1:(N_sim_full+1)
+for i=1:(1) % the last simulation is for remainder, which can be zero
 	tmp_disp_str=strcat('Test number ',num2str(i));
 	disp(tmp_disp_str)
 

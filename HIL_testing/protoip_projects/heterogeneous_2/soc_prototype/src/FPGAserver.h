@@ -34,25 +34,25 @@
 //IP interface arrays lengths:
 #define INIT_IN_VECTOR_LENGTH 3
 #define SC_IN_IN_VECTOR_LENGTH 5
-#define BLOCK_IN_VECTOR_LENGTH 164
-#define OUT_BLOCK_IN_VECTOR_LENGTH 22
-#define V_IN_IN_VECTOR_LENGTH 116
-#define V_OUT_OUT_VECTOR_LENGTH 116
+#define BLOCK_IN_VECTOR_LENGTH 849
+#define OUT_BLOCK_IN_VECTOR_LENGTH 66
+#define V_IN_IN_VECTOR_LENGTH 414
+#define V_OUT_OUT_VECTOR_LENGTH 414
 #define SC_OUT_OUT_VECTOR_LENGTH 5
 
 //SOC interface arrays lengths:
-#define SOC_X_HAT_IN_VECTOR_LENGTH 2
+#define SOC_X_HAT_IN_VECTOR_LENGTH 6
 
-#define SOC_U_OPT_OUT_VECTOR_LENGTH 63
+#define SOC_U_OPT_OUT_VECTOR_LENGTH 217
 ////////////////////////////////////////////////////////////
 //FPGA vectors memory maps
 #define init_IN_DEFINED_MEM_ADDRESS 33554432
 #define sc_in_IN_DEFINED_MEM_ADDRESS 33554444
 #define block_IN_DEFINED_MEM_ADDRESS 33554464
-#define out_block_IN_DEFINED_MEM_ADDRESS 33555120
-#define v_in_IN_DEFINED_MEM_ADDRESS 33555208
-#define v_out_OUT_DEFINED_MEM_ADDRESS 33555672
-#define sc_out_OUT_DEFINED_MEM_ADDRESS 33556136
+#define out_block_IN_DEFINED_MEM_ADDRESS 33557860
+#define v_in_IN_DEFINED_MEM_ADDRESS 33558124
+#define v_out_OUT_DEFINED_MEM_ADDRESS 33559780
+#define sc_out_OUT_DEFINED_MEM_ADDRESS 33561436
 
 
 ////////////////////////////////////////////////////////////

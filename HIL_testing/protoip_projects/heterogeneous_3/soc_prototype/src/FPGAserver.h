@@ -29,7 +29,7 @@
 
 //IP interface arrays lengths:
 #define MINRES_DATA_IN_VECTOR_LENGTH 5
-#define BLOCK_IN_VECTOR_LENGTH 838
+#define BLOCK_IN_VECTOR_LENGTH 849
 #define OUT_BLOCK_IN_VECTOR_LENGTH 66
 #define X_IN_IN_VECTOR_LENGTH 414
 #define Y_OUT_OUT_VECTOR_LENGTH 414
@@ -42,9 +42,9 @@
 //FPGA vectors memory maps
 #define minres_data_IN_DEFINED_MEM_ADDRESS 33554432
 #define block_IN_DEFINED_MEM_ADDRESS 33554452
-#define out_block_IN_DEFINED_MEM_ADDRESS 33557804
-#define x_in_IN_DEFINED_MEM_ADDRESS 33558068
-#define y_out_OUT_DEFINED_MEM_ADDRESS 33559724
+#define out_block_IN_DEFINED_MEM_ADDRESS 33557848
+#define x_in_IN_DEFINED_MEM_ADDRESS 33558112
+#define y_out_OUT_DEFINED_MEM_ADDRESS 33559768
 
 
 ////////////////////////////////////////////////////////////

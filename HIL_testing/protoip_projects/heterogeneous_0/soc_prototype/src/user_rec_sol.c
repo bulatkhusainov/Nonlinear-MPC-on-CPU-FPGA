@@ -11,8 +11,8 @@ void rec_sol(float d_all_theta[n_all_theta],float d_all_nu[n_all_nu],float d_all
 
 	int upper_bounds_indeces[2] = {6,7,};
 	int lower_bounds_indeces[2] = {6,7,};
-	float upper_bounds[2] = {0.0400000000000000,0.0400000000000000,};
-	float lower_bounds[2] = {-0.0400000000000000,-0.0400000000000000,};
+	float upper_bounds[2] = {0.2000000000000000,0.2000000000000000,};
+	float lower_bounds[2] = {-0.2000000000000000,-0.2000000000000000,};
 
 	// extract d_all_theta[] from d_x[]
 	for(i = 0; i < N; i++)

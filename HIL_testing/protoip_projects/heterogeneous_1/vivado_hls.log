@@ -6,7 +6,7 @@
 ================================================================
 @I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-64-generic) on Wed Mar 08 13:56:40 GMT 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-72-generic) on Thu Apr 06 10:50:22 BST 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1'
 @I [HLS-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0'.
 @I [HLS-10] Adding design file '../../src/foo_data.h' to the project
@@ -15,7 +15,7 @@
 @I [HLS-10] Opening and resetting solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1'.
 @I [HLS-10] Cleaning up the solution database.
 @I [HLS-10] Setting target device to '{xc7z020clg484-1}'
-@I [SYN-201] Setting up clock 'default' with a period of 10ns.
+@I [SYN-201] Setting up clock 'default' with a period of 7ns.
 @I [HLS-10] Analyzing design file '../../src/foo.cpp' ... 
 @I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 
 @I [HLS-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
@@ -33,30 +33,42 @@
 @W [XFORM-505] Ignored pipeline directive for loop 'memcpy..memory_inout' because its parent loop or function is pipelined.
 @I [XFORM-502] Unrolling all sub-loops inside loop 'interface_loop_y_out' (../../src/foo.cpp:97) in function 'foo' for pipelining.
 @W [XFORM-505] Ignored pipeline directive for loop 'memcpy.memory_inout.' because its parent loop or function is pipelined.
-@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-2' (../../src/user_mv_mult_prescaled_HW.cpp:27) in function 'foo_user' for pipelining.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-2' (../../src/user_mv_mult_prescaled_HW.cpp:32) in function 'foo_user' for pipelining.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-8.1' (../../src/user_mv_mult_prescaled_HW.cpp:128) in function 'foo_user' for pipelining.
 @I [XFORM-501] Unrolling loop 'memcpy..memory_inout' in function 'foo' completely.
 @I [XFORM-501] Unrolling loop 'memcpy.memory_inout.' in function 'foo' completely.
-@I [XFORM-501] Unrolling loop 'Loop-2.1' (../../src/user_mv_mult_prescaled_HW.cpp:30) in function 'foo_user' completely.
-@I [XFORM-501] Unrolling loop 'Loop-11.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:126) in function 'foo_user' completely.
+@I [XFORM-501] Unrolling loop 'Loop-2.1' (../../src/user_mv_mult_prescaled_HW.cpp:35) in function 'foo_user' completely.
+@I [XFORM-501] Unrolling loop 'Loop-8.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:133) in function 'foo_user' completely.
 @I [XFORM-101] Partitioning array 'block_in_int.mat'  in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'x_in_in_int.vec' (../../src/foo.cpp:31) in dimension 1 completely.
 @I [XFORM-101] Partitioning array 'y_out_out_int.vec'  in dimension 1 completely.
-@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:61:4) to (../../src/user_mv_mult_prescaled_HW.cpp:64:2) in function 'foo_user'... converting 4 basic blocks.
-@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:65:4) to (../../src/user_mv_mult_prescaled_HW.cpp:65:4) in function 'foo_user'... converting 4 basic blocks.
-@I [XFORM-541] Flattening a loop nest 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:59:6) in function 'foo_user'.
-@I [XFORM-541] Flattening a loop nest 'Loop-7.1' (../../src/user_mv_mult_prescaled_HW.cpp:70:7) in function 'foo_user'.
-@I [XFORM-541] Flattening a loop nest 'Loop-7' (../../src/user_mv_mult_prescaled_HW.cpp:69:6) in function 'foo_user'.
-@I [XFORM-811] Inferring bus burst read of length 83 on port 'memory_inout' (../../src/foo.cpp:47:3).
-@I [XFORM-811] Inferring bus burst read of length 8 on port 'memory_inout' (../../src/foo.cpp:49:3).
+@W [ANALYSIS-31] The program may have out of bound access of array variable 'y_out_out_int.vec_term' in function 'foo' (../../src/foo.cpp:108:3).
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:66:4) to (../../src/user_mv_mult_prescaled_HW.cpp:69:2) in function 'foo_user'... converting 11 basic blocks.
+@I [XFORM-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:70:4) to (../../src/user_mv_mult_prescaled_HW.cpp:70:4) in function 'foo_user'... converting 11 basic blocks.
+@I [XFORM-11] Balancing expressions in function 'foo' (../../src/foo.cpp:21)...6 expression(s) balanced.
+@I [XFORM-541] Flattening a loop nest 'Loop-5' (../../src/user_mv_mult_prescaled_HW.cpp:64:6) in function 'foo_user'.
+@I [XFORM-541] Flattening a loop nest 'Loop-7' (../../src/user_mv_mult_prescaled_HW.cpp:124:7) in function 'foo_user'.
+@I [XFORM-521] Merging 3 loops (../../src/user_mv_mult_prescaled_HW.cpp:27, ../../src/user_mv_mult_prescaled_HW.cpp:32, ../../src/user_mv_mult_prescaled_HW.cpp:48) in function 'foo_user'.
+@I [XFORM-811] Inferring bus burst read of length 9 on port 'memory_inout' (../../src/foo.cpp:52:3).
 @I [XFORM-811] Inferring bus burst read of length 66 on port 'memory_inout' (../../src/foo.cpp:61:3).
 @I [XFORM-811] Inferring bus burst read of length 6 on port 'memory_inout' (../../src/foo.cpp:67:3).
-@I [XFORM-811] Inferring bus burst read of length 40 on port 'memory_inout' (../../src/foo.cpp:75:3).
-@I [XFORM-811] Inferring bus burst read of length 8 on port 'memory_inout' (../../src/foo.cpp:77:3).
+@I [XFORM-811] Inferring bus burst read of length 8 on port 'memory_inout' (../../src/foo.cpp:80:3).
 @I [XFORM-811] Inferring bus burst write of length 6 on port 'memory_inout' (../../src/foo.cpp:95:3).
-@I [XFORM-811] Inferring bus burst write of length 40 on port 'memory_inout' (../../src/foo.cpp:103:3).
-@I [XFORM-811] Inferring bus burst write of length 8 on port 'memory_inout' (../../src/foo.cpp:105:3).
-@I [XFORM-811] Inferring bus burst write of length 120 on port 'memory_inout' (../../src/foo.cpp:99:2).
-@I [HLS-111] Elapsed time: 125.595 seconds; current memory usage: 246 MB.
+@I [XFORM-811] Inferring bus burst write of length 9 on port 'memory_inout' (../../src/foo.cpp:108:3).
+@I [XFORM-811] Inferring bus burst write of length 40 on port 'memory_inout' (../../src/foo.cpp:99:2).
+@W [XFORM-561] Ignored multiple trip count directives for loop 'Loop-0' in function 'foo_user'.
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_0' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_1' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_2' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_3' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_4' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_5' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_6' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_7' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_8' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting inter dependency for variable 'y_out_out_int_vec_9' (../../src/foo_user.cpp:18) (distance = 10).
+@I [ANALYSIS-51] Setting 'RAW' inter dependency for variable 'y_out_out_int_vec_term' (../../src/foo_user.cpp:18) (distance = 4).
+@I [HLS-111] Elapsed time: 44.3385 seconds; current memory usage: 216 MB.
 @I [HLS-10] Starting hardware synthesis ...
 @I [HLS-10] Synthesizing 'foo' ...
 @I [HLS-10] ----------------------------------------------------------------
@@ -66,25 +78,25 @@
 @I [SCHED-61] Pipelining loop 'Loop 1'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
 @I [SCHED-61] Pipelining loop 'Loop 2'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 7.
 @I [SCHED-61] Pipelining loop 'Loop 3'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 10.
 @I [SCHED-61] Pipelining loop 'Loop 4'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 7.
 @I [SCHED-61] Pipelining loop 'Loop 5'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 16.
 @I [SCHED-61] Pipelining loop 'Loop 6'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 6.
-@I [SCHED-61] Pipelining loop 'Loop 7'.
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 1, distance = 1)
-   between 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:76->../../src/foo_user.cpp:20) of variable 'tmp_75', ../../src/user_mv_mult_prescaled_HW.cpp:76->../../src/foo_user.cpp:20 on array 'y_out_out_int_vec_0' and 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:75->../../src/foo_user.cpp:20) of variable 'tmp_74', ../../src/user_mv_mult_prescaled_HW.cpp:75->../../src/foo_user.cpp:20 on array 'y_out_out_int_vec_0'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 2, Depth: 7.
-@I [SCHED-61] Pipelining loop 'Loop 8'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
-@I [SCHED-61] Pipelining loop 'Loop 9'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 5.
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 1, distance = 4)
+   between 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:161->../../src/foo_user.cpp:20) of variable 'tmp_56', ../../src/user_mv_mult_prescaled_HW.cpp:161->../../src/foo_user.cpp:20 on array 'y_out_out_int_vec_term' and 'load' operation ('y_out_out_int_vec_term_load', ../../src/user_mv_mult_prescaled_HW.cpp:161->../../src/foo_user.cpp:20) on array 'y_out_out_int_vec_term'.
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 2, distance = 4)
+   between 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:161->../../src/foo_user.cpp:20) of variable 'tmp_56', ../../src/user_mv_mult_prescaled_HW.cpp:161->../../src/foo_user.cpp:20 on array 'y_out_out_int_vec_term' and 'load' operation ('y_out_out_int_vec_term_load', ../../src/user_mv_mult_prescaled_HW.cpp:161->../../src/foo_user.cpp:20) on array 'y_out_out_int_vec_term'.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 3, Depth: 16.
+@W [SCHED-21] Estimated clock period (8.1ns) exceeds the target (target clock period: 7ns, clock uncertainty: 0.875ns, effective delay budget: 6.12ns).
+@W [SCHED-21] The critical path consists of the following:
+	'fadd' operation ('tmp_72', ../../src/user_mv_mult_prescaled_HW.cpp:136->../../src/foo_user.cpp:20) (5.39 ns)
+	'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:136->../../src/foo_user.cpp:20) of variable 'tmp_72', ../../src/user_mv_mult_prescaled_HW.cpp:136->../../src/foo_user.cpp:20 on array 'y_out_out_int_vec_0' (2.71 ns)
 @I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 18.7226 seconds; current memory usage: 439 MB.
+@I [HLS-111] Elapsed time: 6.6029 seconds; current memory usage: 278 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -93,7 +105,7 @@
 @I [BIND-101] Exploring resource sharing.
 @I [BIND-101] Binding ...
 @I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.344262 seconds; current memory usage: 441 MB.
+@I [HLS-111] Elapsed time: 0.315276 seconds; current memory usage: 280 MB.
 @I [HLS-10] ----------------------------------------------------------------
 @I [HLS-10] -- Scheduling module 'foo' 
 @I [HLS-10] ----------------------------------------------------------------
@@ -113,21 +125,13 @@
    between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
 @W [SCHED-68] Unable to enforce a carried dependency constraint (II = 46, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 94, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 70, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 190, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 82, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 238, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 83, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 244, distance = 1)
-   between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 247, distance = 1)
-   between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 248, distance = 1)
-   between bus request on port 'memory_inout' (../../src/foo.cpp:43) and bus request on port 'memory_inout' (../../src/foo.cpp:43).
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 249, Depth: 257.
-@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 84, Depth: 92.
 @I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
 @I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::out_block_in_int.memory_inout'.
@@ -147,17 +151,15 @@
    between bus request on port 'memory_inout' (../../src/foo.cpp:71) and bus request on port 'memory_inout' (../../src/foo.cpp:71).
 @W [SCHED-68] Unable to enforce a carried dependency constraint (II = 22, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:71) and bus request on port 'memory_inout' (../../src/foo.cpp:71).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 46, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 34, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:71) and bus request on port 'memory_inout' (../../src/foo.cpp:71).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 94, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 37, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:71) and bus request on port 'memory_inout' (../../src/foo.cpp:71).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 118, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 38, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:71) and bus request on port 'memory_inout' (../../src/foo.cpp:71).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 119, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 39, distance = 1)
    between bus request on port 'memory_inout' (../../src/foo.cpp:71) and bus request on port 'memory_inout' (../../src/foo.cpp:71).
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 120, Depth: 128.
-@I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 40, Depth: 48.
 @I [SCHED-61] Pipelining loop 'memcpy..memory_inout'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
 @I [SCHED-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.vec0.gep'.
@@ -175,16 +177,93 @@
    between bus write on port 'memory_inout' (../../src/foo.cpp:99) and bus write on port 'memory_inout' (../../src/foo.cpp:99).
 @W [SCHED-68] Unable to enforce a carried dependency constraint (II = 22, distance = 1)
    between bus write on port 'memory_inout' (../../src/foo.cpp:99) and bus write on port 'memory_inout' (../../src/foo.cpp:99).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 46, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 34, distance = 1)
    between bus write on port 'memory_inout' (../../src/foo.cpp:99) and bus write on port 'memory_inout' (../../src/foo.cpp:99).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 94, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 37, distance = 1)
    between bus write on port 'memory_inout' (../../src/foo.cpp:99) and bus write on port 'memory_inout' (../../src/foo.cpp:99).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 118, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 38, distance = 1)
    between bus write on port 'memory_inout' (../../src/foo.cpp:99) and bus write on port 'memory_inout' (../../src/foo.cpp:99).
-@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 119, distance = 1)
+@W [SCHED-68] Unable to enforce a carried dependency constraint (II = 39, distance = 1)
    between bus write on port 'memory_inout' (../../src/foo.cpp:99) and bus write on port 'memory_inout' (../../src/foo.cpp:99).
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 120, Depth: 126.
+@I [SCHED-61] Pipelining result: Target II: 1, Final II: 40, Depth: 46.
 @I [SCHED-61] Pipelining loop 'memcpy.memory_inout.'.
 @I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
-@I [SCHED-61] Pipelining loop 'memcpy.memory_inout.'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+@I [SCHED-11] Finished scheduling.
+@I [HLS-111] Elapsed time: 32.6058 seconds; current memory usage: 300 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Exploring micro-architecture for module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [BIND-100] Starting micro-architecture generation ...
+@I [BIND-101] Performing variable lifetime analysis.
+@I [BIND-101] Exploring resource sharing.
+@I [BIND-101] Binding ...
+@I [BIND-100] Finished micro-architecture generation.
+@I [HLS-111] Elapsed time: 4.17853 seconds; current memory usage: 314 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_8_full_dsp': 10 instance(s).
+@I [RTGEN-100] Generating core module 'foo_fmul_32ns_32ns_32_4_max_dsp': 10 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
+@I [HLS-111] Elapsed time: 3.12851 seconds; current memory usage: 317 MB.
+@I [HLS-10] ----------------------------------------------------------------
+@I [HLS-10] -- Generating RTL for module 'foo' 
+@I [HLS-10] ----------------------------------------------------------------
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_block_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_out_block_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_x_in_in_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/byte_y_out_out_offset' to 's_axilite & ap_none' (register).
+@I [RTGEN-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
+@I [RTGEN-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
+@I [RTGEN-100] Generating core module 'foo_mux_10to1_sel4_32_1': 2 instance(s).
+@I [RTGEN-100] Finished creating RTL model for 'foo'.
+@I [HLS-111] Elapsed time: 4.14324 seconds; current memory usage: 343 MB.
+@I [RTMG-279] Implementing memory 'foo_foo_user_num_block_sched_rom' using auto ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_col_block_sched_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_row_block_sched_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_num_term_block_sched3_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_col_term_block_sched2_rom' using distributed ROMs.
+@I [RTMG-279] Implementing memory 'foo_foo_user_row_term_block_sched1_rom' using distributed ROMs.
+@I [RTMG-278] Implementing memory 'foo_block_in_int_mat_term_ram' using distributed RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_out_block_in_int_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_block_in_int_mat_0_ram' using block RAMs with power-on initialization.
+@I [RTMG-278] Implementing memory 'foo_x_in_in_int_vec0_ram' using distributed RAMs.
+@I [RTMG-278] Implementing memory 'foo_x_in_in_int_vec_0_ram' using block RAMs.
+@I [RTMG-278] Implementing memory 'foo_x_in_in_int_vec_1_ram' using block RAMs.
+@I [RTMG-278] Implementing memory 'foo_x_in_in_int_vec_term_ram' using distributed RAMs.
+@I [RTMG-278] Implementing memory 'foo_y_out_out_int_vec_0_ram' using block RAMs.
+@I [HLS-10] Finished generating all RTL models.
+@I [WSYSC-301] Generating RTL SystemC for 'foo'.
+@I [WVHDL-304] Generating RTL VHDL for 'foo'.
+@I [WVLOG-307] Generating RTL Verilog for 'foo'.
+@I [IMPL-8] Exporting RTL as an IP in IP-XACT.
+
+****** Vivado v2015.2 (64-bit)
+  **** SW Build 1266856 on Fri Jun 26 16:35:25 MDT 2015
+  **** IP Build 1264090 on Wed Jun 24 14:22:01 MDT 2015
+    ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+
+INFO: [Common 17-1269] XILINX_LOCAL_USER_DATA is set to 'YES', using local Tcl Store at '/home/bkhusain/.Xilinx/Vivado/2015.2/XilinxTclStore'.
+INFO: [Common 17-748] XILINX_TCLAPP_REPO is set to '/home/bkhusain/Documents/XilinxTclStore'. Refresh XilinxTclStore catalog is disabled when XILINX_TCLAPP_REPO is set.
+source run_ippack.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fmul_2_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fmul_2_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fadd_6_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_6_full_dsp_32'...
+****** Webtalk v2015.2 (64-bit)
+  **** SW Build 1266856 on Fri Jun 26 16:35:25 MDT 2015
+  **** IP Build 1264090 on Wed Jun 24 14:22:01 MDT 2015
+    ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+
+source /home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/labtool_webtalk.tcl -notrace
+INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Thu Apr  6 10:53:00 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Thu Apr  6 10:53:00 2017...
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
+INFO: [Common 17-206] Exiting Vivado at Thu Apr  6 10:53:01 2017...
+@I [HLS-112] Total elapsed time: 174.637 seconds; peak memory usage: 343 MB.
+@I [LIC-101] Checked in feature [ap_opencl]

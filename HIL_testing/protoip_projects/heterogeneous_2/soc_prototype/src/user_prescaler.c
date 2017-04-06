@@ -3,6 +3,8 @@
 #include "user_nnz_header.h"
 #include "user_prototypes_header.h"
 
+extern float minres_data[5];
+
 // this function prescales orginal linear system and calls MINRES solver,
 void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_all_theta+n_all_nu],float x_current[n_all_theta+n_all_nu])
 {
@@ -13,24 +15,24 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	float out_blocks[(N+1)*n_states];
 
 	// block pattern in COO format
-	int row_block[28] = {0,6,8,9,1,7,8,2,8,10,3,10,6,8,7,9,0,0,0,1,1,2,2,3,4,4,5,5,};
-	int col_block[28] = {0,0,0,0,1,1,1,2,2,2,3,3,4,4,5,5,6,8,9,7,8,8,10,10,6,8,7,9,};
-	int num_block[28] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1,2,3,5,6,8,9,11,12,13,14,15,};
+	int row_block[161] = {21,2,4,21,22,27,28,32,33,34,38,2,23,32,38,24,29,30,32,35,36,38,4,25,32,38,5,26,31,32,37,38,6,28,32,34,38,39,7,30,36,39,21,27,22,28,33,34,38,23,29,38,24,30,35,36,38,25,31,38,26,32,37,38,21,33,22,33,34,38,23,35,38,24,35,36,38,25,37,38,26,37,38,0,0,0,0,1,1,1,1,1,1,1,2,2,2,3,3,3,3,3,3,3,4,4,4,5,5,5,5,5,6,6,6,6,6,7,7,8,9,9,10,10,10,10,10,11,11,11,12,12,12,12,12,13,13,13,14,14,14,14,15,15,16,16,16,16,17,17,17,18,18,18,18,19,19,19,20,20,20,};
+	int col_block[161] = {21,0,0,0,1,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,8,9,9,10,10,10,10,10,11,11,11,12,12,12,12,12,13,13,13,14,14,14,14,15,15,16,16,16,16,17,17,17,18,18,18,18,19,19,19,20,20,20,0,2,4,21,22,27,28,32,33,34,38,23,32,38,24,29,30,32,35,36,38,25,32,38,26,31,32,37,38,28,32,34,38,39,30,36,39,21,27,22,28,33,34,38,23,29,38,24,30,35,36,38,25,31,38,26,32,37,38,21,33,22,33,34,38,23,35,38,24,35,36,38,25,37,38,26,37,38,};
+	int num_block[161] = {83,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,23,24,25,27,28,29,30,31,33,34,35,36,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,};
 
 	// term_block pattern in COO format
-	int row_term_block[6] = {0,3,1,3,0,2,};
-	int col_term_block[6] = {0,0,1,2,3,3,};
-	int num_term_block[6] = {0,1,2,3,1,3,};
+	int row_term_block[13] = {7,2,4,7,2,4,5,7,0,0,0,0,6,};
+	int col_term_block[13] = {7,0,0,0,2,4,5,6,0,2,4,7,7,};
+	int num_term_block[13] = {8,1,2,3,4,5,6,7,0,1,2,3,7,};
 
 	// block_tril pattern in COO format
-	int row_block_tril[16] = {0,6,8,9,1,7,8,2,8,10,3,10,6,8,7,9,};
-	int col_block_tril[16] = {0,0,0,0,1,1,1,2,2,2,3,3,4,4,5,5,};
-	int num_block_tril[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,};
+	int row_block_tril[84] = {0,2,4,21,22,27,28,32,33,34,38,2,23,32,38,24,29,30,32,35,36,38,4,25,32,38,5,26,31,32,37,38,6,28,32,34,38,39,7,30,36,39,21,27,22,28,33,34,38,23,29,38,24,30,35,36,38,25,31,38,26,32,37,38,21,33,22,33,34,38,23,35,38,24,35,36,38,25,37,38,26,37,38,21,};
+	int col_block_tril[84] = {0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,8,9,9,10,10,10,10,10,11,11,11,12,12,12,12,12,13,13,13,14,14,14,14,15,15,16,16,16,16,17,17,17,18,18,18,18,19,19,19,20,20,20,21,};
+	int num_block_tril[84] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,};
 
 	// term_block_tril pattern in COO format
-	int row_term_block_tril[4] = {0,3,1,3,};
-	int col_term_block_tril[4] = {0,0,1,2,};
-	int num_term_block_tril[4] = {0,1,2,3,};
+	int row_term_block_tril[9] = {0,2,4,7,2,4,5,7,7,};
+	int col_term_block_tril[9] = {0,0,0,0,2,4,5,6,7,};
+	int num_term_block_tril[9] = {0,1,2,3,4,5,6,7,8,};
 
 	// intitialize prescaler
 	for(i = 0; i < n_states; i++) M[i] = 1;
@@ -102,17 +104,18 @@ void prescaler(float blocks[N*nnz_block_tril + nnz_term_block_tril],float b[n_al
 	#ifdef MINRES_prescaled
 		#if heterogeneity > 2
 			#ifdef PROTOIP
+			send_minres_data_in(minres_data);
 			send_block_in(blocks);
 			send_out_block_in(out_blocks);
 			send_x_in_in(b);
-			start_foo(1,1,1,1);
+			start_foo(1,1,1,1,1);
 			while(!(finished_foo())){;} // wait for IP to finish
 			receive_y_out_out(x_current);
 			#else
-			wrap_minres_HW(blocks, out_blocks, b, x_current); // HW realization
+			wrap_minres_HW(blocks, out_blocks, b, x_current, minres_data); // HW realization
 			#endif
 		#else
-		minres(blocks, out_blocks, b, x_current); // SW realization
+		minres(blocks, out_blocks, b, x_current, minres_data); // SW realization
 		#endif
 	#endif
 	// recover solution 

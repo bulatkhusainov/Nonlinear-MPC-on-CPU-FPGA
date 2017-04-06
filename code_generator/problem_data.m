@@ -20,7 +20,7 @@ else
     %butcher_table_beta =  [1/6; 2/3; 1/6];   
 end;
 
-if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 3; end;
+if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 2; end;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
@@ -186,11 +186,12 @@ elseif(strcmp(model,  'crane_xz'))
     node_objective_residual = sqrt(Ts)*[ (x(1) + (0.5+x(3))*sin(x(5)));
                                          (  (0.5+x(3))*cos(x(5)) -0.5 );
                                          x(6);
-                                         sqrt(0.001)*(u(1));
-                                         sqrt(0.001)*(u(2))]; % least squares format
+                                         sqrt(0.0001)*(u(1));
+                                         sqrt(0.0001)*(u(2))]; % least squares format
     term_objective_residual = [(term_x(1) + (0.5+term_x(3))*sin(term_x(5)));
                                          (  (0.5+term_x(3))*cos(term_x(5)) -0.5 );
-                                         term_x(6)];
+                                         term_x(6)
+                                         ];
                                      
                                      
 % node_objective_residual = sqrt(Ts)*[     sqrt(10)*(x(1)); 

@@ -20,7 +20,7 @@ delete('soc_prototype/test/results/my_project0/*.dat');
 
 %ip_design_build_debug('project_name','my_project0');
 
-ip_prototype_build('project_name','my_project0','board_name','zedboard');
+%ip_prototype_build('project_name','my_project0','board_name','zedboard');
 
 %ip_prototype_load('project_name','my_project0','board_name','zedboard','type_eth','udp');
 

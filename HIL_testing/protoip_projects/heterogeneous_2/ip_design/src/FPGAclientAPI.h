@@ -34,11 +34,11 @@
 //Input vectors size:
 #define INIT_IN_LENGTH 3
 #define SC_IN_IN_LENGTH 5
-#define BLOCK_IN_LENGTH 164
-#define OUT_BLOCK_IN_LENGTH 22
-#define V_IN_IN_LENGTH 116
+#define BLOCK_IN_LENGTH 849
+#define OUT_BLOCK_IN_LENGTH 66
+#define V_IN_IN_LENGTH 414
 //Output vectors size:
-#define V_OUT_OUT_LENGTH 116
+#define V_OUT_OUT_LENGTH 414
 #define SC_OUT_OUT_LENGTH 5
 
 
