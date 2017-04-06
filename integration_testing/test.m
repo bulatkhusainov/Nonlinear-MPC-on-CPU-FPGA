@@ -31,7 +31,7 @@ all_lambda = ones(N*n_bounds, 1); % inequality dual variables
 %all_theta(902) = 12;
 %all_nu(301) = 4;
 
-mu = 0.001; % barrier parameter
+mu = 0.0001; % barrier parameter
 
 
 n_z = size(all_theta,1) + size(all_nu,1); 

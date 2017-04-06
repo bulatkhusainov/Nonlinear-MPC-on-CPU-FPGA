@@ -30,14 +30,14 @@
 #define n_linear (n_all_theta+n_all_nu)  // # of linear system dimension 
 
 //number of iterations for iterative algorithms 
-#define IP_iter 20  // # of interior point iterations 
+#define IP_iter 15  // # of interior point iterations 
 #define MINRES_iter 1*n_linear // # of MINRES iterations 
 #define MINRES_prescaled // # use/do not use prescaler 
 
 //parallalization related parameters 
 #define PAR 10  // # of parallel processors for the main part 
 #define part_size 1  // # partition size in terms nodes 
-#define heterogeneity 2  // # degree of heterogeneouty 
+#define heterogeneity 0  // # degree of heterogeneouty 
 #define FLOATING_lacnzos  // # fixed/floating point data for lanczos kernel 
 
 #endif
