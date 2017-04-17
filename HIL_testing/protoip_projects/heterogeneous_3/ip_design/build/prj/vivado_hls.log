@@ -1,10 +1,58 @@
-================================================================
-  Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC
-  Version 2015.2
-  Build 1266856 on Fri Jun 26 16:57:37 PM 2015
-  Copyright (C) 2015 Xilinx Inc. All rights reserved.
-================================================================
+INFO: [Common 17-701] A license check has taken more than 10 seconds to complete. This may indicate that there is a performance issue with one or more license servers listed in XILINXD_LICENSE_FILE or LM_LICENSE_FILE, or that the license servers are just not responding at all. Try setting the FLEXLM_DIAGNOSTICS environment variable to 3 and running Vivado again to get more information.
+@I [LIC-101] Checked out feature [ap_opencl]
 @I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-67-generic) on Mon Mar 27 10:48:49 BST 2017
+            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-72-generic) on Mon Apr 17 11:29:04 BST 2017
             in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj'
-@I [HLS-10] Bringing up Vivado HLS GUI ... 
+@I [HLS-10] Opening project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0'.
+@I [HLS-10] Adding design file '../../src/foo.cpp' to the project
+@I [HLS-10] Adding design file '../../src/foo_user.cpp' to the project
+@I [HLS-10] Adding design file '../../src/foo_data.h' to the project
+@I [HLS-10] Adding design file '../../src/user_lanczos_HW.cpp' to the project
+@I [HLS-10] Adding design file '../../src/user_minres_HW.cpp' to the project
+@I [HLS-10] Adding design file '../../src/user_mv_mult_prescaled_HW.cpp' to the project
+@I [HLS-10] Opening solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1'.
+@I [SYN-201] Setting up clock 'default' with a period of 10ns.
+@I [HLS-10] Setting target device to 'xc7z020clg484-1'
+@I [HLS-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/user_minres_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/user_lanczos_HW.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 
+@I [HLS-10] Analyzing design file '../../src/foo.cpp' ... 
+@I [HLS-10] Validating synthesis directives ...
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_minres_data' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_block' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_out_block' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
+@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
+@I [HLS-10] Starting code transformations ...
+@I [XFORM-603] Inlining function 'reset_part_vector' into 'minres_HW' (../../src/user_minres_HW.cpp:84).
+@I [XFORM-603] Inlining function 'copy_vector_to_part_vector' into 'minres_HW' (../../src/user_minres_HW.cpp:85).
+@I [XFORM-603] Inlining function 'ap_fixed_base<78, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>::operator<<' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:371).
+@I [XFORM-603] Inlining function 'ap_fixed_base<1, 33, false, (ap_q_mode)5, (ap_o_mode)0, 0>::overflow_adjust' into 'ap_fixed_base<1, 33, false, (ap_q_mode)5, (ap_o_mode)0, 0>::ap_fixed_base<55, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>' ().
+@I [XFORM-603] Inlining function 'mv_mult_prescaled_HW' into 'minres_HW' (../../src/user_minres_HW.cpp:104).
+@I [XFORM-603] Inlining function 'part_vector_normalize_update' into 'minres_HW' (../../src/user_minres_HW.cpp:221).
+@I [HLS-10] Checking synthesizability ...
+@I [XFORM-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:368) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:371) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::__signbit' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:383) automatically.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'reset_part_vector_1' (../../src/user_minres_HW.cpp:268) in function 'minres_HW' for pipelining.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-8.2' (../../src/user_mv_mult_prescaled_HW.cpp:32) in function 'minres_HW' for pipelining.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'Loop-8.8.1' (../../src/user_mv_mult_prescaled_HW.cpp:128) in function 'minres_HW' for pipelining.
+@I [XFORM-502] Unrolling all sub-loops inside loop 'part_vector_normalize_1_0' (../../src/user_minres_HW.cpp:480) in function 'minres_HW' for pipelining.
+@I [XFORM-501] Unrolling loop 'Loop-3.1' (../../src/user_minres_HW.cpp:270) in function 'minres_HW' completely.
+@I [XFORM-501] Unrolling loop 'Loop-8.2.1' (../../src/user_mv_mult_prescaled_HW.cpp:35) in function 'minres_HW' completely.
+@I [XFORM-501] Unrolling loop 'Loop-8.8.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:133) in function 'minres_HW' completely.
+@I [XFORM-501] Unrolling loop 'part_vector_normalize_1_1' (../../src/user_minres_HW.cpp:483) in function 'minres_HW' completely.
+@I [XFORM-101] Partitioning array 'block_in_int.mat'  in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_new.vec' (../../src/user_minres_HW.cpp:55) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_prev.vec' (../../src/user_minres_HW.cpp:55) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'v_current.vec' (../../src/user_minres_HW.cpp:55) in dimension 1 completely.
+@I [XFORM-101] Partitioning array 'A_mult_v.vec' (../../src/user_minres_HW.cpp:60) in dimension 1 completely.
+@I [XFORM-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:368) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:371) automatically.
+@I [XFORM-602] Inlining function 'fp_struct<float>::__signbit' into 'hls::cast_IEEE754<int, float>' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/hls/hls_round.h:383) automatically.
+@I [XFORM-602] Inlining function 'hls::cast_IEEE754<int, float>' into '__hls_fptosi_float_i32' (/wrk/buildscratch/2015.2/continuous/20150626163259/src/products/hls/hls_lib/src/lib_floatconversion.cpp:39) automatically.
+@I [XFORM-721] Changing loop 'Loop_init_loop_proc' (../../src/user_minres_HW.cpp:77) to a process function for dataflow in function 'minres_HW'.
+@E [HLS-102] Encountered an internal error;
+             For technical support on this issue, please visit http://www.xilinx.com/support.
+@I [LIC-101] Checked in feature [ap_opencl]

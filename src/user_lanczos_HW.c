@@ -22,6 +22,7 @@ void copy_vector_to_part_vector(float *vector, part_vector *instance);
 
 void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
+	/*
 	static part_vector v_current, v_prev, v_new;
 	#pragma HLS ARRAY_PARTITION variable=v_new.vec complete dim=1
 	#pragma HLS ARRAY_PARTITION variable=v_prev.vec complete dim=1
@@ -54,10 +55,10 @@ void lanczos_HW(int init, part_matrix *blocks, d_type_lanczos out_blocks[], floa
 
 	// update beta
 	beta_current = beta_new;
-
+*/
 }
 
-
+/*
 // functions implementations
 void copy_vector_to_part_vector(float *vector, part_vector *instance)
 {
@@ -363,6 +364,7 @@ d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2)
 	}
 	return sos_final;
 }
+*/
 
 /*
 // this function is not needed because structure assignment seems to have the same efficiency
