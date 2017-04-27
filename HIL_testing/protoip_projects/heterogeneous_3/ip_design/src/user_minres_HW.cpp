@@ -58,7 +58,7 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 	float v_current_alg_array[n_linear];
 	part_vector A_mult_v;
 	#pragma HLS ARRAY_PARTITION variable=A_mult_v.vec complete dim=1
-	float beta_current, beta_new, alfa_current;
+	d_type_lanczos beta_current, beta_new, alfa_current;
 	float beta_current_alg, beta_new_alg, alfa_current_alg;
 	float nu_current, nu_new;
 	float gamma_prev = 1, gamma_current = 1, gamma_new;
@@ -66,22 +66,23 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 	float omega_pprev[n_linear], omega_prev[n_linear], omega_current[n_linear];
 	float delta, over_ro_1, ro_2, ro_3;
 
-	float dummy_array[n_linear];
+	//float dummy_array[n_linear];
 
 	#ifdef PROTOIP
-		beta_current = hls::sqrtf(vv_mult_HW(b,b));
+		beta_current_alg = hls::sqrtf(vv_mult_HW(b,b));
 	#else
-		beta_current = sqrtf(vv_mult_HW(b,b));
+		beta_current_alg = sqrtf(vv_mult_HW(b,b));
 	#endif
 	
 	//initialisation
 	init_loop:for(i = 0; i < n_linear; i++)
 	{
 		#pragma HLS PIPELINE
-		b[i] = b[i]/beta_current;
+		b[i] = b[i]/beta_current_alg;
 	}
 
-	nu_current = beta_current;
+	nu_current = beta_current_alg;
+	beta_current = (d_type_lanczos) beta_current_alg;
 
 	reset_part_vector(&v_prev);
 	copy_vector_to_part_vector(b, &v_current);
@@ -137,6 +138,7 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 			k = (k+1) & mask[(k+1) != 10];
 			l++;
 		}
+		/*
 		part_vector_v_new_1:for(i = 0; i < PAR; i++)
 		{
 			part_vector_v_new_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
@@ -162,6 +164,39 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 				l++;
 			}
 		}
+		*/
+
+		//part_vector_v_new_1:for(i = 0; i < PAR; i++)
+		{
+			//part_vector_v_new_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
+			i = 0;
+			j = 0;
+			for(int l_local = 0; l_local < PAR*part_size*(n_node_theta+n_node_eq); l_local++)
+			{
+				#pragma HLS LOOP_FLATTEN
+				#pragma HLS PIPELINE
+				#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
+
+				// solution update
+	    		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
+	    		x_new[l] = x_current[l] + gamma_new*nu_current*omega_current[l];
+
+	    		// variable update
+	    		x_current[l] = x_new[l];
+	    		omega_pprev[l] = omega_prev[l];
+	    		omega_prev[l] = omega_current[l];
+
+				tmp_var = A_mult_v.vec[i][j] - alfa_current*v_current.vec[i][j] - beta_current*v_prev.vec[i][j];
+				v_current_alg_array[l] = (float) v_current.vec[i][j];
+				v_new.vec[i][j] = tmp_var;
+				sos[k] += tmp_var*tmp_var;
+				k = (k+1) & mask[(k+1) != 10];
+				l++;
+				i = i + (int) ((j+1) == part_size*(n_node_theta+n_node_eq));
+				j = (j+1) & mask[(j+1) != part_size*(n_node_theta+n_node_eq)];
+			}
+		}
+
 		#ifdef rem_partition
 		part_vector_v_new_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
 		{
@@ -217,14 +252,11 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 			beta_new = sqrtf(sos_final);
 		#endif
 
-    	//beta_new = part_vector_v_new(&v_new, &A_mult_v, &v_current, dummy_array, &v_prev, alfa_current, beta_current);
-    	//copy_part_vector_to_vector(&v_current, v_current_alg_array);
-
 		part_vector_normalize_update(&v_new, &v_current, &v_prev, beta_new);
 
-		beta_current_alg = beta_current;
-		beta_new_alg = beta_new;
-		alfa_current_alg = alfa_current;
+		beta_current_alg = (float) beta_current;
+		beta_new_alg = (float) beta_new;
+		alfa_current_alg = (float)alfa_current;
 
 		beta_current = beta_new;
 

@@ -37,14 +37,14 @@
 			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/.apc/.tb</location>
 		</link>
 		<link>
-			<name>.reference/user_main_header.h</name>
+			<name>.reference/ap_private.h</name>
 			<type>1</type>
-			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_main_header.h</location>
+			<location>/opt/Xilinx/Vivado_HLS/2017.1/include/etc/ap_private.h</location>
 		</link>
 		<link>
-			<name>.reference/user_protoip_definer.h</name>
+			<name>.reference/user_nnz_header.h</name>
 			<type>1</type>
-			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_protoip_definer.h</location>
+			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_nnz_header.h</location>
 		</link>
 		<link>
 			<name>.reference/user_structure_header.h</name>
@@ -70,11 +70,6 @@
 			<name>source/foo_user.cpp</name>
 			<type>1</type>
 			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/foo_user.cpp</location>
-		</link>
-		<link>
-			<name>source/user_lanczos_HW.cpp</name>
-			<type>1</type>
-			<location>/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/src/user_lanczos_HW.cpp</location>
 		</link>
 		<link>
 			<name>source/user_minres_HW.cpp</name>

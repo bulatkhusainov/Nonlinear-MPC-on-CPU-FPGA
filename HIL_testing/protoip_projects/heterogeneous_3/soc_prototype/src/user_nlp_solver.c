@@ -70,9 +70,9 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 			all_mu_over_g[i] = mu*all_one_over_g[i];
 
 		//if(ip_counter == 0)
-		//{
+		{
 			for(i = 0; i < N*nnz_block_tril + nnz_term_block_tril; i++) blocks[i] = 0;
-		//}
+		}
 		// evaluate blocks
 		for(i = 0; i < N; i++) // node blocks
 			node_block_eval(&blocks[i*nnz_block_tril], (float (*)[n_node_theta]) &node_jac_2d[i][0][0], &all_theta[i*n_node_theta], &all_lambda_over_g[i*n_bounds]);
@@ -115,7 +115,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
 
-		minres_data[0] = 1*n_linear;
+		minres_data[0] = 1*n_linear ;
 		// solve linear system with minres
 		#ifdef MINRES_prescaled
 			prescaler(blocks, b,d_x);

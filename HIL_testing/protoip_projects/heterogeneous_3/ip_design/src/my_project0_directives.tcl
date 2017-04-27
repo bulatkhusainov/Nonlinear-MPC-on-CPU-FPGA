@@ -1,7 +1,7 @@
 ############################################################
 ## This file is generated automatically by Vivado HLS.
 ## Please DO NOT edit it.
-## Copyright (C) 2015 Xilinx Inc. All rights reserved.
+## Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
 ############################################################
 set_directive_interface -mode m_axi -depth 1748 "foo" memory_inout
 set_directive_interface -mode s_axilite -bundle BUS_A "foo"
@@ -16,4 +16,6 @@ set_directive_pipeline "foo/input_cast_loop_block"
 set_directive_pipeline "foo/input_cast_loop_out_block"
 set_directive_pipeline "foo/input_cast_loop_x_in"
 set_directive_pipeline "foo/output_cast_loop_y_out"
+
+
 

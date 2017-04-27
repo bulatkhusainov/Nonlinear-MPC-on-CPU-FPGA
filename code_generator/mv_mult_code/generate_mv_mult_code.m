@@ -163,6 +163,8 @@ fprintf(fileID,'#include "user_main_header.h"\n');
 fprintf(fileID,'#include "user_nnz_header.h"\n');
 fprintf(fileID,'#include "user_structure_header.h"\n\n');
 
+fprintf(fileID,'//#include "mex.h"\n\n');
+
 fprintf(fileID, '#define n_NOPs_node      %d  // # number of NOPs for pipilening (in each node) \n',n_NOPs_node);
 fprintf(fileID, '#define n_NOPs_node_term %d  // # number of NOPs for pipilening (in terminal node) \n\n',n_NOPs_node_term);
 
@@ -295,14 +297,17 @@ fprintf(fileID,strcat('\t\t\t','//i_offset1 = i*(n_node_theta+n_node_eq);\n'));
 fprintf(fileID,strcat('\t\t\t','//i_offset2 = i*nnz_block_tril;\n'));
 fprintf(fileID,strcat('\t\t\t','for(j = 0; j < (nnz_block-1+n_NOPs_node); j++)\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec array inter distance=',num2str(distance_achieved_node),' true\n'));
+fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec inter distance=',num2str(distance_achieved_node-1),' true\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS LOOP_FLATTEN\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS PIPELINE\n'));
+fprintf(fileID,strcat('\t\t\t','if(!( (row_block_sched[j] == n_node_theta) && (col_block_sched[j] == n_node_theta)))\n'));
+fprintf(fileID,strcat('\t\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t\t','for(k = 0; k < PAR; k++)\n'));
 fprintf(fileID,strcat('\t\t\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t\t\t','#pragma HLS UNROLL skip_exit_check\n'));
 fprintf(fileID,strcat('\t\t\t\t\t','y_out->vec[k][i_offset1+row_block_sched[j]] += block->mat[k][i_offset2 + num_block_sched[j]]*x_in->vec[k][i_offset1+col_block_sched[j]];\n'));
 fprintf(fileID,strcat('\t\t\t\t','}\n'));
+fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','}\n\n'));
 
@@ -313,25 +318,29 @@ fprintf(fileID,strcat('\t\t\t','//i_offset1 = i*(n_node_theta+n_node_eq);\n'));
 fprintf(fileID,strcat('\t\t\t','//i_offset2 = i*nnz_block_tril;\n'));
 fprintf(fileID,strcat('\t\t\t','for(j = 0; j < (nnz_block-1+n_NOPs_node); j++)\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_rem array inter distance=',num2str(distance_achieved_node),' true\n'));
+fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_rem inter distance=',num2str(distance_achieved_node),' true\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS PIPELINE\n'));
 fprintf(fileID,strcat('\t\t\t\t','y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];\n'));
 fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','#endif\n'));
 
-fprintf(fileID,strcat('\t','} // exclude from merging \n\n'));
+
 
 fprintf(fileID,strcat('\t\t','// handle the terminal block\n'));
-fprintf(fileID,strcat('\t\t','for(j = 0; j < (nnz_term_block-1+n_NOPs_node_term); j++)\n'));
+fprintf(fileID,strcat('\t\t','debug_loop:for(j = 0; j < (nnz_term_block-1+n_NOPs_node_term); j++)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
 
-fprintf(fileID,strcat('\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_term array inter RAW distance=',num2str(distance_achieved_node_term),' true\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_term inter distance=',num2str(distance_achieved_node_term-1),' true\n'));
 fprintf(fileID,strcat('\t\t\t','#pragma HLS PIPELINE\n'));
+fprintf(fileID,strcat('\t\t\t','if(( num_term_block_sched[j] != 8))\n'));
+fprintf(fileID,strcat('\t\t\t','{\n'));
+fprintf(fileID,strcat('\t\t\t','//printf("ab  ");\n'));
 fprintf(fileID,strcat('\t\t\t','y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];\n'));
+fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','}\n'));
 
-
+fprintf(fileID,strcat('\t','} // exclude from merging \n\n'));
 
 fprintf(fileID,'}\n');
 fclose(fileID);
