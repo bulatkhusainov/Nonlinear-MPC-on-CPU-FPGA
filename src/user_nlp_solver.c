@@ -62,6 +62,13 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		for(i = 0; i < N; i++)
 			node_bounds_eval(&bounds[i*n_bounds], &all_theta[i*n_node_theta]);
 
+		// calculate barrier parameter
+		for(i = 0; i < n_all_lambda; i++)
+			mu += -bounds[i]*all_lambda[i];
+		mu = 0.3*mu/n_all_lambda;
+		if(mu <= 0.0001)
+			mu = 0.0001;
+
 		for(i = 0; i < n_all_lambda; i++) // precalculate 1 over g
 			all_one_over_g[i] = 1/bounds[i];
 		for(i = 0; i < n_all_lambda; i++) // precalculate lambda over g

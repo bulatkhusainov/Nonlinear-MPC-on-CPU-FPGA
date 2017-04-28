@@ -46,6 +46,7 @@ r_slackness_store = zeros(1,IP_iter);
 mu_store = zeros(1,IP_iter);
 
 for ip_iter = 1:IP_iter
+ 
     %evaluate A matrix
     A( (n_states + 1):2*n_states, 1:n_states) = -eye(n_states); % initial condition
     for i = 1:N
