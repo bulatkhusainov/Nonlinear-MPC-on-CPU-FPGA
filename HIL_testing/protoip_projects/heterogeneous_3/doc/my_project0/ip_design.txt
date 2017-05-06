@@ -35,11 +35,11 @@ Timing:
 
 * IP
    target clock period (ns): 6.00
-   estimated clock period (ns): 8.02
+   estimated clock period (ns): 8.66
 
 	* User function
 	   target clock period (ns): 6.00
-	   estimated clock period (ns): 8.02
+	   estimated clock period (ns): 8.66
 
 WARNING: Time constraints might NOT be met during IP prototyping. You might increase clock target period to met time constraints.
 
@@ -60,15 +60,15 @@ Resource utilization:
 ------------------------
 
 * IP
-   BRAM_18K: 99 (35%) used out off 280 available.
-   DSP48E: 73 (33%) used out off 220 available.
-   FF: 24743 (23%) used out off 106400 available.
-   LUT: 27676 (52%) used out off 53200 available.
+   BRAM_18K: 97 (34%) used out off 280 available.
+   DSP48E: 68 (30%) used out off 220 available.
+   FF: 24959 (23%) used out off 106400 available.
+   LUT: 26770 (50%) used out off 53200 available.
 
 	* User function
-	   BRAM_18K: 82 (29%) used out off 280 available.
-	   DSP48E: 73 (33%) used out off 220 available.
-	   FF: 23229 (21%) used out off 106400 available.
-	   LUT: 25396 (47%) used out off 53200 available.
+	   BRAM_18K: 80 (28%) used out off 280 available.
+	   DSP48E: 68 (30%) used out off 220 available.
+	   FF: 23445 (22%) used out off 106400 available.
+	   LUT: 24490 (46%) used out off 53200 available.
 
 NOTE: IP design performance might be enhanced by adding directives from Vivado_HLS GUI interface. Run "tclapp::icl::protoip::ip_design_build_debug" to open my_project0 with Vivado_HLS GUI interface.

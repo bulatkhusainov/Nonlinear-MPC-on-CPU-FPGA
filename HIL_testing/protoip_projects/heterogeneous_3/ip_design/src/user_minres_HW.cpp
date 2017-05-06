@@ -7,6 +7,9 @@
 #include <math.h>  
 //#include "mex.h"
 
+
+
+
 float vv_mult_HW(float *x_1, float *x_2)
 {
 	int i,j;
@@ -41,7 +44,7 @@ d_type_lanczos part_vector_v_new(part_vector *v_new, part_vector *A_mult_v, part
 void part_vector_normalize_update(part_vector *v_new, part_vector *v_current, part_vector *v_prev, d_type_lanczos scalar);
 void copy_part_vector_to_vector(part_vector *instance, float *vector);
 d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2);
-
+float accumulator_16(float sos[16]);
 
 void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* x_current, float* minres_data)
 {
@@ -105,11 +108,11 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
     	sigma_new = beta_new_alg*over_ro_1;
 
     	mv_mult_prescaled_HW(&A_mult_v, blocks, out_blocks, &v_current);
-    	alfa_current = part_vector_mult_par(&A_mult_v, &v_current); // calculate alfa
+    	alfa_current = part_vector_mult(&A_mult_v, &v_current); // calculate alfa
 
 		int mask[2] = {0, ~((int) 0)};
-		d_type_lanczos sos[10], sos_final, tmp_var;
-		part_vector_mult_init: for(i = 0; i < 10; i++)
+		d_type_lanczos sos[16], sos_final, tmp_var;
+		part_vector_mult_init: for(i = 0; i < 16; i++)
 		{
 			#pragma HLS PIPELINE
 			sos[i] = 0;
@@ -120,7 +123,7 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 		part_vector_v_new_0:for(i = 0; i < n_states; i++)
 		{
 			#pragma HLS PIPELINE
-			#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
+			#pragma HLS DEPENDENCE variable=sos array inter distance=16 true
 
 			// solution update
     		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
@@ -135,73 +138,45 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 			v_current_alg_array[l] = (float) v_current.vec0[i];
 			v_new.vec0[i] = tmp_var;
 			sos[k] += tmp_var*tmp_var;
-			k = (k+1) & mask[(k+1) != 10];
+			k = (k+1) & mask[(k+1) != 16];
 			l++;
 		}
-		/*
-		part_vector_v_new_1:for(i = 0; i < PAR; i++)
-		{
-			part_vector_v_new_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
-			{
-				#pragma HLS LOOP_FLATTEN
-				#pragma HLS PIPELINE
-				#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
-
-				// solution update
-	    		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
-	    		x_new[l] = x_current[l] + gamma_new*nu_current*omega_current[l];
-
-	    		// variable update
-	    		x_current[l] = x_new[l];
-	    		omega_pprev[l] = omega_prev[l];
-	    		omega_prev[l] = omega_current[l];
-
-				tmp_var = A_mult_v.vec[i][j] - alfa_current*v_current.vec[i][j] - beta_current*v_prev.vec[i][j];
-				v_current_alg_array[l] = (float) v_current.vec[i][j];
-				v_new.vec[i][j] = tmp_var;
-				sos[k] += tmp_var*tmp_var;
-				k = (k+1) & mask[(k+1) != 10];
-				l++;
-			}
-		}
-		*/
 
 		//part_vector_v_new_1:for(i = 0; i < PAR; i++)
+		//part_vector_v_new_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
+		i = 0;
+		j = 0;
+		for(int l_local = 0; l_local < PAR*part_size*(n_node_theta+n_node_eq); l_local++)
 		{
-			//part_vector_v_new_1_0:for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
-			i = 0;
-			j = 0;
-			for(int l_local = 0; l_local < PAR*part_size*(n_node_theta+n_node_eq); l_local++)
-			{
-				#pragma HLS LOOP_FLATTEN
-				#pragma HLS PIPELINE
-				#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
+			#pragma HLS LOOP_FLATTEN
+			#pragma HLS PIPELINE
+			#pragma HLS DEPENDENCE variable=sos array inter distance=16 true
 
-				// solution update
-	    		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
-	    		x_new[l] = x_current[l] + gamma_new*nu_current*omega_current[l];
+			// solution update
+    		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
+    		x_new[l] = x_current[l] + gamma_new*nu_current*omega_current[l];
 
-	    		// variable update
-	    		x_current[l] = x_new[l];
-	    		omega_pprev[l] = omega_prev[l];
-	    		omega_prev[l] = omega_current[l];
+    		// variable update
+    		x_current[l] = x_new[l];
+    		omega_pprev[l] = omega_prev[l];
+    		omega_prev[l] = omega_current[l];
 
-				tmp_var = A_mult_v.vec[i][j] - alfa_current*v_current.vec[i][j] - beta_current*v_prev.vec[i][j];
-				v_current_alg_array[l] = (float) v_current.vec[i][j];
-				v_new.vec[i][j] = tmp_var;
-				sos[k] += tmp_var*tmp_var;
-				k = (k+1) & mask[(k+1) != 10];
-				l++;
-				i = i + (int) ((j+1) == part_size*(n_node_theta+n_node_eq));
-				j = (j+1) & mask[(j+1) != part_size*(n_node_theta+n_node_eq)];
-			}
+			tmp_var = A_mult_v.vec[i][j] - alfa_current*v_current.vec[i][j] - beta_current*v_prev.vec[i][j];
+			v_current_alg_array[l] = (float) v_current.vec[i][j];
+			v_new.vec[i][j] = tmp_var;
+			sos[k] += tmp_var*tmp_var;
+			k = (k+1) & mask[(k+1) != 16];
+			l++;
+			i = i + (int) ((j+1) == part_size*(n_node_theta+n_node_eq));
+			j = (j+1) & mask[(j+1) != part_size*(n_node_theta+n_node_eq)];
 		}
+		
 
 		#ifdef rem_partition
 		part_vector_v_new_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
 		{
 			#pragma HLS PIPELINE
-			#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
+			#pragma HLS DEPENDENCE variable=sos array inter distance=16 true
 
 			// solution update
     		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
@@ -216,14 +191,14 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 			v_current_alg_array[l] = (float) v_current.vec_rem[i];
 			v_new.vec_rem[i] = tmp_var;
 			sos[k] += tmp_var*tmp_var;
-			k = (k+1) & mask[(k+1) != 10];
+			k = (k+1) & mask[(k+1) != 16];
 			l++;
 		}
 		#endif
 		part_vector_v_new_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
 		{
 			#pragma HLS PIPELINE
-			#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
+			#pragma HLS DEPENDENCE variable=sos array inter distance=16 true
 
 			// solution update
     		omega_current[l] = (v_current_alg_array[l] - ro_3*omega_pprev[l] - ro_2*omega_prev[l])*over_ro_1;
@@ -238,14 +213,11 @@ void minres_HW(part_matrix *blocks, d_type_lanczos* out_blocks, float* b,float* 
 			v_current_alg_array[l] = (float) v_current.vec_term[i];
 			v_new.vec_term[i] = tmp_var;
 			sos[k] += tmp_var*tmp_var;
-			k = (k+1) & mask[(k+1) != 10];
+			k = (k+1) & mask[(k+1) != 16];
 			l++;
 		}
 
-		part_vector_mult_final:for(i = 0; i < 10; i++)
-		{
-			sos_final += sos[i];
-		}
+		sos_final = accumulator_16(sos);
 		#ifdef PROTOIP
 			beta_new = hls::sqrtf(sos_final);
 		#else
@@ -360,54 +332,52 @@ d_type_lanczos part_vector_mult(part_vector *x_1, part_vector *x_2)
 	#pragma HLS INLINE off
 	int i,j, k;
 	int mask[2] = {0, ~((int) 0)};
-	d_type_lanczos sos[8], sos_final;
-	part_vector_mult_init: for(i = 0; i < 8; i++)
+	d_type_lanczos sos[16], sos_final;
+	part_vector_mult_init: for(i = 0; i < 16; i++)
 	{
-		//#pragma HLS PIPELINE
+		#pragma HLS PIPELINE
 		sos[i] = 0;
 	}
 	sos_final = 0;
-	//k = 0;
-	part_vector_mult_0: for(k = 0, i = 0; i < n_states; i++)
+	k = 0;
+	part_vector_mult_0: for(i = 0; i < n_states; i++)
 	{
-		#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
-		//#pragma HLS PIPELINE
+		#pragma HLS DEPENDENCE variable=sos pointer inter distance=16 true
+		#pragma HLS PIPELINE
 		sos[k] += (x_1->vec0[i] * x_2->vec0[i]);
-		k = (k+1) & mask[(k+1) != 8];
+		k = (k+1) & mask[(k+1) != 16];
 	}
 	part_vector_mult_1:for(i = 0; i < PAR; i++)
 	{
 		for(j = 0; j < part_size*(n_node_theta+n_node_eq); j++)
 		{
-			#pragma HLS DEPENDENCE variable=sos pointer inter distance=8 true
+			#pragma HLS DEPENDENCE variable=sos pointer inter distance=16 true
 			#pragma HLS LOOP_FLATTEN
-			//#pragma HLS PIPELINE
+			#pragma HLS PIPELINE
 			sos[k] +=  (x_1->vec[i][j] * x_2->vec[i][j]);
-			k = (k+1) & mask[(k+1) != 8];
+			k = (k+1) & mask[(k+1) != 16];
 		}
 	}
 	#ifdef rem_partition
 	part_vector_mult_2:for(i = 0; i < rem_partition*(n_node_theta+n_node_eq); i++)
 	{
-		#pragma HLS DEPENDENCE variable=sos array inter distance=8 true
-		//#pragma HLS PIPELINE
+		#pragma HLS DEPENDENCE variable=sos array inter distance=16 true
+		#pragma HLS PIPELINE
 		sos[k]+= (x_1->vec_rem[i] * x_2->vec_rem[i]);
-		k = (k+1) & mask[(k+1) != 8];
+		k = (k+1) & mask[(k+1) != 16];
 	}
 	#endif
 	part_vector_mult_3:for(i = 0; i < n_term_theta+n_term_eq; i++)
 	{
-		#pragma HLS DEPENDENCE variable=sos array inter distance=8 true
-		//#pragma HLS PIPELINE
+		#pragma HLS DEPENDENCE variable=sos array inter distance=16 true
+		#pragma HLS PIPELINE
 		sos[k] += (x_1->vec_term[i] * x_2->vec_term[i]);
-		k = (k+1) & mask[(k+1) != 8];
+		k = (k+1) & mask[(k+1) != 16];
 	}
 
-	part_vector_mult_final:for(i = 0; i < 8; i++)
-	{
-		sos_final += sos[i];
-	}
-	return sos_final;
+
+
+	return accumulator_16(sos);
 }
 
 
@@ -626,4 +596,23 @@ d_type_lanczos part_vector_mult_par(part_vector *x_1, part_vector *x_2)
 		sos_final += sos1[i] + sos2[i];
 	}
 	return sos_final;
+}
+
+float accumulator_16(float sos[16])
+{
+	#pragma HLS INLINE
+	int acc_i[32] = {0,2,4,6,8,10,12,14,16,0,16,4,16,8,16,12,16,16,16,0,16,16,16,8,16,16,16,16,16,16,16,0};
+	int acc_j[32] = {1,3,5,7,9,11,13,15,16,2,16,6,16,10,16,14,16,16,16,4,16,16,16,12,16,16,16,16,16,16,16,8};
+
+	part_vector_mult_final:for(int i = 0; i < 32; i++)
+	{
+		#pragma HLS PIPELINE II=2
+		#pragma HLS DEPENDENCE variable=sos inter distance=8 true
+		if(acc_i[i] != 16)
+		{
+			sos[acc_i[i]] += sos[acc_j[i]] ;
+		}
+	}
+	return sos[0];
+
 }
