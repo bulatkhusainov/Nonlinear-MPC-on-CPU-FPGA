@@ -19,3 +19,28 @@ set_directive_pipeline "foo/output_cast_loop_y_out"
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

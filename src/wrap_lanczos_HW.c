@@ -5,8 +5,11 @@
 #include "user_prototypes_header.h"
 
 
+
 void wrap_lanczos_HW(int init, float blocks[], float out_blocks[], float v_current_in[n_linear], float v_current_out[n_linear], float sc_in[5], float sc_out[5])
 {
+	#if heterogeneity == 2
+
 	int i,j,k;
 
 	// interface structure
@@ -29,5 +32,7 @@ void wrap_lanczos_HW(int init, float blocks[], float out_blocks[], float v_curre
 
 	// call the function
 	lanczos_HW(init, &block_struct,  out_blocks_casted, v_current_in, v_current_out, sc_in, sc_out);
-
+	
+	#endif
 }
+

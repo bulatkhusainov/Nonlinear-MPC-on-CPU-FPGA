@@ -66,7 +66,7 @@ void foo	(
 	{
 		interface_loop_block:for(int i = 0; i < PAR; i++)
 		{
-			#pragma HLS PIPELINE
+			//#pragma HLS PIPELINE
 			memcpy(&block_in_int.mat[i][0],(const data_t_memory*)(memory_inout+byte_block_in_offset/4+(i*part_size)*nnz_block_tril),
 					(part_size*nnz_block_tril)*sizeof(data_t_memory));
 		}

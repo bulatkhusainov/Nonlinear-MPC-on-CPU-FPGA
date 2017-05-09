@@ -7,6 +7,8 @@
 
 void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_current[], float minres_data[])
 {
+	#if heterogeneity == 3
+
 	int i,j,k;
 
 	// interface structure
@@ -28,4 +30,6 @@ void wrap_minres_HW(float blocks[], float out_blocks[], float b[], float x_curre
 
 	// call the function
 	minres_HW(&block_struct,  out_blocks_casted, b, x_current, minres_data);
+	
+	#endif
 }

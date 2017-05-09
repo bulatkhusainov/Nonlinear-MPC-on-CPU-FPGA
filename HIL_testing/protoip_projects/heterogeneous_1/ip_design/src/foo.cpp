@@ -39,7 +39,7 @@ void foo	(
 	{
 		interface_loop_block:for(int i = 0; i < PAR; i++)
 		{
-			#pragma HLS PIPELINE
+			//#pragma HLS PIPELINE
 			memcpy(&block_in_int.mat[i][0],(const data_t_memory*)(memory_inout+byte_block_in_offset/4+(i*part_size)*nnz_block_tril),
 					(part_size*nnz_block_tril)*sizeof(data_t_memory));
 		}
@@ -67,7 +67,7 @@ void foo	(
 		memcpy(x_in_in_int.vec0,(const data_t_memory*)(memory_inout+byte_x_in_in_offset/4),n_states*sizeof(data_t_memory));
 		interface_loop_x_in:for(int i = 0; i < PAR; i++)
 		{
-			#pragma HLS PIPELINE
+			//#pragma HLS PIPELINE
 			memcpy(&x_in_in_int.vec[i][0],(const data_t_memory*)(memory_inout+byte_x_in_in_offset/4+n_states+(i*part_size*(n_node_theta+n_node_eq))),
 								(part_size*(n_node_theta+n_node_eq))*sizeof(data_t_memory));
 		}
@@ -95,7 +95,7 @@ void foo	(
 		memcpy((data_t_memory *)(memory_inout+byte_y_out_out_offset/4),&y_out_out_int.vec0[0], n_states*sizeof(data_t_memory));
 		interface_loop_y_out:for(int i = 0; i < PAR; i++)
 		{
-			#pragma HLS PIPELINE
+			//#pragma HLS PIPELINE
 			memcpy((data_t_memory *)(memory_inout+byte_y_out_out_offset/4+n_states+ (i*part_size*(n_node_theta+n_node_eq)) ),
 									&y_out_out_int.vec[i][0],(part_size*(n_node_theta+n_node_eq))*sizeof(data_t_memory));
 		}

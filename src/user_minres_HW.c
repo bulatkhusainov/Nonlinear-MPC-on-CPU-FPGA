@@ -8,15 +8,15 @@
 //#include "mex.h"
 
 
-
+#if heterogeneity == 3
 
 float vv_mult_HW(float *x_1, float *x_2)
 {
 	int i,j;
-	float sos_final, sos[10];
+	float sos_final, sos[16];
 	int mask[2] = {0, ~((int) 0)};
 	sos_final = 0;
-	for(i = 0; i < 10; i++)
+	for(i = 0; i < 16; i++)
 	{
 		#pragma HLS PIPELINE
 		sos[i] = 0;
@@ -27,9 +27,9 @@ float vv_mult_HW(float *x_1, float *x_2)
 		#pragma HLS DEPENDENCE variable=sos array inter distance=10 true
 		#pragma HLS PIPELINE
 		sos[j] = sos[j] + x_1[i]*x_2[i];
-		j = (j+1) & mask[(j+1) != 10];
+		j = (j+1) & mask[(j+1) != 16];
 	}
-	for(i = 0; i < 10; i++)
+	for(i = 0; i < 16; i++)
 	{
 		sos_final += sos[i];
 	}
@@ -616,3 +616,5 @@ float accumulator_16(float sos[16])
 	return sos[0];
 
 }
+
+#endif

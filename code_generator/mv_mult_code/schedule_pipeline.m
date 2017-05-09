@@ -1,7 +1,7 @@
 function [ indeces_sched, distance_achieved,  n_NOPs] = schedule_pipeline( indeces, dimension )
 
 %distance required
-distance_required = 16;
+distance_required = 13;
 
 % unpack data
 row_block_NOP = indeces.row_block;

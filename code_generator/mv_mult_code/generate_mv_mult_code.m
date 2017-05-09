@@ -291,13 +291,13 @@ fprintf(fileID,strcat('\t','int i_offset1, i_offset2;\n'));
 fprintf(fileID,strcat('\t','merge_mv_mult:{\n'));
 fprintf(fileID,strcat('\t\t','#pragma HLS LOOP_MERGE\n'));
 fprintf(fileID,strcat('\t\t','// handle nonzero elements in node blocks\n'));
-fprintf(fileID,strcat('\t\t','for(i = 0,  i_offset1 = 0, i_offset2 = 0; i < part_size; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)\n'));
+fprintf(fileID,strcat('\t\t','mv_mult_core_loop:for(i = 0,  i_offset1 = 0, i_offset2 = 0; i < part_size; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t','//i_offset1 = i*(n_node_theta+n_node_eq);\n'));
 fprintf(fileID,strcat('\t\t\t','//i_offset2 = i*nnz_block_tril;\n'));
-fprintf(fileID,strcat('\t\t\t','for(j = 0; j < (nnz_block-1+n_NOPs_node); j++)\n'));
+fprintf(fileID,strcat('\t\t\t','mv_mult_core_loop_1:for(j = 0; j < (nnz_block-1+n_NOPs_node); j++)\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec inter distance=',num2str(distance_achieved_node-1),' true\n'));
+fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec inter distance=',num2str(distance_achieved_node),' true\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS LOOP_FLATTEN\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS PIPELINE\n'));
 fprintf(fileID,strcat('\t\t\t','if(!( (row_block_sched[j] == n_node_theta) && (col_block_sched[j] == n_node_theta)))\n'));
@@ -312,15 +312,18 @@ fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','}\n\n'));
 
 fprintf(fileID,strcat('\t\t','#ifdef rem_partition\n'));
-fprintf(fileID,strcat('\t\t','for(i = 0, i_offset1 = 0, i_offset2 = 0; i < rem_partition; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)\n'));
+fprintf(fileID,strcat('\t\t','mv_mult_rem_loop:for(i = 0, i_offset1 = 0, i_offset2 = 0; i < rem_partition; i++, i_offset1+=(n_node_theta+n_node_eq), i_offset2+=nnz_block_tril)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t','//i_offset1 = i*(n_node_theta+n_node_eq);\n'));
 fprintf(fileID,strcat('\t\t\t','//i_offset2 = i*nnz_block_tril;\n'));
-fprintf(fileID,strcat('\t\t\t','for(j = 0; j < (nnz_block-1+n_NOPs_node); j++)\n'));
+fprintf(fileID,strcat('\t\t\t','mv_mult_rem_loop_1:for(j = 0; j < (nnz_block-1+n_NOPs_node); j++)\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_rem inter distance=',num2str(distance_achieved_node),' true\n'));
 fprintf(fileID,strcat('\t\t\t\t','#pragma HLS PIPELINE\n'));
-fprintf(fileID,strcat('\t\t\t\t','y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];\n'));
+fprintf(fileID,strcat('\t\t\t\t','if(!( (row_block_sched[j] == n_node_theta) && (col_block_sched[j] == n_node_theta)))\n'));
+fprintf(fileID,strcat('\t\t\t\t','{\n'));
+fprintf(fileID,strcat('\t\t\t\t\t','y_out->vec_rem[i_offset1+row_block_sched[j]] += block->mat_rem[i_offset2 + num_block_sched[j]]*x_in->vec_rem[i_offset1+col_block_sched[j]];\n'));
+fprintf(fileID,strcat('\t\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','#endif\n'));
@@ -328,15 +331,14 @@ fprintf(fileID,strcat('\t\t','#endif\n'));
 
 
 fprintf(fileID,strcat('\t\t','// handle the terminal block\n'));
-fprintf(fileID,strcat('\t\t','debug_loop:for(j = 0; j < (nnz_term_block-1+n_NOPs_node_term); j++)\n'));
+fprintf(fileID,strcat('\t\t','mv_mult_term_loop:for(j = 0; j < (nnz_term_block-1+n_NOPs_node_term); j++)\n'));
 fprintf(fileID,strcat('\t\t','{\n'));
 
-fprintf(fileID,strcat('\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_term inter distance=',num2str(distance_achieved_node_term-1),' true\n'));
+fprintf(fileID,strcat('\t\t\t','#pragma HLS DEPENDENCE variable=y_out->vec_term inter distance=',num2str(distance_achieved_node_term),' true\n'));
 fprintf(fileID,strcat('\t\t\t','#pragma HLS PIPELINE\n'));
-fprintf(fileID,strcat('\t\t\t','if(( num_term_block_sched[j] != 8))\n'));
+fprintf(fileID,strcat('\t\t\t','if(!( (row_term_block_sched[j] == n_term_theta) && (col_term_block_sched[j] == n_term_theta)))\n'));
 fprintf(fileID,strcat('\t\t\t','{\n'));
-fprintf(fileID,strcat('\t\t\t','//printf("ab  ");\n'));
-fprintf(fileID,strcat('\t\t\t','y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];\n'));
+fprintf(fileID,strcat('\t\t\t\t','y_out->vec_term[row_term_block_sched[j]] += block->mat_term[num_term_block_sched[j]]*x_in->vec_term[col_term_block_sched[j]];\n'));
 fprintf(fileID,strcat('\t\t\t','}\n'));
 fprintf(fileID,strcat('\t\t','}\n'));
 

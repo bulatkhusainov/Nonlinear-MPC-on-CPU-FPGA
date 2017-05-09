@@ -7,7 +7,7 @@
 
 	#ifdef FIXED_lacnzos
 		#include "ap_fixed.h"
-		typedef ap_fixed<30,30-25,AP_TRN,AP_SAT> d_type_lanczos;
+		typedef ap_fixed<40,40-34,AP_TRN_ZERO,SC_WRAP> d_type_lanczos;
 //typedef float d_type_lanczos;
 	#else
 		typedef float d_type_lanczos;
