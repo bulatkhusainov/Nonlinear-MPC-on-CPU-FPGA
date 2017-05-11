@@ -1,0 +1,72 @@
+---------------------------------------------------------
+Input and output vectors:
+---------------------------------------------------------
+
+Name			| Direction		| Number of data 			| Data representation
+
+block			 	| Input         | BLOCK_IN_LENGTH=513 			|data type "data_t_block_in" is floating-point single precision (32 bits)
+out_block			 	| Input         | OUT_BLOCK_IN_LENGTH=42 			|data type "data_t_out_block_in" is floating-point single precision (32 bits)
+x_in			 	| Input         | X_IN_IN_LENGTH=254 			|data type "data_t_x_in_in" is floating-point single precision (32 bits)
+y_out			 	| Output         | Y_OUT_OUT_LENGTH=254 			|data type "data_t_y_out_in" is floating-point single precision (32 bits)
+
+
+---------------------------------------------------------
+IP design C/RTL test(s): input and output vectors has been mapped into a virtual memory at the following addresses:
+(the virtual memory is used by foo_test.cpp)
+---------------------------------------------------------
+
+Name			| Base address in Byte
+
+block			 	| 0x00000000 <- 0
+out_block			 	| 0x00000804 <- (BLOCK_IN_LENGTH)*4
+x_in			 	| 0x000008AC <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+y_out			 	| 0x00000CA4 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
+
+
+---------------------------------------------------------
+IP build report: my_project0
+----------------------------------------------------------
+
+
+Timing:
+------------------------
+
+* IP
+   target clock period (ns): 6.00
+   estimated clock period (ns): 7.78
+
+	* User function
+	   target clock period (ns): 6.00
+	   estimated clock period (ns): 7.78
+
+WARNING: Time constraints might NOT be met during IP prototyping. You might increase clock target period to met time constraints.
+
+
+Latency:
+------------------------
+
+* IP
+   latency (clock cycles): 2948
+   latency (us): 17.688
+
+	* User function
+	   latency (clock cycles): 1803
+	   latency (us): 10.818
+
+
+Resource utilization:
+------------------------
+
+* IP
+   BRAM_18K: 12 (4%) used out off 280 available.
+   DSP48E: 10 (4%) used out off 220 available.
+   FF: 4958 (4%) used out off 106400 available.
+   LUT: 5813 (10%) used out off 53200 available.
+
+	* User function
+	   BRAM_18K: 3 (1%) used out off 280 available.
+	   DSP48E: 10 (4%) used out off 220 available.
+	   FF: 3170 (2%) used out off 106400 available.
+	   LUT: 3331 (6%) used out off 53200 available.
+
+NOTE: IP design performance might be enhanced by adding directives from Vivado_HLS GUI interface. Run "tclapp::icl::protoip::ip_design_build_debug" to open my_project0 with Vivado_HLS GUI interface.

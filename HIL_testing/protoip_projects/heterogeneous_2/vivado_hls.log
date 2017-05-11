@@ -5,7 +5,7 @@
   Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
 ================================================================
 INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
-INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-75-generic) on Tue May 09 00:26:04 BST 2017
+INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-75-generic) on Wed May 10 23:22:31 BST 2017
 INFO: [HLS 200-10] On os Ubuntu 14.04.5 LTS
 INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2'
 INFO: [HLS 200-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_2/ip_design/build/prj/my_project0'.
@@ -28,8 +28,8 @@ WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_v_in' does not exist in function 'foo'. 
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_v_out' does not exist in function 'foo'. 
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_sc_out' does not exist in function 'foo'. 
-INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:04:40 ; elapsed = 00:03:44 . Memory (MB): peak = 352.082 ; gain = 12.590 ; free physical = 16988 ; free virtual = 59875
-INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:04:59 ; elapsed = 00:04:04 . Memory (MB): peak = 352.082 ; gain = 12.590 ; free physical = 16652 ; free virtual = 59866
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:04:26 ; elapsed = 00:03:32 . Memory (MB): peak = 352.082 ; gain = 12.590 ; free physical = 15737 ; free virtual = 60032
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:04:43 ; elapsed = 00:03:50 . Memory (MB): peak = 352.082 ; gain = 12.590 ; free physical = 15404 ; free virtual = 60026
 INFO: [HLS 200-10] Starting code transformations ...
 INFO: [XFORM 203-603] Inlining function 'ap_fixed_base<79, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>::operator<<' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:441).
 INFO: [XFORM 203-603] Inlining function 'ap_fixed_base<1, 32, false, (ap_q_mode)5, (ap_o_mode)0, 0>::overflow_adjust' into 'ap_fixed_base<1, 32, false, (ap_q_mode)5, (ap_o_mode)0, 0>::ap_fixed_base<79, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>' ().
@@ -40,7 +40,7 @@ INFO: [XFORM 203-603] Inlining function 'accumulator_16' into 'part_vector_v_new
 INFO: [XFORM 203-603] Inlining function 'accumulator_16' into 'part_vector_mult' (../../src/user_lanczos_HW.cpp:302).
 INFO: [XFORM 203-603] Inlining function 'part_vector_v_new' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:48).
 INFO: [XFORM 203-603] Inlining function 'part_vector_normalize_update' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:50).
-INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:05:34 ; elapsed = 00:04:40 . Memory (MB): peak = 1728.090 ; gain = 1388.598 ; free physical = 15088 ; free virtual = 58628
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:05:16 ; elapsed = 00:04:24 . Memory (MB): peak = 1728.090 ; gain = 1388.598 ; free physical = 13841 ; free virtual = 58788
 INFO: [HLS 200-10] Checking synthesizability ...
 INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:438) automatically.
 INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:441) automatically.
@@ -49,7 +49,7 @@ INFO: [XFORM 203-602] Inlining function 'hls::cast_IEEE754<int, (ap_q_mode)6, fl
 INFO: [XFORM 203-602] Inlining function 'hls::cast_IEEE754<int, float>' into '__hls_fptosi_float_i32' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/lib_floatconversion.cpp:43) automatically.
 INFO: [XFORM 203-602] Inlining function 'hls::sqrtf' into 'lanczos_HW' (../../src/user_lanczos_HW.cpp:210->../../src/user_lanczos_HW.cpp:48) automatically.
 INFO: [XFORM 203-602] Inlining function '__hls_fptosi_float_i32' into 'foo_user' (../../src/foo_user.cpp:41) automatically.
-INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:05:40 ; elapsed = 00:04:46 . Memory (MB): peak = 1935.086 ; gain = 1595.594 ; free physical = 14779 ; free virtual = 58374
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:05:22 ; elapsed = 00:04:30 . Memory (MB): peak = 1935.082 ; gain = 1595.590 ; free physical = 13532 ; free virtual = 58534
 INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'reset_part_vector_1' (../../src/user_lanczos_HW.cpp:230) in function 'lanczos_HW' for pipelining.
 INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-8' (../../src/user_mv_mult_prescaled_HW.cpp:34) in function 'lanczos_HW' for pipelining.
 INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-12' (../../src/user_mv_mult_prescaled_HW.cpp:76) in function 'lanczos_HW' automatically.
@@ -81,7 +81,7 @@ INFO: [XFORM 203-602] Inlining function 'hls::sqrtf' into 'lanczos_HW' (../../sr
 INFO: [XFORM 203-602] Inlining function '__hls_fptosi_float_i32' into 'foo_user' (../../src/foo_user.cpp:41) automatically.
 INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:68:4) to (../../src/user_mv_mult_prescaled_HW.cpp:71:2) in function 'lanczos_HW'... converting 10 basic blocks.
 INFO: [XFORM 203-401] Performing if-conversion on hyperblock to (../../src/user_mv_mult_prescaled_HW.cpp:72:4) in function 'lanczos_HW'... converting 10 basic blocks.
-INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:05:50 ; elapsed = 00:04:57 . Memory (MB): peak = 2720.082 ; gain = 2380.590 ; free physical = 13682 ; free virtual = 57636
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:05:31 ; elapsed = 00:04:40 . Memory (MB): peak = 2720.082 ; gain = 2380.590 ; free physical = 12432 ; free virtual = 57792
 INFO: [XFORM 203-541] Flattening a loop nest 'part_vector_mult_1' (../../src/user_lanczos_HW.cpp:275:3) in function 'part_vector_mult'.
 WARNING: [XFORM 203-542] Cannot flatten a loop nest 'copy_vector_to_part_vector_1' (../../src/user_lanczos_HW.cpp:75:3) in function 'lanczos_HW' : 
 WARNING: [XFORM 203-542] the outer loop is not a perfect loop.
@@ -120,7 +120,7 @@ INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/use
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:146) (distance = 16).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:146) (distance = 16).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_lanczos_HW.cpp:146) (distance = 8).
-INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:05:54 ; elapsed = 00:05:01 . Memory (MB): peak = 3008.086 ; gain = 2668.594 ; free physical = 13335 ; free virtual = 57339
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:05:35 ; elapsed = 00:04:44 . Memory (MB): peak = 3008.086 ; gain = 2668.594 ; free physical = 12092 ; free virtual = 57504
 INFO: [HLS 200-10] Starting hardware synthesis ...
 INFO: [HLS 200-10] Synthesizing 'foo' ...
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -144,7 +144,7 @@ WARNING: [SCHED 204-21] The critical path consists of the following:
 	'select' operation ('j_mid2', ../../src/user_lanczos_HW.cpp:276) (2.07 ns)
 	'add' operation ('j', ../../src/user_lanczos_HW.cpp:276) (2.71 ns)
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 301.67 seconds; current allocated memory: 2.267 GB.
+INFO: [HLS 200-111]  Elapsed time: 284.4 seconds; current allocated memory: 2.267 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
@@ -196,19 +196,19 @@ WARNING: [SCHED 204-21] The critical path consists of the following:
 	'icmp' operation ('exitcond_i2', ../../src/user_mv_mult_prescaled_HW.cpp:163->../../src/user_lanczos_HW.cpp:45) (3.88 ns)
 	blocking operation 4.63 ns on control path)
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 1.46 seconds; current allocated memory: 2.273 GB.
+INFO: [HLS 200-111]  Elapsed time: 1.39 seconds; current allocated memory: 2.273 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 1.53 seconds; current allocated memory: 2.278 GB.
+INFO: [HLS 200-111]  Elapsed time: 1.46 seconds; current allocated memory: 2.278 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Implementing module 'foo_user' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [SCHED 204-11] Starting scheduling ...
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 1.05 seconds; current allocated memory: 2.279 GB.
+INFO: [HLS 200-111]  Elapsed time: 1 seconds; current allocated memory: 2.279 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
@@ -240,13 +240,13 @@ WARNING: [SCHED 204-21] The critical path consists of the following:
 	'select' operation ('indvar3_mid2') (2.07 ns)
 	'add' operation ('indvar_next3') (2.75 ns)
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 0.7 seconds; current allocated memory: 2.280 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.67 seconds; current allocated memory: 2.280 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.57 seconds; current allocated memory: 2.281 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.56 seconds; current allocated memory: 2.281 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'part_vector_mult' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -259,7 +259,7 @@ INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32neOg': 1 instance(
 INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32nfYi': 1 instance(s).
 INFO: [RTGEN 206-100] Generating core module 'foo_mux_104_32_1': 2 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'part_vector_mult'.
-INFO: [HLS 200-111]  Elapsed time: 0.8 seconds; current allocated memory: 2.284 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.78 seconds; current allocated memory: 2.284 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'lanczos_HW' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -331,12 +331,12 @@ INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32nfYi': 12 instance
 INFO: [RTGEN 206-100] Generating core module 'foo_fsqrt_32ns_32bak': 1 instance(s).
 INFO: [RTGEN 206-100] Generating core module 'foo_mux_104_32_1': 3 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'lanczos_HW'.
-INFO: [HLS 200-111]  Elapsed time: 1.48 seconds; current allocated memory: 2.296 GB.
+INFO: [HLS 200-111]  Elapsed time: 1.45 seconds; current allocated memory: 2.296 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'foo_user' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [RTGEN 206-100] Finished creating RTL model for 'foo_user'.
-INFO: [HLS 200-111]  Elapsed time: 2.69 seconds; current allocated memory: 2.312 GB.
+INFO: [HLS 200-111]  Elapsed time: 2.49 seconds; current allocated memory: 2.312 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'foo' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -364,7 +364,7 @@ INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_8' to 'foo_block_i
 INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_9' to 'foo_block_in_int_bml' due to the length limit 20
 INFO: [RTGEN 206-100] Bundling port 'return', 'byte_init_in_offset', 'byte_sc_in_in_offset', 'byte_block_in_offset', 'byte_out_block_in_offset', 'byte_v_out_out_offset' and 'byte_sc_out_out_offset' to AXI-Lite port BUS_A.
 INFO: [RTGEN 206-100] Finished creating RTL model for 'foo'.
-INFO: [HLS 200-111]  Elapsed time: 0.99 seconds; current allocated memory: 2.317 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.97 seconds; current allocated memory: 2.317 GB.
 INFO: [RTMG 210-279] Implementing memory 'part_vector_mult_bkb_rom' using distributed ROMs.
 INFO: [RTMG 210-279] Implementing memory 'part_vector_mult_cud_rom' using distributed ROMs.
 INFO: [RTMG 210-278] Implementing memory 'part_vector_mult_dEe_ram' using block RAMs.
@@ -390,7 +390,7 @@ INFO: [RTMG 210-278] Implementing memory 'foo_v_in_in_int_ram' using block RAMs 
 INFO: [RTMG 210-278] Implementing memory 'foo_block_in_int_bdk_ram' using block RAMs with power-on initialization.
 INFO: [RTMG 210-278] Implementing memory 'foo_v_out_out_int_ram' using block RAMs.
 INFO: [RTMG 210-278] Implementing memory 'foo_sc_out_out_int_ram' using block RAMs.
-INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:06:06 ; elapsed = 00:05:16 . Memory (MB): peak = 3008.086 ; gain = 2668.594 ; free physical = 13264 ; free virtual = 57294
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:05:46 ; elapsed = 00:04:58 . Memory (MB): peak = 3008.086 ; gain = 2668.594 ; free physical = 12021 ; free virtual = 57458
 INFO: [SYSC 207-301] Generating SystemC RTL for foo.
 INFO: [VHDL 208-304] Generating VHDL RTL for foo.
 INFO: [VLOG 209-307] Generating Verilog RTL for foo.
@@ -421,5 +421,5 @@ INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fsqrt_26_n
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Tue May  9 00:31:39 2017...
-INFO: [HLS 200-112] Total elapsed time: 370.3 seconds; peak allocated memory: 2.317 GB.
+INFO: [Common 17-206] Exiting Vivado at Wed May 10 23:27:48 2017...
+INFO: [HLS 200-112] Total elapsed time: 351.82 seconds; peak allocated memory: 2.317 GB.

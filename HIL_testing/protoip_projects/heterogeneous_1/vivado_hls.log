@@ -5,7 +5,7 @@
   Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
 ================================================================
 INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
-INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-75-generic) on Mon May 08 17:23:57 BST 2017
+INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-75-generic) on Wed May 10 15:47:16 BST 2017
 INFO: [HLS 200-10] On os Ubuntu 14.04.5 LTS
 INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1'
 INFO: [HLS 200-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0'.
@@ -24,13 +24,13 @@ WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_out_block' does not exist in function 'foo'. 
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
-INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:03:03 ; elapsed = 00:02:25 . Memory (MB): peak = 352.086 ; gain = 12.590 ; free physical = 16413 ; free virtual = 59898
-INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:03:15 ; elapsed = 00:02:38 . Memory (MB): peak = 352.086 ; gain = 12.590 ; free physical = 16188 ; free virtual = 59892
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:03:02 ; elapsed = 00:02:25 . Memory (MB): peak = 352.078 ; gain = 12.590 ; free physical = 14081 ; free virtual = 58827
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:03:14 ; elapsed = 00:02:37 . Memory (MB): peak = 352.078 ; gain = 12.590 ; free physical = 13860 ; free virtual = 58825
 INFO: [HLS 200-10] Starting code transformations ...
 INFO: [XFORM 203-603] Inlining function 'mv_mult_prescaled_HW' into 'foo_user' (../../src/foo_user.cpp:20).
-INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:03:32 ; elapsed = 00:02:56 . Memory (MB): peak = 1056.090 ; gain = 716.594 ; free physical = 15373 ; free virtual = 59243
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:03:30 ; elapsed = 00:02:54 . Memory (MB): peak = 1088.078 ; gain = 748.590 ; free physical = 13040 ; free virtual = 58171
 INFO: [HLS 200-10] Checking synthesizability ...
-INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:03:34 ; elapsed = 00:02:58 . Memory (MB): peak = 1216.086 ; gain = 876.590 ; free physical = 15257 ; free virtual = 59152
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:03:32 ; elapsed = 00:02:57 . Memory (MB): peak = 1164.418 ; gain = 824.930 ; free physical = 12925 ; free virtual = 58081
 INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-2' (../../src/user_mv_mult_prescaled_HW.cpp:34) in function 'foo_user' for pipelining.
 INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:76) in function 'foo_user' automatically.
 INFO: [XFORM 203-502] Unrolling small iteration loop 'mv_mult_core_loop' (../../src/user_mv_mult_prescaled_HW.cpp:127) in function 'foo_user' automatically.
@@ -45,7 +45,7 @@ WARNING: [ANALYSIS 214-31] The program may have out of bound access of array var
 INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:68:4) to (../../src/user_mv_mult_prescaled_HW.cpp:71:2) in function 'foo_user'... converting 11 basic blocks.
 INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:72:4) to (../../src/user_mv_mult_prescaled_HW.cpp:72:4) in function 'foo_user'... converting 11 basic blocks.
 INFO: [XFORM 203-11] Balancing expressions in function 'foo' (../../src/foo.cpp:21)...6 expression(s) balanced.
-INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:03:38 ; elapsed = 00:03:02 . Memory (MB): peak = 1452.438 ; gain = 1112.941 ; free physical = 14798 ; free virtual = 58846
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:03:36 ; elapsed = 00:03:01 . Memory (MB): peak = 1452.430 ; gain = 1112.941 ; free physical = 12468 ; free virtual = 57776
 INFO: [XFORM 203-541] Flattening a loop nest 'Loop-5' (../../src/user_mv_mult_prescaled_HW.cpp:66:6) in function 'foo_user'.
 INFO: [XFORM 203-541] Flattening a loop nest 'interface_loop_block' (../../src/foo.cpp:41:4) in function 'foo'.
 INFO: [XFORM 203-541] Flattening a loop nest 'interface_loop_x_in' (../../src/foo.cpp:69:4) in function 'foo'.
@@ -62,18 +62,18 @@ INFO: [XFORM 203-811] Inferring bus burst write of length 6 on port 'memory_inou
 INFO: [XFORM 203-811] Inferring bus burst write of length 40 on port 'memory_inout' (../../src/foo.cpp:99:4).
 INFO: [XFORM 203-811] Inferring bus burst write of length 9 on port 'memory_inout' (../../src/foo.cpp:108:3).
 WARNING: [XFORM 203-561] Ignored multiple trip count directives for loop 'Loop-0' in function 'foo_user'.
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[9]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[8]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[7]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[6]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[0]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[4]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[3]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[5]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[9]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[4]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[2]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[0]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[7]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[6]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[8]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[1]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec_te' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:03:39 ; elapsed = 00:03:04 . Memory (MB): peak = 1528.918 ; gain = 1189.422 ; free physical = 14700 ; free virtual = 58748
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:03:37 ; elapsed = 00:03:02 . Memory (MB): peak = 1528.910 ; gain = 1189.422 ; free physical = 12370 ; free virtual = 57679
 INFO: [HLS 200-10] Starting hardware synthesis ...
 INFO: [HLS 200-10] Synthesizing 'foo' ...
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -99,13 +99,13 @@ WARNING: [SCHED 204-21] The critical path consists of the following:
 	'select' operation ('i_4_i_mid2', ../../src/user_mv_mult_prescaled_HW.cpp:67->../../src/foo_user.cpp:20) (2.07 ns)
 	'add' operation ('i', ../../src/user_mv_mult_prescaled_HW.cpp:67->../../src/foo_user.cpp:20) (2.62 ns)
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 183.93 seconds; current allocated memory: 1.054 GB.
+INFO: [HLS 200-111]  Elapsed time: 182.52 seconds; current allocated memory: 1.054 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.26 seconds; current allocated memory: 1.056 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.27 seconds; current allocated memory: 1.056 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Implementing module 'foo' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -141,7 +141,7 @@ INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.55 seconds; current allocated memory: 1.060 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.54 seconds; current allocated memory: 1.060 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'foo_user' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -156,7 +156,7 @@ INFO: [SYN 201-210] Renamed object name 'foo_fmul_32ns_32ns_32_5_max_dsp' to 'fo
 INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nhbi': 10 instance(s).
 INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32nibs': 10 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'foo_user'.
-INFO: [HLS 200-111]  Elapsed time: 0.64 seconds; current allocated memory: 1.064 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.61 seconds; current allocated memory: 1.064 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'foo' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -207,7 +207,7 @@ INFO: [SYN 201-210] Renamed object name 'foo_urem_9ns_7ns_9_13' to 'foo_urem_9ns
 INFO: [RTGEN 206-100] Generating core module 'foo_mux_104_32_1': 1 instance(s).
 INFO: [RTGEN 206-100] Generating core module 'foo_urem_9ns_7ns_Thq': 3 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'foo'.
-INFO: [HLS 200-111]  Elapsed time: 1.5 seconds; current allocated memory: 1.075 GB.
+INFO: [HLS 200-111]  Elapsed time: 1.49 seconds; current allocated memory: 1.075 GB.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_col_blocbkb_rom' using auto ROMs.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_row_bloccud_rom' using auto ROMs.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_num_blocdEe_rom' using auto ROMs.
@@ -224,7 +224,7 @@ INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vxdS_ram' using block 
 INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vGfk_ram' using distributed RAMs.
 INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_intIfE_ram' using block RAMs.
 INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_intShg_ram' using block RAMs.
-INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:03:45 ; elapsed = 00:03:11 . Memory (MB): peak = 1528.918 ; gain = 1189.422 ; free physical = 14662 ; free virtual = 58724
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:03:43 ; elapsed = 00:03:09 . Memory (MB): peak = 1528.910 ; gain = 1189.422 ; free physical = 12333 ; free virtual = 57656
 INFO: [SYSC 207-301] Generating SystemC RTL for foo.
 INFO: [VHDL 208-304] Generating VHDL RTL for foo.
 INFO: [VLOG 209-307] Generating Verilog RTL for foo.
@@ -248,5 +248,5 @@ INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_7_ful
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Mon May  8 17:27:22 2017...
-INFO: [HLS 200-112] Total elapsed time: 229.49 seconds; peak allocated memory: 1.075 GB.
+INFO: [Common 17-206] Exiting Vivado at Wed May 10 15:50:37 2017...
+INFO: [HLS 200-112] Total elapsed time: 225.45 seconds; peak allocated memory: 1.075 GB.

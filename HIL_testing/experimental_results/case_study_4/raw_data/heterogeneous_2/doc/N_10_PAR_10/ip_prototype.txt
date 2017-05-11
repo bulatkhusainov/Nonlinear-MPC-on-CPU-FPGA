@@ -1,0 +1,147 @@
+---------------------------------------------------------
+Input and output vectors:
+---------------------------------------------------------
+
+Name			| Direction		| Number of data 			| Data representation
+
+init			 	| Input         | INIT_IN_LENGTH=3 			|data type "data_t_init_in" is floating-point single precision (32 bits)
+sc_in			 	| Input         | SC_IN_IN_LENGTH=5 			|data type "data_t_sc_in_in" is floating-point single precision (32 bits)
+block			 	| Input         | BLOCK_IN_LENGTH=849 			|data type "data_t_block_in" is floating-point single precision (32 bits)
+out_block			 	| Input         | OUT_BLOCK_IN_LENGTH=66 			|data type "data_t_out_block_in" is floating-point single precision (32 bits)
+v_in			 	| Input         | V_IN_IN_LENGTH=414 			|data type "data_t_v_in_in" is floating-point single precision (32 bits)
+v_out			 	| Output         | V_OUT_OUT_LENGTH=414 			|data type "data_t_v_out_in" is floating-point single precision (32 bits)
+sc_out			 	| Output         | SC_OUT_OUT_LENGTH=5 			|data type "data_t_sc_out_in" is floating-point single precision (32 bits)
+
+
+---------------------------------------------------------
+IP prototype test(s):
+Input and output vectors has been mapped into external DDR3 memory at the following addresses:
+---------------------------------------------------------
+
+Name			| Base address in Byte
+
+init			 	| 0x02000000 <- 0
+sc_in			 	| 0x0200000C <- (INIT_IN_LENGTH)*4
+block			 	| 0x02000020 <- (INIT_IN_LENGTH+SC_IN_IN_LENGTH)*4
+out_block			 	| 0x02000D64 <- (INIT_IN_LENGTH+SC_IN_IN_LENGTH+BLOCK_IN_LENGTH)*4
+v_in			 	| 0x02000E6C <- (INIT_IN_LENGTH+SC_IN_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+v_out			 	| 0x020014E4 <- (INIT_IN_LENGTH+SC_IN_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+V_IN_IN_LENGTH)*4
+sc_out			 	| 0x02001B5C <- (INIT_IN_LENGTH+SC_IN_IN_LENGTH+BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+V_IN_IN_LENGTH+V_OUT_OUT_LENGTH)*4
+
+NOTE: the external DDR memory is shared memory between the CPU embedded into the FPGA and the Algorithm implemented into the FPGA programmable logic (PL).
+
+
+To send input vectors from the host (Matlab) to the FPGA call Matlab function "FPGAclientMATLAB" in "test_HIL.m" using the following parameters:
+
+Input vector name		| Packet type 	|	Packet internal ID 	| Data to send	| Packet output size
+init			 			| 3				| 0						| data vector	| 0
+sc_in			 			| 3				| 1						| data vector	| 0
+block			 			| 3				| 2						| data vector	| 0
+out_block			 			| 3				| 3						| data vector	| 0
+v_in			 			| 3				| 4						| data vector	| 0
+
+
+
+To read output vectors from the FPGA to the host PC call Matlab function "FPGAclientMATLAB" in "test_HIL.m" using the following parameters:
+
+Output vector name		| Packet type 	|	Packet internal ID 	| Data to send	| Packet output size
+v_out			 			| 4				| 0						| 0				| 414
+sc_out			 			| 4				| 1						| 0				| 5
+
+
+---------------------------------------------------------
+FPGA prototype report: my_project0.zedboard
+---------------------------------------------------------
+
+
+
+
+Timing (post Place & Route):
+--------------------------
+
+* FPGA
+target clock period (ns): 6.00
+achieved clock period (ns): 0.218
+Time constraints met during IP prototyping. You might reduce clock target period to build a faster design.
+
+
+Resource measurement (post Place & Route):
+------------------------------------------
+
+* FPGA
+   BRAM_18K: 90 (32%) used out off 280 available.
+   DSP48E: 61 (27%) used out off 220 available.
+   FF: 14837 (13%) used out off 106400 available.
+   LUT: 11470 (21%)  used out off 53200 available.
+
+	* IP
+   	BRAM_18K: 90 (32%) used out off 280 available.
+   	DSP48E: 61 (27%) used out off 220 available.
+   	FF: 14044 (13%) used out off 106400 available.
+   	LUT: 10906 (20%)  used out off 53200 available.
+
+		* user function
+   		BRAM_18K: 0 (0%) used out off 280 available.
+   		DSP48E: 0 (0%) used out off 220 available.
+   		FF: 0 (0%) used out off 106400 available.
+   		LUT: 0 (0%)  used out off 53200 available.
+
+
+Power estimation with average toggle rate of 12.5/% (post Place & Route):
+-------------------------------------------------------------------------
+
+* FPGA
+   Total power on-chip (W): 2.510
+   Dynamic power on-chip (W): 2.330
+   Static power on-chip (W): 0.180
+
+	* ARM Cortex-A9
+   	   Total ARM Cortex-A9 power (W): 1.535
+
+	* IP
+   	   Total IP power (W): 0.782
+
+		* user function
+   		   Total IP power (W): 0
+
+
+
+
+Post Synthesis resource estimation:
+-----------------------------------
+
+* FPGA
+   BRAM_18K: 90 (32%) used out off 280 available.
+   DSP48E: 61 (27%) used out off 220 available.
+   FF: 15303 (14%) used out off 106400 available.
+   LUT: 12437 (23%)  used out off 53200 available.
+
+	* IP
+   	BRAM_18K: 90 (32%) used out off 280 available.
+   	DSP48E: 61 (27%) used out off 220 available.
+   	FF: 14193 (13%) used out off 106400 available.
+   	LUT: 11482 (21%)  used out off 53200 available.
+
+		* user function
+   		BRAM_18K: 0 (0%) used out off 280 available.
+   		DSP48E: 0 (0%) used out off 220 available.
+   		FF: 0 (0%) used out off 106400 available.
+   		LUT: 0 (0%)  used out off 53200 available.
+
+
+Post Synthesis power estimation (average toggle rate 12.5/%):
+-------------------------------------------------------------
+
+* FPGA
+   Total power on-chip (W): 2.507
+   Dynamic power on-chip (W): 2.328
+   Static power on-chip (W): 0.180
+
+	* ARM Cortex-A9
+   	   Total ARM Cortex-A9 power (W): 1.535
+
+	* IP
+   	   Total IP power (W): 0.773
+
+		* user function
+   		   Total IP power (W): 0

@@ -14,6 +14,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 
 void soc_user(float soc_x_hat_in[SOC_X_HAT_IN_VECTOR_LENGTH],float soc_u_opt_out[SOC_U_OPT_OUT_VECTOR_LENGTH])
 {
+
 	int i,j,k;
 	float debug_output[n_all_theta + n_all_nu]={0};
 	float all_theta[n_all_theta]={0,};

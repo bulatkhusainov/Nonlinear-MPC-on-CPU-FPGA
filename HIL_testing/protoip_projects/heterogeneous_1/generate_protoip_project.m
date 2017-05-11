@@ -12,7 +12,7 @@ all_theta_soc_interface = strcat('u_opt:',num2str(5),':float'); % assume all opt
 
 %make_template('type','SOC','project_name','my_project0','input',block_interface,'input',out_block_interface,'input',x_in_interface,'output',y_out_interface,'soc_input',x_hat_soc_interface,'soc_output',all_theta_soc_interface);
 
-ip_design_build('project_name','my_project0', 'input', block_interface, 'input', out_block_interface,'input', x_in_interface, 'output', y_out_interface);
+%ip_design_build('project_name','my_project0', 'input', block_interface, 'input', out_block_interface,'input', x_in_interface, 'output', y_out_interface);
 
 %ip_design_build_debug('project_name','my_project0');
 
