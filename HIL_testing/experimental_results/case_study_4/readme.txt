@@ -19,3 +19,7 @@ Exploration was performed in the following way:
 %         wrapper_query_simulation([0.1; N; 2; 3; PAR])        
 %     end
 % end
+
+%for N = 1:10
+%        wrapper_query_simulation([0.1; N; 2; 0; 1])        
+%end
