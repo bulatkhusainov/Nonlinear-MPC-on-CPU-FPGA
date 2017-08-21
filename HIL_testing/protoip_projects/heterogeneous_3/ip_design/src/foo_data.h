@@ -62,20 +62,20 @@ typedef float data_t_memory;
 
 
 #if FLOAT_FIX_MINRES_DATA_IN == 1
-	typedef ap_fixed<MINRES_DATA_IN_INTEGERLENGTH+MINRES_DATA_IN_FRACTIONLENGTH,MINRES_DATA_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_minres_data_in;
-	typedef ap_fixed<32,32-MINRES_DATA_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_minres_data_in;
+	typedef ap_fixed<MINRES_DATA_IN_INTEGERLENGTH+MINRES_DATA_IN_FRACTIONLENGTH,MINRES_DATA_IN_INTEGERLENGTH,AP_TRN,AP_WRAP> data_t_minres_data_in;
+	typedef ap_fixed<32,32-MINRES_DATA_IN_FRACTIONLENGTH,AP_TRN,AP_WRAP> data_t_interface_minres_data_in;
 #endif
 #if FLOAT_FIX_BLOCK_IN == 1
-	typedef ap_fixed<BLOCK_IN_INTEGERLENGTH+BLOCK_IN_FRACTIONLENGTH,BLOCK_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_block_in;
-	typedef ap_fixed<32,32-BLOCK_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_block_in;
+	typedef ap_fixed<BLOCK_IN_INTEGERLENGTH+BLOCK_IN_FRACTIONLENGTH,BLOCK_IN_INTEGERLENGTH,AP_TRN,AP_WRAP> data_t_block_in;
+	typedef ap_fixed<32,32-BLOCK_IN_FRACTIONLENGTH,AP_TRN,AP_WRAP> data_t_interface_block_in;
 #endif
 #if FLOAT_FIX_OUT_BLOCK_IN == 1
-	typedef ap_fixed<OUT_BLOCK_IN_INTEGERLENGTH+OUT_BLOCK_IN_FRACTIONLENGTH,OUT_BLOCK_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_out_block_in;
-	typedef ap_fixed<32,32-OUT_BLOCK_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_out_block_in;
+	typedef ap_fixed<OUT_BLOCK_IN_INTEGERLENGTH+OUT_BLOCK_IN_FRACTIONLENGTH,OUT_BLOCK_IN_INTEGERLENGTH,AP_TRN,AP_WRAP> data_t_out_block_in;
+	typedef ap_fixed<32,32-OUT_BLOCK_IN_FRACTIONLENGTH,AP_TRN,AP_WRAP> data_t_interface_out_block_in;
 #endif
 #if FLOAT_FIX_X_IN_IN == 1
-	typedef ap_fixed<X_IN_IN_INTEGERLENGTH+X_IN_IN_FRACTIONLENGTH,X_IN_IN_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_x_in_in;
-	typedef ap_fixed<32,32-X_IN_IN_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_x_in_in;
+	typedef ap_fixed<X_IN_IN_INTEGERLENGTH+X_IN_IN_FRACTIONLENGTH,X_IN_IN_INTEGERLENGTH,AP_TRN,AP_WRAP> data_t_x_in_in;
+	typedef ap_fixed<32,32-X_IN_IN_FRACTIONLENGTH,AP_TRN,AP_WRAP> data_t_interface_x_in_in;
 #endif
 #if FLOAT_FIX_MINRES_DATA_IN == 0
 	typedef float data_t_minres_data_in;
@@ -94,8 +94,8 @@ typedef float data_t_memory;
 	typedef float data_t_interface_x_in_in;
 #endif
 #if FLOAT_FIX_Y_OUT_OUT == 1 
-	typedef ap_fixed<Y_OUT_OUT_INTEGERLENGTH+Y_OUT_OUT_FRACTIONLENGTH,Y_OUT_OUT_INTEGERLENGTH,AP_TRN_ZERO,AP_SAT> data_t_y_out_out;
-	typedef ap_fixed<32,32-Y_OUT_OUT_FRACTIONLENGTH,AP_TRN_ZERO,AP_SAT> data_t_interface_y_out_out;
+	typedef ap_fixed<Y_OUT_OUT_INTEGERLENGTH+Y_OUT_OUT_FRACTIONLENGTH,Y_OUT_OUT_INTEGERLENGTH,AP_TRN,AP_WRAP> data_t_y_out_out;
+	typedef ap_fixed<32,32-Y_OUT_OUT_FRACTIONLENGTH,AP_TRN,AP_WRAP> data_t_interface_y_out_out;
 #endif
 #if FLOAT_FIX_Y_OUT_OUT == 0 
 	typedef float data_t_y_out_out;

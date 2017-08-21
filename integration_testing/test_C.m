@@ -25,4 +25,6 @@ max(abs(all_theta - all_theta_C));
 
 error_C  = all_theta - all_theta_C;
 
+max(abs(error_C)) / max(abs(all_theta))
+
 compare_graphs;

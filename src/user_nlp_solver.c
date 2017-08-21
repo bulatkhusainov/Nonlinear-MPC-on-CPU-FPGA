@@ -122,7 +122,7 @@ void nlp_solver(float debug_output[n_all_theta + n_all_nu], float all_theta[n_al
 		// evaluate mat vec multiplication (for debugging only)
 		//mv_mult(d_x,blocks,b);
 
-		minres_data[0] = 1*n_linear ;
+		minres_data[0] = 1*n_linear;
 		// solve linear system with minres
 		#ifdef MINRES_prescaled
 			prescaler(blocks, b,d_x);

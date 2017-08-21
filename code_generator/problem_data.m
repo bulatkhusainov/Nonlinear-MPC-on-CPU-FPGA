@@ -20,7 +20,7 @@ else
     %butcher_table_beta =  [1/6; 2/3; 1/6];   
 end;
 
-if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 3; end;
+if exist('design','var') && any(strcmp('heterogeneity',fieldnames(design))); heterogeneity = design.heterogeneity; else heterogeneity = 0; end;
 x_init = [0.5;0];
 Tsim = 10;
 MINRES_prescaled = 1;
@@ -227,8 +227,8 @@ elseif(strcmp(model,  'crane_xz'))
     % bound indeces [x' u' s']'
     upper_bounds_indeces = [7,8]-1; % in C format
     lower_bounds_indeces = [7,8]-1; % in C format
-    upper_bounds = [ 0.2, 0.2];
-    lower_bounds = [ -0.2, -0.2];   
+    upper_bounds = [ 0.15, 0.15];
+    lower_bounds = [ -0.15, -0.15];   
     
     n_upper_bounds = max(size(upper_bounds_indeces));
     n_lower_bounds = max(size(lower_bounds_indeces));

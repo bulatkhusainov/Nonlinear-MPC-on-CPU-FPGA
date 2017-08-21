@@ -3,7 +3,7 @@ load('Params_Simscape.mat');
 
 Ts_hw = 0.01; % this samplling time is for actuators PI controllers only
 %Ts = 0.1; % this sampling time is for mpc controller
-T = 10;
+T = 12;
 
 % Filter parameters (for velocity filtering)
 cut_period = 0.1;
