@@ -1,119 +1,111 @@
 ================================================================
   Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC
-  Version 2015.2
-  Build 1266856 on Fri Jun 26 16:57:37 PM 2015
-  Copyright (C) 2015 Xilinx Inc. All rights reserved.
+  Version 2017.1
+  Build 1846317 on Fri Apr 14 19:19:38 MDT 2017
+  Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
 ================================================================
-@I [LIC-101] Checked out feature [ap_opencl]
-@I [HLS-10] Running '/opt/Xilinx/Vivado_HLS/2015.2/bin/unwrapped/lnx64.o/vivado_hls'
-            for user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-62-generic) on Thu Feb 09 14:37:32 GMT 2017
-            in directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0'
-@I [HLS-10] Creating and opening project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0'.
-@I [HLS-10] Adding design file '../../src/foo_data.h' to the project
-@I [HLS-10] Adding design file '../../src/foo_user.cpp' to the project
-@I [HLS-10] Adding design file '../../src/foo.cpp' to the project
-@I [HLS-10] Creating and opening solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1'.
-@I [HLS-10] Cleaning up the solution database.
-@I [HLS-10] Setting target device to '{xc7z020clg484-1}'
-@I [SYN-201] Setting up clock 'default' with a period of 10ns.
-@I [HLS-10] Analyzing design file '../../src/foo.cpp' ... 
-@I [HLS-10] Analyzing design file '../../src/foo_user.cpp' ... 
-@I [HLS-10] Validating synthesis directives ...
-@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_block' does not exist in function 'foo'. 
-@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
-@W [HLS-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
-@I [HLS-10] Starting code transformations ...
-@I [HLS-10] Checking synthesizability ...
-@I [XFORM-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:74:3).
-@I [XFORM-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:101:3).
-@I [XFORM-811] Inferring bus burst write of length 5 on port 'memory_inout' (../../src/foo.cpp:138:3).
-@I [HLS-111] Elapsed time: 8.17056 seconds; current memory usage: 160 MB.
-@I [HLS-10] Starting hardware synthesis ...
-@I [HLS-10] Synthesizing 'foo' ...
-@I [HLS-10] ----------------------------------------------------------------
-@I [HLS-10] -- Scheduling module 'foo_foo_user' 
-@I [HLS-10] ----------------------------------------------------------------
-@I [SCHED-11] Starting scheduling ...
-@I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.038478 seconds; current memory usage: 161 MB.
-@I [HLS-10] ----------------------------------------------------------------
-@I [HLS-10] -- Exploring micro-architecture for module 'foo_foo_user' 
-@I [HLS-10] ----------------------------------------------------------------
-@I [BIND-100] Starting micro-architecture generation ...
-@I [BIND-101] Performing variable lifetime analysis.
-@I [BIND-101] Exploring resource sharing.
-@I [BIND-101] Binding ...
-@I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.014764 seconds; current memory usage: 161 MB.
-@I [HLS-10] ----------------------------------------------------------------
-@I [HLS-10] -- Scheduling module 'foo' 
-@I [HLS-10] ----------------------------------------------------------------
-@I [SCHED-11] Starting scheduling ...
-@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, float volatile*)::block_in_int.memory_inout'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
-@I [SCHED-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, float volatile*)::x_in_in_int.memory_inout'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
-@I [SCHED-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.gep'.
-@I [SCHED-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
-@I [SCHED-11] Finished scheduling.
-@I [HLS-111] Elapsed time: 0.043028 seconds; current memory usage: 161 MB.
-@I [HLS-10] ----------------------------------------------------------------
-@I [HLS-10] -- Exploring micro-architecture for module 'foo' 
-@I [HLS-10] ----------------------------------------------------------------
-@I [BIND-100] Starting micro-architecture generation ...
-@I [BIND-101] Performing variable lifetime analysis.
-@I [BIND-101] Exploring resource sharing.
-@I [BIND-101] Binding ...
-@I [BIND-100] Finished micro-architecture generation.
-@I [HLS-111] Elapsed time: 0.028631 seconds; current memory usage: 161 MB.
-@I [HLS-10] ----------------------------------------------------------------
-@I [HLS-10] -- Generating RTL for module 'foo_foo_user' 
-@I [HLS-10] ----------------------------------------------------------------
-@I [RTGEN-100] Generating core module 'foo_fadd_32ns_32ns_32_5_full_dsp': 1 instance(s).
-@I [RTGEN-100] Finished creating RTL model for 'foo_foo_user'.
-@I [HLS-111] Elapsed time: 0.040718 seconds; current memory usage: 162 MB.
-@I [HLS-10] ----------------------------------------------------------------
-@I [HLS-10] -- Generating RTL for module 'foo' 
-@I [HLS-10] ----------------------------------------------------------------
-@I [RTGEN-500] Setting interface mode on port 'foo/byte_block_in_offset' to 's_axilite & ap_none' (register).
-@I [RTGEN-500] Setting interface mode on port 'foo/byte_x_in_in_offset' to 's_axilite & ap_none' (register).
-@I [RTGEN-500] Setting interface mode on port 'foo/byte_y_out_out_offset' to 's_axilite & ap_none' (register).
-@I [RTGEN-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
-@I [RTGEN-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
-@I [RTGEN-100] Finished creating RTL model for 'foo'.
-@I [HLS-111] Elapsed time: 0.073416 seconds; current memory usage: 164 MB.
-@I [RTMG-278] Implementing memory 'foo_block_in_int_ram' using distributed RAMs with power-on initialization.
-@I [RTMG-278] Implementing memory 'foo_y_out_out_int_ram' using distributed RAMs.
-@I [HLS-10] Finished generating all RTL models.
-@I [WSYSC-301] Generating RTL SystemC for 'foo'.
-@I [WVHDL-304] Generating RTL VHDL for 'foo'.
-@I [WVLOG-307] Generating RTL Verilog for 'foo'.
-@I [IMPL-8] Exporting RTL as an IP in IP-XACT.
+INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-EliteBook-840-G1' (Linux_x86_64 version 4.13.0-38-generic) on Sun Apr 15 18:31:00 BST 2018
+INFO: [HLS 200-10] On os Ubuntu 16.04.4 LTS
+INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0'
+INFO: [HLS 200-10] Creating and opening project '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0'.
+INFO: [HLS 200-10] Adding design file '../../src/foo_data.h' to the project
+INFO: [HLS 200-10] Adding design file '../../src/foo_user.cpp' to the project
+INFO: [HLS 200-10] Adding design file '../../src/foo.cpp' to the project
+INFO: [HLS 200-10] Creating and opening solution '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1'.
+INFO: [HLS 200-10] Cleaning up the solution database.
+INFO: [HLS 200-10] Setting target device to '{xc7z020clg484-1}'
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-10] Analyzing design file '../../src/foo.cpp' ... 
+INFO: [HLS 200-10] Analyzing design file '../../src/foo_user.cpp' ... 
+INFO: [HLS 200-10] Validating synthesis directives ...
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_block' does not exist in function 'foo'. 
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:02:55 ; elapsed = 00:02:21 . Memory (MB): peak = 348.109 ; gain = 12.586 ; free physical = 5312 ; free virtual = 18954
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:03:09 ; elapsed = 00:02:35 . Memory (MB): peak = 348.109 ; gain = 12.586 ; free physical = 5086 ; free virtual = 18948
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:03:27 ; elapsed = 00:02:54 . Memory (MB): peak = 1084.109 ; gain = 748.586 ; free physical = 4273 ; free virtual = 18299
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:03:30 ; elapsed = 00:02:57 . Memory (MB): peak = 1160.434 ; gain = 824.910 ; free physical = 4142 ; free virtual = 18192
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:03:34 ; elapsed = 00:03:02 . Memory (MB): peak = 1448.434 ; gain = 1112.910 ; free physical = 3697 ; free virtual = 17899
+INFO: [XFORM 203-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:74:3).
+INFO: [XFORM 203-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:101:3).
+INFO: [XFORM 203-811] Inferring bus burst write of length 5 on port 'memory_inout' (../../src/foo.cpp:138:3).
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:03:35 ; elapsed = 00:03:03 . Memory (MB): peak = 1519.965 ; gain = 1184.441 ; free physical = 3613 ; free virtual = 17816
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'foo' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'foo_user' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 182.61 seconds; current allocated memory: 1.045 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.08 seconds; current allocated memory: 1.045 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'foo' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, float volatile*)::block_in_int.memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, float volatile*)::x_in_in_int.memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.gep'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.16 seconds; current allocated memory: 1.046 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.18 seconds; current allocated memory: 1.046 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'foo_user' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'foo_fadd_32ns_32ns_32_5_full_dsp' to 'foo_fadd_32ns_32nbkb' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nbkb': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'foo_user'.
+INFO: [HLS 200-111]  Elapsed time: 0.12 seconds; current allocated memory: 1.046 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'foo' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_block_in_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_x_in_in_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_y_out_out_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return', 'byte_block_in_offset' and 'byte_y_out_out_offset' to AXI-Lite port BUS_A.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'foo'.
+INFO: [HLS 200-111]  Elapsed time: 0.17 seconds; current allocated memory: 1.048 GB.
+INFO: [RTMG 210-278] Implementing memory 'foo_block_in_int_ram' using distributed RAMs with power-on initialization.
+INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_int_ram' using distributed RAMs.
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:03:36 ; elapsed = 00:03:04 . Memory (MB): peak = 1519.965 ; gain = 1184.441 ; free physical = 3599 ; free virtual = 17807
+INFO: [SYSC 207-301] Generating SystemC RTL for foo.
+INFO: [VHDL 208-304] Generating VHDL RTL for foo.
+INFO: [VLOG 209-307] Generating Verilog RTL for foo.
+INFO: [IMPL 213-8] Exporting RTL as an IP in IP-XACT.
 
-****** Vivado v2015.2 (64-bit)
-  **** SW Build 1266856 on Fri Jun 26 16:35:25 MDT 2015
-  **** IP Build 1264090 on Wed Jun 24 14:22:01 MDT 2015
-    ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 
-INFO: [Common 17-1269] XILINX_LOCAL_USER_DATA is set to 'YES', using local Tcl Store at '/home/bkhusain/.Xilinx/Vivado/2015.2/XilinxTclStore'.
+INFO: [Common 17-1269] XILINX_LOCAL_USER_DATA is set to 'YES', using local Tcl Store at '/home/bkhusain/.Xilinx/Vivado/2017.1/XilinxTclStore'.
 INFO: [Common 17-748] XILINX_TCLAPP_REPO is set to '/home/bkhusain/Documents/XilinxTclStore'. Refresh XilinxTclStore catalog is disabled when XILINX_TCLAPP_REPO is set.
 source run_ippack.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
-INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
 INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fadd_3_full_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_3_full_dsp_32'...
-****** Webtalk v2015.2 (64-bit)
-  **** SW Build 1266856 on Fri Jun 26 16:35:25 MDT 2015
-  **** IP Build 1264090 on Wed Jun 24 14:22:01 MDT 2015
-    ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
-
-source /home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/labtool_webtalk.tcl -notrace
-INFO: [Common 17-186] '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_0/ip_design/build/prj/my_project0/solution1/impl/ip/tmp.hw/webtalk/usage_statistics_ext_labtool.xml' has been successfully sent to Xilinx on Thu Feb  9 14:38:39 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.2/doc/webtalk_introduction.html.
-INFO: [Common 17-206] Exiting Webtalk at Thu Feb  9 14:38:39 2017...
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
-INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.2/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Thu Feb  9 14:38:39 2017...
-@I [HLS-112] Total elapsed time: 81.531 seconds; peak memory usage: 164 MB.
-@I [LIC-101] Checked in feature [ap_opencl]
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [Common 17-206] Exiting Vivado at Sun Apr 15 18:34:15 2018...
+INFO: [HLS 200-112] Total elapsed time: 218.37 seconds; peak allocated memory: 1.048 GB.

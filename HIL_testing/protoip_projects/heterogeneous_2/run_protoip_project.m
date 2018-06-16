@@ -34,12 +34,12 @@ soc_prototype_test('project_name','my_project0','board_name','zedboard','num_tes
 
 % % save data into relevant folders
 % mkdir(strcat('doc/PAR_',num2str(PAR+double(logical(double(rem_partition))))));
-% copyfile('doc/my_project0/*.dat', strcat('doc/N_', num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
-% copyfile('doc/my_project0/*.txt', strcat('doc/N_', num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
-% 
-% mkdir(strcat('soc_prototype/test/results/my_project0/PAR_',num2str(PAR)));
-% copyfile('soc_prototype/test/results/my_project0/*.dat', strcat('soc_prototype/test/results/my_project0/N_',num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
-% delete('soc_prototype/test/results/my_project0/*.dat');
+copyfile('doc/my_project0/*.dat', strcat('doc/N_', num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
+copyfile('doc/my_project0/*.txt', strcat('doc/N_', num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
+
+%mkdir(strcat('soc_prototype/test/results/my_project0/PAR_',num2str(PAR)));
+copyfile('soc_prototype/test/results/my_project0/*.dat', strcat('soc_prototype/test/results/my_project0/N_',num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
+delete('soc_prototype/test/results/my_project0/*.dat');
 
 
 % read obectives

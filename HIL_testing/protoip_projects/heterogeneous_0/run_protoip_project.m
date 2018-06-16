@@ -16,8 +16,8 @@ soc_prototype_test('project_name','my_project0','board_name','zedboard','num_tes
 
 
 % mkdir(strcat('soc_prototype/test/results/my_project0/PAR_',num2str(PAR)));
-% copyfile('soc_prototype/test/results/my_project0/*.dat', strcat('soc_prototype/test/results/my_project0/N_',num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
-% delete('soc_prototype/test/results/my_project0/*.dat');
+copyfile('soc_prototype/test/results/my_project0/*.dat', strcat('soc_prototype/test/results/my_project0/N_',num2str(N),'_PAR_',num2str(PAR+double(logical(double(rem_partition))))));
+delete('soc_prototype/test/results/my_project0/*.dat');
 
 % read obectives
 % performance = sum(importdata('soc_prototype/test/results/my_project0/objective.dat'));

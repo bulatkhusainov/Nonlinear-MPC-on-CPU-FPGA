@@ -44,8 +44,8 @@ Latency:
 ------------------------
 
 * IP
-   latency (clock cycles): 431
-   latency (us): 4.31
+   latency (clock cycles): 434
+   latency (us): 4.34
 
 	* User function
 	   latency (clock cycles): 391
@@ -56,15 +56,15 @@ Resource utilization:
 ------------------------
 
 * IP
-   BRAM_18K: 0 (0%) used out off 280 available.
+   BRAM_18K: 2 (0%) used out off 280 available.
    DSP48E: 2 (0%) used out off 220 available.
-   FF: 1611 (1%) used out off 106400 available.
-   LUT: 1639 (3%) used out off 53200 available.
+   FF: 1578 (1%) used out off 106400 available.
+   LUT: 1908 (3%) used out off 53200 available.
 
 	* User function
 	   BRAM_18K: 0 (0%) used out off 280 available.
 	   DSP48E: 2 (0%) used out off 220 available.
 	   FF: 403 (0%) used out off 106400 available.
-	   LUT: 589 (1%) used out off 53200 available.
+	   LUT: 608 (1%) used out off 53200 available.
 
 NOTE: IP design performance might be enhanced by adding directives from Vivado_HLS GUI interface. Run "tclapp::icl::protoip::ip_design_build_debug" to open my_project0 with Vivado_HLS GUI interface.

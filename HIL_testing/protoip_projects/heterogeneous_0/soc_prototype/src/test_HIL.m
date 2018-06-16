@@ -26,42 +26,42 @@ load ../../../../../code_generator/problem_data
 
 % to see if the file is copied
 % import casadi
-import casadi.*
-
-% define casadi integration parameters
-x = SX.sym('x',n_states,1); %state vector
-u = SX.sym('u',m_inputs,1); %input vector
-% give meaningful names to states and inputs
-x_coord     = x(1); % this is copied from proble_data
-x_speed     = x(2);
-z_coord     = x(3);
-z_speed     = x(4);
-theta_angle = x(5);
-theta_speed = x(6);
-input_x     = u(1);
-input_z     = u(2);
-ode = SX.zeros(1, n_states);
-ode(1) = x_speed; % this is copied from problem data
-ode(2) = -(1/tau_x)*x_speed + (1/tau_x)*input_x;
-ode(3) = z_speed;
-ode(4) = -(1/tau_z)*z_speed + (1/tau_z)*input_z;
-ode(5) = theta_speed;
-ode(6) = (-1/(0.5 + z_coord))*( (-x_speed/(tau_x) + input_x/tau_x)*cos(theta_angle) + g*sin(theta_angle) + 2*z_speed*theta_speed);
-x_dot = ode';
-% this is copied from problem data
- node_objective_residual = sqrt(Ts)*[ sqrt(10)*(x(1)); 
-                                         sqrt(0.001)*(x(2));
-                                         sqrt(10)*(x(3));
-                                         sqrt(0.001)*(x(4));
-                                         sqrt(10)*(x(5));
-                                         sqrt(0.01)*(x(6));
-                                         sqrt(0.0001)*(u(1));
-                                         sqrt(0.0001)*(u(2))]; % least squares format
-L = node_objective_residual'*node_objective_residual;
-f = Function('f', {x,u},{x_dot},{'x','u'},{'x_dot', 'L'});
-dae = struct('x',x,'p',u,'ode',x_dot,'quad',L);
-opts = struct('tf',Ts);
-F = integrator('F', 'cvodes', dae, opts);
+% import casadi.*
+% 
+% % define casadi integration parameters
+% x = SX.sym('x',n_states,1); %state vector
+% u = SX.sym('u',m_inputs,1); %input vector
+% % give meaningful names to states and inputs
+% x_coord     = x(1); % this is copied from proble_data
+% x_speed     = x(2);
+% z_coord     = x(3);
+% z_speed     = x(4);
+% theta_angle = x(5);
+% theta_speed = x(6);
+% input_x     = u(1);
+% input_z     = u(2);
+% ode = SX.zeros(1, n_states);
+% ode(1) = x_speed; % this is copied from problem data
+% ode(2) = -(1/tau_x)*x_speed + (1/tau_x)*input_x;
+% ode(3) = z_speed;
+% ode(4) = -(1/tau_z)*z_speed + (1/tau_z)*input_z;
+% ode(5) = theta_speed;
+% ode(6) = (-1/(0.5 + z_coord))*( (-x_speed/(tau_x) + input_x/tau_x)*cos(theta_angle) + g*sin(theta_angle) + 2*z_speed*theta_speed);
+% x_dot = ode';
+% % this is copied from problem data
+%  node_objective_residual = sqrt(Ts)*[ sqrt(10)*(x(1)); 
+%                                          sqrt(0.001)*(x(2));
+%                                          sqrt(10)*(x(3));
+%                                          sqrt(0.001)*(x(4));
+%                                          sqrt(10)*(x(5));
+%                                          sqrt(0.01)*(x(6));
+%                                          sqrt(0.0001)*(u(1));
+%                                          sqrt(0.0001)*(u(2))]; % least squares format
+% L = node_objective_residual'*node_objective_residual;
+% f = Function('f', {x,u},{x_dot},{'x','u'},{'x_dot', 'L'});
+% dae = struct('x',x,'p',u,'ode',x_dot,'quad',L);
+% opts = struct('tf',Ts);
+% F = integrator('F', 'cvodes', dae, opts);
 
 % define initial condition
 x_init = [0; 0; 0.3; 0; 0.2; 0]';
@@ -154,36 +154,36 @@ for i=1:(1) % the last simulation is for remainder, which can be zero
 	fclose(fid);
     
    
-    % ode integration 
-    try
-        if i == (N_sim_full+1)
-             % for the remainder simulation could be shorter
-            opts = struct('tf',Tsim_last);
-            F = integrator('F', 'cvodes', dae, opts);
-
-        end
-        u_opt = fpga_soc_u_opt_out(n_states + (1:m_inputs));
-        Fk = F('x0',soc_x_hat_in','p',u_opt);
-        soc_x_hat_in = (full(Fk.xf))';
-        cost_simulated = full(Fk.qf); 
-    catch
-        save(crash_file);
-        soc_x_hat_in = zeros(1, n_states);
-        cost_simulated = 1e10;      
-    end
+%     % ode integration 
+%     try
+%         if i == (N_sim_full+1)
+%              % for the remainder simulation could be shorter
+%             opts = struct('tf',Tsim_last);
+%             F = integrator('F', 'cvodes', dae, opts);
+% 
+%         end
+%         u_opt = fpga_soc_u_opt_out(n_states + (1:m_inputs));
+%         Fk = F('x0',soc_x_hat_in','p',u_opt);
+%         soc_x_hat_in = (full(Fk.xf))';
+%         cost_simulated = full(Fk.qf); 
+%     catch
+%         save(crash_file);
+%         soc_x_hat_in = zeros(1, n_states);
+%         cost_simulated = 1e10;      
+%     end
     
     
-    %save objective
-	if (TYPE_TEST==0)
-		filename = strcat('../test/results/', project_name ,'/objective.dat');
-	else
-		%filename = strcat('../test/results/', project_name ,'/fpga_time_log.dat');
-	end
-	fid = fopen(filename, 'a+');
-   
-	fprintf(fid, '%2.18f, \n', cost_simulated);
-
-	fclose(fid);
+%     %save objective
+% 	if (TYPE_TEST==0)
+% 		filename = strcat('../test/results/', project_name ,'/objective.dat');
+% 	else
+% 		%filename = strcat('../test/results/', project_name ,'/fpga_time_log.dat');
+% 	end
+% 	fid = fopen(filename, 'a+');
+%    
+% 	fprintf(fid, '%2.18f, \n', cost_simulated);
+% 
+% 	fclose(fid);
 
 
        

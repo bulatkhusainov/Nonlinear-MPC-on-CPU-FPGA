@@ -1,0 +1,153 @@
+Template type: SOC
+
+
+---------------------------------------------------------
+Input and output vectors:
+---------------------------------------------------------
+
+Name			| Direction		| Number of data 			| Data representation
+
+block			 	| Input         | BLOCK_IN_LENGTH=597 			|data type "data_t_block_in" is floating-point single precision (32 bits)
+out_block			 	| Input         | OUT_BLOCK_IN_LENGTH=48 			|data type "data_t_out_block_in" is floating-point single precision (32 bits)
+x_in			 	| Input         | X_IN_IN_LENGTH=294 			|data type "data_t_x_in_in" is floating-point single precision (32 bits)
+y_out			 	| Output         | Y_OUT_OUT_LENGTH=294 			|data type "data_t_y_out_in" is floating-point single precision (32 bits)
+
+NOTES: 1) the following constants are defined in ip_design/src/foo_data.h and are used by ip_design/src/foo.cpp, ip_design/src/foo_user.cpp and ip_design/src/foo_test.cpp
+       2) ip_design/src/foo_data.h is generated automatically, please do not edit manually.
+
+// FLOAT_FIX_VECTOR_NAME=1 to enable  fixed-point (up to 32 bits word length) arithmetic precision or 
+// FLOAT_FIX_VECTOR_NAME=0 to enable floating-point single arithmetic precision.
+FLOAT_FIX_BLOCK_IN=0
+FLOAT_FIX_OUT_BLOCK_IN=0
+FLOAT_FIX_X_IN_IN=0
+FLOAT_FIX_Y_OUT_OUT=0
+
+// Input vectors INTEGERLENGTH:
+BLOCK_IN_INTEGERLENGTH=0
+OUT_BLOCK_IN_INTEGERLENGTH=0
+X_IN_IN_INTEGERLENGTH=0
+// Output vectors INTEGERLENGTH:
+Y_OUT_OUT_INTEGERLENGTH=0
+
+// Input vectors FRACTIONLENGTH:
+BLOCK_IN_FRACTIONLENGTH=0
+OUT_BLOCK_IN_FRACTIONLENGTH=0
+X_IN_IN_FRACTIONLENGTH=0
+// Output vectors FRACTIONLENGTH:
+Y_OUT_OUT_FRACTIONLENGTH=0
+
+//Input vectors size:
+BLOCK_IN_LENGTH=597
+OUT_BLOCK_IN_LENGTH=48
+X_IN_IN_LENGTH=294
+//Output vectors size:
+Y_OUT_OUT_LENGTH=294
+
+
+---------------------------------------------------------
+SoC Input and output vectors:
+---------------------------------------------------------
+
+Name			| Direction		| Number of data 
+
+x_hat			 	| Input         | SOC_X_HAT_IN_LENGTH=6
+u_opt			 	| Output         | SOC_U_OPT_OUT_LENGTH=154
+
+NOTE: SoC interfaces use single precision floating point arithmetics.
+
+
+
+
+---------------------------------------------------------
+FPGA circuit clock frequency
+---------------------------------------------------------
+165 MHz
+
+NOTE: This clock is also used to clock the IP axi-master and axi-slave interface. Please do not exceed 200MHz in order to guarantee time closure during the ip_prototype_build phase.
+
+
+---------------------------------------------------------
+FPGA name
+---------------------------------------------------------
+xc7z020clg484-1
+
+NOTE: Any Xilinx 7 Series and Zynq®-7000 are supported, but only a some of them are supported if the purpose is to prototype the designed IP.
+
+
+---------------------------------------------------------
+Evaluation Borad name
+---------------------------------------------------------
+zedboard
+
+NOTE: Prototype is available only on the supported Evaluation boards which mount the following FPGAs:
+- zedboard : FPGA name should be xc7z020clg484-1
+- microzedboard : FPGA name should be xc7z020clg400-1
+- zc702 : FPGA name should be xc7z020clg484-1
+- zc706 : FPGA name should be xc7z045ffg900-2
+
+
+---------------------------------------------------------
+Ethernet connection type
+---------------------------------------------------------
+UDP-IP
+
+
+---------------------------------------------------------
+DDR3 memory base address
+---------------------------------------------------------
+33554432
+
+
+---------------------------------------------------------
+Number of test(s)
+---------------------------------------------------------
+1
+
+
+---------------------------------------------------------
+Type of C/RTL test(s): c, xsim, modelsim
+---------------------------------------------------------
+No C/RTL test(s) selected
+
+
+---------------------------------------------------------
+IP design C/RTL test(s):
+Input and output vectors has been mapped into a virtual memory at the following addresses:
+---------------------------------------------------------
+
+Name			| Base address in Byte
+
+block			 	| 0x00000000 <- 0
+out_block			 	| 0x00000954 <- (BLOCK_IN_LENGTH)*4
+x_in			 	| 0x00000A14 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+y_out			 	| 0x00000EAC <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
+
+
+---------------------------------------------------------
+IP prototype test(s):
+Input and output vectors has been mapped into external DDR3 memory at the following addresses:
+---------------------------------------------------------
+
+Name			| Base address in Byte
+
+block			 	| 0x02000000 <- 0
+out_block			 	| 0x02000954 <- (BLOCK_IN_LENGTH)*4
+x_in			 	| 0x02000A14 <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH)*4
+y_out			 	| 0x02000EAC <- (BLOCK_IN_LENGTH+OUT_BLOCK_IN_LENGTH+X_IN_IN_LENGTH)*4
+
+NOTE: the external DDR memory is shared memory between the CPU embedded into the FPGA and the Algorithm implemented into the FPGA programmable logic (PL).
+
+
+To send input vectors from the host (Matlab) to the FPGA call Matlab function "FPGAclientMATLAB" in "test_HIL.m" using the following parameters:
+
+Input vector name		| Packet type 	|	Packet internal ID 	| Data to send	| Packet output size
+block			 			| 3				| 0						| data vector	| 0
+out_block			 			| 3				| 1						| data vector	| 0
+x_in			 			| 3				| 2						| data vector	| 0
+
+
+
+To read output vectors from the FPGA to the host PC call Matlab function "FPGAclientMATLAB" in "test_HIL.m" using the following parameters:
+
+Output vector name		| Packet type 	|	Packet internal ID 	| Data to send	| Packet output size
+y_out			 			| 4				| 0						| 0				| 294

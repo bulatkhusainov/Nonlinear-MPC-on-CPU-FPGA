@@ -5,15 +5,423 @@
   Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
 ================================================================
 INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
-INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-92-generic) on Mon Aug 21 16:30:54 BST 2017
-INFO: [HLS 200-10] On os Ubuntu 14.04.5 LTS
-INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3'
-INFO: [HLS 200-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0'.
+INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-EliteBook-840-G1' (Linux_x86_64 version 4.13.0-43-generic) on Wed Jun 13 04:20:57 BST 2018
+INFO: [HLS 200-10] On os Ubuntu 16.04.4 LTS
+INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3'
+INFO: [HLS 200-10] Opening and resetting project '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0'.
 INFO: [HLS 200-10] Adding design file '../../src/foo_data.h' to the project
 INFO: [HLS 200-10] Adding design file '../../src/foo_user.cpp' to the project
 INFO: [HLS 200-10] Adding design file '../../src/foo.cpp' to the project
-INFO: [HLS 200-10] Opening and resetting solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1'.
+INFO: [HLS 200-10] Opening and resetting solution '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_3/ip_design/build/prj/my_project0/solution1'.
 INFO: [HLS 200-10] Cleaning up the solution database.
 INFO: [HLS 200-10] Setting target device to '{xc7z020clg484-1}'
 INFO: [SYN 201-201] Setting up clock 'default' with a period of 6ns.
 INFO: [HLS 200-10] Analyzing design file '../../src/foo.cpp' ... 
+INFO: [HLS 200-10] Analyzing design file '../../src/foo_user.cpp' ... 
+INFO: [HLS 200-10] Analyzing design file '../../src/user_mv_mult_prescaled_HW.cpp' ... 
+INFO: [HLS 200-10] Analyzing design file '../../src/user_minres_HW.cpp' ... 
+INFO: [HLS 200-10] Validating synthesis directives ...
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_minres_data' does not exist in function 'foo'. 
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_block' does not exist in function 'foo'. 
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_out_block' does not exist in function 'foo'. 
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
+WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:04:25 ; elapsed = 00:03:32 . Memory (MB): peak = 348.105 ; gain = 12.586 ; free physical = 4116 ; free virtual = 18080
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:04:46 ; elapsed = 00:03:53 . Memory (MB): peak = 348.105 ; gain = 12.586 ; free physical = 3784 ; free virtual = 18076
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [XFORM 203-603] Inlining function 'reset_part_vector' into 'minres_HW' (../../src/user_minres_HW.cpp:90).
+INFO: [XFORM 203-603] Inlining function 'copy_vector_to_part_vector' into 'minres_HW' (../../src/user_minres_HW.cpp:91).
+INFO: [XFORM 203-603] Inlining function 'ap_fixed_base<79, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>::operator<<' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:441).
+INFO: [XFORM 203-603] Inlining function 'ap_fixed_base<1, 32, false, (ap_q_mode)5, (ap_o_mode)0, 0>::overflow_adjust' into 'ap_fixed_base<1, 32, false, (ap_q_mode)5, (ap_o_mode)0, 0>::ap_fixed_base<79, 55, false, (ap_q_mode)5, (ap_o_mode)3, 0>' ().
+INFO: [XFORM 203-603] Inlining function 'mv_mult_prescaled_HW' into 'minres_HW' (../../src/user_minres_HW.cpp:110).
+INFO: [XFORM 203-603] Inlining function 'accumulator_16' into 'part_vector_mult' (../../src/user_minres_HW.cpp:380).
+INFO: [XFORM 203-603] Inlining function 'accumulator_16' into 'minres_HW' (../../src/user_minres_HW.cpp:220).
+INFO: [XFORM 203-603] Inlining function 'part_vector_normalize_update' into 'minres_HW' (../../src/user_minres_HW.cpp:227).
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:05:24 ; elapsed = 00:04:32 . Memory (MB): peak = 1724.113 ; gain = 1388.594 ; free physical = 2221 ; free virtual = 16837
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:438) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:441) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::__signbit' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:473) automatically.
+INFO: [XFORM 203-602] Inlining function 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' into 'hls::cast_IEEE754<int, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:523) automatically.
+INFO: [XFORM 203-602] Inlining function 'hls::cast_IEEE754<int, float>' into '__hls_fptosi_float_i32' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/lib_floatconversion.cpp:43) automatically.
+INFO: [XFORM 203-602] Inlining function 'hls::sqrtf' into 'minres_HW' (../../src/user_minres_HW.cpp:75) automatically.
+INFO: [XFORM 203-602] Inlining function '__hls_fptosi_float_i32' into 'minres_HW' (../../src/user_minres_HW.cpp:94) automatically.
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:05:30 ; elapsed = 00:04:38 . Memory (MB): peak = 1852.109 ; gain = 1516.590 ; free physical = 1999 ; free virtual = 16656
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'reset_part_vector_1' (../../src/user_minres_HW.cpp:274) in function 'minres_HW' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-8.2' (../../src/user_mv_mult_prescaled_HW.cpp:34) in function 'minres_HW' for pipelining.
+INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-8.6' (../../src/user_mv_mult_prescaled_HW.cpp:76) in function 'minres_HW' automatically.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'mv_mult_core_loop_1' (../../src/user_mv_mult_prescaled_HW.cpp:131) in function 'minres_HW' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'part_vector_normalize_1_0' (../../src/user_minres_HW.cpp:484) in function 'minres_HW' for pipelining.
+INFO: [XFORM 203-501] Unrolling loop 'Loop-3.1' (../../src/user_minres_HW.cpp:276) in function 'minres_HW' completely.
+INFO: [XFORM 203-501] Unrolling loop 'Loop-8.2.1' (../../src/user_mv_mult_prescaled_HW.cpp:37) in function 'minres_HW' completely.
+INFO: [XFORM 203-501] Unrolling loop 'Loop-8.6' (../../src/user_mv_mult_prescaled_HW.cpp:76) in function 'minres_HW' completely.
+INFO: [XFORM 203-501] Unrolling loop 'Loop-8.8.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:137) in function 'minres_HW' completely.
+INFO: [XFORM 203-501] Unrolling loop 'part_vector_normalize_1_1' (../../src/user_minres_HW.cpp:487) in function 'minres_HW' completely.
+INFO: [XFORM 203-102] Automatically partitioning small array 'mask' (../../src/user_minres_HW.cpp:334) completely based on array size.
+INFO: [XFORM 203-102] Automatically partitioning small array 'mask' (../../src/user_minres_HW.cpp:113) completely based on array size.
+INFO: [XFORM 203-102] Automatically partitioning small array 'mask' (../../src/user_minres_HW.cpp:17) completely based on array size.
+INFO: [XFORM 203-101] Partitioning array 'block_in_int.mat'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'v_new.vec' (../../src/user_minres_HW.cpp:57) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'v_prev.vec' (../../src/user_minres_HW.cpp:57) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'v_current.vec' (../../src/user_minres_HW.cpp:57) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'A_mult_v.vec' (../../src/user_minres_HW.cpp:62) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'mask' (../../src/user_minres_HW.cpp:334) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'mask' (../../src/user_minres_HW.cpp:113) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'mask' (../../src/user_minres_HW.cpp:17) in dimension 1 completely.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::mantissa' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:438) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::expv' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:441) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<float>::__signbit' into 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:473) automatically.
+INFO: [XFORM 203-602] Inlining function 'hls::cast_IEEE754<int, (ap_q_mode)6, float>' into 'hls::cast_IEEE754<int, float>' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/hls/hls_round.h:523) automatically.
+INFO: [XFORM 203-602] Inlining function 'hls::cast_IEEE754<int, float>' into '__hls_fptosi_float_i32' (/wrk/2017.1/nightly/2017_04_14_1846317/src/products/hls/hls_lib/src/lib_floatconversion.cpp:43) automatically.
+INFO: [XFORM 203-602] Inlining function 'hls::sqrtf' into 'minres_HW' (../../src/user_minres_HW.cpp:75) automatically.
+INFO: [XFORM 203-602] Inlining function '__hls_fptosi_float_i32' into 'minres_HW' (../../src/user_minres_HW.cpp:94) automatically.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:68:4) to (../../src/user_mv_mult_prescaled_HW.cpp:71:2) in function 'minres_HW'... converting 5 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock to (../../src/user_mv_mult_prescaled_HW.cpp:72:4) in function 'minres_HW'... converting 5 basic blocks.
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:05:38 ; elapsed = 00:04:48 . Memory (MB): peak = 2524.105 ; gain = 2188.586 ; free physical = 1045 ; free virtual = 16009
+INFO: [XFORM 203-541] Flattening a loop nest 'part_vector_mult_1' (../../src/user_minres_HW.cpp:351:3) in function 'part_vector_mult'.
+WARNING: [XFORM 203-542] Cannot flatten a loop nest 'copy_vector_to_part_vector_1' (../../src/user_minres_HW.cpp:308:3) in function 'minres_HW' : 
+WARNING: [XFORM 203-542] the outer loop is not a perfect loop.
+INFO: [XFORM 203-541] Flattening a loop nest 'Loop-8.5' (../../src/user_mv_mult_prescaled_HW.cpp:66:6) in function 'minres_HW'.
+INFO: [XFORM 203-541] Flattening a loop nest 'Loop-8.6' (../../src/user_mv_mult_prescaled_HW.cpp:77:7) in function 'minres_HW'.
+INFO: [XFORM 203-541] Flattening a loop nest 'mv_mult_core_loop' (../../src/user_mv_mult_prescaled_HW.cpp:127:4) in function 'minres_HW'.
+WARNING: [XFORM 203-542] Cannot flatten a loop nest 'main_loop' (../../src/user_minres_HW.cpp:95:3) in function 'minres_HW' : 
+WARNING: [XFORM 203-542] more than one sub loop.
+INFO: [XFORM 203-541] Flattening a loop nest 'interface_loop_block' (../../src/foo.cpp:51:4) in function 'foo'.
+INFO: [XFORM 203-521] Merging 3 loops (../../src/user_mv_mult_prescaled_HW.cpp:29, ../../src/user_mv_mult_prescaled_HW.cpp:34, ../../src/user_mv_mult_prescaled_HW.cpp:50) in function 'minres_HW'.
+INFO: [XFORM 203-521] Merging 2 loops (, ../../src/user_mv_mult_prescaled_HW.cpp:164) in function 'minres_HW'.
+INFO: [XFORM 203-521] Merging 3 loops (../../src/user_minres_HW.cpp:478, ../../src/user_minres_HW.cpp:484, ../../src/user_minres_HW.cpp:503) in function 'minres_HW'.
+INFO: [XFORM 203-811] Inferring bus burst read of length 5 on port 'memory_inout' (../../src/foo.cpp:42:4).
+INFO: [XFORM 203-811] Inferring bus burst read of length 840 on port 'memory_inout' (../../src/foo.cpp:55:5).
+INFO: [XFORM 203-811] Inferring bus burst read of length 9 on port 'memory_inout' (../../src/foo.cpp:77:2).
+INFO: [XFORM 203-811] Inferring bus burst read of length 66 on port 'memory_inout' (../../src/foo.cpp:95:4).
+INFO: [XFORM 203-811] Inferring bus burst read of length 414 on port 'memory_inout' (../../src/foo.cpp:110:3).
+INFO: [XFORM 203-811] Inferring bus burst write of length 414 on port 'memory_inout' (../../src/foo.cpp:135:3).
+WARNING: [XFORM 203-561] Ignored multiple trip count directives for loop 'Loop-7-0' in function 'minres_HW'.
+WARNING: [XFORM 203-561] Ignored multiple trip count directives for loop 'mv_mult_core_loop_mv_mult_core_loop_1' in function 'minres_HW'.
+WARNING: [XFORM 203-561] Ignored multiple trip count directives for loop 'part_vector_normalize_1_0' in function 'minres_HW'.
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:16) (distance = 10).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:335) (distance = 16).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:335) (distance = 16).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:335) (distance = 16).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:335) (distance = 8).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'A_mult_v.vec[0]' (../../src/user_minres_HW.cpp:62) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'A_mult_v.vec[1]' (../../src/user_minres_HW.cpp:62) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'A_mult_v.vec[2]' (../../src/user_minres_HW.cpp:62) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'A_mult_v.vec[3]' (../../src/user_minres_HW.cpp:62) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'A_mult_v.vec[4]' (../../src/user_minres_HW.cpp:62) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'A_mult_v.vec_term' (../../src/user_minres_HW.cpp:62) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:114) (distance = 16).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:114) (distance = 16).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:114) (distance = 16).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'sos' (../../src/user_minres_HW.cpp:114) (distance = 8).
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:05:41 ; elapsed = 00:04:51 . Memory (MB): peak = 2674.051 ; gain = 2338.531 ; free physical = 795 ; free virtual = 15812
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'foo' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'vv_mult_HW' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'Loop 2'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 16.
+WARNING: [SCHED 204-21] Estimated clock period (6.67ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+WARNING: [SCHED 204-21] The critical path consists of the following:
+	'load' operation ('sos_load', ../../src/user_minres_HW.cpp:29) on array 'sos', ../../src/user_minres_HW.cpp:16 (2.32 ns)
+	'fadd' operation ('tmp_5', ../../src/user_minres_HW.cpp:29) (4.35 ns)
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 291.29 seconds; current allocated memory: 2.044 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.1 seconds; current allocated memory: 2.044 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'part_vector_mult' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_init'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_0'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 17.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_1_L'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 19.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_3'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 17.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_final'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 2, Final II: 2, Depth: 14.
+WARNING: [SCHED 204-21] Estimated clock period (7.74ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+WARNING: [SCHED 204-21] The critical path consists of the following:
+	'phi' operation ('j') with incoming values : ('j', ../../src/user_minres_HW.cpp:352) (0 ns)
+	'icmp' operation ('exitcond1', ../../src/user_minres_HW.cpp:352) (2.91 ns)
+	'select' operation ('j_mid2', ../../src/user_minres_HW.cpp:352) (2.07 ns)
+	'add' operation ('j', ../../src/user_minres_HW.cpp:352) (2.75 ns)
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.29 seconds; current allocated memory: 2.045 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.2 seconds; current allocated memory: 2.046 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'minres_HW' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'init_loop'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 33.
+INFO: [SCHED 204-61] Pipelining loop 'reset_part_vector_0'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'reset_part_vector_1'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'reset_part_vector_3'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'copy_vector_to_part_vector_0'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'copy_vector_to_part_vector_1_0'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'copy_vector_to_part_vector_3'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'main_loop.1'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'main_loop.2'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+INFO: [SCHED 204-61] Pipelining loop 'main_loop.3'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 11.
+INFO: [SCHED 204-61] Pipelining loop 'main_loop.4'.
+WARNING: [SCHED 204-68] Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1)
+   between 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:83->../../src/user_minres_HW.cpp:110) of variable 'tmp_109', ../../src/user_mv_mult_prescaled_HW.cpp:83->../../src/user_minres_HW.cpp:110 on array 'A_mult_v.vec[0]', ../../src/user_minres_HW.cpp:62 and 'store' operation (../../src/user_mv_mult_prescaled_HW.cpp:82->../../src/user_minres_HW.cpp:110) of variable 'tmp_107', ../../src/user_mv_mult_prescaled_HW.cpp:82->../../src/user_minres_HW.cpp:110 on array 'A_mult_v.vec[0]', ../../src/user_minres_HW.cpp:62.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 2, Depth: 11.
+INFO: [SCHED 204-61] Pipelining loop 'main_loop.5'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 9.
+INFO: [SCHED 204-61] Pipelining loop 'mv_mult_core_loop_mv_mult_core_loop_1'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 25.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_init'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_v_new_0'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 45.
+INFO: [SCHED 204-61] Pipelining loop 'main_loop.9'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 45.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_v_new_3'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 45.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_mult_final'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 2, Final II: 2, Depth: 14.
+INFO: [SCHED 204-61] Pipelining loop 'part_vector_normalize_0'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
+INFO: [SCHED 204-61] Pipelining loop 'init_loop1'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
+WARNING: [SCHED 204-21] Estimated clock period (8.37ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+WARNING: [SCHED 204-21] The critical path consists of the following:
+	'icmp' operation ('exitcond_i3', ../../src/user_minres_HW.cpp:607->../../src/user_minres_HW.cpp:220) (3.88 ns)
+	blocking operation 4.49 ns on control path)
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 1.92 seconds; current allocated memory: 2.052 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 2.05 seconds; current allocated memory: 2.059 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'foo_user' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 1.17 seconds; current allocated memory: 2.059 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.23 seconds; current allocated memory: 2.059 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'foo' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::minres_data_in_int.memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'interface_loop_block_memcpy..memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'memcpy..memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::out_block_in_int.memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.foo(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float volatile*)::x_in_in_int.memory_inout'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+INFO: [SCHED 204-61] Pipelining loop 'memcpy.memory_inout.y_out_out_int.gep'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
+WARNING: [SCHED 204-21] Estimated clock period (7.78ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+WARNING: [SCHED 204-21] The critical path consists of the following:
+	'phi' operation ('indvar2') with incoming values : ('indvar_next2') (0 ns)
+	'icmp' operation ('exitcond') (2.91 ns)
+	'select' operation ('indvar2_mid2') (2.07 ns)
+	'add' operation ('indvar_next2') (2.8 ns)
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.65 seconds; current allocated memory: 2.060 GB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.42 seconds; current allocated memory: 2.061 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'vv_mult_HW' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'foo_fadd_32ns_32ns_32_9_full_dsp' to 'foo_fadd_32ns_32nbkb' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_fmul_32ns_32ns_32_5_max_dsp' to 'foo_fmul_32ns_32ncud' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nbkb': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32ncud': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'vv_mult_HW'.
+INFO: [HLS 200-111]  Elapsed time: 0.66 seconds; current allocated memory: 2.062 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'part_vector_mult' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'part_vector_mult_acc_i' to 'part_vector_mult_dEe' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'part_vector_mult_acc_j' to 'part_vector_mult_eOg' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'part_vector_mult_sos' to 'part_vector_mult_fYi' due to the length limit 20
+WARNING: [RTGEN 206-101] RTL name 'foo_fadd_32ns_32nbkb' is changed to 'foo_fadd_32ns_32nbkb_x' due to conflict.
+WARNING: [RTGEN 206-101] RTL name 'foo_fmul_32ns_32ncud' is changed to 'foo_fmul_32ns_32ncud_x' due to conflict.
+INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nbkb': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32ncud': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_mux_53_32_1': 2 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'part_vector_mult'.
+INFO: [HLS 200-111]  Elapsed time: 0.25 seconds; current allocated memory: 2.064 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'minres_HW' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'minres_HW_row_block_sched' to 'minres_HW_row_blog8j' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_col_block_sched' to 'minres_HW_col_blohbi' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_num_block_sched' to 'minres_HW_num_bloibs' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_row_term_block_sched' to 'minres_HW_row_terjbC' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_num_term_block_sched' to 'minres_HW_num_terkbM' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_col_term_block_sched' to 'minres_HW_col_terlbW' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec0' to 'minres_HW_v_curremb6' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec_0' to 'minres_HW_v_currencg' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec_1' to 'minres_HW_v_curreocq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec_2' to 'minres_HW_v_currepcA' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec_3' to 'minres_HW_v_curreqcK' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec_4' to 'minres_HW_v_currercU' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_vec_term' to 'minres_HW_v_curresc4' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec0' to 'minres_HW_v_prev_tde' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec_0' to 'minres_HW_v_prev_udo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec_1' to 'minres_HW_v_prev_vdy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec_2' to 'minres_HW_v_prev_wdI' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec_3' to 'minres_HW_v_prev_xdS' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec_4' to 'minres_HW_v_prev_yd2' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_prev_vec_term' to 'minres_HW_v_prev_zec' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec0' to 'minres_HW_v_new_vAem' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec_0' to 'minres_HW_v_new_vBew' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec_1' to 'minres_HW_v_new_vCeG' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec_2' to 'minres_HW_v_new_vDeQ' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec_3' to 'minres_HW_v_new_vEe0' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec_4' to 'minres_HW_v_new_vFfa' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_new_vec_term' to 'minres_HW_v_new_vGfk' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_v_current_alg_array' to 'minres_HW_v_curreHfu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec0' to 'minres_HW_A_mult_IfE' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec_0' to 'minres_HW_A_mult_JfO' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec_1' to 'minres_HW_A_mult_KfY' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec_2' to 'minres_HW_A_mult_Lf8' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec_3' to 'minres_HW_A_mult_Mgi' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec_4' to 'minres_HW_A_mult_Ngs' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_A_mult_v_vec_term' to 'minres_HW_A_mult_OgC' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_omega_pprev' to 'minres_HW_omega_pPgM' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'minres_HW_omega_prev' to 'minres_HW_omega_pQgW' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_faddfsub_32ns_32ns_32_9_full_dsp' to 'foo_faddfsub_32nsRg6' due to the length limit 20
+WARNING: [RTGEN 206-101] RTL name 'foo_fadd_32ns_32nbkb' is changed to 'foo_fadd_32ns_32nbkb_x' due to conflict.
+WARNING: [RTGEN 206-101] RTL name 'foo_fmul_32ns_32ncud' is changed to 'foo_fmul_32ns_32ncud_x' due to conflict.
+INFO: [SYN 201-210] Renamed object name 'foo_fdiv_32ns_32ns_32_30' to 'foo_fdiv_32ns_32nShg' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_fsqrt_32ns_32ns_32_28' to 'foo_fsqrt_32ns_32Thq' due to the length limit 20
+WARNING: [RTGEN 206-101] RTL name 'foo_mux_53_32_1' is changed to 'foo_mux_53_32_1_x' due to conflict.
+INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nbkb': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_faddfsub_32nsRg6': 4 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fdiv_32ns_32nShg': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32ncud': 7 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fsqrt_32ns_32Thq': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_mux_53_32_1': 4 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'minres_HW'.
+INFO: [HLS 200-111]  Elapsed time: 1.66 seconds; current allocated memory: 2.079 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'foo_user' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'foo_user'.
+INFO: [HLS 200-111]  Elapsed time: 2.48 seconds; current allocated memory: 2.095 GB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'foo' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_minres_data_in_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_block_in_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_out_block_in_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_x_in_in_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/byte_y_out_out_offset' to 's_axilite & ap_none' (register).
+INFO: [RTGEN 206-500] Setting interface mode on port 'foo/memory_inout' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'foo' to 's_axilite & ap_ctrl_hs'.
+INFO: [SYN 201-210] Renamed object name 'foo_minres_data_in_int' to 'foo_minres_data_iUhA' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_ter' to 'foo_block_in_int_VhK' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_out_block_in_int' to 'foo_out_block_in_WhU' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_0' to 'foo_block_in_int_Xh4' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_1' to 'foo_block_in_int_Yie' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_2' to 'foo_block_in_int_Zio' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_3' to 'foo_block_in_int_0iy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_4' to 'foo_block_in_int_1iI' due to the length limit 20
+INFO: [RTGEN 206-100] Bundling port 'return', 'byte_minres_data_in_offset', 'byte_block_in_offset', 'byte_out_block_in_offset', 'byte_x_in_in_offset' and 'byte_y_out_out_offset' to AXI-Lite port BUS_A.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'foo'.
+INFO: [HLS 200-111]  Elapsed time: 0.75 seconds; current allocated memory: 2.097 GB.
+INFO: [RTMG 210-278] Implementing memory 'vv_mult_HW_sos_ram' using block RAMs.
+INFO: [RTMG 210-279] Implementing memory 'part_vector_mult_dEe_rom' using distributed ROMs.
+INFO: [RTMG 210-279] Implementing memory 'part_vector_mult_eOg_rom' using distributed ROMs.
+INFO: [RTMG 210-279] Implementing memory 'minres_HW_row_blog8j_rom' using auto ROMs.
+INFO: [RTMG 210-279] Implementing memory 'minres_HW_col_blohbi_rom' using auto ROMs.
+INFO: [RTMG 210-279] Implementing memory 'minres_HW_num_bloibs_rom' using auto ROMs.
+INFO: [RTMG 210-279] Implementing memory 'minres_HW_row_terjbC_rom' using distributed ROMs.
+INFO: [RTMG 210-279] Implementing memory 'minres_HW_num_terkbM_rom' using distributed ROMs.
+INFO: [RTMG 210-279] Implementing memory 'minres_HW_col_terlbW_rom' using distributed ROMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_curremb6_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_currencg_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_curreocq_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_curresc4_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_prev_tde_ram' using distributed RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_prev_udo_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_prev_zec_ram' using distributed RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_v_curreHfu_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_A_mult_JfO_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_A_mult_OgC_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'minres_HW_omega_pPgM_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'foo_minres_data_iUhA_ram' using distributed RAMs with power-on initialization.
+INFO: [RTMG 210-278] Implementing memory 'foo_block_in_int_VhK_ram' using distributed RAMs with power-on initialization.
+INFO: [RTMG 210-278] Implementing memory 'foo_out_block_in_WhU_ram' using block RAMs with power-on initialization.
+INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_ram' using block RAMs with power-on initialization.
+INFO: [RTMG 210-278] Implementing memory 'foo_block_in_int_Xh4_ram' using block RAMs with power-on initialization.
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:05:54 ; elapsed = 00:05:06 . Memory (MB): peak = 2716.105 ; gain = 2380.586 ; free physical = 737 ; free virtual = 15779
+INFO: [SYSC 207-301] Generating SystemC RTL for foo.
+INFO: [VHDL 208-304] Generating VHDL RTL for foo.
+INFO: [VLOG 209-307] Generating Verilog RTL for foo.
+INFO: [IMPL 213-8] Exporting RTL as an IP in IP-XACT.
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+INFO: [Common 17-1269] XILINX_LOCAL_USER_DATA is set to 'YES', using local Tcl Store at '/home/bkhusain/.Xilinx/Vivado/2017.1/XilinxTclStore'.
+INFO: [Common 17-748] XILINX_TCLAPP_REPO is set to '/home/bkhusain/Documents/XilinxTclStore'. Refresh XilinxTclStore catalog is disabled when XILINX_TCLAPP_REPO is set.
+source run_ippack.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fadd_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fmul_3_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fmul_3_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fdiv_28_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fdiv_28_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fsqrt_26_no_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fsqrt_26_no_dsp_32'...
+WARNING: [IP_Flow 19-4832] The IP name 'foo_ap_faddfsub_7_full_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues.
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_faddfsub_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_faddfsub_7_full_dsp_32'...
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [Common 17-206] Exiting Vivado at Wed Jun 13 04:26:22 2018...
+INFO: [HLS 200-112] Total elapsed time: 359.04 seconds; peak allocated memory: 2.097 GB.

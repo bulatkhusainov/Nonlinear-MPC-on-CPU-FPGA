@@ -5,14 +5,14 @@
   Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
 ================================================================
 INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
-INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-Z420-Workstation' (Linux_x86_64 version 4.4.0-75-generic) on Wed May 10 15:47:16 BST 2017
-INFO: [HLS 200-10] On os Ubuntu 14.04.5 LTS
-INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1'
-INFO: [HLS 200-10] Opening and resetting project '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0'.
+INFO: [HLS 200-10] For user 'bkhusain' on host 'bkhusain-HP-EliteBook-840-G1' (Linux_x86_64 version 4.13.0-43-generic) on Wed Jun 13 02:59:14 BST 2018
+INFO: [HLS 200-10] On os Ubuntu 16.04.4 LTS
+INFO: [HLS 200-10] In directory '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1'
+INFO: [HLS 200-10] Opening and resetting project '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0'.
 INFO: [HLS 200-10] Adding design file '../../src/foo_data.h' to the project
 INFO: [HLS 200-10] Adding design file '../../src/foo_user.cpp' to the project
 INFO: [HLS 200-10] Adding design file '../../src/foo.cpp' to the project
-INFO: [HLS 200-10] Opening and resetting solution '/home/bkhusain/Desktop/improved_NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1'.
+INFO: [HLS 200-10] Opening and resetting solution '/home/bkhusain/Desktop/NMPC_SOC/HIL_testing/protoip_projects/heterogeneous_1/ip_design/build/prj/my_project0/solution1'.
 INFO: [HLS 200-10] Cleaning up the solution database.
 INFO: [HLS 200-10] Setting target device to '{xc7z020clg484-1}'
 INFO: [SYN 201-201] Setting up clock 'default' with a period of 6ns.
@@ -24,56 +24,53 @@ WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_out_block' does not exist in function 'foo'. 
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'input_cast_loop_x_in' does not exist in function 'foo'. 
 WARNING: [HLS 200-40] Directive 'PIPELINE' cannot be applied: Label 'output_cast_loop_y_out' does not exist in function 'foo'. 
-INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:03:02 ; elapsed = 00:02:25 . Memory (MB): peak = 352.078 ; gain = 12.590 ; free physical = 14081 ; free virtual = 58827
-INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:03:14 ; elapsed = 00:02:37 . Memory (MB): peak = 352.078 ; gain = 12.590 ; free physical = 13860 ; free virtual = 58825
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:02:57 ; elapsed = 00:02:19 . Memory (MB): peak = 348.105 ; gain = 12.586 ; free physical = 3496 ; free virtual = 18075
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:03:11 ; elapsed = 00:02:34 . Memory (MB): peak = 348.105 ; gain = 12.586 ; free physical = 3272 ; free virtual = 18071
 INFO: [HLS 200-10] Starting code transformations ...
 INFO: [XFORM 203-603] Inlining function 'mv_mult_prescaled_HW' into 'foo_user' (../../src/foo_user.cpp:20).
-INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:03:30 ; elapsed = 00:02:54 . Memory (MB): peak = 1088.078 ; gain = 748.590 ; free physical = 13040 ; free virtual = 58171
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:03:29 ; elapsed = 00:02:53 . Memory (MB): peak = 1084.105 ; gain = 748.586 ; free physical = 2457 ; free virtual = 17421
 INFO: [HLS 200-10] Checking synthesizability ...
-INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:03:32 ; elapsed = 00:02:57 . Memory (MB): peak = 1164.418 ; gain = 824.930 ; free physical = 12925 ; free virtual = 58081
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:03:32 ; elapsed = 00:02:56 . Memory (MB): peak = 1160.445 ; gain = 824.926 ; free physical = 2336 ; free virtual = 17324
 INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-2' (../../src/user_mv_mult_prescaled_HW.cpp:34) in function 'foo_user' for pipelining.
 INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:76) in function 'foo_user' automatically.
-INFO: [XFORM 203-502] Unrolling small iteration loop 'mv_mult_core_loop' (../../src/user_mv_mult_prescaled_HW.cpp:127) in function 'foo_user' automatically.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'mv_mult_core_loop_1' (../../src/user_mv_mult_prescaled_HW.cpp:131) in function 'foo_user' for pipelining.
 INFO: [XFORM 203-501] Unrolling loop 'Loop-2.1' (../../src/user_mv_mult_prescaled_HW.cpp:37) in function 'foo_user' completely.
 INFO: [XFORM 203-501] Unrolling loop 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:76) in function 'foo_user' completely.
-INFO: [XFORM 203-501] Unrolling loop 'mv_mult_core_loop' (../../src/user_mv_mult_prescaled_HW.cpp:127) in function 'foo_user' completely.
 INFO: [XFORM 203-501] Unrolling loop 'Loop-8.1.1' (../../src/user_mv_mult_prescaled_HW.cpp:137) in function 'foo_user' completely.
 INFO: [XFORM 203-101] Partitioning array 'block_in_int.mat'  in dimension 1 completely.
 INFO: [XFORM 203-101] Partitioning array 'x_in_in_int.vec' (../../src/foo.cpp:31) in dimension 1 completely.
 INFO: [XFORM 203-101] Partitioning array 'y_out_out_int.vec'  in dimension 1 completely.
 WARNING: [ANALYSIS 214-31] The program may have out of bound access of array variable 'y_out_out_int.vec_term' in function 'foo' (../../src/foo.cpp:108:3).
-INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:68:4) to (../../src/user_mv_mult_prescaled_HW.cpp:71:2) in function 'foo_user'... converting 11 basic blocks.
-INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:72:4) to (../../src/user_mv_mult_prescaled_HW.cpp:72:4) in function 'foo_user'... converting 11 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:68:4) to (../../src/user_mv_mult_prescaled_HW.cpp:71:2) in function 'foo_user'... converting 6 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../../src/user_mv_mult_prescaled_HW.cpp:72:4) to (../../src/user_mv_mult_prescaled_HW.cpp:72:4) in function 'foo_user'... converting 6 basic blocks.
 INFO: [XFORM 203-11] Balancing expressions in function 'foo' (../../src/foo.cpp:21)...6 expression(s) balanced.
-INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:03:36 ; elapsed = 00:03:01 . Memory (MB): peak = 1452.430 ; gain = 1112.941 ; free physical = 12468 ; free virtual = 57776
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:03:36 ; elapsed = 00:03:00 . Memory (MB): peak = 1448.449 ; gain = 1112.930 ; free physical = 1880 ; free virtual = 17023
 INFO: [XFORM 203-541] Flattening a loop nest 'Loop-5' (../../src/user_mv_mult_prescaled_HW.cpp:66:6) in function 'foo_user'.
+INFO: [XFORM 203-541] Flattening a loop nest 'Loop-6' (../../src/user_mv_mult_prescaled_HW.cpp:77:7) in function 'foo_user'.
+INFO: [XFORM 203-541] Flattening a loop nest 'mv_mult_core_loop' (../../src/user_mv_mult_prescaled_HW.cpp:127:4) in function 'foo_user'.
 INFO: [XFORM 203-541] Flattening a loop nest 'interface_loop_block' (../../src/foo.cpp:41:4) in function 'foo'.
 INFO: [XFORM 203-541] Flattening a loop nest 'interface_loop_x_in' (../../src/foo.cpp:69:4) in function 'foo'.
 INFO: [XFORM 203-541] Flattening a loop nest 'interface_loop_y_out' (../../src/foo.cpp:97:4) in function 'foo'.
 INFO: [XFORM 203-521] Merging 3 loops (../../src/user_mv_mult_prescaled_HW.cpp:29, ../../src/user_mv_mult_prescaled_HW.cpp:34, ../../src/user_mv_mult_prescaled_HW.cpp:50) in function 'foo_user'.
-ERROR: [XFORM 203-522] Cannot merge loops in region 'merge_mv_mult': non-trivial code exists among loops.
+INFO: [XFORM 203-521] Merging 2 loops (, ../../src/user_mv_mult_prescaled_HW.cpp:164) in function 'foo_user'.
 INFO: [XFORM 203-811] Inferring bus burst read of length 840 on port 'memory_inout' (../../src/foo.cpp:43:4).
 INFO: [XFORM 203-811] Inferring bus burst read of length 9 on port 'memory_inout' (../../src/foo.cpp:52:3).
 INFO: [XFORM 203-811] Inferring bus burst read of length 66 on port 'memory_inout' (../../src/foo.cpp:61:3).
 INFO: [XFORM 203-811] Inferring bus burst read of length 6 on port 'memory_inout' (../../src/foo.cpp:67:3).
-INFO: [XFORM 203-811] Inferring bus burst read of length 40 on port 'memory_inout' (../../src/foo.cpp:71:4).
+INFO: [XFORM 203-811] Inferring bus burst read of length 80 on port 'memory_inout' (../../src/foo.cpp:71:4).
 INFO: [XFORM 203-811] Inferring bus burst read of length 8 on port 'memory_inout' (../../src/foo.cpp:80:3).
 INFO: [XFORM 203-811] Inferring bus burst write of length 6 on port 'memory_inout' (../../src/foo.cpp:95:3).
-INFO: [XFORM 203-811] Inferring bus burst write of length 40 on port 'memory_inout' (../../src/foo.cpp:99:4).
+INFO: [XFORM 203-811] Inferring bus burst write of length 80 on port 'memory_inout' (../../src/foo.cpp:99:4).
 INFO: [XFORM 203-811] Inferring bus burst write of length 9 on port 'memory_inout' (../../src/foo.cpp:108:3).
 WARNING: [XFORM 203-561] Ignored multiple trip count directives for loop 'Loop-0' in function 'foo_user'.
+WARNING: [XFORM 203-561] Ignored multiple trip count directives for loop 'mv_mult_core_loop_mv_mult_core_loop_1' in function 'foo_user'.
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[3]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[5]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[9]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[4]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[2]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[0]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[7]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[6]' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[8]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[1]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[0]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[2]' (../../src/foo_user.cpp:18) (distance = 13).
+INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec[4]' (../../src/foo_user.cpp:18) (distance = 13).
 INFO: [ANALYSIS 214-51] Found inter dependency for variable 'y_out_out_int.vec_te' (../../src/foo_user.cpp:18) (distance = 13).
-INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:03:37 ; elapsed = 00:03:02 . Memory (MB): peak = 1528.910 ; gain = 1189.422 ; free physical = 12370 ; free virtual = 57679
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:03:37 ; elapsed = 00:03:01 . Memory (MB): peak = 1524.934 ; gain = 1189.414 ; free physical = 1784 ; free virtual = 16927
 INFO: [HLS 200-10] Starting hardware synthesis ...
 INFO: [HLS 200-10] Synthesizing 'foo' ...
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -85,27 +82,27 @@ INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 1.
 INFO: [SCHED 204-61] Pipelining loop 'Loop 2'.
 INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.
 INFO: [SCHED 204-61] Pipelining loop 'Loop 3'.
-INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 12.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 11.
 INFO: [SCHED 204-61] Pipelining loop 'Loop 4'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 11.
+INFO: [SCHED 204-61] Pipelining loop 'Loop 5'.
 INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 9.
-INFO: [SCHED 204-61] Pipelining loop 'mv_mult_core_loop_1'.
-INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 23.
-INFO: [SCHED 204-61] Pipelining loop 'mv_mult_term_loop'.
-INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 19.
-WARNING: [SCHED 204-21] Estimated clock period (7.79ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+INFO: [SCHED 204-61] Pipelining loop 'mv_mult_core_loop_mv_mult_core_loop_1'.
+INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 25.
+WARNING: [SCHED 204-21] Estimated clock period (7.78ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
 WARNING: [SCHED 204-21] The critical path consists of the following:
-	'phi' operation ('i') with incoming values : ('i', ../../src/user_mv_mult_prescaled_HW.cpp:67->../../src/foo_user.cpp:20) (0 ns)
-	'icmp' operation ('exitcond7_i', ../../src/user_mv_mult_prescaled_HW.cpp:67->../../src/foo_user.cpp:20) (3.1 ns)
-	'select' operation ('i_4_i_mid2', ../../src/user_mv_mult_prescaled_HW.cpp:67->../../src/foo_user.cpp:20) (2.07 ns)
-	'add' operation ('i', ../../src/user_mv_mult_prescaled_HW.cpp:67->../../src/foo_user.cpp:20) (2.62 ns)
+	'phi' operation ('j') with incoming values : ('j', ../../src/user_mv_mult_prescaled_HW.cpp:130->../../src/foo_user.cpp:20) (0 ns)
+	'icmp' operation ('exitcond2_i', ../../src/user_mv_mult_prescaled_HW.cpp:130->../../src/foo_user.cpp:20) (2.91 ns)
+	'select' operation ('j_3_i_mid2', ../../src/user_mv_mult_prescaled_HW.cpp:130->../../src/foo_user.cpp:20) (2.07 ns)
+	'add' operation ('j', ../../src/user_mv_mult_prescaled_HW.cpp:130->../../src/foo_user.cpp:20) (2.8 ns)
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 182.52 seconds; current allocated memory: 1.054 GB.
+INFO: [HLS 200-111]  Elapsed time: 181.73 seconds; current allocated memory: 1.053 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.27 seconds; current allocated memory: 1.056 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.25 seconds; current allocated memory: 1.055 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Implementing module 'foo' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -128,35 +125,36 @@ INFO: [SCHED 204-61] Pipelining loop 'interface_loop_y_out_memcpy.memory_inout.'
 INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 21.
 INFO: [SCHED 204-61] Pipelining loop 'memcpy.memory_inout.'.
 INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.
-WARNING: [SCHED 204-21] Estimated clock period (8.66ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
+WARNING: [SCHED 204-21] Estimated clock period (7.78ns) exceeds the target (target clock period: 6ns, clock uncertainty: 0.75ns, effective delay budget: 5.25ns).
 WARNING: [SCHED 204-21] The critical path consists of the following:
-	'phi' operation ('indvar4') with incoming values : ('indvar_next4') (0 ns)
-	'icmp' operation ('exitcond5') (3.88 ns)
-	'select' operation ('indvar4_mid2') (2.07 ns)
-	'add' operation ('indvar_next4') (2.71 ns)
+	'phi' operation ('indvar') with incoming values : ('indvar_next') (0 ns)
+	'icmp' operation ('exitcond3') (2.91 ns)
+	'select' operation ('indvar_mid2') (2.07 ns)
+	'add' operation ('indvar_next') (2.8 ns)
 INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 0.6 seconds; current allocated memory: 1.058 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.54 seconds; current allocated memory: 1.057 GB.
 INFO: [BIND 205-100] Starting micro-architecture generation ...
 INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.54 seconds; current allocated memory: 1.060 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.46 seconds; current allocated memory: 1.058 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'foo_user' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
-INFO: [SYN 201-210] Renamed object name 'foo_user_col_block_sched' to 'foo_user_col_blocbkb' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_user_row_block_sched' to 'foo_user_row_bloccud' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_user_row_block_sched' to 'foo_user_row_blocbkb' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_user_col_block_sched' to 'foo_user_col_bloccud' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_user_num_block_sched' to 'foo_user_num_blocdEe' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_user_row_term_block_sched' to 'foo_user_row_termeOg' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_user_num_term_block_sched' to 'foo_user_num_termfYi' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_user_col_term_block_sched' to 'foo_user_col_termg8j' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_fadd_32ns_32ns_32_9_full_dsp' to 'foo_fadd_32ns_32nhbi' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_fmul_32ns_32ns_32_5_max_dsp' to 'foo_fmul_32ns_32nibs' due to the length limit 20
-INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nhbi': 10 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32nibs': 10 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fadd_32ns_32nhbi': 6 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_fmul_32ns_32nibs': 6 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_mux_53_32_1': 2 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'foo_user'.
-INFO: [HLS 200-111]  Elapsed time: 0.61 seconds; current allocated memory: 1.064 GB.
+INFO: [HLS 200-111]  Elapsed time: 0.53 seconds; current allocated memory: 1.062 GB.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'foo' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -173,58 +171,43 @@ INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_1' to 'foo_block_i
 INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_2' to 'foo_block_in_int_ncg' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_3' to 'foo_block_in_int_ocq' due to the length limit 20
 INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_4' to 'foo_block_in_int_pcA' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_5' to 'foo_block_in_int_qcK' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_6' to 'foo_block_in_int_rcU' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_7' to 'foo_block_in_int_sc4' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_8' to 'foo_block_in_int_tde' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_block_in_int_mat_9' to 'foo_block_in_int_udo' due to the length limit 20
 INFO: [RTGEN 206-100] Bundling port 'return', 'byte_block_in_offset', 'byte_out_block_in_offset' and 'byte_y_out_out_offset' to AXI-Lite port BUS_A.
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec0' to 'foo_x_in_in_int_vvdy' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_0' to 'foo_x_in_in_int_vwdI' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_1' to 'foo_x_in_in_int_vxdS' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_2' to 'foo_x_in_in_int_vyd2' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_3' to 'foo_x_in_in_int_vzec' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_4' to 'foo_x_in_in_int_vAem' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_5' to 'foo_x_in_in_int_vBew' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_6' to 'foo_x_in_in_int_vCeG' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_7' to 'foo_x_in_in_int_vDeQ' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_8' to 'foo_x_in_in_int_vEe0' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_9' to 'foo_x_in_in_int_vFfa' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_term' to 'foo_x_in_in_int_vGfk' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec0' to 'foo_y_out_out_intHfu' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_0' to 'foo_y_out_out_intIfE' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_1' to 'foo_y_out_out_intJfO' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_2' to 'foo_y_out_out_intKfY' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_3' to 'foo_y_out_out_intLf8' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_4' to 'foo_y_out_out_intMgi' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_5' to 'foo_y_out_out_intNgs' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_6' to 'foo_y_out_out_intOgC' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_7' to 'foo_y_out_out_intPgM' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_8' to 'foo_y_out_out_intQgW' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_9' to 'foo_y_out_out_intRg6' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_te' to 'foo_y_out_out_intShg' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'foo_urem_9ns_7ns_9_13' to 'foo_urem_9ns_7ns_Thq' due to the length limit 20
-INFO: [RTGEN 206-100] Generating core module 'foo_mux_104_32_1': 1 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'foo_urem_9ns_7ns_Thq': 3 instance(s).
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec0' to 'foo_x_in_in_int_vqcK' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_0' to 'foo_x_in_in_int_vrcU' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_1' to 'foo_x_in_in_int_vsc4' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_2' to 'foo_x_in_in_int_vtde' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_3' to 'foo_x_in_in_int_vudo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_4' to 'foo_x_in_in_int_vvdy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_x_in_in_int_vec_term' to 'foo_x_in_in_int_vwdI' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec0' to 'foo_y_out_out_intxdS' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_0' to 'foo_y_out_out_intyd2' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_1' to 'foo_y_out_out_intzec' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_2' to 'foo_y_out_out_intAem' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_3' to 'foo_y_out_out_intBew' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_4' to 'foo_y_out_out_intCeG' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_y_out_out_int_vec_te' to 'foo_y_out_out_intDeQ' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'foo_urem_9ns_8ns_9_13' to 'foo_urem_9ns_8ns_Ee0' due to the length limit 20
+WARNING: [RTGEN 206-101] RTL name 'foo_mux_53_32_1' is changed to 'foo_mux_53_32_1_x' due to conflict.
+INFO: [RTGEN 206-100] Generating core module 'foo_mux_53_32_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'foo_urem_9ns_8ns_Ee0': 3 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'foo'.
-INFO: [HLS 200-111]  Elapsed time: 1.49 seconds; current allocated memory: 1.075 GB.
-INFO: [RTMG 210-279] Implementing memory 'foo_user_col_blocbkb_rom' using auto ROMs.
-INFO: [RTMG 210-279] Implementing memory 'foo_user_row_bloccud_rom' using auto ROMs.
+INFO: [HLS 200-111]  Elapsed time: 1.19 seconds; current allocated memory: 1.072 GB.
+INFO: [RTMG 210-279] Implementing memory 'foo_user_row_blocbkb_rom' using auto ROMs.
+INFO: [RTMG 210-279] Implementing memory 'foo_user_col_bloccud_rom' using auto ROMs.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_num_blocdEe_rom' using auto ROMs.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_row_termeOg_rom' using distributed ROMs.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_num_termfYi_rom' using distributed ROMs.
 INFO: [RTMG 210-279] Implementing memory 'foo_user_col_termg8j_rom' using distributed ROMs.
-INFO: [RTMG 210-282] Generating pipelined core: 'foo_urem_9ns_7ns_Thq_div'
+INFO: [RTMG 210-282] Generating pipelined core: 'foo_urem_9ns_8ns_Ee0_div'
 INFO: [RTMG 210-278] Implementing memory 'foo_block_in_int_jbC_ram' using distributed RAMs with power-on initialization.
 INFO: [RTMG 210-278] Implementing memory 'foo_out_block_in_kbM_ram' using block RAMs with power-on initialization.
 INFO: [RTMG 210-278] Implementing memory 'foo_block_in_int_lbW_ram' using block RAMs with power-on initialization.
-INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vvdy_ram' using distributed RAMs.
-INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vwdI_ram' using block RAMs.
-INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vxdS_ram' using block RAMs.
-INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vGfk_ram' using distributed RAMs.
-INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_intIfE_ram' using block RAMs.
-INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_intShg_ram' using block RAMs.
-INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:03:43 ; elapsed = 00:03:09 . Memory (MB): peak = 1528.910 ; gain = 1189.422 ; free physical = 12333 ; free virtual = 57656
+INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vqcK_ram' using distributed RAMs.
+INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vrcU_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'foo_x_in_in_int_vwdI_ram' using distributed RAMs.
+INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_intyd2_ram' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'foo_y_out_out_intDeQ_ram' using block RAMs.
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:03:42 ; elapsed = 00:03:07 . Memory (MB): peak = 1524.934 ; gain = 1189.414 ; free physical = 1751 ; free virtual = 16906
 INFO: [SYSC 207-301] Generating SystemC RTL for foo.
 INFO: [VHDL 208-304] Generating VHDL RTL for foo.
 INFO: [VLOG 209-307] Generating Verilog RTL for foo.
@@ -241,12 +224,12 @@ source run_ippack.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fmul_3_max_dsp_32'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fmul_3_max_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fadd_7_full_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fadd_7_full_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'foo_ap_fmul_3_max_dsp_32'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'foo_ap_fmul_3_max_dsp_32'...
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Wed May 10 15:50:37 2017...
-INFO: [HLS 200-112] Total elapsed time: 225.45 seconds; peak allocated memory: 1.075 GB.
+INFO: [Common 17-206] Exiting Vivado at Wed Jun 13 03:02:34 2018...
+INFO: [HLS 200-112] Total elapsed time: 224.93 seconds; peak allocated memory: 1.072 GB.
