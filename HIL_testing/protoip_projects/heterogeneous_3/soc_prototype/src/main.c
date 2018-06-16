@@ -154,7 +154,8 @@ int main()
 	echo_netif = &server_netif;
 
 	init_platform();
-	Xil_DCacheDisable();
+	Xil_DCacheEnable();
+	//Xil_DCacheDisable();
 
 	/* initliaze IP addresses to be used */
 	IP4_ADDR(&ipaddr,  FPGA_ip_address_a4, FPGA_ip_address_a3,   FPGA_ip_address_a2, FPGA_ip_address_a1);

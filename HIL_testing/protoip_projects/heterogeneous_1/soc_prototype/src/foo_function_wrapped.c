@@ -30,6 +30,8 @@ void send_block_in(float* block_in)
 	else { //floating point
 		memcpy(block_in_ptr_ddr, block_in, BLOCK_IN_VECTOR_LENGTH*4);
 	}
+	Xil_DCacheFlushRange((uint)block_in_ptr_ddr, BLOCK_IN_VECTOR_LENGTH*4);
+
 }
 void send_out_block_in(float* out_block_in)
 {
@@ -49,6 +51,7 @@ void send_out_block_in(float* out_block_in)
 	else { //floating point
 		memcpy(out_block_in_ptr_ddr, out_block_in, OUT_BLOCK_IN_VECTOR_LENGTH*4);
 	}
+	Xil_DCacheFlushRange((uint)out_block_in_ptr_ddr, OUT_BLOCK_IN_VECTOR_LENGTH*4);
 }
 void send_x_in_in(float* x_in_in)
 {
@@ -68,6 +71,7 @@ void send_x_in_in(float* x_in_in)
 	else { //floating point
 		memcpy(x_in_in_ptr_ddr, x_in_in, X_IN_IN_VECTOR_LENGTH*4);
 	}
+	Xil_DCacheFlushRange((uint)x_in_in_ptr_ddr, X_IN_IN_VECTOR_LENGTH*4);
 }
 
 //function for calling foo_user IP
@@ -122,6 +126,8 @@ void receive_y_out_out(float* y_out_out)
 	Xint32 *y_out_out_ptr_ddr = (Xint32 *)y_out_OUT_DEFINED_MEM_ADDRESS;
 	int32_t outputvec_fix[Y_OUT_OUT_VECTOR_LENGTH];
 	int i;
+	Xil_DCacheInvalidateRange((uint)y_out_out_ptr_ddr, Y_OUT_OUT_VECTOR_LENGTH*4);
+
 
 	//read y_out_out from DDR
 	if (FLOAT_FIX_Y_OUT_OUT == 1) { //fixed point

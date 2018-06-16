@@ -17,6 +17,8 @@ sdk create_app_project -name test_fpga -proc ps7_cortexa9_0 -hwproject design_1_
 sdk configapp -app test_fpga build-config Release
 sdk configapp -app test_fpga libraries m
 sdk configapp -app test_fpga compiler-misc {-O3}
+
+file copy -force ../../../../../lscript.ld workspace1/test_fpga/src
 #end added by Bulat
 
 file copy -force ../../../src/echo.c workspace1/test_fpga/src
